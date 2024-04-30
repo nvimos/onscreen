@@ -22,7 +22,7 @@ return { {
 
 					{ icon = '', key = '.', desc = 'find', action = 'Telescope find_files',      group = 'DevIconFavicon', icon_hl = 'DevIconsFish', },
 					{ icon = '', key = '/', desc = 'dirs', action = 'lua Telescope_find_dirs()', group = 'DevIconFavicon', icon_hl = '@variable', },
-					{ icon = '', key = 'o', desc = 'old',  action = 'lua Telescope oldfiles',    group = 'DevIconFavicon', icon_hl = '@variable', },
+					{ icon = '', key = 'o', desc = 'old',  action = 'Telescope oldfiles',    group = 'DevIconFavicon', icon_hl = '@variable', },
 
 					-- { icon = ' ', key = '.', desc = '󰍉',   action = 'Telescope find_files',      group = 'Label', icon_hl = '@variable', },
 					-- { icon = ' ', key = '/', desc = '',     action = 'lua Telescope_find_dirs()', group = 'Label', icon_hl = '@variable', },

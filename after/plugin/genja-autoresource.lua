@@ -1,4 +1,10 @@
+--[[ 
+	genja-autoresource: always reload lua init-files on safe
 
+	setup({
+
+	})
+]]
 
 local pats = {}
 local genja = vim.fn.readdir(vim.fn.stdpath('config')..'/lua/genja/', 'v:val =~ "\\.lua$"') -- init.lua, opt.lua, ...

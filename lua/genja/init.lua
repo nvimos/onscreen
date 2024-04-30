@@ -17,8 +17,12 @@
 	Examples
 	https://gist.github.com/s1n7ax
 	https://gist.github.com/s1n7ax/6885a550633fa8a285fdef2c0f8044ad generate doc-comments
-	https://github.com/Traap/nvim - old timer has his own system.
 	https://github.com/wincent/wincent/blob/aa3a322e3a911dabe0ef398ebb1fd7c77209b8ac/roles/dotfiles/files/.vim/plugin/mappings/leader.vim
+
+
+	Dotfiles (funny, or "simple")
+	https://github.com/Traap/nvim - old timer has his own system.
+	https://github.com/beauwilliams/Dotfiles/tree/master/Vim/nvim - full of life ossie with code comments spanning 88-145 dashes :D
 
 
 	Plugins to study
@@ -27,37 +31,41 @@
 
 	Other
 	https://www.nerdfonts.com/cheat-sheet
-
 ]]
+
+-------[[=================]]--
 vim.cmd 'colorscheme lunaperche'
-require 'genja.fn'
-
+require 'genja.fn'          -- functions
+--                          --
+--                          --
+--                          --
 if (is_started_from_windows_shell()) then
-	vim.loop.chdir(vim.env.Userprofile)
-end
-
-vim.g.mapleader      = ' '
-vim.g.maplocalleader = ','
-
---[[=================]]--
-require 'genja.opt'
-require 'genja.init-map'
-require 'genja.alias'
-require 'genja.auto'
-require 'genja.hilite'
-require 'genja.lazy' -- packages via genja.lazy
-require 'genja.map'
---[[=================]]--
-------------------------------
--- require 'genja.lsp'
-START_DIRS = (function() -- Telescope_find_dirs
-	local function Norm(p) return p:gsub([[\]], [[/]]) end
-	return {
-		-- Norm(vim.env.HOME) , 
-		Norm(vim.fn.stdpath('config'))
-		, Norm('A:/workspace')
-		, Norm('O:/H1')
-		, } end)()
-
-
-
+	vim.loop.chdir(vim.env.Userprofile) end
+--                          --
+Myleige(' ', ',')           -- mapleader, maplocalleader
+--                          --
+--                          --
+-------[[=================]]--
+require 'genja.opt'         -- just static options
+require 'genja.auto-alias'  -- these should be safe foo
+require 'genja.imap'        -- early maps, if config breaks
+require 'genja.auto'        -- autocommads, automation
+require 'genja.hilite'      --
+require 'genja.lazy'        -- genja/lazy.lua -> import { plugins, genja.lazy-plugs }
+require 'genja.map'         --
+-------[[=================]]--
+--                          --
+--                          --
+--                          --
+START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
+	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
+	local sd = {}
+	if vim.fn.has("Windows") then
+		table.insert(sd, Norm('O:/H1'))
+		table.insert(sd, Norm('A:/workspace'))
+		table.insert(sd, Norm(vim.env.Userprofile))
+		else
+		table.insert(sd, Norm(vim.env.HOME))
+		end
+		table.insert(sd, Norm(vim.fn.stdpath('config')))
+	return sd end)()

@@ -12,59 +12,40 @@
 -- })
 
 
--- vim.api.nvim_create_autocmd('UIEnter', {
---   group = vim.api.nvim_create_augroup('Dashboard', { clear = true }),
---   callback = function()
---     if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
---       require('dashboard'):instance()
---     end
--- 	vim.cmd("MRU")
---   end,
--- })
+--[[ EXAMPLE 
+				vim.api.nvim_create_autocmd('UIEnter', {
+				  group = vim.api.nvim_create_augroup('Dashboard', { clear = true }),
+				  callback = function(ev)  --  buf, event, file, group, id, match
+					if "nerdtree" == vim.bo[ev.buf].filetype then ... end
+					if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
+					  require('dashboard'):instance()
+					end
+					vim.cmd("MRU")
+				  end,
+				})
 
-vim.api.nvim_create_autocmd('BufWritePost', {
-	group = vim.api.nvim_create_augroup('conf-reload', { clear = true }),
-	pattern = pattern,
-	callback = function()
-		-- 
-	end
-})
+				augroup Inits
+					autocmd!
+					" TODO: Fix so that lsp shows, it is updated correctly at right time
+					autocmd BufEnter * lua require'statusline'.statusline_init()
+					autocmd WinEnter,BufEnter * lua require'statusline'.activeLine()
+					autocmd WinLeave,BufLeave * lua require'statusline'.inActiveLine()
+					autocmd WinEnter,BufEnter,WinLeave,BufLeave NvimTree lua require'statusline'.simpleLine()
+					autocmd WinEnter,BufEnter * lua require'statusline'.tabline_init()
+				augroup END
+--]]
 
 
-vim.cmd [[
-autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\   exe "normal! g`\"" |
-\ endif
-]]
+	  -- vim.schedule_wrap(function() end)
 
-vim.cmd [[
-augroup _general_settings
-autocmd!
-autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR> 
-autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200}) 
-autocmd BufWinEnter * :set formatoptions-=cro
-autocmd FileType qf set nobuflisted
-augroup end
+--[[ reset the search register after  - cursor movement in insert mode.
+                                      - leaving nerdtree ]]--
+local clear_search = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
+vim.api.nvim_create_autocmd('CursorMovedI', { group = clear_search,
+												callback = function() vim.fn.setreg('/@', '') end, })
+vim.api.nvim_create_autocmd({ "WinLeave", 
+                              "BufLeave" }, { group = clear_search,
+												callback = function(ev) vim.fn.setreg('/@', '') end,
+												pattern = 'NERD_tree*', })
 
-augroup _git
-autocmd!
-autocmd FileType gitcommit setlocal wrap
-autocmd FileType gitcommit setlocal spell
-augroup end
-
-augroup _markdown
-autocmd!
-autocmd FileType markdown setlocal wrap
-autocmd FileType markdown setlocal spell
-augroup end
-
-" augroup _auto_resize
-"   autocmd!
-"   autocmd VimResized * tabdo wincmd = 
-" augroup end
-" augroup _alpha
-"   autocmd!
-"   autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-" augroup end
-]]
+--[[x]]--

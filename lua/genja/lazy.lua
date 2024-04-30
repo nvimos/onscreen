@@ -1,14 +1,21 @@
-
+--[[
+	This file has new-ish plugins which are under evaluation.
+	As soon as it's confirmed good/needed, it is moved to genja/lazy-plugs
+	There is also the RUNTIME/pluginz for lazy-configs from others.
+--]]
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({ 'git', 'clone', '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath, })
+    vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable',
+						'https://github.com/folke/lazy.nvim.git', lazypath })
 end
 vim.opt.rtp:prepend(lazypath)
 
 
 -- PluginSpec «:help lazy.nvim-lazy.nvim-plugin-spec»
 PluginSpec = {
+	{ import = "genja.lazy-plug" },   -- custom lazy-plugin-specs
+	{ import = 'pluginz' },           -- plugin LPSs from other people on github
 
 	--[[ "debian stable" ]]
 	'mbbill/undotree',                -- revert to previous versions of edits
@@ -17,24 +24,14 @@ PluginSpec = {
 		cmd = 'Luapad'
 		},
 
-	{ 'preservim/nerdtree',         -- file navigation reeplacing netrw
-		lazy = true,
-		config = true,
-		cmd = 'NERDTreeToggle',
-		-- keys = { '<F1>', '<cmd>NERDTreeToggle<cr>', mode = {'n'} }
-		},
-	{ 'vim-scripts/mru.vim',       -- most recently used (old school)
-		lazy = true,
-		keys = { '<S-F1>', nil }
-		},
-
 	{ 'tpope/vim-fugitive',        -- git ui
 		lazy = true,
 		cmd = 'Git'
 		},
 
-	--[[ cute ]]
+	--[[ cute / games ]]
 	{ 'eandrju/cellular-automaton.nvim', --  TODO: move fml key-binds here
+		cmd = 'CellularAutomaton',
 		lazy = true },
 
 	--[[ "debian testing" ]]
@@ -63,10 +60,8 @@ PluginSpec = {
 
 	-- 'theprimeagen/refactoring.nvim',
 	-- 'github/copilot.vim',
-
-
-	{ import = "genja.lazy-plug" },
-	{ import = 'pluginz' },
+	-- { 'stevearc/oil.nvim', opts = {}, dependencies = { "nvim-tree/nvim-web-devicons" }, }
+	-- { 'echasnovski/mini.files', version = '*' },
 
 }
 	

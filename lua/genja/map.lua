@@ -19,6 +19,32 @@ local function cmd(c) return '<cmd>'..c..'<cr>' end
 		MAIN MAP
 ]]
 
+
+-- replace word under cursor
+-- utils.nnoremap(leader .. 'r', ':lua require("spectre").open()<cr>')
+-- utils.vnoremap(leader .. 'r', ':lua require("spectre").open()<cr>')
+-- utils.nnoremap('R', ':%s/\\<<C-r><C-w>\\>//g<Left><Left><C-r><C-w>')
+
+-- -- Replace/Delete words quick! ONE BY ONE.
+-- -- c. c, d. d,
+-- utils.nnoremap('c.', "/\\<<C-R>=expand('<cword>')<CR>\\>\\C<CR>``cgn")
+-- utils.nnoremap('c,', "?\\<<C-R>=expand('<cword>')<CR>\\>\\C<CR>``cgN")
+-- utils.nnoremap('d.', "/\\<<C-r>=expand('<cword>')<CR>\\>\\C<CR>``dgn")
+-- utils.nnoremap('d,', "?\\<<C-r>=expand('<cword>')<CR>\\>\\C<CR>``dgN")
+
+-- -- Resize our splits with <leader> ;/'/,/.- easily
+-- set_keymap("n", "<Leader>.", ":exe \"resize \" . (winheight(0) * 4/3)<CR>", { silent = true, noremap = true, })
+-- set_keymap("n", "<Leader>,", ":exe \"resize \" . (winheight(0) * 3/4)<CR>", { silent = true, noremap = true, })
+-- set_keymap("n", "<leader>;", ":exe \"vertical resize \" . (winwidth(0) * 3/4)<CR>", { silent = true, noremap = true, })
+-- set_keymap("n", "<leader>'", ":exe \"vertical resize \" . (winwidth(0) * 4/3)<CR>", { silent = true, noremap = true, })
+--
+
+-- -- CHANGE A SPLIT ORENTATION FROM HORIZONTAL TO VERTICAL AND VICE VERSA
+-- set_keymap("n", "<leader>[", "<c-w>H", { silent = true, noremap = true, })
+-- set_keymap("n", "<leader>]", "<c-w>K", { silent = true, noremap = true, })
+
+
+
 vim.keymap.set('', '<leader>`', cmd[[wincmd w]], {desc = 'next win'})
 vim.keymap.set('', '<C-a>',     cmd[[wincmd w]], {desc = 'next win'})
 
@@ -84,9 +110,9 @@ vim.keymap.set('n', '<leader>fml-', '<cmd>CellularAutomaton make_it_rain<CR>')
 vim.keymap.set('n', '<leader>fml=', '<cmd>CellularAutomaton scramble<CR>')
 
 -- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
-vim.keymap.set('n',  '<leader>ws', [[:'<,'>g/^$/d<cr>]],             {noremap = true, desc = [[remove empty lines in visual block]]})
-vim.keymap.set('n',  '<leader>w"', [[:s/"/'/g<cr>]],                 {noremap = true, desc = [[replace " with ' on current line]]})
-vim.keymap.set('n',  '<leader>ss', [[:%s,\s\+$,,<cr>]],              {noremap = true, desc = [[remove trailing space]]})
+vim.keymap.set('n',  '<leader>ws', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
+vim.keymap.set('n',  '<leader>w"', [[:s/"/'/g<cr>]],                           {noremap = true, desc = [[replace " with ' on current line]]})
+vim.keymap.set('n',  '<leader>ss', [[:%s,\s\+$,,<cr>]],                        {noremap = true, desc = [[remove trailing space]]})
 
 vim.keymap.set('v',  '<leader>w"', [[$A",<esc>gvI"<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
 --vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
@@ -100,7 +126,6 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 --vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 --vim.keymap.set('n', '<leader>ee', vim.cmd.Ex)
 
---vim.keymap.set('n', '<leader>ei', ':edit ' .. vim.fn.stdpath('config') .. '<CR>/init.lua')
 --vim.keymap.set('n', '<leader>ep', ':tabedit %:p:h<CR>')
 
 function EdInit()
@@ -115,11 +140,9 @@ function EdInit()
 
 	-- /init<CR><cmd>nohl<CR><cmd>cd ' ..myConf.. '/../..<cr>', { desc = 'edit init'}
 end
--- vim.keymap.set('n', '<leader>ei', ':tabedit ' ..myConf.. '<CR>/init<CR><cmd>nohl<CR><cmd>cd ' ..myConf.. '/../..<cr>', { desc = 'edit init'})
 --
 
 -- local myConf = vim.fn.stdpath('config') .. '/lua/genja/'
--- vim.keymap.set('n', '<leader>ei', ':tabedit ' ..myConf.. '<CR>/init<CR><cmd>nohl<CR><cmd>cd ' ..myConf.. '/../..<cr>', { desc = 'edit init'})
 
 
 -------------------
@@ -130,17 +153,9 @@ vim.keymap.set('n', "<leader>t0", "<cmd>tabmove 0<cr>", { desc = "tabmove 0" })
 vim.keymap.set('n', "<leader>t-", "<cmd>tabmove -1<cr>", { desc = "tabmove left" })
 vim.keymap.set('n', "<leader>t=", "<cmd>tabmove +1<cr>", { desc = "tabmove right" })
 
--- nnoremap <leader>n :NERDTreeFocus<CR>
--- nnoremap <C-n> :NERDTree<CR>
--- nnoremap <C-t> :NERDTreeToggle<CR>
--- nnoremap <C-f> :NERDTreeFind<CR>
 vim.keymap.set('n', "<leader>ft", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
 vim.keymap.set('n', "<leader>fw", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
-vim.keymap.set('n', "<leader>fn", "<cmd>NERDTreeToggle<cr>", { desc = "NERDTree" })
-vim.keymap.set('n', "<leader>jp", "<cmd>NERDTreeToggle<cr>", { desc = "NERDTree" })
-vim.keymap.set('',  "<F12>",      "<cmd>NERDTreeToggle<cr>", { desc = "NERDTree" })
 
--- https://github.com/preservim/nerdtree
 
 
 local function init_harpoon()
@@ -174,14 +189,6 @@ vim.keymap.set('', '<leader>jm', vim.cmd.MRU, { desc = 'MRU' } )
 
 
 
-vim.keymap.set('', '<S-F1>', ':lua CheckAndRunMRU()<CR>', { noremap = true, silent = true })
-function CheckAndRunMRU() -- <S-F1>
-    if vim.bo.filetype == "mru" then vim.cmd("quit")
-    else
-		os.execute("A:\\bin\\uniq-vim-mru-files.exe")
-		vim.cmd("MRU")
-	end
-end
 
 -- vim.keymap.set('n', '<S-F5>', ':source %<CR>
 -- :echo "{sourced}" resolve(expand("%:t")) <CR>')
@@ -198,11 +205,10 @@ vim.keymap.set('n', '<leader>j,', ':cd ..   <cr>:pwd<cr>', { desc = ':cd ..'})
 
 
 --  n o v
-vim.keymap.set('n',       '<F1>', '<cmd>NERDTreeToggle<CR>',                                    { desc = 'NERDTree sidebar', noremap = true }) -- override init-map
-vim.keymap.set('n', '<leader>e.', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:edit %:p:h<CR>/',    { desc = 'edit CWD %:h (dirname)'})
-vim.keymap.set('n', '<leader>ee', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:edit %:p:h<CR>/',    { desc = 'edit CWD' })
-vim.keymap.set('n', '<leader>et', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:tabedit %:p:h<CR>/', { desc = 'tabedit CWD' })
-vim.keymap.set('',        '<F3>', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:tabedit %:p:h<CR>/', { desc = 'tabedit CWD' }) -- override init-map
+vim.keymap.set('n',        '<F3>', ':CycleDirs<cr>', { desc = 'tabedit CWD' }) -- override init-map
+
+
+
 
 
 
@@ -217,20 +223,6 @@ vim.keymap.set('',        '<F3>', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:tabed
 -- vim.keymap.set(mode, 'k', 'n', { desc = 'Find next' })
 -- vim.keymap.set(mode, 'K', 'N', { desc = 'Find previous' })
 -- vim.keymap.set(mode, 'e', 'k', { desc = 'Up' })
-
-
-
--- map <F3> :!C:\_dev\wamp\bin\php\php5.4.16\php.exe -l %<CR><CR>
--- map <F2> :!C:\_dev\wamp\bin\php\php5.4.16\php.exe %:p<CR><CR>
-
-
--- map <F5> :edit $HOME\_vimrc<CR>
--- map <F6> :source $HOME\_vimrc<CR>
--- map <F12> :NERDTreeToggle<cr>
--- map <F1> :tabnext<CR>
--- map <S-F1> :tabprev<CR>
-
-
 
 --- function! FoldedLines()
 --- 	if HasFoldedLines() == 1
@@ -250,8 +242,6 @@ vim.keymap.set('',        '<F3>', '<cmd>lua Close_nerdtree_wins()<CR><cmd>:tabed
 --- 	endwhile
 --- 	return 0
 --- endfu
-
-
 
 
 -- maybe -- require('refactoring').setup({})

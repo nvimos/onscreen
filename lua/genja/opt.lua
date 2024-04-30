@@ -1,6 +1,6 @@
 
 
-vim.g.source_safeish = true -- genja-autoresource.lua
+vim.g.autoresource_enable = true -- genja-autoresource.lua
 
 
 
@@ -43,13 +43,12 @@ vim.g.netrw_sizestyle = 'H'
 vim.g.netrw_sort_by        = 'time'
 vim.g.netrw_sort_direction = 'reverse'
 
+vim.g.netrw_sort_by        = 'name'
+vim.g.netrw_sort_direction = 'normal'
+
 vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'move'; else return 'mv'; end end)()
 
 
-vim.g.NERDTreeMinimalUI   = 1
-vim.g.NERDTreeMinimalMenu = 1
-
-vim.g.NERDTreeShowBookmarks = 0
 
 
 vim.opt.foldcolumn = '2'
@@ -95,14 +94,14 @@ vim.opt.undofile = true
 vim.opt.showbreak = '⬉      '
 
 
-vim.o.ruler = true -- the cursor positon in statusline: line,col (Top|Bot)  %62
-vim.o.rulerformat = ''
+-- vim.o.ruler = true -- the cursor positon in statusline: line,col (Top|Bot)  %62
+-- vim.o.rulerformat = ''
 
 vim.o.fileencoding = "utf-8"
 vim.o.ignorecase = true
 vim.o.mouse = "a"
 vim.o.showmode = false
-vim.o.showtabline = 2 -- always show tabs
+vim.o.showtabline = 2 -- 0: never -- 1: iff >= 2 tabs -- 2: always
 
 
 vim.o.cmdheight = 4
@@ -143,6 +142,13 @@ vim.opt.iskeyword:append("-")
 -- vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
 -- vim.opt.runtimepath:remove("/usr/share/vim/vimfiles")  -- separate vim plugins from neovim in case vim still in use
 
+
+vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
+vim.opt.formatoptions:append {'l', 'b'}
+vim.opt.formatoptions:append 'w'
+vim.opt.formatoptions:append 'q'
+vim.opt.formatoptions:append 't'
+vim.opt.formatoptions:append 'n'
 
 --- lsp performance
 vim.g.lsp_semantic_enabled = 0
