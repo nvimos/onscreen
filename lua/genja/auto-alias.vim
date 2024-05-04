@@ -3,6 +3,8 @@
 
 command! -nargs=* M MRU <args>
 command! -nargs=* T       tabedit <args>
+command!          Td      tabedit | Dashboard
+command!          Tt      tabedit | Telescope
 command! -nargs=* Tabedit tabedit <args>
 
 command! QQQ tabdo write | qa
@@ -27,17 +29,24 @@ command! Lspclients :lua =vim.lsp.get_clients()
 " Abbreviations
 
 cnoreabbrev load:  source ~/tmp/viss
-cnoreabbrev save:  mksession! ~/tmp/viss
+cnoreabbrev save:  mksession! ~/tmp/viss \| qa
 
-cnoreabbrev e.      edit %:p:h 
-cnoreabbrev te.     tabedit %:p:h 
-
-cnoreabbrev jj: q
+cnoreabbrev e.   edit %:p:h 
+cnoreabbrev te.  tabedit %:p:h 
+cnoreabbrev te:  tabedit %:p:h 
 
 cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
 
-cnoreabbrev te: tabedit
+cnoreabbrev jj qa
+
+cnoreabbrev helf vert help
+cnoreabbrev helv vert help
+cnoreabbrev velp vert help
+cnoreabbrev he\| vert help
+cnoreabbrev he:  vert help
+
+
 cnoreabbrev dgen DogeGenerate
 inoreabbrev iferr: if err != nil {<cr>return err<cr>}<cr>  
 
@@ -67,6 +76,9 @@ augroup _general_settings
 	autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 333}) 
 
 augroup end
+
+" autocmd BufNewFile * if &buftype ==# 'nofile' | file Empty | endif
+" autocmd BufNewFile * if &filetype ==# 'dashboard' | file Dashboard | endif
 
 
 augroup _alpha

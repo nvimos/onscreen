@@ -21,6 +21,7 @@ local function derive_log_level()
     return "warn" -- default, if user hasn't set to one from log_levels
 end
 
+
 M.log = require("plenary.log").new({
 	level = derive_log_level(),
 	plugin = M.log_name,
@@ -41,4 +42,5 @@ for _, v in pairs(log_levels) do
     override(v)
 end
 
+-- @prop log{ trace debug info warn error fatal }
 return M

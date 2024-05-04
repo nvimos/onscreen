@@ -43,6 +43,11 @@ local function cmd(c) return '<cmd>'..c..'<cr>' end
 -- set_keymap("n", "<leader>[", "<c-w>H", { silent = true, noremap = true, })
 -- set_keymap("n", "<leader>]", "<c-w>K", { silent = true, noremap = true, })
 
+local KM = vim.keymap.set 
+
+-- KM('', ':help', ':vert help<cr>', { noremap = true, desc = 'split help vertically by default'})
+
+-- vim.cmd[[ nnoremap <silent> :help :vert help ]]
 
 
 vim.keymap.set('', '<leader>`', cmd[[wincmd w]], {desc = 'next win'})
@@ -94,6 +99,35 @@ end
 -- print(vim.loop.os_uname().sysname) -- Windows_NT
 
 
+vim.keymap.set("n", "<leader>az1", function()
+    require("zen-mode").setup {
+        window = {
+            width = 90,
+            options = { }
+        },
+    }
+    require("zen-mode").toggle()
+    vim.wo.wrap = false
+    vim.wo.number = true
+    vim.wo.rnu = true
+    -- ColorMyPencils()
+end)
+vim.keymap.set("n", "<leader>az2", function()
+    require("zen-mode").setup {
+        window = {
+            width = 80,
+            options = { }
+        },
+    }
+    require("zen-mode").toggle()
+    vim.wo.wrap = false
+    vim.wo.number = false
+    vim.wo.rnu = false
+    vim.opt.colorcolumn = "0"
+    -- ColorMyPencils()
+end)
+
+
 
 vim.keymap.set('n', '<C-/>', ':norm gcc<CR>j')
 vim.keymap.set('v', '<C-/>', '<cmd>norm gc<CR>')
@@ -110,9 +144,9 @@ vim.keymap.set('n', '<leader>fml-', '<cmd>CellularAutomaton make_it_rain<CR>')
 vim.keymap.set('n', '<leader>fml=', '<cmd>CellularAutomaton scramble<CR>')
 
 -- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
-vim.keymap.set('n',  '<leader>ws', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
-vim.keymap.set('n',  '<leader>w"', [[:s/"/'/g<cr>]],                           {noremap = true, desc = [[replace " with ' on current line]]})
-vim.keymap.set('n',  '<leader>ss', [[:%s,\s\+$,,<cr>]],                        {noremap = true, desc = [[remove trailing space]]})
+vim.keymap.set({'n', 'v'},  '<leader>ws', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
+vim.keymap.set({'n', 'v'},  '<leader>w"', [[:s/"/'/g<cr>]],                           {noremap = true, desc = [[replace " with ' on current line]]})
+vim.keymap.set({'n', 'v'},  '<leader>ss', [[:%s,\s\+$,,<cr>]],                        {noremap = true, desc = [[remove trailing space]]})
 
 vim.keymap.set('v',  '<leader>w"', [[$A",<esc>gvI"<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
 --vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})

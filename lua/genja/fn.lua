@@ -1,5 +1,5 @@
 CONFIG = vim.fn.stdpath('config')
-require 'genja.winbar' -- Winbar()
+
 
 
 function Myleige(g, l)
@@ -12,7 +12,29 @@ local UserComm = vim.api.nvim_create_user_command
 function Cd(to) vim.api.nvim_call_function("chdir", { to }); vim.cmd[[pwd]] end
 
 
+UserComm( 'Winfo', function(c) 
+	local zzz = vim.api.nvim_get_current_buf()
+	-- print(vim.api.nvim_buf_get_name(z))
+
+
+	-- print(vim.inspect(vim.bo.fenc))
+	--print(vim.inspect(vim.bo.filetype))
+
+	info = {}
+	info.name = vim.fn.bufname()
+    info.modified = vim.fn.getbufvar(0, "&modified") == 1
+    info.modified_count = vim.fn.getbufvar(0, "&mod") 
+    info.line_count = vim.fn.line("$")
+    info.filetype = vim.bo.filetype
+    info.encoding = vim.bo.fenc
+	-- :::nvim_buf_get_var
+	print(vim.inspect(info))
+
+end, { desc = 'gather info about current window/buffer' })
+
+
 UserComm( 'Nospell',  function(c) vim.o.spell = not vim.o.spell end,              { desc = "toggle spelling" , bar = true })
+UserComm( 'VimStatusline',  function(c) return 'VimStatusline()' end,              { desc = "just a meme" , bar = true })
 
 
 -- complete = function() return {'a', 'x', 'c'} end

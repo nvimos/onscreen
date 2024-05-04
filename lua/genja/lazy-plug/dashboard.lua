@@ -8,11 +8,44 @@ return { {
 	},
 	event = 'VimEnter',
 	config = function()
+
+		-- vim.g.da = "nyet"
+		-- vim.api.nvim_create_autocmd({'BufFilePost', 'BufNew', 'FileType', 'UIEnter',}, {
+		-- 	group = vim.api.nvim_create_augroup('rename-dashboard', { clear = true }),
+		-- 	callback = function(ev)  --  buf, event, file, group, id, match
+		-- 		vim.g.da = "ft:" .. vim.bo[ev.buf].filetype
+		-- 		vim.g.da = ev
+		-- 		local b = vim.bo[ev.buf]
+		-- 		local bname = vim.api.nvim_buf_get_name(ev.buf)
+		-- 		print("DASH2", bname, "--", vim.bo[ev.buf].filetype)
+		-- 		if "dashboard" == vim.bo[ev.buf].filetype then
+		-- 			print("DASH", bname)
+		-- 			vim.api.nvim_buf_set_name(ev.buf, "Dashboard")
+		-- 			-- print(vim.inspect(vim.bo[ev.buf]))
+		-- 		end
+		-- 		-- if vim.fn.argc() == 0 and vim.api.nvim_buf_get_name(0) == '' then
+		-- 		-- require('dashboard'):instance()
+		-- 		-- end
+		-- 		-- vim.cmd("MRU")
+		-- 	end,
+		-- })
+	
+		--
+		--vim.api.nvim_create_autocmd({'FileType'}, {
+		vim.api.nvim_create_autocmd({'UIEnter'}, {
+			group = vim.api.nvim_create_augroup('rename-dashboard', { clear = true }),
+			callback = function(ev)
+				if "dashboard" == vim.bo[ev.buf].filetype then
+					vim.api.nvim_buf_set_name(ev.buf, "Dashboard")
+				end
+			end,
+		})
+		--
 		require('dashboard').setup({
 			theme = 'hyper',
 			shortcut_type = 'letter' or 'number',
 			disable_move = false,
-			hide = { statusline = true, tabline = false, winbar = false, },
+			hide = { statusline = false, tabline = false, winbar = false, },
 			config = {
 
 				week_header = { enable = true, concat = '', append = { foo = '-bar-' } },
@@ -22,17 +55,17 @@ return { {
 
 					{ icon = '', key = '.', desc = 'find', action = 'Telescope find_files',      group = 'DevIconFavicon', icon_hl = 'DevIconsFish', },
 					{ icon = '', key = '/', desc = 'dirs', action = 'lua Telescope_find_dirs()', group = 'DevIconFavicon', icon_hl = '@variable', },
-					{ icon = '', key = 'o', desc = 'old',  action = 'Telescope oldfiles',    group = 'DevIconFavicon', icon_hl = '@variable', },
+					{ icon = '', key = 'o', desc = 'old',  action = 'Telescope oldfiles',        group = 'DevIconFavicon', icon_hl = '@variable', },
+					{            key = 't', desc = 'tele', action = 'Telescope',                 group = 'DevIconFavicon', },
 
 					-- { icon = ' ', key = '.', desc = '󰍉',   action = 'Telescope find_files',      group = 'Label', icon_hl = '@variable', },
 					-- { icon = ' ', key = '/', desc = '',     action = 'lua Telescope_find_dirs()', group = 'Label', icon_hl = '@variable', },
 					-- { icon = ' ', key = '/', desc = '<>',  action = 'lua Telescope oldfiles', group = 'Label', icon_hl = '@variable', },
 
 					{            key = 'g', desc = 'git',    action = 'Git',                  group = 'Git', },
-					{            key = 'm', desc = 'mason',  action = 'Mason',                group = 'DevIconMATE', },
+					{            key = 'm', desc = 'mason',  action = 'Mason',                group = 'String', },
 					{            key = 'l', desc = 'lazy',   action = 'Lazy',                 group = 'String', },
-					{            key = 't', desc = 'tele',   action = 'Telescope',            group = 'DiagnosticHint', },
-					{            key = 'p', desc = 'lua',    action = 'Luapad',            group = '@property', },
+					{            key = 'p', desc = 'lua',    action = 'Luapad',               group = 'DevIconMATE', },
 					--{ icon = '', key = 'u' , desc = 'update',    action = 'Lazy update',          group = '@property' },
 					-- { icon = ' ', key = 'a', desc = 'Apps',       action = 'Telescope app',        group = 'DiagnosticHint', },
 					-- {              key = 'd', desc = 'dotfiles', action = 'Telescope dotfiles',   group = 'zNumber', },

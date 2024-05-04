@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 	callback = function(ev)
 		local fname = vim.fn.fnamemodify(ev.match, ':t')
 			vim.g.genja_resource = "1"
-			if not vim.g.source_safeish then -- flag to turn it off
+			if not vim.g.genja_enable_autoresource then -- flag to turn it off
 				return
 			end
 			vim.g.genja_resource = "2"

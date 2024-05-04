@@ -33,30 +33,26 @@
 	https://www.nerdfonts.com/cheat-sheet
 ]]
 
--------[[=================]]--
 vim.cmd 'colorscheme lunaperche'
 require 'genja.fn'          -- functions
---                          --
---                          --
---                          --
+
 if (is_started_from_windows_shell()) then
 	vim.loop.chdir(vim.env.Userprofile) end
---                          --
 Myleige(' ', ',')           -- mapleader, maplocalleader
---                          --
---                          --
--------[[=================]]--
+
 require 'genja.opt'         -- just static options
-require 'genja.auto-alias'  -- these should be safe foo
+-- require 'genja.auto-alias'  -- these should be safe foo
+
+-- ./auto-alias.vim
+vim.cmd ([[source ]]..CONFIG..[[/lua/genja/auto-alias.vim]]) --  can vim.cmd[[ ]] support vimscript syntax?
+
+
 require 'genja.imap'        -- early maps, if config breaks
 require 'genja.auto'        -- autocommads, automation
 require 'genja.hilite'      --
 require 'genja.lazy'        -- genja/lazy.lua -> import { plugins, genja.lazy-plugs }
 require 'genja.map'         --
--------[[=================]]--
---                          --
---                          --
---                          --
+
 START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
 	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
 	local sd = {}

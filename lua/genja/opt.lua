@@ -1,38 +1,12 @@
 
 
-vim.g.autoresource_enable = true -- genja-autoresource.lua
+--[[ plugin settings ]]--
+vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 
 
 
--- vim.api.nvim_set_function("Winbar", Winbar)
 
--- vim.o.winbar = 'COCK.'
--- vim.o.winbar = "%{%v:lua.require'genja.winbar'()%}"
-
--- function Winbar() return "WINBAR" end
---vim.o.winbar = "%{v:lua.Winbar()}" -- not expanded as statusline
-vim.o.winbar = "%{%v:lua.Winbar()%}"
-
-local function get_mode()
-	local mode = vim.fn.mode()
-	local mode_map = {
-		n = "N",
-		i = "I",
-		v = "V",
-		V = "V",
-		[""] = "V",
-		c = "C",
-		t = "T",
-		R = "R",
-	}
-	return mode_map[mode] or mode
-end
-
--- Set statusline
---     
--- vim.o.statusline = ' %f %m%r%h%w%y [%{&fileencoding}] [%{&fileformat}]'
-
-
+--[[ netrw ]]--
 --vim.g.netrw_browse_split = 0
 --vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3 -- tree
@@ -49,7 +23,20 @@ vim.g.netrw_sort_direction = 'normal'
 vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'move'; else return 'mv'; end end)()
 
 
+--[[ status bars , lines ]]--
 
+
+require 'genja.winbar' -- Winbar()
+require 'genja.statusline' -- Statusline()
+
+--vim.o.winbar = "%{v:lua.Winbar()}" -- %{} not expanded as statusline
+vim.o.winbar = "%{%v:lua.Winbar()%}" -- %{%} expanded as statusline
+vim.o.statusline = '%!VimStatusline()'
+vim.o.statusline = '%{%v:lua.Statusline()%}'
+vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never
+
+
+--[[ vim options ]]--
 
 vim.opt.foldcolumn = '2'
 vim.o.listchars = 'space:_,tab:>~'
@@ -115,7 +102,7 @@ vim.o.splitright = true
 vim.o.timeoutlen = 300                        -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.o.updatetime = 300                        -- faster completion (4000ms default)
 
-vim.o.expandtab = false                        -- convert tabs to spaces
+vim.o.expandtab = false                       -- convert tabs to spaces, if true
 vim.o.shiftwidth = 4                          -- the number of spaces inserted for each indentation
 vim.o.tabstop = 4                             -- insert 2 spaces for a tab
 
@@ -131,7 +118,14 @@ vim.o.linebreak = true                        -- companion to wrap, don't split 
 vim.o.scrolloff = 4                           -- minimal number of screen lines to keep above and below the cursor
 vim.o.sidescrolloff = 4                       -- minimal number of screen columns either side of cursor if wrap is `false`
 -- vim.o.guifont = "monospace:h17"               -- the font used in graphical neovim applications
+
 vim.o.whichwrap = "bs<>[]hl"                  -- which "horizontal" keys are allowed to travel to prev/next line
+-- <> is   in normal and visual
+-- [] is   in insert and replace
+-- hl are also affecting how x works!
+vim.o.whichwrap = "b[]"                       -- prefer the feel closer to original vi
+
+
 
 vim.opt.iskeyword:append("-")
 
