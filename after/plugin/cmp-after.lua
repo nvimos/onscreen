@@ -1,4 +1,6 @@
 
+local vim = vim
+
 local err = vim.api.nvim_err_writeln; 
 
 local ok, cmp = pcall(require, 'cmp');
@@ -32,6 +34,12 @@ cmp.setup({
 			['<CR>'] = cmp.mapping.confirm({select = false}),
 			['<C-Space>'] = cmp.mapping.complete(),
 			['<Tab>'] = function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end,
+			['<C-b>'] = cmp.mapping.scroll_docs(-4),
+			['<C-f>'] = cmp.mapping.scroll_docs(4),
+			['<C-e>'] = cmp.mapping.abort(),
+
+			['<C-S-b>'] = cmp.mapping( cmp.mapping.scroll_docs(-4), { 'i', 'c'})
+
 		}),
 		snippet = {
 			expand = function(args)

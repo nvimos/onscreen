@@ -119,6 +119,10 @@ vim.o.scrolloff = 4                           -- minimal number of screen lines 
 vim.o.sidescrolloff = 4                       -- minimal number of screen columns either side of cursor if wrap is `false`
 -- vim.o.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 
+-- vim.opt.guioptions:append('a')
+-- https://vi.stackexchange.com/questions/33182/what-neovim-guis-have-gui-scrollbars-as-described-in-vim-under-h-gui-scrollbars
+
+
 vim.o.whichwrap = "bs<>[]hl"                  -- which "horizontal" keys are allowed to travel to prev/next line
 -- <> is   in normal and visual
 -- [] is   in insert and replace

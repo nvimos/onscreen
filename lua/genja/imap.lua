@@ -1,4 +1,5 @@
-km = vim.keymap.set
+local km = vim.keymap.set
+local vim = vim
 
 
 
@@ -79,41 +80,76 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'diag prev' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'diag next' })
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.setloclist, { desc = 'diag setlocallist' })
 vim.keymap.set('n', '<leader>c?', vim.diagnostic.open_float, { desc = 'diag open float' })
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
+--[[ map keys when a server attaches to a buffer ]]--
 vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP Actions',
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 	callback = function(ev)
 		---- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc' -- complete with <c-x><c-o>
-		-- Buffer local mappings.
-		-- local opts = { buffer = ev.buf }
+
+		--[[ buffer local mappings ]]--
 		local o = function(desc) return {buffer = ev.buf, desc = desc} end
+		local vlb = vim.lsp.buf
+		local split_and = function(fn)  return function() vim.cmd[[split]]; fn(); end end
+		local list_workspaces = function() print(vim.inspect(vlb.list_workspace_folders())) end
+		local reformat = function() vlb.format { async = true } end
 
-		vim.keymap.set('n',             '<F2>',    vim.lsp.buf.rename, o("rename"))
-		vim.keymap.set({'n', 'i', 'v'}, '<F4>',    vim.diagnostic.goto_next, o("diag next"))
-		vim.keymap.set({'n', 'i', 'v'}, '<S-F4>',  vim.diagnostic.goto_prev, o("diag prev"))
 
-		vim.keymap.set('n', 'K', vim.lsp.buf.hover, o("hover/man"))
-		vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, o("implementation"))
-		vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, o("type definition"))
-		vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, o("signature help"))
-		vim.keymap.set('n', 'gr', vim.lsp.buf.references, o("reference"))
-		vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, o("declaration"))
-		vim.keymap.set('n', 'gd', function() vim.cmd[[split]]; vim.lsp.buf.definition() end , o("definition"))
-		vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, o("type definition"))
+		km('n',             '<F2>',    vlb.rename, o("rename"))
+		km({'n', 'i', 'v'}, '<F4>',    vim.diagnostic.goto_next, o("diag next"))
+		km({'n', 'i', 'v'}, '<S-F4>',  vim.diagnostic.goto_prev, o("diag prev"))
 
-		vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder,    o("workspace add"))
-		vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, o("workspace rm"))
-		vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, o("workspace list"))
+		km('n', 'gi',   vlb.implementation,                             o("implementation"))
+		km('n', 'go',   vlb.type_definition,                            o("type definition"))
+		km('n', 'gs',   vlb.signature_help,                             o("signature help"))
+		km('n', 'gr',   vlb.references,                                 o("reference")) -- Telescope references?
+		km('n', 'gDd',  vlb.declaration,                                o("declaration"))
+		km('n', 'gDt',  vlb.type_definition,                            o("type definition"))
+		km('n', 'gDs',  split_and(vlb.definition),                      o("definition"))
+		km('n', 'gd',   vlb.definition,                                 o("definition"))
+		km('n', 'gl',   '<cmd>Telescope diagnostics',                   o("Telescope diagnostics"))
 
-		vim.keymap.set('n', '<space>r', function() vim.lsp.buf.format { async = true } end, o("reformat"))
+		km('n', '<space>wa', vlb.add_workspace_folder,                   o("workspace add"))
+		km('n', '<space>wr', vlb.remove_workspace_folder,                o("workspace rm"))
+		km('n', '<space>wl', list_workspaces,                            o("workspace list"))
 
-		--  vim.keymap.set('', '<leader>ttd', function() vim.diagnostic.enable(not vim.diagnostic.is_disabled()) end, o[[toggle diagnostics]])
+		km('n', '<space>r', reformat,  o("reformat"))
+		km('n', '<space>k', vlb.hover,                                   o("hover/man"))
+		km('n', '<space>?', vlb.hover,                                   o("hover/man"))
+		km('n', 'K',        vlb.hover,                                   o("hover/man"))
 
-		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = ev.buf, desc = 'Code action' })
-		vim.keymap.set({ 'n', 'v' }, '<space>da', vim.lsp.buf.code_action, { buffer = ev.buf, desc = 'Code action' })
-		vim.keymap.set({ 'n', 'v' }, '<space>d!', vim.lsp.buf.code_action, { buffer = ev.buf, desc = 'Code action' })
+		--  km('', '<leader>ttd', function() vim.diagnostic.enable(not vim.diagnostic.is_disabled()) end, o[[toggle diagnostics]])
+
+		-- Telescope code-actions?
+		km({ 'n', 'v' }, '<space>ca', vlb.code_action, { buffer = ev.buf, desc = 'Code action' })
+		km({ 'n', 'v' }, '<space>da', vlb.code_action, { buffer = ev.buf, desc = 'Code action' })
+		km({ 'n', 'v' }, '<space>d!', vlb.code_action, { buffer = ev.buf, desc = 'Code action' })
+
+		--[[ nvchad:
+
+		map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+		map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+		map("n", "K", vim.lsp.buf.hover, opts "hover information")
+		map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+		map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
+		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
+
+		map("n", "<leader>wl", function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, opts "List workspace folders")
+
+		map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
+
+		map("n", "<leader>ra", function()
+		require "nvchad.lsp.renamer"()
+		end, opts "NvRenamer")
+
+		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
+		map("n", "gr", vim.lsp.buf.references, opts "Show references")
+
+
+		]]--
 	end,
 })
 
