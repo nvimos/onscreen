@@ -66,9 +66,9 @@ M.capabilities.textDocument.completion.completionItem = {
 
 M.setup_mason_lspconfig = function(set, zz)
 
-	vim.notify [[setup mason]]
-	vim.notify ([[caps cmp]] .. vim.inspect(  vim.tbl_keys(nvims_capabilities)))
-	vim.notify ([[caps made]] .. vim.inspect( vim.tbl_keys(M.capabilities)))
+	-- vim.notify [[setup mason]]
+	-- vim.notify ([[caps cmp]] .. vim.inspect(  vim.tbl_keys(nvims_capabilities)))
+	-- vim.notify ([[caps made]] .. vim.inspect( vim.tbl_keys(M.capabilities)))
 
 
 	-- for i, e in pairs(set) do

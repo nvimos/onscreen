@@ -39,7 +39,24 @@ vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never
 --[[ vim options ]]--
 
 vim.opt.foldcolumn = '2'
-vim.o.listchars = 'space:_,tab:>~'
+
+
+-- vim.o.listchars = 'leadmultispace:>   ·,lead:>,multispace:· ,space:·,tab: '
+vim.opt.showbreak = '⬉      '                              -- display this after wrapped
+vim.o.listchars = 'eol:󰭿,tab: '
+vim.o.listchars = 'eol:`,tab: '
+vim.o.listchars = 'tab: '
+vim.opt.listchars:append('space:·,multispace:· ')
+vim.opt.listchars:append('lead:>,leadmultispace:   ·')
+vim.opt.listchars:append('trail:󱁐,')
+vim.opt.listchars:append('extends:→,precedes:←')
+
+
+
+vim.o.list = true
+
+
+
 vim.o.shiftwidth = 4
 
 vim.o.backup = false
@@ -49,36 +66,6 @@ vim.opt.undodir = (vim.fn.stdpath('config') .. '/undodir'):gsub([[\]], [[/]])
 vim.opt.undofile = true
 
 
---vim.opt.showbreak = '\\      ' -- display this after wrapped
--- vim.opt.showbreak = '⦚      '
--- vim.opt.showbreak = '⧙      '
--- vim.opt.showbreak = '⧛      '
--- vim.opt.showbreak = '⧚      '
--- vim.opt.showbreak = '⧘      '
--- vim.opt.showbreak = '⬈      '
--- vim.opt.showbreak = '⬊      '
--- vim.opt.showbreak = '⬋      '
--- vim.opt.showbreak = '⬎      '
--- vim.opt.showbreak = '⬏      '
--- vim.opt.showbreak = '⬐      '
--- vim.opt.showbreak = '⬑      '
--- | 10214   | \u27e6  | ⟦     |
--- | 10215   | \u27e7  | ⟧     |
--- | 10216   | \u27e8  | ⟨     |
--- | 10217   | \u27e9  | ⟩     |
--- | 10218   | \u27ea  | ⟪     |
--- | 10219   | \u27eb  | ⟫     |
--- | 10220   | \u27ec  | ⟬     |
--- | 10221   | \u27ed  | ⟭     |
--- | 10222   | \u27ee  | ⟮     |
--- | 10223   | \u27ef  | ⟯     |
-
--- | 09252   | \u2424  | ␤     |
--- | 09226   | \u240a  | ␊     |
--- | 09773   | \u262d  | ☭     |
--- vim.opt.showbreak = '⤴      '
--- vim.opt.showbreak = '⤣      '
-vim.opt.showbreak = '⬉      '
 
 
 -- vim.o.ruler = true -- the cursor positon in statusline: line,col (Top|Bot)  %62
@@ -152,3 +139,58 @@ vim.opt.formatoptions:append 'n'
 vim.g.lsp_semantic_enabled = 0
 vim.g.lsp_format_sync_timeout = 1000
 
+
+
+-- vim.o.listchars = 'space:_,tab:⩺ '
+-- vim.o.listchars = 'space:_,tab:⨡ '
+-- vim.o.listchars = 'tab:⨡ '
+-- vim.o.listchars = 'tab:⨽ '
+-- vim.o.listchars = 'tab:┐ '
+-- vim.o.listchars = 'space:,tab: '
+-- vim.o.listchars = 'space:·,tab: '
+-- vim.o.listchars = 'space:ˉ,tab: '
+-- vim.o.listchars = 'space:ˉ,tab: '
+-- vim.o.listchars = 'space:‾,tab: '
+-- vim.o.listchars = 'space:_,tab: '
+
+-- U+005F - LOW LINE: _
+-- U+203E - OVERLINE: ‾
+-- U+FF3F - FULLWIDTH LOW LINE: ＿
+-- U+0332 - COMBINING LOW LINE: ′̲ (This combines with the character before it)
+
+-- U+00B7 - MIDDLE DOT: ·
+-- U+2022 - BULLET: •
+-- U+2219 - BULLET OPERATOR: ∙
+-- U+00B4 - ACUTE ACCENT: ́ (Slightly raised)
+-- U+02D9 - DOT ABOVE: ˙ (Above)
+-- U+02C9 - MODIFIER LETTER MACRON: ˉ (Above)
+-- U+02D0 - MODIFIER LETTER TRIANGULAR COLON: ː (Above)
+--vim.opt.showbreak = '\\      ' 
+-- vim.opt.showbreak = '⦚      '
+-- vim.opt.showbreak = '⧙      '
+-- vim.opt.showbreak = '⧛      '
+-- vim.opt.showbreak = '⧚      '
+-- vim.opt.showbreak = '⧘      '
+-- vim.opt.showbreak = '⬈      '
+-- vim.opt.showbreak = '⬊      '
+-- vim.opt.showbreak = '⬋      '
+-- vim.opt.showbreak = '⬎      '
+-- vim.opt.showbreak = '⬏      '
+-- vim.opt.showbreak = '⬐      '
+-- vim.opt.showbreak = '⬑      '
+-- | 10214   | \u27e6  | ⟦     |
+-- | 10215   | \u27e7  | ⟧     |
+-- | 10216   | \u27e8  | ⟨     |
+-- | 10217   | \u27e9  | ⟩     |
+-- | 10218   | \u27ea  | ⟪     |
+-- | 10219   | \u27eb  | ⟫     |
+-- | 10220   | \u27ec  | ⟬     |
+-- | 10221   | \u27ed  | ⟭     |
+-- | 10222   | \u27ee  | ⟮     |
+-- | 10223   | \u27ef  | ⟯     |
+
+-- | 09252   | \u2424  | ␤     |
+-- | 09226   | \u240a  | ␊     |
+-- | 09773   | \u262d  | ☭     |
+-- vim.opt.showbreak = '⤴      '
+-- vim.opt.showbreak = '⤣      '

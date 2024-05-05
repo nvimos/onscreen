@@ -6,6 +6,7 @@ local err = vim.api.nvim_err_writeln;
 local ok, cmp = pcall(require, 'cmp');
 if not ok then
 	err("no cmp module!")
+	return
 end
 
 vim.g.mycmp = 1

@@ -10,7 +10,6 @@ return {
 		config = false,
 		priority = 70,
 		lazy = true,
-		cmd = 'Mason',
 		},
 	{ 'williamboman/mason-lspconfig.nvim',
 		config = false, -- require('mason-lspconfig').setup({})
@@ -20,6 +19,7 @@ return {
 	{ 'neovim/nvim-lspconfig',
 		priority = 72,
 		lazy = true,
+		cmd = 'Mason',
 		config = function(lp, opt)
 			require 'genja.lspm'.setup_mason_lspconfig(lp, opt)
 		end

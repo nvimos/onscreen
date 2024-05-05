@@ -64,4 +64,5 @@ START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locatio
 		table.insert(sd, Norm(vim.env.HOME))
 		end
 		table.insert(sd, Norm(vim.fn.stdpath('config')))
+		table.insert(sd, Norm(vim.fn.stdpath('data')))
 	return sd end)()

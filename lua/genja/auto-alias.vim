@@ -5,6 +5,7 @@ command! -nargs=* M MRU <args>
 command! -nargs=* T       tabedit <args>
 command!          Td      tabedit | Dashboard
 command!          Tt      tabedit | Telescope
+command!          To      tabedit | Telescope oldfiles
 command! -nargs=* Tabedit tabedit <args>
 
 command! QQQ tabdo write | qa

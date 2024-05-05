@@ -29,7 +29,7 @@ return { {
 		-- 		-- vim.cmd("MRU")
 		-- 	end,
 		-- })
-	
+
 		--
 		--vim.api.nvim_create_autocmd({'FileType'}, {
 		vim.api.nvim_create_autocmd({'UIEnter'}, {
@@ -42,13 +42,15 @@ return { {
 		})
 		--
 		require('dashboard').setup({
-			theme = 'hyper',
+			buffer_name = 'Dashi',
+			theme = 'hooper', -- based on hyper
 			shortcut_type = 'letter' or 'number',
 			disable_move = false,
 			hide = { statusline = false, tabline = false, winbar = false, },
 			config = {
 
-				week_header = { enable = true, concat = '', append = { foo = '-bar-' } },
+				week_header = { enable = true, concat = '', append = { '' } },
+
 				packages = { enable = true },
 				shortcut = {
 					--[[ 🎩 💃  󰍉 ]]
@@ -73,7 +75,7 @@ return { {
 
 				--project = { enable = true, limit = 8, icon = 'your icon', label = '', action = 'Telescope find_files cwd=' },
 				project = { enable = true, limit = 8, icon = " ",  icon_hl = 'Git',        group = 'DevIconHuff', label = 'Proyect    ' },
-				mru =     { enable = true, limit = 7, icon = "  ", icon_hl = 'DevIconMd5', group = 'DevIconHuff', label = 'Recientes', cwd_only = false }, -- icon = 'your icon', 
+				mru =     { enable = true, limit = 7, icon = "  ", icon_hl = 'DevIconMd5', group = 'DevIconHuff', label = 'Recientes', cwd_only = false }, -- icon = 'your icon',
 				center = {
 					{ action = "", label = "fooz" },
 				},

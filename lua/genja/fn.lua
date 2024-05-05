@@ -33,7 +33,9 @@ UserComm( 'Winfo', function(c)
 end, { desc = 'gather info about current window/buffer' })
 
 
-UserComm( 'Nospell',  function(c) vim.o.spell = not vim.o.spell end,              { desc = "toggle spelling" , bar = true })
+UserComm( 'Nospell',      function(c) vim.o.spell = not vim.o.spell end,              { desc = "toggle spelling" , bar = true })
+UserComm( 'ToggleSpell',  function(c) vim.o.spell = not vim.o.spell end,              { desc = "toggle spelling" , bar = true })
+UserComm( 'ToggleList',   function(c) vim.o.list  = not vim.o.list end,              { desc = "toggle listchars" , bar = true })
 UserComm( 'VimStatusline',  function(c) return 'VimStatusline()' end,              { desc = "just a meme" , bar = true })
 
 
@@ -52,8 +54,8 @@ function Close_nerdtree_wins() -- <space> ee | e. | et
 end
 
 function CheckAndRunMRU() -- <S-F1>
-    if vim.bo.filetype == "mru" then vim.cmd("quit")
-    else
+	if vim.bo.filetype == "mru" then vim.cmd("quit")
+	else
 		-- os.execute("A:\\bin\\uniq-vim-mru-files.exe")
 		-- vim.cmd("MRU")
 		vim.fn.jobstart("A:\\bin\\uniq-vim-mru-files.exe", {
@@ -66,7 +68,7 @@ end
 
 UserComm('CycleDirs', function() CycleDirs() end, {})
 UserComm('CDconfig',  function() Cd(vim.fn.stdpath('config')) end,                { desc = "cd stdpath(config)" , bar = true })
-UserComm('CDconfigg', function() Cd(vim.fn.stdpath('config')..'/lua/genja') end, { desc = "cd ()/lua/genja" , bar = true })
+UserComm('CDconfigg', function() Cd(vim.fn.stdpath('config')..'/lua/genja') end,  { desc = "cd ()/lua/genja" , bar = true })
 UserComm('CD',        function(c) Cd(c.fargs) end,                                { nargs = '*', desc = "cd ?" , bar = true })
 
 
@@ -84,4 +86,4 @@ function CycleDirs(dirlist)
 
 function is_started_from_windows_shell()
 	return [[nvim.exe]] == vim.fn.readdir( '.', [[v:val =~ 'nvim.exe$']])
-	                [1] end
+						[1] end

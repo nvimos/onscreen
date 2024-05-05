@@ -144,9 +144,9 @@ vim.keymap.set('n', '<leader>fml-', '<cmd>CellularAutomaton make_it_rain<CR>')
 vim.keymap.set('n', '<leader>fml=', '<cmd>CellularAutomaton scramble<CR>')
 
 -- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
-vim.keymap.set({'n', 'v'},  '<leader>ws', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
+vim.keymap.set({'n', 'v'},  '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
+vim.keymap.set({'n', 'v'},  '<leader>wss', [[:%s,\s\+$,,<cr>]],                        {noremap = true, desc = [[remove trailing space]]})
 vim.keymap.set({'n', 'v'},  '<leader>w"', [[:s/"/'/g<cr>]],                           {noremap = true, desc = [[replace " with ' on current line]]})
-vim.keymap.set({'n', 'v'},  '<leader>ss', [[:%s,\s\+$,,<cr>]],                        {noremap = true, desc = [[remove trailing space]]})
 
 vim.keymap.set('v',  '<leader>w"', [[$A",<esc>gvI"<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
 --vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})

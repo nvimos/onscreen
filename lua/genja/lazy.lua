@@ -59,6 +59,7 @@ PluginSpec = {
 				}}) end,
 		lazy = true,
 		},
+
 	--[[ maybe try at some point ]]
 
 	-- 'theprimeagen/refactoring.nvim',
@@ -69,6 +70,9 @@ PluginSpec = {
 	-- Vonr/align.nvim
 	-- { 'echasnovski/mini.nvim', version = '*' },
 	-- gopher.nvim
+	-- https://github.com/jose-elias-alvarez/null-ls.nvim/
+
+	-- https://github.com/MaximilianLloyd/lazy-reload.nvim
 
 }
 

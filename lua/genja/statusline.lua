@@ -39,7 +39,7 @@ local mode_map = {
 	-- v = "vis",
 	-- V = "vlin",
 	-- [''] = "vblk",
-	
+
 	v = "  ☭ vis",
 	V = "  ☭vlin",
 	[''] = "  ☭vblk",
@@ -72,8 +72,8 @@ function Statusline()
 	local _os
 
 	_M = string.format('%1s', sl('%M'))
-	_hwq = sl('%h%w%q ')
-	_ro = sl('%R')
+	local _hwq = sl('%h%w%q ')
+	local _ro = sl('%R')
 
 
 	if _hwq then _ro = '' end
@@ -96,12 +96,11 @@ function Statusline()
 	local _ft = vim.bo['filetype']
 	local _frm = vim.bo['fileformat']
 	local _fenc =  vim.bo['fileencoding']
-	
+
 	-- _fi = join({'(', _ft, _frm, _fenc, ')'}, '󰥛')
-	local _fi = '(' .. _ft ..'󰥛'.. _frm ..'󰥛'.. _fenc .. ')'
 	local _fi = join({_ft, _frm, _fenc}, ' ')
 
-	_bufnr = '·' .. sl('%n')
+	local _bufnr = '·' .. sl('%n')
 
 	local elts = {
 		-- '',
@@ -117,21 +116,18 @@ function Statusline()
 		_bufnr,
 		' %<',
 
-		_fi,
-		'%<',
-		--' 󰥛%n',
-		-- '󰏢%n',
+		_fi, '%<', _ro,
 
-		_ro,
-		'%=',
-		'%=',
+		-- '%=',
+		-- '%=',
 
-		_os,
-		'%=',
-		'%=',
-		'%=',
+
+		-- '%=',
+		-- '%=',
 		-- 'k:%k',
 
+		'%=',
+		_os,
 		_showcmd,
 
 		_rune,
@@ -165,6 +161,10 @@ end
 function Statusline1()
 	return 'KAKE. and sodomy'
 end
+
+
+		--' 󰥛%n',
+		-- '󰏢%n',
 
 --[[ examples from docs ]]--
 -- vim.cmd[[
