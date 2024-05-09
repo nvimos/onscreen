@@ -90,8 +90,6 @@ local function reverse(tbl)
 end
 
 local function project_list(config, callback)
-  -- vim.notify("project-list: ".. vim.inspect(config.path))
-
   config.project = vim.tbl_extend('force', {
     limit = 8,
     enable = true,
@@ -100,9 +98,6 @@ local function project_list(config, callback)
     action = 'Telescope find_files cwd=',
     label = ' Recent Projects:',
   }, config.project or {})
-
-  vim.notify('async-read: '..config.path)
-
   local function read_project(data)
     local res = {}
     data = string.gsub(data, '%z', '')

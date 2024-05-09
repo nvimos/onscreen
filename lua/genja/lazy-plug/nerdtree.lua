@@ -5,6 +5,7 @@ return {
 		vim.g.NERDTreeMinimalUI   = 1
 		vim.g.NERDTreeMinimalMenu = 1
 		vim.g.NERDTreeShowBookmarks = 0
+		vim.g.NERDTreeQuitOnOpen = 1 -- :help nerdtreequitonopen
 		vim.keymap.set('n',       '<F1>', '<cmd>NERDTreeToggle<CR>',                                    { desc = 'NERDTree sidebar', noremap = true }) -- override init-map
 		vim.keymap.set('n', '<leader>e.', '<cmd>lua Close_nerdtree_wins()<cr><cmd>:edit %:p:h<CR>/',    { desc = 'edit CWD %:h (dirname)'})
 		vim.keymap.set('n', '<leader>ee', '<cmd>lua Close_nerdtree_wins()<cr><cmd>:edit %:p:h<CR>/',    { desc = 'edit CWD' })
@@ -14,7 +15,6 @@ return {
 		-- user_comm( 'NERDTxAll',  [[:lua Close_nerdtree_wins()<cr>]],    { desc = "close all nerds" , bar = true })
 
 		vim.api.nvim_create_user_command( 'NERDxAll',  '<cmd>lua Close_nerdtree_wins()<cr>',    { desc = "close all nerds" , bar = true })
-		print("NERD!")
 
 	end,
 	cmd = 'NERDTreeToggle',
@@ -23,6 +23,7 @@ return {
 		{ '<leader>e.', nil },
 		{ '<leader>ee', nil },
 		{ '<leader>et', nil },
+		-- { '<leader>ei', nil },
 	}
 },
 }

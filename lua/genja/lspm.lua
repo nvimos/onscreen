@@ -114,7 +114,6 @@ M.setup_mason_lspconfig = function(set, zz)
 					maxPreload = 100000,
 					preloadFileSize = 10000,
 				},
-
 			}
 		}
 	})

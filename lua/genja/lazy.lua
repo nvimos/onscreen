@@ -42,7 +42,8 @@ PluginSpec = {
 
 	--[[ "debian unstable" ]]
 	'michaeljsmith/vim-indent-object', -- leader + vii vai vaI; cii dii -- TODO lazify
-	'theprimeagen/harpoon', --  meh ? evaluating...
+	'theprimeagen/harpoon', --  meh ? evaluating... -- https://www.youtube.com/watch?v=CdXH-LaX6Ms&ab_channel=Traap
+
 	{ 'laytan/cloak.nvim',               -- hide sensitive info in config files
 		cmd = { 'CloakDisable', 'CloakToggle', 'CloakPreviewLine', 'CloakEnable' },
 		config = function()

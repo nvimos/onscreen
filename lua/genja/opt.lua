@@ -5,8 +5,10 @@ vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 
 
 
-
 --[[ netrw ]]--
+-- more: https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+-- more2: https://github.com/prichrd/netrw.nvim
+--
 --vim.g.netrw_browse_split = 0
 --vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3 -- tree

@@ -56,6 +56,8 @@ inoreabbrev iferr: if err != nil {<cr>return err<cr>}<cr>
 
 " Autocommands
 
+augroup FileType c,cpp,java set mps+==:;
+augroup FileType lua set mps+function(:end
 augroup _general_settings
 	autocmd!
 
