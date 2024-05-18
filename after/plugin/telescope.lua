@@ -33,8 +33,10 @@ if not ok then
 	return
 end
 
+local action_generate = require("telescope.actions.generate")
 
-require('telescope').setup{
+
+require('telescope').setup {
 	defaults = {
 		-- winblend = 2,
 
@@ -45,61 +47,69 @@ require('telescope').setup{
 		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
 		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 		generic_sorter = require("telescope.sorters").get_fzy_sorter,
+
 		mappings = {
 			i = {
 				["<C-Down>"] = require('telescope.actions').cycle_history_next,
 				["<C-Up>"] = require('telescope.actions').cycle_history_prev,
 			},
+			n = {
+				["?"] = action_generate.which_key {
+					name_width = 20, -- typically leads to smaller floats
+					max_height = 0.5, -- increase potential maximum height
+					separator = " > ", -- change sep between mode, keybind, and name
+					close_with_action = false, -- do not close float on action
+				},
+			}
 		},
 
 		get_selection_window = function() return 0 end,
 
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-        -- borderchars = { "·", "│", "·─", "│", ".", ".", "'", "`" },
+		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+		-- borderchars = { "·", "│", "·─", "│", ".", ".", "'", "`" },
 
 		path_display = { truncate = 3, shorten = 2, smart = true}, -- help: telescope.defaults.path_display
 		prompt_prefix = '󰧚 ',
-		layout_strategy = 'vertical',
-		-- layout_strategy = 'horizontal',
+		layout_strategy = 'vertical', -- 'horizontal',
 		layout_config = {
 			scroll_speed = 6,
 			prompt_position = 'top',
 			mirror = true,
 			height = 0.9999,
 			width = 0.98 },
-		preview = { timeout = 110 },
-		-- vimgrep_arguments is only used for grep_string and live_grep
-		vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden' },
-		border = true,
-		file_ignore_patterns = {
-			--
-			'AMD_RyzenMaster.log',
-			-- Files
-			"%.a",
-			"%.class",
-			"%.mkv",
-			"%.mp4",
-			"%.mp3",
-			"%.o",
-			"%.out",
-			"%.pdf",
-			"%.zip",
-			-- Directories
-			"undodir/",
-			".cache",
-			".git/",
-			".github/",
-			--
-			".node_modules/",
-			".node_modules\\",
-			"node%_modules",
-			--
-			"lazy-lock.json",
-			"go.pkg.mod",
-			"go\\pkg\\"
+			preview = { timeout = 110 },
+			-- vimgrep_arguments is only used for grep_string and live_grep
+			vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden' },
+			border = true,
+			file_ignore_patterns = {
+				--
+				'AMD_RyzenMaster.log',
+				-- Files
+				"%.a",
+				"%.class",
+				"%.mkv",
+				"%.mp4",
+				"%.mp3",
+				"%.o",
+				"%.out",
+				"%.pdf",
+				"%.zip",
+				-- Directories
+				"undodir/",
+				".cache",
+				".git/",
+				".github/",
+				--
+				".node_modules/",
+				".node_modules\\",
+				"node%_modules",
+				--
+				"lazy-lock.json",
+				"go.pkg.mod",
+				"go\\pkg\\"
+			}
 		}
 	}
-}
 
 
 
@@ -108,24 +118,38 @@ if not ok then
 	return
 end
 
-function Telescope_find_dirs()
-	-- local sd = { vim.fn.stdpath('config'), }
-	-- if not vim.fn.has('macunix') then
-	-- 	table.insert(sd, vim.env.HOME)
-	-- end
-	vim.list_extend({}, START_DIRS)
-	te.find_files({ hidden = false, search_dirs = sd })
-end
-
-
 
 -- vim.keymap.set('n', '<leader>jj', te.live_grep, { desc = '() live_grep 󰵃'})
 vim.keymap.set('n', '<leader>jj', te.live_grep, { desc = '() live 󰵃'})
 vim.keymap.set('n', '<leader>jg', te.git_files, { desc = '() git_files'})
 vim.keymap.set('n', '<leader>jh', te.help_tags, { desc = '() help_tags'})
+vim.keymap.set('n', '<leader>j?', te.builtin,   { desc = '() builtin'})
 vim.keymap.set('n', '<leader>jb', te.buffers,   { desc = '() buffers'})
+vim.keymap.set('n', '<leader>jr', te.registers,     { desc = '() registers'})
 vim.keymap.set('n', '<leader>jo', te.oldfiles,  { desc = '() oldfiles'})
 vim.keymap.set('n', '<leader>jd', Telescope_find_dirs, { desc = '() dirs󰅲'})
+
+vim.keymap.set('n', '<leader>jm', te.marks,     { desc = '() marks'})
+
+vim.keymap.set('n', '<leader>jq', te.quickfix,  { desc = '() quickfix'})
+vim.keymap.set('n', '<leader>jl', te.loclist,  { desc = '() loclist'})
+vim.keymap.set('n', '<leader>jv', te.vim_options,  { desc = '() vim_options'})
+vim.keymap.set('n', '<leader>jC', te.colorscheme,   { desc = '() colorscheme'})
+vim.keymap.set('n', '<leader>jM', te.keymaps,     { desc = '() keymaps'})
+vim.keymap.set('n', '<leader>jA', te.autocommands,     { desc = '() autocommands'})
+
+-- builtin.lsp_references
+-- builtin.lsp_incoming_calls
+-- builtin.lsp_outcoing_calls
+-- builtin.lsp_definitions
+-- builtin.lsp_type_definitions
+-- builtin.lsp_implementations
+-- builtin.lsp_document_symbols
+-- builtin.lsp_workspace_symbols
+
+-- builtin.diagnostics
+
+
 
 
 vim.keymap.set('n', '<leader>js', function()

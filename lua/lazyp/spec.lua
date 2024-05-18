@@ -52,17 +52,6 @@ return {
 		end
 	},
 
-	-- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
-	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'LinArcX/telescope-env.nvim',
-		},
-		config = function()
-		end
-	},
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",

@@ -1,5 +1,6 @@
 return {
 	{ 'preservim/nerdtree',         -- file navigation reeplacing netrw
+	enabled = false,
 	lazy = true,
 	config = function()
 		vim.g.NERDTreeMinimalUI   = 1
@@ -15,6 +16,18 @@ return {
 		-- user_comm( 'NERDTxAll',  [[:lua Close_nerdtree_wins()<cr>]],    { desc = "close all nerds" , bar = true })
 
 		vim.api.nvim_create_user_command( 'NERDxAll',  '<cmd>lua Close_nerdtree_wins()<cr>',    { desc = "close all nerds" , bar = true })
+
+		vim.cmd[[
+        call NERDTreeAddKeyMap({
+               \ 'key': 'a',
+               \ 'callback': 'NERDTreeGitAdd',
+               \ 'quickhelpText': 'Add file to git',
+               \ 'scope': 'FileNode' })
+        function! NERDTreeGitAdd(fil)
+			let filepath = shellescape(a:fil.path.str())
+			execute '!git add ' . filepath
+        endfunction
+		]]
 
 	end,
 	cmd = 'NERDTreeToggle',

@@ -11,14 +11,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 --[[
 	PluginSpec
 	:help lazy.nvim-lazy.nvim-plugin-spec
 ]]
 PluginSpec = {
-	{ import = "genja.lazy-plug" },   -- custom lazy-plugin-specs
-	{ import = 'pluginz' },           -- plugin LPSs from other people on github
+	-- { import = "genja.lazy-plug" },   -- custom lazy-plugin-specs
+	-- { import = 'pluginz' },           -- plugin LPSs from other people on github
+	{ import = 'lazyp' },           -- lazy plugin specs
 
 	--[[ "debian stable" ]]
 	'mbbill/undotree',                -- revert to previous versions of edits
@@ -65,7 +65,6 @@ PluginSpec = {
 
 	-- 'theprimeagen/refactoring.nvim',
 	-- 'github/copilot.vim',
-	-- { 'stevearc/oil.nvim', opts = {}, dependencies = { "nvim-tree/nvim-web-devicons" }, }
 	-- { 'echasnovski/mini.files', version = '*' },
 
 	-- Vonr/align.nvim
@@ -74,6 +73,10 @@ PluginSpec = {
 	-- https://github.com/jose-elias-alvarez/null-ls.nvim/
 
 	-- https://github.com/MaximilianLloyd/lazy-reload.nvim
+
+	-- https://github.com/nanotee/zoxide.vim
+
+	-- nvim-telescope/telescope-media-files.nvim
 
 }
 
@@ -84,4 +87,10 @@ PluginSpec = {
 -- table.insert(PluginSpec, { import = "genja.lazy-plug" })
 -- table.insert(PluginSpec, { import = 'pluginz' })
 
-require("lazy").setup(PluginSpec, { my_plugin_spec = { "hello", "world"}})
+require("lazy").setup(PluginSpec, {
+  dev = {
+        ---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
+        path = [[A:\workspace]],
+	}
+})
+

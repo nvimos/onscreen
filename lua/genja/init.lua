@@ -38,7 +38,9 @@ require 'genja.fn'          -- functions
 
 if (is_started_from_windows_shell()) then
 	vim.loop.chdir(vim.env.Userprofile) end
-Myleige(' ', ',')           -- mapleader, maplocalleader
+
+Myleige( ' ',   ',')        -- mapleader, maplocalleader
+Myleige([[ ]], [[,]])       -- mapleader, maplocalleader
 
 require 'genja.opt'         -- just static options
 -- require 'genja.auto-alias'  -- these should be safe foo

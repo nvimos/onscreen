@@ -53,10 +53,27 @@ vim.cmd[[
 	"hi StatusLineNC cterm=NONE ctermbg=black ctermfg=orange
 
 
+	hi TablineFill guibg=#161616
+
+	hi TablineSel gui=none
+	hi TablineSel guifg=#AF4805
+	hi TablineSel guibg=#161616
+	hi TablineSel guibg=#0e0707
+
+	hi Tabline gui=none
+	hi Tabline guifg=#656565
+	hi Tabline guibg=#161616
+
 	hi StatusLine    gui=bold
+	hi StatusLine    gui=none
+	hi StatusLine    gui=none
 	hi StatusLine    guibg=#161616
-	hi StatusLine    guifg=#FF6500
-	hi StatusLine    guifg=#fb8500
+	hi StatusLine    guifg=#AF4805
+	"hi StatusLine    guifg=#fb8500
+	"hi StatusLine    guifg=#FF6500
+
+	hi StatusLineWeak    guifg=#383838
+	hi StatusLineWeak    guibg=#161616
 
 	" not current?
 	hi StatusLineNC  gui=NONE
@@ -104,6 +121,8 @@ vim.api.nvim_set_hl(0, 'Git', cc("#f14e32"):bold():t())
 vim.api.nvim_set_hl(0, 'TelescopeBorder',    cc('#202020'):bold():t())
 vim.api.nvim_set_hl(0, 'TelescopeSelection', cc('#B5642F'):t())
 vim.api.nvim_set_hl(0, 'TelescopeNormal',    cc('#AAAAAA'):t())
+vim.api.nvim_set_hl(0, 'TelescopePromptNormal',    cc('#AAAAAA'):t())
+vim.api.nvim_set_hl(0, 'TelescopePromptTitle',    cc('#AAAAAA'):t())
 
 
 

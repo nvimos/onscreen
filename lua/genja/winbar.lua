@@ -18,14 +18,23 @@ local function sl(a, b) b=b or {}; return vim.api.nvim_eval_statusline(a, b).str
 local function with_hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
 
 function Winbar()
-	local fname = vim.fn.fnamemodify(sl('%t'), ':r')
+	local fname = vim.fn.fnamemodify(sl('%t'), ':r')  -- top of path, no extension
+	if fname == "" then
+		local buf = vim.api.nvim_get_current_buf()
+		local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+		fname = ft
+	end
+
 	return ''
-	..with_hl('WinBarPath',     sl(''))
-	..with_hl('WinBarPath',     sl('%r'))
-	..with_hl('WinBarPath',     sl('%q'))
+	-- ..with_hl('WinBarPath',     sl(''))
+	..with_hl('WinBarPath',     sl(' '))
+
+	..with_hl('WinBarPath',     fname)
 	..with_hl('WinBarModified', sl('%M')) -- modified flag
-	..with_hl('WinBarPath',     fname..sl('%R')) -- top of path
-	..with_hl('WinBarPath',     sl(''))
+	..with_hl('WinBarPath',     sl('%r')) -- read-only [RO]
+	..with_hl('WinBarPath',     sl('%q')) -- [quickfix list]
+	-- ..with_hl('WinBarPath',     fname..sl('%R')) -- top of path
+	-- ..with_hl('WinBarPath',     sl(''))
 end
 
 

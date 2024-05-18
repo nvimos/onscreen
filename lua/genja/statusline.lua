@@ -6,163 +6,166 @@
 --[[
 	Each status line item (%) is of the form:
 	All fields except the {item} are optional.
-
 	  %-0{minwid}.{maxwid}{item}
-
 	  %= alignment / splitter
 	  %< where to truncate
 	  %# set highlight group
 	  %* ?? takes value from minwid? diff is applied to StatusLineNC? see hl-User1..9
 	  %* ?? restore to normal
 	  %0* restore to normal
-	
 	Empty groups like this will disappear if no flags are set
-
 	:set statusline=...%(\ [%M%R%H]%)...
-
-
 	:redrawstatus will force an update
-
 ]]
-
-
-local function sl(a, b) b=b or {}; return vim.api.nvim_eval_statusline(a, b).str end
-local function with_hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
-
-local mode_map = {
-	-- i = "",
-	-- n = "",
-	n = "norm",
-
-	i = "ins",
-
-	-- v = "vis",
-	-- V = "vlin",
-	-- [''] = "vblk",
-
-	v = "  ☭ vis",
-	V = "  ☭vlin",
-	[''] = "  ☭vblk",
-
-	c = "comm",
-	t = "term",
-	R = 'irep',
-}
-local function get_mode()
-	local mode = vim.fn.mode()
-	local mm = mode_map[mode] or '«' .. mode ..'»'
-	return mm
-end
-
 
 vim.o.statusline = 'jwf'
 vim.o.statusline = '%{%v:lua.Statusline()%}'
 
-vim.g.genja_statusline_rune = false
+vim.o.tabline = '%{%v:lua.Tabline()%}'
 
-vim.cmd[[:hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red]]
+vim.g.genja_statusline_rune = false -- display percise information about the cursor position
 
 
+local function sl(a, b) b=b or {}; return vim.api.nvim_eval_statusline(a, b).str end
+local function hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
 
--- %-0{minwid}.{maxwid}{item}
+local DOTm = '·'
+local Space = ' '
+local Empty = ''
+
+local Tabsep = '' -- '%=%='
+local Dirseparator = '󰞱' -- '⧸' '/'
+
+
+-- i = "", n = "", v = "vis", V = "vlin", [''] = "vblk",
+local mode_map = {
+	n = "norm", i = "ins",
+	v = "  ☭ vis", V = "  ☭vlin", [''] = "  ☭vblk",
+	c = "comm", t = "term", R = 'irep', }
+local function get_mode()
+	local mode = vim.fn.mode()
+	return mode_map[mode]
+	    or ('«' .. mode ..'»')
+end
+
+local wincount_label = {
+	[1] =   '⋅', [2] =   '²', [3] =   '³', [4] =   '⁴', [5] =   '⁵',
+	[6] =   '⁶', [7] =   '⁷', [8] =   '⁸', [9] =   '⁹', [10] =  '¹⁰'}
+local function get_close_tab_button(tabnum, wins)
+	local x = '󱀬'; if wincount_label[wins] then x = wincount_label[wins] end
+	return '%'.. tabnum .. 'X'..x
+end
+
+local function get_os_icon()
+	local _os = ''
+	if false then _os = ''
+	elseif vim.fn.has('Mac') then _os = ''
+	elseif vim.fn.has('Windows') then _os = '󰖳'
+	elseif vim.fn.has('Gentoo') then _os = ''
+	elseif vim.fn.has('Linux') then _os = ''
+	else _os = '?' end
+	return _os
+end
+
+
+local rename_buf_fns = {
+	-- function(nam, buf) return nam end,
+	function(nam, buf)
+		local z = nam
+		if 'oil' == vim.api.nvim_buf_get_option(buf, 'filetype') then
+			z = vim.api.nvim_buf_get_name(buf)
+			z = z:gsub([[/$]], '') -- want last dir (:path:tail)
+			z = 'o:'..vim.fn.fnamemodify( z, ':p:t')
+		end
+		return z
+	end,
+}
+
+function Tabline()
+	local tl = { hl('WinBarPath', ' '), ' ' }
+    for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+		local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
+		local thi = '%#TabLine#'
+		if tabnum == vim.fn.tabpagenr() then
+			thi = '%#TabLineSel#' end
+		local wins = vim.api.nvim_tabpage_list_wins(tabpage)
+		local win = vim.api.nvim_tabpage_get_win(tabpage)
+		local buf = vim.api.nvim_win_get_buf(win)
+		----------------------------------------
+
+		local bn = vim.fn.fnamemodify( vim.api.nvim_buf_get_name(buf), ':t:r')
+		if bn == Empty then
+			bn = vim.api.nvim_buf_get_option(buf, 'filetype'); end
+		if bn == Empty then
+			bn = 'none'; end
+		for _, tr in pairs(rename_buf_fns) do
+			bn = tr(bn, buf)
+		end
+
+		table.insert(tl, thi)
+		table.insert(tl, '%' .. tabnum .. 'T') -- this is only necessary if we use statusline %items ? - but we resolve them manually with sl()...
+		table.insert(tl, bn)
+		table.insert(tl, get_close_tab_button(tabnum, #wins))
+		table.insert(tl, hl('StatusLineWeak', Space..Tabsep..Space))
+    end
+	table.insert(tl, '%#TabLineFill#%T')
+	table.insert(tl, '%=%#TabLine#%999X󱀬')
+	return Join(tl)
+end
+
 function Statusline()
-	local sline , _M = '', ''
-	local _rune, _pos = '', ''
-	local _showcmd, _file
-	local _os
+	local sline = ''
 
-	_M = string.format('%1s', sl('%M'))
-	local _hwq = sl('%h%w%q ')
-	local _ro = sl('%R')
+	local _mod = string.format('%1s', sl('%M'))
+	if _mod == '-' then _mod = ' ' end
 
-
+	local _hwq, _ro = sl('%h%w%q '), sl('%R')
 	if _hwq then _ro = '' end
 
-	if _M == '-' then _M = ' ' end
-
+	local _rune, _pos = '', ''
 	if vim.g.genja_statusline_rune then
 		_rune = ' rune{%03b %04B}'
 		_pos = ' pos{%04o %O}'
 	end
 
-	_showcmd = sl('%S')
+	local _showcmd, _file = sl('%S'), ''
+	_file = sl('%.50f'):gsub('[~\\/]', '/')
+	_file = vim.fn.fnamemodify(_file, ':r') -- no extension
+	_file = Join(Split(_file, '/'), hl('StatusLineWeak', Dirseparator))
 
-	_file = vim.fn.fnamemodify(sl('%.38f'), ':r')
-	-- _file = _file:gsub('[\\/]', '/')
-	_file = _file:gsub('[\\/]', '⧸')
-
-	if vim.fn.has("Windows") then _os = '󰖳' else _os = '' end
-
-	local _ft = vim.bo['filetype']
-	local _frm = vim.bo['fileformat']
-	local _fenc =  vim.bo['fileencoding']
-
-	-- _fi = join({'(', _ft, _frm, _fenc, ')'}, '󰥛')
-	local _fi = join({_ft, _frm, _fenc}, ' ')
-
-	local _bufnr = '·' .. sl('%n')
+	local _ft_fmt_enc =  Join({ vim.bo['filetype'], vim.bo['fileformat'], vim.bo['fileencoding']}, ' ')
+	local _mode = string.format('%7s', get_mode())
 
 	local elts = {
-		-- '',
-		-- '·',
-		string.format('%7s', get_mode()),
-		' ',
-		-- "«",
-		-- "»",
 
-		'%a',
+		hl('StatusLineWeak', _mode..Space..DOTm..sl('%n')..DOTm..Space), -- %n is bufnr
 
-		_M, _hwq, _file, -- file/buffer name and ro status
-		_bufnr,
+		_file, _mod, _hwq, -- file/buffer name and ro status
 		' %<',
-
-		_fi, '%<', _ro,
-
-		-- '%=',
-		-- '%=',
-
-
-		-- '%=',
-		-- '%=',
-		-- 'k:%k',
-
 		'%=',
-		_os,
+		'%a', -- argument list status
+		Space,
+		'%<',
+		hl('StatuslineWeak', _ft_fmt_enc),
+		'%<',
+		_ro,
+		hl('StatusLineWeak', Space..DOTm..Space),
+
+		get_os_icon(),
 		_showcmd,
 
 		_rune,
 		_pos,
 
-
-		'%3cc %3lʟ',
-		' ',
-		'%-3L␤ %P',
-
-		'',
+		'%3cc %3lʟ', Space, '%-3L␤ %P', -- column line total lines percentage
 	}
-	return join(elts)
-end
-
-function join(t, sep)
-	sep = sep or ''
-	local sline = t[1]
-	for i=2, #t do
-		e = t[i]
-		if e == nil then e = '' end
-		sline = sline .. sep .. tostring(e)
-	end
-	return sline
-end
-
-function Statusline2()
-	return "S0"
-end
-
-function Statusline1()
-	return 'KAKE. and sodomy'
+	return Join(elts)
 end
 
 
+
+
+-- vim.cmd[[:hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red]]
 		--' 󰥛%n',
 		-- '󰏢%n',
 
@@ -367,6 +370,32 @@ end
 --
 -- return M
 
+-- 'tabline' option.  Additionally, the |tabpagebuflist()|, |tabpagenr()| and
+-- |tabpagewinnr()| functions are useful.
+--[[
+	function MyTabLine()
+	  let s = ''
+	  for i in range(tabpagenr('$'))
+	    " select the highlighting
+	    if i + 1 == tabpagenr()
+	      let s ..= '%#TabLineSel#'
+	    else
+	      let s ..= '%#TabLine#'
+	    endif
+	    " set the tab page number (for mouse clicks)
+	    let s ..= '%' .. (i + 1) .. 'T'
+	    " the label is made by MyTabLabel()
+	    let s ..= ' %{MyTabLabel(' .. (i + 1) .. ')} '
+	  endfor
+	  " after the last tab fill with TabLineFill and reset tab page nr
+	  let s ..= '%#TabLineFill#%T'
+	  " right-align the label to close the current tab page
+	  if tabpagenr('$') > 1
+	    let s ..= '%=%#TabLine#%999Xclose'
+	  endif
+	  return s
+	endfunction
+]]
 
 
 -- local M = {}
@@ -549,3 +578,31 @@ end
 -- 	end,
 -- })
 -- return M
+
+		-- '',
+		-- '·',
+
+	-- [1] = '⋅',
+	-- [1] = '',
+	-- [2] = '⚇',
+	-- [3] = '󰮍',
+	-- [2] = ':',
+	-- [3] = '󰇘',
+	-- [4] = '⦙',
+	-- [5] = '∺',
+	-- [6] = '󱗾',
+	-- [7] = '󱗿',
+	-- [8] = '󱗽',
+	-- [9] = '󱗼',
+	----
+
+	-- [2] = '󱂉',
+	-- [3] = '󱂊',
+	-- [4] = '󱂋',
+	-- [5] = 'Ⅴ',
+	-- [6] = '󱂍',
+
+	-- [1] =   '¹',
+
+	-- [1] =   '¹',
+

@@ -4,12 +4,11 @@ local err = vim.api.nvim_err_writeln
 
 --[[ reset the search register after  - cursor movement in insert mode.
                                       - leaving nerdtree ]]--
-local clear_search = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
-aucmd('CursorMovedI', { group = clear_search,
-						callback = function() vim.fn.setreg('/@', '') end, })
-aucmd({ "WinLeave", "BufLeave" }, { group = clear_search,
-									callback = function(ev) vim.fn.setreg('/@','') end,
-									pattern = {'TelescopePrompt', 'NERD_tree*',}})
+local clear_search_reg = function() vim.fn.setreg('/@', '') end
+local csag = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
+aucmd({'CursorMovedI'} , { group = csag, callback = clear_search_reg, })
+aucmd({ "WinLeave", "BufLeave" }, { group = csag, callback = clear_search_reg,
+									pattern = {'TelescopePrompt', 'NERD_tree*', 'oil'}})
 
 
 

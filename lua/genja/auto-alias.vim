@@ -30,6 +30,7 @@ command! Lspclients :lua =vim.lsp.get_clients()
 " Abbreviations
 
 cnoreabbrev load:  source ~/tmp/viss
+cnoreabbrev j:     source ~/tmp/viss
 cnoreabbrev r:     source ~/tmp/viss
 cnoreabbrev save:  mksession! ~/tmp/viss \| qa
 

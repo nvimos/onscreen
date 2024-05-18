@@ -1,6 +1,13 @@
 CONFIG = vim.fn.stdpath('config')
 
 
+function Telescope_find_dirs()
+	local te = require 'telescope.builtin'
+	te.find_files({
+		hidden = false,
+		search_dirs = START_DIRS })
+end
+
 
 function Myleige(g, l)
 	vim.g.mapleader      = g or [[\]]
@@ -76,12 +83,45 @@ UserComm('CD', function(c) Cd(c.fargs) end, { nargs = '*', desc = "cd ?", bar = 
 
 UserComm('HiTest', function() vim.cmd [[:so $VIMRUNTIME/syntax/hitest.vim]] end, {})
 
+
+function JoinPaths(...)
+    local separator = package.config:sub(1, 1) -- Get the OS-specific path separator
+    return table.concat({...}, separator)
+end
+
+function Join(t, sep)
+	sep = sep or ''
+	local sline = t[1]
+	for i=2, #t do
+		e = t[i]
+		if e == nil then e = '' end
+		sline = sline .. sep .. tostring(e)
+	end
+	return sline
+end
+
+function Split(inputstr, sep)
+    if sep == nil then
+        sep = "%s" -- Default separator is any whitespace
+    end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+        table.insert(t, str)
+    end
+    return t
+end
+
+
 --[[ roll your own ]]
                       --
 local _cdp = 1
 function CycleDirs(dirlist)
 	dirlist = dirlist or START_DIRS
-	Cd(dirlist[_cdp]); _cdp = _cdp + 1;
+	local z , ok = pcall(function()
+		-- handle error?
+		Cd(dirlist[_cdp]);
+	end)
+	_cdp = _cdp + 1;
 	if _cdp > #dirlist then
 		_cdp = 1;
 	end
@@ -90,4 +130,52 @@ end
 function is_started_from_windows_shell()
 	return [[nvim.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim.exe$']])
 		[1]
+end
+
+
+
+local tags = {
+"x264", "x265",
+"264",
+"-name",
+"10bit",  "480p", "720p", "aac2", "aaf",
+"ac3", "afg", "alfahd", "amcon", "amiable", "amzn",
+"avi$", "bae", "bdmf", "bdrip", "bigdoc",
+"bipolar", "bluray", "bordure", "brrip", "cakes", "cinefile",
+"clue", "cm8", "cmrg", "\\[csi][h33t]", "d3fil3r", "d3g",
+"dd2", "dd5", "ddp", "ddp2", "ddp5", "debtvid",
+"deimos", "demand", "diamond", "dimension", "disc", "divx",
+"dl", "dts", "dual", "(dvd)", "dvd", "dvdrip",
+"dvdscr", "ebook", "elia", "ethel", "evo", "extras",
+"ffndvd", "flux", "fqm", "ghosts", "h264", "haggis",
+"hdrip", "hdtv", "hevc", "hive", "hmax", "\\[hst]",
+"hulu", "hybris", "imbt", "internal", "ipt", "kacy",
+"ktr", "lama", "m00tv", "majestic", "megusta", "mp3",
+"mp4", "msd", "naisu", "nogrp", "%[norar%]", "npw",
+"ntb", "ntsc", "paleale", "part", "phase", "proof",
+"psychd", "qix", "redblade", "remastered", "repack",
+"reward", "river", "rovers", "s01e02", "s01e03", "s01e04",
+"s01e05", "s01e06", "s01e07", "s01e08", "s01e09", "s01e10",
+"s03", "s04", "s05", "sadpanda", "sample", "screens",
+"season", "sinners", "stories", "strife", "subs", "subtitles",
+"\\[tg", "topaz", "trips", "uki", "usury", "video_ts",
+"vodo", "vomit", "voxhd", "web", "webb", "webrip",
+"wiki", "wrb", "x0r",  "xlf",
+"xvid",
+"xvidhd",
+"xxx",
+}
+
+function  StripSceneTags(e)
+	e = string.lower(e)
+	for _, p in pairs(tags) do
+		e,_ = e:gsub(p, "")
+	end
+	e,_ = e:gsub('%.', " ")
+	e,_ = e:gsub('%d%d%d%d', " ")
+	e,_ = e:gsub('-$', "")
+	e,_ = e:gsub("%s+", " ")
+
+	e = e:match("^%s*(.-)%s*$")
+	return e
 end

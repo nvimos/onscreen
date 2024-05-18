@@ -67,12 +67,21 @@ vim.keymap.set('n', '<leader>em',
 	[[<C-W>r<CR>]]
 	, { desc = 'edit init'})
 
+
+-- vim.keymap.set('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',    { desc = 'edit CWD' })
+vim.keymap.set('n', '<leader>e.', '<cmd>:edit %:p:h<cr>',    { desc = 'edit CWD %:h (dirname)'})
+vim.keymap.set('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', { desc = 'tabedit CWD' })
+
+
+
+
+
+
 -- Only
 vim.keymap.set('n', '<leader>o', ':only<CR>')
 
 -- Redo!
 vim.keymap.set('n', '!', ':<up><home><c-right>!<cr>') -- repeat last command with a bang
-
 
 
 --[[ LSP ]]--

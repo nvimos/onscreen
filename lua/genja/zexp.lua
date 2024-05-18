@@ -76,33 +76,33 @@ end
 -- end
 
 -- 
-vim.api.nvim_create_autocmd('BufWritePost', {
-	group = vim.api.nvim_create_augroup('conf-reload', { clear = true }),
-	pattern = vim.fn.readdir(vim.fn.stdpath('config')..'/lua/genja/', 'v:val =~ "\\.lua$"'), -- init.lua, opt.lua, ...
-	callback = function(ev)
-		local safeish = { [''] = false }
-		local _safeish =  {
-			'zexp.lua' ,
-			'map.lua' ,
-			'init-map.lua',
-			'opt.lua' ,
-			'alias.lua',
-			'auto.lua',
-			'winbar.lua',
-		}
-		for _, e in ipairs(_safeish) do safeish[e] = true end
-		local fname = vim.fn.fnamemodify(path, ':t')
-		if safeish[fname] then
-			if not vim.g.source_safeish then
-				return
-			end
-			local status, err = pcall(vim.cmd, [[source ]]..ev.match)
-			if not status then
-				print(string.format("psource(%s):\n%s", vim.inspect(err)))
-			end
-		end
-	end
-})
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+-- 	group = vim.api.nvim_create_augroup('conf-reload', { clear = true }),
+-- 	pattern = vim.fn.readdir(vim.fn.stdpath('config')..'/lua/genja/', 'v:val =~ "\\.lua$"'), -- init.lua, opt.lua, ...
+-- 	callback = function(ev)
+-- 		local safeish = { [''] = false }
+-- 		local _safeish =  {
+-- 			'zexp.lua' ,
+-- 			'map.lua' ,
+-- 			'init-map.lua',
+-- 			'opt.lua' ,
+-- 			'alias.lua',
+-- 			'auto.lua',
+-- 			'winbar.lua',
+-- 		}
+-- 		for _, e in ipairs(_safeish) do safeish[e] = true end
+-- 		local fname = vim.fn.fnamemodify(path, ':t')
+-- 		if safeish[fname] then
+-- 			if not vim.g.source_safeish then
+-- 				return
+-- 			end
+-- 			local status, err = pcall(vim.cmd, [[source ]]..ev.match)
+-- 			if not status then
+-- 				print(string.format("psource(%s):\n%s", vim.inspect(err)))
+-- 			end
+-- 		end
+-- 	end
+-- })
 
 
 ---
@@ -123,6 +123,7 @@ local Object = {
 }
 -- Create a new object
 local obj1 = Object:new()
+obj1 = obj1
 ---
 
 
@@ -150,9 +151,33 @@ local obj1 = Object:new()
     -- end
 -- end
 
-for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
-	local bufnr = buffer
-	local bufname = vim.api.nvim_buf_get_name(bufnr)
-	local buftype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-	print(string.format("buffer filetype: %20s name: %s", buftype, bufname ))
-end
+-- for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
+-- 	local bufnr = buffer
+-- 	local bufname = vim.api.nvim_buf_get_name(bufnr)
+-- 	local buftype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+-- 	-- print(string.format("buf-ft: «%10s» name: %s", buftype, vim.fs.normalize( bufname )))
+-- end
+
+
+-- -- local gg = vim.fn.glob([[Q:\audio-balmora\**\_*]])
+-- local gg = {}
+-- local pats = {
+-- 	[[??-*]],
+-- 	[[??-*/_*]],
+-- 	[[??-*/*/_*]],
+-- 	[[_*]]
+-- }
+-- local dirs = {
+-- 	[[Q:\audio-balmora\musikkkk]],
+-- 	[[Q:\audio-balmora\muzica]],
+-- }
+-- -- for _, d in pairs(dirs) do
+-- -- 	for _, p in pairs(pats) do
+-- -- 		vim.list_extend(gg, vim.fn.globpath( d, p, false, true))
+-- -- 	end
+-- -- end
+-- -- for _, e in pairs(gg) do
+-- -- 	--print(e)
+-- -- end
+
+
