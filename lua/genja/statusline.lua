@@ -36,6 +36,9 @@ local Empty = ''
 local Tabsep = '' -- '%=%='
 local Dirseparator = '󰞱' -- '⧸' '/'
 
+local function get_os_icon()
+	return OsDependant( '󰖳', '', '', 'bsd', 'posix', 'other')
+end
 
 -- i = "", n = "", v = "vis", V = "vlin", [''] = "vblk",
 local mode_map = {
@@ -51,20 +54,10 @@ end
 local wincount_label = {
 	[1] =   '⋅', [2] =   '²', [3] =   '³', [4] =   '⁴', [5] =   '⁵',
 	[6] =   '⁶', [7] =   '⁷', [8] =   '⁸', [9] =   '⁹', [10] =  '¹⁰'}
-local function get_close_tab_button(tabnum, wins)
-	local x = '󱀬'; if wincount_label[wins] then x = wincount_label[wins] end
+local function tl_close_tab_button(tabnum, tabpage)
+	local wins = vim.api.nvim_tabpage_list_wins(tabpage)
+	local x = '󱀬'; if wincount_label[#wins] then x = wincount_label[#wins] end
 	return '%'.. tabnum .. 'X'..x
-end
-
-local function get_os_icon()
-	local _os = ''
-	if false then _os = ''
-	elseif vim.fn.has('Mac') then _os = ''
-	elseif vim.fn.has('Windows') then _os = '󰖳'
-	elseif vim.fn.has('Gentoo') then _os = ''
-	elseif vim.fn.has('Linux') then _os = ''
-	else _os = '?' end
-	return _os
 end
 
 
@@ -80,38 +73,107 @@ local rename_buf_fns = {
 		return z
 	end,
 }
+local tl_bufname = function(tabpage, charsleft)
+	local win = vim.api.nvim_tabpage_get_win(tabpage)
+	local buf = vim.api.nvim_win_get_buf(win)
+	local bn = vim.fn.fnamemodify( vim.api.nvim_buf_get_name(buf), ':t:r')
+	if bn == Empty then
+		bn = vim.api.nvim_buf_get_option(buf, 'filetype'); end
+	if bn == Empty then
+		bn = 'none'; end
+	for _, tr in pairs(rename_buf_fns) do
+		bn = tr(bn, buf)
+	end
 
-function Tabline()
-	local tl = { hl('WinBarPath', ' '), ' ' }
-    for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
-		local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
-		local thi = '%#TabLine#'
-		if tabnum == vim.fn.tabpagenr() then
-			thi = '%#TabLineSel#' end
-		local wins = vim.api.nvim_tabpage_list_wins(tabpage)
-		local win = vim.api.nvim_tabpage_get_win(tabpage)
-		local buf = vim.api.nvim_win_get_buf(win)
-		----------------------------------------
+	local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
+	local dist = vim.fn.abs(vim.fn.tabpagenr() - tabnum)
 
-		local bn = vim.fn.fnamemodify( vim.api.nvim_buf_get_name(buf), ':t:r')
-		if bn == Empty then
-			bn = vim.api.nvim_buf_get_option(buf, 'filetype'); end
-		if bn == Empty then
-			bn = 'none'; end
-		for _, tr in pairs(rename_buf_fns) do
-			bn = tr(bn, buf)
+	if charsleft > 0 then
+		-- return '('..tabnum..'){'.. vim.fn.abs(dist) ..'}' .. bn
+		-- return '('..tabnum..')' .. bn
+		return bn
+	else
+		if dist > 1 and #bn > 4 then
+			local keep = #bn - dist
+			if keep < 3 then
+				bn = 'T' .. tabnum
+			else
+				bn = bn:sub(1, keep) .. '…'
+			end
 		end
+		return bn
+	end
 
-		table.insert(tl, thi)
+
+end
+
+local function tl_hilite(tabpage)
+	local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
+	local hilite = '%#TabLine#'
+	if tabnum == vim.fn.tabpagenr() then
+		hilite = '%#TabLineSel#' end
+	return hilite
+end
+
+
+local total = 0
+local function count_len(str)
+	total = total + #str
+	return str
+end
+
+local function tablabels(charsleft)
+	total = 0
+	local tl = { hl('WinBarPath', ' '), ' ' }
+	for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+		local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
+
+		local bnfull = tl_bufname(tabpage, 999)
+		local bn = tl_bufname(tabpage, charsleft)
+
+		local saved = #bnfull - #bn
+		charsleft = charsleft - saved
+
+		table.insert(tl, tl_hilite(tabpage))
 		table.insert(tl, '%' .. tabnum .. 'T') -- this is only necessary if we use statusline %items ? - but we resolve them manually with sl()...
-		table.insert(tl, bn)
-		table.insert(tl, get_close_tab_button(tabnum, #wins))
-		table.insert(tl, hl('StatusLineWeak', Space..Tabsep..Space))
+		table.insert(tl, count_len( bn ))
+		table.insert(tl, tl_close_tab_button(tabnum, tabpage))
+		-- table.insert(tl, hl('StatusLineWeak', count_len(Space..Tabsep..Space)))
     end
+	table.insert(tl, '%<')
+	table.insert(tl, '%<')
 	table.insert(tl, '%#TabLineFill#%T')
 	table.insert(tl, '%=%#TabLine#%999X󱀬')
-	return Join(tl)
+	return tl
 end
+
+function Tabline()
+	local Ww = tonumber(vim.api.nvim_command_output("echo &columns")) or 0
+
+	local tl = tablabels(0)
+
+
+	local extra = 2 + #tostring(Ww) + #tostring(total) + #tostring(Ww-total)
+	extra = extra + 2
+
+	local diff = Ww - total - extra
+	local N = Ww..':'..total..':'..(diff)
+
+	if diff > 0 then
+		return N..Join(tl)
+	else
+		tl = tablabels(diff)
+		local a = diff
+		diff = Ww - total - extra
+		if diff > 0 then
+			tl = tablabels(diff)
+		end
+		vim.notify(a..':'..diff)
+
+		return N..Join(tl)
+	end
+end
+
 
 function Statusline()
 	local sline = ''
