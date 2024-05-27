@@ -242,6 +242,57 @@ vim.keymap.set('n', '<leader>j,', ':cd ..   <cr>:pwd<cr>', { desc = ':cd ..'})
 vim.keymap.set('n',        '<F3>', ':CycleDirs<cr>', { desc = 'tabedit CWD' }) -- override init-map
 
 
+local ok, te = pcall(require, 'telescope.builtin')
+if ok then
+	local km = vim.keymap.set
+
+	-- km('n', '<leader>jj', te.live_grep, { desc = '() live_grep 󰵃'})
+	km('n', '<leader>jj', te.live_grep, { desc = '() live 󰵃'})
+	km('n', '<leader>jg', te.git_files, { desc = '() git_files'})
+	km('n', '<leader>jh', te.help_tags, { desc = '() help_tags'})
+	km('n', '<leader>j?', te.builtin,   { desc = '() builtin'})
+	km('n', '<leader>jb', te.buffers,   { desc = '() buffers'})
+	km('n', '<leader>jr', te.registers,     { desc = '() registers'})
+	km('n', '<leader>jo', te.oldfiles,  { desc = '() oldfiles'})
+	km('n', '<leader>jd', Telescope_find_dirs, { desc = '() dirs󰅲'})
+
+	km('n', '<leader>jm', te.marks,     { desc = '() marks'})
+
+	km('n', '<leader>jq', te.quickfix,  { desc = '() quickfix'})
+	km('n', '<leader>jl', te.loclist,  { desc = '() loclist'})
+	km('n', '<leader>jv', te.vim_options,  { desc = '() vim_options'})
+	km('n', '<leader>jC', te.colorscheme,   { desc = '() colorscheme'})
+	km('n', '<leader>jM', te.keymaps,     { desc = '() keymaps'})
+	km('n', '<leader>jA', te.autocommands,     { desc = '() autocommands'})
+
+
+	km('n', '<leader>js', function()
+		te.grep_string({ search = vim.fn.input("Grep: ") })
+	end, {  desc = '() grep'})
+
+	km('n', '<leader>j/.', te.find_files,                    { desc = '() find_files'})
+	km('n', '<leader>j//', ':lua Telescope_find_dirs()<CR>', { desc = '() dirs()'})
+	-- km('n', '<leader>ff', te.find_files, { desc = 'Telescope find_files'})
+	-- km('n', '<leader>fg', te.live_grep, { desc = 'Telescope live_grep'})
+	-- km('n', '<leader>fb', te.buffers, { desc = 'Telescobe buffers' })
+	-- km('n', '<leader>fh', te.help_tags, { desc = 'Telescope help_tags'})
+	--km('n', '<leader>pf', te.find_files, {})
+	--km('n', '<C-p>', te.git_files, {})
+	--km('n', '<leader>vh', te.help_tags, {})
+
+	-- builtin.lsp_references
+	-- builtin.lsp_incoming_calls
+	-- builtin.lsp_outcoing_calls
+	-- builtin.lsp_definitions
+	-- builtin.lsp_type_definitions
+	-- builtin.lsp_implementations
+	-- builtin.lsp_document_symbols
+	-- builtin.lsp_workspace_symbols
+	-- builtin.diagnostics
+end
+
+
+
 
 
 

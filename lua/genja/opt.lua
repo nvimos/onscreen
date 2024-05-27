@@ -1,5 +1,10 @@
 
 
+-- [[ ftplugins ]]
+
+vim.g.dosbatch_colons_comment = true
+
+
 --[[ plugin settings ]]--
 vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 
@@ -48,8 +53,11 @@ vim.opt.showbreak = '⬉      '                              -- display this aft
 vim.o.listchars = 'eol:󰭿,tab: '
 vim.o.listchars = 'eol:`,tab: '
 vim.o.listchars = 'tab: '
-vim.opt.listchars:append('space:·,multispace:· ')
-vim.opt.listchars:append('lead:>,leadmultispace:   ·')
+                                                --
+												--[[
+z                                               --]]
+vim.opt.listchars:append('space: ,multispace:   ·')
+vim.opt.listchars:append('lead:>,leadmultispace:  ·')
 vim.opt.listchars:append('trail:󱁐,')
 vim.opt.listchars:append('extends:→,precedes:←')
 
@@ -80,8 +88,10 @@ vim.o.showmode = false
 vim.o.showtabline = 2 -- 0: never -- 1: iff >= 2 tabs -- 2: always
 
 
-vim.o.cmdheight = 4
+-- how many lines to show of the command...
 vim.o.cmdheight = 1
+vim.o.cmdheight = 4
+vim.o.cmdheight = 2
 
 vim.o.smartcase = true
 vim.o.smartindent = true

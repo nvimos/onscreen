@@ -3,6 +3,7 @@
 
 command! -nargs=* M MRU <args>
 command! -nargs=* T       tabedit <args>
+command! -nargs=* Te       tabedit <args>
 command!          Td      tabedit | Dashboard
 command!          Tt      tabedit | Telescope
 command!          To      tabedit | Telescope oldfiles
@@ -25,6 +26,12 @@ command! DiffOrigGit vert new | set bt=nofile | execute 'silent r !git show HEAD
 command! DiffOrig    vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis | wincmd r
 command! Lspclients :lua =vim.lsp.get_clients()
 
+command! Ss :call RemoveTrailingSpaces()
+function! RemoveTrailingSpaces()
+	let save_cursor = getpos('.')
+	silent! %s/\s\+$//e
+	call setpos('.', save_cursor)
+endfunction
 
 
 " Abbreviations
@@ -33,10 +40,11 @@ cnoreabbrev load:  source ~/tmp/viss
 cnoreabbrev j:     source ~/tmp/viss
 cnoreabbrev r:     source ~/tmp/viss
 cnoreabbrev save:  mksession! ~/tmp/viss \| qa
+cnoreabbrev save::  mksession! ~/tmp/viss
 
-cnoreabbrev e.   edit %:p:h 
-cnoreabbrev te.  tabedit %:p:h 
-cnoreabbrev te:  tabedit %:p:h 
+cnoreabbrev e.   edit %:p:h
+cnoreabbrev te.  tabedit %:p:h
+cnoreabbrev te:  tabedit %:p:h
 
 cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
@@ -51,7 +59,7 @@ cnoreabbrev he:  vert help
 
 
 cnoreabbrev dgen DogeGenerate
-inoreabbrev iferr: if err != nil {<cr>return err<cr>}<cr>  
+inoreabbrev iferr: if err != nil {<cr>return err<cr>}<cr>
 
 
 
@@ -63,7 +71,7 @@ augroup _general_settings
 	autocmd!
 
 	" close with q
-	autocmd FileType qf,help,man,lspinfo,telescope nnoremap <silent> <buffer> q :close<CR> 
+	autocmd FileType qf,help,man,lspinfo,telescope nnoremap <silent> <buffer> q :close<CR>
 
 	" -cro : do not insert comment leaders, and do not auto wrap comments
 	autocmd BufWinEnter * :set formatoptions-=cro
@@ -78,7 +86,7 @@ augroup _general_settings
 
 
 	" show what was yanked, briefly
-	autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 333}) 
+	autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 333})
 
 augroup end
 
@@ -93,7 +101,7 @@ augroup end
 
 augroup _auto_resize
 	autocmd!
-	autocmd VimResized * tabdo wincmd = 
+	autocmd VimResized * tabdo wincmd =
 augroup end
 
 augroup _markdown

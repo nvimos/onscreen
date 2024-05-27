@@ -60,9 +60,16 @@ local function tl_close_tab_button(tabnum, tabpage)
 	return '%'.. tabnum .. 'X'..x
 end
 
+local function tl_hilite(tabpage)
+	local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
+	local hilite = '%#TabLine#'
+	if tabnum == vim.fn.tabpagenr() then
+		hilite = '%#TabLineSel#' end
+	return hilite
+end
 
 local rename_buf_fns = {
-	-- function(nam, buf) return nam end,
+	--[[ function(nam, buf) return nam end, ]]--
 	function(nam, buf)
 		local z = nam
 		if 'oil' == vim.api.nvim_buf_get_option(buf, 'filetype') then
@@ -84,37 +91,41 @@ local tl_bufname = function(tabpage, charsleft)
 	for _, tr in pairs(rename_buf_fns) do
 		bn = tr(bn, buf)
 	end
-
 	local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
-	local dist = vim.fn.abs(vim.fn.tabpagenr() - tabnum)
-
-	if charsleft > 0 then
-		-- return '('..tabnum..'){'.. vim.fn.abs(dist) ..'}' .. bn
-		-- return '('..tabnum..')' .. bn
-		return bn
-	else
-		if dist > 1 and #bn > 4 then
-			local keep = #bn - dist
-			if keep < 3 then
-				bn = 'T' .. tabnum
-			else
-				bn = bn:sub(1, keep) .. '…'
+	local distance = vim.fn.abs(vim.fn.tabpagenr() - tabnum)
+	-- if tabnum == 1 then
+		-- bn = ' ' .. bn
+	-- end
+	if charsleft < 0 then
+		if distance > 3 then
+			if #bn > 3 then
+				return bn:sub(1, 3) .. '…'
+			end
+		elseif distance > 2 then
+			if #bn > 4 then
+				return bn:sub(1, 4) .. '…'
+			end
+		elseif distance > 1 then
+			if #bn > 12 then
+				return bn:sub(1, 12) .. '…'
 			end
 		end
-		return bn
 	end
-
-
+	return bn
 end
 
-local function tl_hilite(tabpage)
+local function tl_separator(tabpage, charsleft)
 	local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
-	local hilite = '%#TabLine#'
-	if tabnum == vim.fn.tabpagenr() then
-		hilite = '%#TabLineSel#' end
-	return hilite
+	local distance = vim.fn.abs(vim.fn.tabpagenr() - tabnum)
+	if charsleft < 0 then
+		if distance > 2 then
+			return ''
+		elseif distance > 1 then
+			return Tabsep..Space
+		end
+	end
+	return Space..Tabsep..Space
 end
-
 
 local total = 0
 local function count_len(str)
@@ -123,22 +134,22 @@ local function count_len(str)
 end
 
 local function tablabels(charsleft)
+	-- local tl = {  };
 	total = 0
-	local tl = { hl('WinBarPath', ' '), ' ' }
+	local tl = { hl('WinBarPath', ' '), '' };
+	total = total + 2 -- triangle, close button
 	for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
 		local tabnum = vim.api.nvim_tabpage_get_number(tabpage)
-
-		local bnfull = tl_bufname(tabpage, 999)
 		local bn = tl_bufname(tabpage, charsleft)
-
-		local saved = #bnfull - #bn
-		charsleft = charsleft - saved
-
+		local sp = tl_separator(tabpage, charsleft)
 		table.insert(tl, tl_hilite(tabpage))
 		table.insert(tl, '%' .. tabnum .. 'T') -- this is only necessary if we use statusline %items ? - but we resolve them manually with sl()...
-		table.insert(tl, count_len( bn ))
+		table.insert(tl, bn)
 		table.insert(tl, tl_close_tab_button(tabnum, tabpage))
-		-- table.insert(tl, hl('StatusLineWeak', count_len(Space..Tabsep..Space)))
+		table.insert(tl, hl('StatusLineWeak', sp))
+		count_len(sp) -- tab separator
+		count_len(bn)  -- tab label
+		count_len('x') -- close button
     end
 	table.insert(tl, '%<')
 	table.insert(tl, '%<')
@@ -147,33 +158,43 @@ local function tablabels(charsleft)
 	return tl
 end
 
+function ctot(Ww)
+	if false then
+		local extra = 6 -- :E+T:t
+		extra = extra + 2 -- mode
+		extra = extra + #tostring(Ww) + #tostring(total) + #tostring(Ww-total)
+		extra = extra + #tostring(Ww - total - extra)
+		return extra
+	end
+	return 0
+end
+
+local Ww = 0
 function Tabline()
-	local Ww = tonumber(vim.api.nvim_command_output("echo &columns")) or 0
-
+	local M = (vim.fn.mode()):sub(1,1)
+	local N = ''
+	if M == 'c' then
+		Ww = Ww
+	else
+		-- Ww = tonumber(vim.api.nvim_command_output("echo &columns")) or 0
+		Ww = tonumber(vim.o.columns) or 0
+	end
 	local tl = tablabels(0)
-
-
-	local extra = 2 + #tostring(Ww) + #tostring(total) + #tostring(Ww-total)
-	extra = extra + 2
-
+	-- local Total = total
+	-- local Dotal = 0
+	local extra = ctot(Ww)
 	local diff = Ww - total - extra
-	local N = Ww..':'..total..':'..(diff)
-
 	if diff > 0 then
+		-- N = M..'.'..Ww..':E'..extra..'+T'..Total..'t'..Dotal..':'..(diff)
 		return N..Join(tl)
 	else
 		tl = tablabels(diff)
-		local a = diff
+		-- Dotal = total
 		diff = Ww - total - extra
-		if diff > 0 then
-			tl = tablabels(diff)
-		end
-		vim.notify(a..':'..diff)
-
+		-- N = M..'.'..Ww..':E'..extra..'+T'..Total..'t'..Dotal..':'..(diff)
 		return N..Join(tl)
 	end
 end
-
 
 function Statusline()
 	local sline = ''

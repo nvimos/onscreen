@@ -15,7 +15,7 @@ hi WinBarPath     guifg=#545454
 
 
 local function sl(a, b) b=b or {}; return vim.api.nvim_eval_statusline(a, b).str end
-local function with_hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
+local function hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
 
 function Winbar()
 	local fname = vim.fn.fnamemodify(sl('%t'), ':r')  -- top of path, no extension
@@ -27,12 +27,12 @@ function Winbar()
 
 	return ''
 	-- ..with_hl('WinBarPath',     sl(''))
-	..with_hl('WinBarPath',     sl(' '))
+	..hl('WinBarPath',     sl(' '))
 
-	..with_hl('WinBarPath',     fname)
-	..with_hl('WinBarModified', sl('%M')) -- modified flag
-	..with_hl('WinBarPath',     sl('%r')) -- read-only [RO]
-	..with_hl('WinBarPath',     sl('%q')) -- [quickfix list]
+	..hl('WinBarPath',     fname)
+	..hl('WinBarModified', sl('%M')) -- modified flag
+	..hl('WinBarPath',     sl('%r')) -- read-only [RO]
+	..hl('WinBarPath',     sl('%q')) -- [quickfix list]
 	-- ..with_hl('WinBarPath',     fname..sl('%R')) -- top of path
 	-- ..with_hl('WinBarPath',     sl(''))
 end

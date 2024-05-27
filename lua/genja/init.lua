@@ -13,6 +13,7 @@
 
 	Plugins
 	https://vimawesome.com/plugin/vim-devicons
+	https://github.com/nvim-neorg/neorg
 
 	Examples
 	https://gist.github.com/s1n7ax
@@ -27,6 +28,9 @@
 
 	Plugins to study
 	https://github.com/ojroques/nvim-buildme/blob/main/lua/buildme.lua
+
+	Intro to fugitive
+	https://jeancharles.quillet.org/posts/2022-03-02-Practical-introduction-to-fugitive.html
 
 
 	Other
