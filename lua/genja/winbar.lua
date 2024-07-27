@@ -17,6 +17,9 @@ hi WinBarPath     guifg=#545454
 local function sl(a, b) b=b or {}; return vim.api.nvim_eval_statusline(a, b).str end
 local function hl(hiGroup, s) return  '%#' .. hiGroup .. '#' .. s .. '%*' end
 
+local Triangle_lower = ' ' -- must use Nerd Font ?
+Triangle_lower = ' '
+
 function Winbar()
 	local fname = vim.fn.fnamemodify(sl('%t'), ':r')  -- top of path, no extension
 	if fname == "" then
@@ -27,7 +30,7 @@ function Winbar()
 
 	return ''
 	-- ..with_hl('WinBarPath',     sl(''))
-	..hl('WinBarPath',     sl(' '))
+	..hl('WinBarPath',     sl(Triangle_lower))
 
 	..hl('WinBarPath',     fname)
 	..hl('WinBarModified', sl('%M')) -- modified flag

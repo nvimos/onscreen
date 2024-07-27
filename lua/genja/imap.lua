@@ -68,17 +68,16 @@ vim.keymap.set('n', '<leader>em',
 	, { desc = 'edit init'})
 
 
--- vim.keymap.set('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',    { desc = 'edit CWD' })
+vim.keymap.set('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',    { desc = 'edit CWD' })
 vim.keymap.set('n', '<leader>e.', '<cmd>:edit %:p:h<cr>',    { desc = 'edit CWD %:h (dirname)'})
 vim.keymap.set('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', { desc = 'tabedit CWD' })
 
 
-
-
-
-
--- Only
-vim.keymap.set('n', '<leader>o', ':only<CR>')
+--
+-- vim.keymap.set('n', '<leader>lo', command('only'), { desc = 'only this window' })
+-- vim.keymap.set('n', '<leader>le', command('wincmd ='), { desc = 'equalize windows' })
+-- vim.keymap.set('n', '<leader>lm', command('resize | vertical resize'), { desc = 'maximize current' })
+vim.keymap.set('n', '<c-w>m',     command('resize | vertical resize'), { desc = 'maximize current' })
 
 -- Redo!
 vim.keymap.set('n', '!', ':<up><home><c-right>!<cr>') -- repeat last command with a bang
@@ -116,7 +115,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		km('n', 'gDt',  vlb.type_definition,                            o("type definition"))
 		km('n', 'gDs',  split_and(vlb.definition),                      o("definition"))
 		km('n', 'gd',   vlb.definition,                                 o("definition"))
-		km('n', 'gl',   '<cmd>Telescope diagnostics',                   o("Telescope diagnostics"))
+		km('n', 'gl',   '<cmd>Telescope diagnostics<cr>',                   o("Telescope diagnostics"))
 
 		km('n', '<space>wa', vlb.add_workspace_folder,                   o("workspace add"))
 		km('n', '<space>wr', vlb.remove_workspace_folder,                o("workspace rm"))

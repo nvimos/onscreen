@@ -24,6 +24,16 @@
 				nocombine	override attributes instead of combining them
 				NONE		no attributes used (used to reset it)
 ]]
+vim.cmd[[
+
+highlight Search     guifg=orange guibg=#441111
+highlight IncSearch  guifg=orange guibg=#441111
+highlight CurSearch  guifg=cyan   guibg=#441111
+highlight MatchParen guifg=orange guibg=NONE
+highlight MatchParen guisp=orange gui=bold,standout,underline
+highlight Visual     guifg=orange guibg=#332277 gui=bold
+
+]]
 
 -- General
 vim.cmd[[
@@ -93,6 +103,12 @@ vim.cmd[[
 	hi ErrorMsg gui=bold
 ]]
 
+-- OilDir -> Directory
+vim.cmd[[
+	hi Directory guifg=#ffd76a
+	hi Directory guifg=#ffe9a9
+	hi Directory guifg=#ffe087
+]]
 
 local ColorTable = {
 	props = {},

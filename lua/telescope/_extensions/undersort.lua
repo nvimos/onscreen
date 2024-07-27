@@ -29,14 +29,24 @@ local os_move = function(opts)
 	local callback = opts.undersort.afterFn
 	local telescoped = ts_state.get_selected_entry()
 	local dest_dir = telescoped[1]
+
+	-- vim.notify(vim.inspect( movees  ))
+
 	for _, movee in pairs(movees) do
 		local from, to = movee.path, JoinPaths(dest_dir, movee.name)
 		local succ, errmsg = os.rename(from, to)
 		if succ then
 			vim.notify('mv ' .. from .. ' ' .. to)
 		else
+			-- windows fails to move a file between different paths like
+			-- P:/cinema/_movies.2024 and V:/_keep.2024
+			-- even if they are the same location and the user has access.
+			-- the workaround is to use the same "drive letter" in both paths.
 			vim.api.nvim_err_writeln(errmsg)
+			vim.api.nvim_err_writeln(from)
+			vim.api.nvim_err_writeln(to)
 		end
+
 		callback(succ)
 	end
 end
@@ -56,10 +66,15 @@ end
 local ask_where_to_move = function(opts)
 	opts = opts or {}
 	local pi = pickers.new(opts, {
+		default_text = opts.undersort.default_text or "",
 		prompt_title = 'mv: ' .. mv_title(opts.undersort.movees),
 		finder = finders.new_table({ results = discover_cats(opts) }),
 		sorter = conf.generic_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
+			map({'i', 'n'}, '<esc>', actions.close)
+			map({'i', 'n'}, '<F2>', actions.move_selection_previous)
+			map({'i', 'n'}, '<F3>', actions.move_selection_next)
+
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				os_move(opts)

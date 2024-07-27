@@ -13,7 +13,6 @@
 
 	Plugins
 	https://vimawesome.com/plugin/vim-devicons
-	https://github.com/nvim-neorg/neorg
 
 	Examples
 	https://gist.github.com/s1n7ax
@@ -35,6 +34,7 @@
 
 	Other
 	https://www.nerdfonts.com/cheat-sheet
+	https://github.com/nvim-neorg/neorg
 ]]
 
 vim.cmd 'colorscheme lunaperche'
@@ -52,23 +52,26 @@ require 'genja.opt'         -- just static options
 -- ./auto-alias.vim
 vim.cmd ([[source ]]..CONFIG..[[/lua/genja/auto-alias.vim]]) --  can vim.cmd[[ ]] support vimscript syntax?
 
-
 require 'genja.imap'        -- early maps, if config breaks
 require 'genja.auto'        -- autocommads, automation
 require 'genja.hilite'      --
-require 'genja.lazy'        -- genja/lazy.lua -> import { plugins, genja.lazy-plugs }
+require 'genja.lazy'        -- genja/lazy.lua -> import { lazyp }
 require 'genja.map'         --
 
 START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
-	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
 	local sd = {}
-	if vim.fn.has("Windows") then
-		table.insert(sd, Norm('O:/H1'))
-		table.insert(sd, Norm('A:/workspace'))
-		table.insert(sd, Norm(vim.env.Userprofile))
+	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
+	local function add_dir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
+	if vim.fn.has('Windows') then
+		add_dir('O:/H1/notes')
+		add_dir('A:/workspace')
+		add_dir('A:/workspace')
+		-- add_dir('P:/cinema')
+		add_dir('V:')
+		add_dir(vim.env.Userprofile)
 		else
-		table.insert(sd, Norm(vim.env.HOME))
+		add_dir(vim.env.HOME)
 		end
-		table.insert(sd, Norm(vim.fn.stdpath('config')))
-		table.insert(sd, Norm(vim.fn.stdpath('data')))
+		add_dir(vim.fn.stdpath('config'))
+		add_dir(vim.fn.stdpath('data'))
 	return sd end)()

@@ -133,10 +133,19 @@ local function count_len(str)
 	return str
 end
 
+local Triangle_upper = ' ' -- must use Nerd Font ?
+Triangle_upper = '\\'
+Triangle_upper = ' '
+
+-- set guifont='3270 Nerd Font Mono:h16'
+-- set guifont='Cascadia Code Light:h16:l'
+
+
+
 local function tablabels(charsleft)
 	-- local tl = {  };
 	total = 0
-	local tl = { hl('WinBarPath', ' '), '' };
+	local tl = { hl('WinBarPath', Triangle_upper ), '' };
 	total = total + 2 -- triangle, close button
 	for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
 		local tabnum = vim.api.nvim_tabpage_get_number(tabpage)

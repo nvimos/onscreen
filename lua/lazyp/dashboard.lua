@@ -35,8 +35,8 @@ return { {
 		vim.api.nvim_create_autocmd({'UIEnter'}, {
 			group = vim.api.nvim_create_augroup('rename-dashboard', { clear = true }),
 			callback = function(ev)
-				if "dashboard" == vim.bo[ev.buf].filetype then
-					vim.api.nvim_buf_set_name(ev.buf, "Dashboard")
+				if 'dashboard' == vim.bo[ev.buf].filetype then
+					vim.api.nvim_buf_set_name(ev.buf, 'Dashboard')
 				end
 			end,
 		})
@@ -55,8 +55,10 @@ return { {
 				shortcut = {
 					--[[ 🎩 💃  󰍉 ]]
 
-					{ icon = '', key = '.', desc = 'find', action = 'Telescope find_files',      group = 'DevIconFavicon', icon_hl = 'DevIconsFish', },
-					{ icon = '', key = '/', desc = 'dirs', action = 'lua Telescope_find_dirs()', group = 'DevIconFavicon', icon_hl = '@variable', },
+					-- { icon = '', key = '.', desc = 'find', action = 'Telescope find_files',      group = 'DevIconFavicon', icon_hl = 'DevIconsFish', },
+					-- { icon = '', key = '/', desc = 'dirs', action = 'lua Telescope_find_dirs()', group = 'DevIconFavicon', icon_hl = '@variable', },
+					{ icon = '', key = '.', desc = 'goto', action = 'Telescope mydirs', group = 'DevIconFavicon', icon_hl = '@variable', },
+
 					{ icon = '', key = 'o', desc = 'old',  action = 'Telescope oldfiles',        group = 'DevIconFavicon', icon_hl = '@variable', },
 					{            key = 't', desc = 'tele', action = 'Telescope',                 group = 'DevIconFavicon', },
 

@@ -49,7 +49,7 @@ vim.opt.foldcolumn = '2'
 
 
 -- vim.o.listchars = 'leadmultispace:>   ·,lead:>,multispace:· ,space:·,tab: '
-vim.opt.showbreak = '⬉      '                              -- display this after wrapped
+vim.o.showbreak = '⬉      '                              -- display this after wrapped
 vim.o.listchars = 'eol:󰭿,tab: '
 vim.o.listchars = 'eol:`,tab: '
 vim.o.listchars = 'tab: '

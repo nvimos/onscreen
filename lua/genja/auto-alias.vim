@@ -1,13 +1,15 @@
-
 " Aliases
 
 command! -nargs=* M MRU <args>
-command! -nargs=* T       tabedit <args>
-command! -nargs=* Te       tabedit <args>
-command!          Td      tabedit | Dashboard
-command!          Tt      tabedit | Telescope
-command!          To      tabedit | Telescope oldfiles
-command! -nargs=* Tabedit tabedit <args>
+command! -nargs=* -complete=file T       tabedit <args>
+command! -nargs=* -complete=file Te      tabedit <args>
+command! -nargs=* -complete=file Tabedit tabedit <args>
+command! -nargs=1 -complete=help Th      tabedit | help <args> | only
+command!                         Td      tabedit | Dashboard
+command!                         Tt      tabedit | Telescope
+command!                         To      tabedit | Telescope oldfiles
+
+
 
 command! QQQ tabdo write | qa
 command! JJJ tabdo write | qa
@@ -15,6 +17,7 @@ command! QQ qa
 command! JJ qa
 command! O only
 command! Tm tabmove +1
+command! Tmm tabmove -1
 command! TM tabmove -1
 command! -nargs=* W write <args>
 command! -nargs=* So source <args>
@@ -25,6 +28,8 @@ command! -nargs=* So source <args>
 command! DiffOrigGit vert new | set bt=nofile | execute 'silent r !git show HEAD:'.expand('%').' | 0d_' | diffthis | wincmd p | diffthis | wincmd r
 command! DiffOrig    vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis | wincmd r
 command! Lspclients :lua =vim.lsp.get_clients()
+
+command! YankFilename put =expand('%:p')
 
 command! Ss :call RemoveTrailingSpaces()
 function! RemoveTrailingSpaces()
@@ -42,6 +47,7 @@ cnoreabbrev r:     source ~/tmp/viss
 cnoreabbrev save:  mksession! ~/tmp/viss \| qa
 cnoreabbrev save::  mksession! ~/tmp/viss
 
+ 
 cnoreabbrev e.   edit %:p:h
 cnoreabbrev te.  tabedit %:p:h
 cnoreabbrev te:  tabedit %:p:h
@@ -59,7 +65,7 @@ cnoreabbrev he:  vert help
 
 
 cnoreabbrev dgen DogeGenerate
-inoreabbrev iferr: if err != nil {<cr>return err<cr>}<cr>
+
 
 
 
@@ -117,5 +123,7 @@ augroup _git
 augroup end
 
 
+
+autocmd FileType vim,help setlocal keywordprg=:help
 
 

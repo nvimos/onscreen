@@ -6,7 +6,8 @@ local sorters = require 'telescope.sorters'
 local state = require 'telescope.actions.state'
 
 local myres = finders.new_table {
-	results = { 'red', 'blue', 'green', 'magenta', 'cyan', 'firebrick' },
+	results = { 'khaki',
+	'red', 'blue', 'green', 'magenta', 'cyan', 'firebrick' },
 }
 
 local handleSelection = function (selection)

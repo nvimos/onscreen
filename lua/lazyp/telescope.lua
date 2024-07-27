@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd({'UIEnter'} , {
 			error 'cannot load nvim-telescope/telescope.nvim'
 		else
 			ts.load_extension 'mycolors'
+			ts.load_extension 'mydirs'
 			ts.load_extension 'undersort'
 		end
 
@@ -27,15 +28,15 @@ return {
 
 
 	{  'nvim-telescope/telescope-symbols.nvim', event = 'VeryLazy', lazy = true }, -- UIEnter
-	{  'barrett-ruth/telescope-http.nvim', event = 'VeryLazy', lazy = true,
-		cmd = 'Telescope http list',
-		config = function()
-			-- require('telescope').setup({
-			-- 	extensions = { http = {
-			-- 		open_url = 'xdg-open %s' -- UNIX
-			-- 		-- open_url = 'open %s' -- OSX
-			-- 		-- open_url = 'start %s' -- Windows
-			-- 	}}})
-			require('telescope').load_extension 'http'
-		end },
+	-- {  'barrett-ruth/telescope-http.nvim', event = 'VeryLazy', lazy = true,
+	-- 	cmd = 'Telescope http list',
+	-- 	config = function()
+	-- 		-- require('telescope').setup({
+	-- 		-- 	extensions = { http = {
+	-- 		-- 		open_url = 'xdg-open %s' -- UNIX
+	-- 		-- 		-- open_url = 'open %s' -- OSX
+	-- 		-- 		-- open_url = 'start %s' -- Windows
+	-- 		-- 	}}})
+	-- 		require('telescope').load_extension 'http'
+	-- 	end },
 }

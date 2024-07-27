@@ -197,17 +197,18 @@ local function init_harpoon()
 	if not ok then
 		return
 	end
-	local harpoon_mark = require("harpoon.mark")
-	local harpoon = require("harpoon.ui")
+	local mark = require("harpoon.mark")
+	local ui = require("harpoon.ui")
 	-- local function toggle_file_mark() harpoon_mark.add_file() end
 
-	vim.keymap.set("n", "<leader>ea", harpoon_mark.toggle_file, { desc = 'harpoon mark on/off' })
-	vim.keymap.set("n", "<leader>ej", function() harpoon.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
-	vim.keymap.set("n", "<M-e>", function() harpoon.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
-	vim.keymap.set("n", "<M-j>", function() harpoon.nav_file(1) end, { desc = 'harpoon 1'})
-	vim.keymap.set("n", "<M-w>", function() harpoon.nav_file(2) end, { desc = 'harpoon 2'})
-	vim.keymap.set("n", "<M-f>", function() harpoon.nav_file(3) end, { desc = 'harpoon 3'})
-	vim.keymap.set("n", "<M-p>", function() harpoon.nav_file(4) end, { desc = 'harpoon 4'})
+	vim.keymap.set("n", "<leader>ea", mark.toggle_file, { desc = 'harpoon mark on/off' })
+	vim.keymap.set("n", "<leader>ej", function() ui.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
+
+	-- vim.keymap.set("n", "<M-e>", function() ui.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
+	-- vim.keymap.set("n", "<M-j>", function() ui.nav_file(1) end, { desc = 'harpoon 1'})
+	-- vim.keymap.set("n", "<M-w>", function() ui.nav_file(2) end, { desc = 'harpoon 2'})
+	-- vim.keymap.set("n", "<M-f>", function() ui.nav_file(3) end, { desc = 'harpoon 3'})
+	-- vim.keymap.set("n", "<M-p>", function() ui.nav_file(4) end, { desc = 'harpoon 4'})
 end; init_harpoon()
 
 
@@ -239,7 +240,8 @@ vim.keymap.set('n', '<leader>j,', ':cd ..   <cr>:pwd<cr>', { desc = ':cd ..'})
 
 
 --  n o v
-vim.keymap.set('n',        '<F3>', ':CycleDirs<cr>', { desc = 'tabedit CWD' }) -- override init-map
+-- vim.keymap.set('n',        '<F3>', ':CycleDirs<cr>', { desc = 'tabedit CWD' }) -- override init-map
+vim.keymap.set('n',        '<F3>', ':Telescope mydirs<cr>', { desc = 'tabedit CWD' }) -- override init-map
 
 
 local ok, te = pcall(require, 'telescope.builtin')
@@ -270,6 +272,8 @@ if ok then
 		te.grep_string({ search = vim.fn.input("Grep: ") })
 	end, {  desc = '() grep'})
 
+	km('n', '<F1>', te.find_files,                    { desc = '() find_files'})
+	km('n', '<S-F1>', te.oldfiles,                    { desc = '() oldfiles'})
 	km('n', '<leader>j/.', te.find_files,                    { desc = '() find_files'})
 	km('n', '<leader>j//', ':lua Telescope_find_dirs()<CR>', { desc = '() dirs()'})
 	-- km('n', '<leader>ff', te.find_files, { desc = 'Telescope find_files'})

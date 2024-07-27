@@ -181,189 +181,58 @@ obj1 = obj1
 -- -- end
 
 
-local function bdecode(data)
-	local function decode_item(index)
-		local char = data:sub(index, index)
-		-- Decode integer
-		if char == "i" then
-			local end_index = data:find("e", index)
-			local number = tonumber(data:sub(index + 1, end_index - 1))
-			return number, end_index + 1
-			-- Decode string
-		elseif char:match("%d") then
-			local colon_index = data:find(":", index)
-			local length = tonumber(data:sub(index, colon_index - 1))
-			local str = data:sub(colon_index + 1, colon_index + length)
-			return str, colon_index + length + 1
-			-- Decode list
-		elseif char == "l" then
-			local list = {}
-			index = index + 1
-			while data:sub(index, index) ~= "e" do
-				local item
-				item, index = decode_item(index)
-				table.insert(list, item)
-			end
-			return list, index + 1
-			-- Decode dictionary
-		elseif char == "d" then
-			local dict = {}
-			index = index + 1
-			while data:sub(index, index) ~= "e" do
-				local key
-				key, index = decode_item(index)
-				local value
-				value, index = decode_item(index)
-				dict[key] = value
-			end
-			return dict, index + 1
-		else
-			error("Invalid Bencode data at index " .. index)
-		end
-	end
-	local result, _ = decode_item(1)
-	return result
-end
 
-function TorrentTarget(torrent)
-	local file = io.open(torrent, "rb")
-	if not file then
-		return
-	end
-	local torrentData = file:read("*all"); file:close()
-	local decoded = bdecode(torrentData)
-	if decoded.info.files  then
-		return { torrent = torrent, type = "directory", name = decoded.info.name}
-	else
-		return { torrent = torrent, type = "file", name = decoded.info.name }
-	end
-end
+-- local curl = require('plenary.curl')
+-- local function make_request()
+--   -- local url = 'https://movielens.org/explore?q=cakez'
+--   local url = 'https://movielens.org/explore'
+--   local response = curl.get(url, {
+-- 	  query = { q = 'cakez' },
+-- 	  raw = { '--max-redirs', '0'}
+--   })
+--   local file, err = io.open("C:\\tmp\\curl-out.html", "w")
+--   if file then
+-- 	  file:write(response.body)
+-- 	  file:close()
+--   end
+--   if response.status == 200 then
+-- 	print("Status: ", response.status, "Body: ", #response.body)
+-- 	-- print("Headers: ", vim.inspect(response.headers))
+--   else
+--     print("HTTP request failed with status: ", response.status)
+--   end
+-- end
+-- make_request()
 
-local D = vim.inspect
-local K = vim.tbl_keys
-local luv = vim.loop
 
-----------------------------------------------
 
-local children = function (path, skip_suffixes)
-	skip_suffixes = skip_suffixes or { [".bak"] = true }
-	local c = {}
-	local function chi(cp)
-		local fh = nil
-		local entry = false
-		fh = luv.fs_scandir(cp)
-		if fh then
-			entry = luv.fs_scandir_next(fh)
-		end
-		while entry do
-			-- table.insert(c, { a = entry[1], b = entry[2]})
-			local P = JoinPaths(cp, entry)
-			local ee = {}
-			local fi = luv.fs_stat(P)
-			if fi then
-				ee.mtime = fi.mtime.sec
-				ee.size = fi.size
-				ee.type = fi.type
-				ee.path = P
-				ee.name = entry
-			else
-				ee.path = P
-				ee.name = entry
-				ee.error = true
-			end
-			local suff = ee.name:match("%.([^%.]+)$")
-			-- print(not skip_suffixes[suff], suff)
-			if not skip_suffixes[suff] then
-				table.insert(c, ee)
-			end
-			entry = luv.fs_scandir_next(fh)
-		end
-	end
-	chi(path)
-	for _, e in pairs(c) do
-		if e.type == 'directory' then
-			if e.path then
-				-- print("S2", e.path)
-				chi(e.path)
-			end
-		end
-	end
-	-- print ("S3 <-", #c)
-	return c
-end
 
-function ScanPaths(p)
-	local nowant = {
-		["nfo"] = true,
-		["sub"] = true,
-		["rar"] = true,
-		["torrent"] = true,
-		["finished"] = true,
-	}
-	for i = 0, 60 do
-		nowant[string.format('r%02d', i)] = true
-	end
-	local mp = {}
-	local globbed = vim.fn.glob(p, false, true)
-	-- print('glob', D(globbed))
-	for _, dir in pairs(globbed) do
-		local dd = children(dir, nowant)
-		-- print('SCAN G', dir, #dd)
-		for _, e in pairs(dd) do
-			-- print(e.name)
-			mp[e.name] = e
-		end
-	end
-	return mp
-end
+-- recent folders
+-- --
+-- -- %AppData%\Microsoft\Windows\Recent\
+-- local pat = vim.env.AppData .. '\\Microsoft\\Windows\\Recent\\*'
+-- local res = vim.fn.glob(pat, false, true)
+-- -- print( res[60] )
+-- -- print( pat )
+-- local n = 0
+-- for _, lnk in ipairs(res) do
+-- 	if n < 80 then
+-- 		local h = io.popen([[A:\\bin\\lnk-target.bat ]] .. '"'  .. lnk .. '"' )
+-- 		local o = h:read('*a')
+-- 		h:close()
+-- 		o = o:gsub('%s*$', '') -- trim trailing spaces
+-- 		if o ~= '' then
+-- 			if not string.match(o, 'pr0n') then
+-- 				if IsDir(o) then
+-- 					print('dir', e:match('pr0n'),  o)
+-- 				end
+-- 				n = n + 1
+-- 			end
+-- 		end
+-- 	end
+-- end
 
-local sp = ScanPaths( [[V:\_*{vote-n-remove,0new}]] )
-local tt = {
-	[[V:/_0new/Jackass.Forever.2022.1080p.WEB-DL.DD5.1.H.264-CMRG [TD].torrent]],
-	[[V:\_vote-n-remove\The.Rum.Diary.2011.720p.BRRip.x264-x0r [TD].torrent]],
-	[[V:\_0new\When the Wind Blows (1986).avi [TD].torrent]],
-	[[V:\_0new/Er.Ist.Wieder.Da.2015.PROPER.720p.BluRay.x264-USURY [TD].torrent]],
-}
--- tt = vim.fn.glob('V:/**/*.torrent', false, true)
 
-sp = ScanPaths( [[V:\_*]] )
-tt = vim.fn.glob('V:/_0new/*.torrent', false, true)
 
-local L = require('genja.log')
-L.init('mv-torrent')
-L.nuke()
 
-local log = L.log
-for _, path in ipairs(tt) do
-	local r = TorrentTarget(path)
-	local tfound = nil
-	if r then
-		local t = sp[r.name]
-		if t then
-			tfound = t.path
-		else
-			print("no...", r.name)
-			tfound = [[V:/torr/here]]
-		end
-	end
-	if tfound then
-		local esc = vim.fn.shellescape
-		-- local msg = string.format([[mv %-70s %s]], esc(path), esc(Dirname(tfound)) )
-		local f = path:gsub([[\+]], '/')
-		local t = Dirname(tfound):gsub([[\+]], '/')
-		local msg1 = string.format([[mv %q %q]], f, t )
-		local msg2 = string.format([[mv %q %q]], f:gsub('(torrent)$', 'finished'), t )
-		-- local msg = string.format([[mv %-70s %s]], esc(path), esc(Dirname(tfound)) )
-		log.warn( msg1 )
-		print( msg1 )
 
-		log.warn( msg2 )
-		print( msg2 )
-	end
-end
-
-print()
-
--- print(D(
--- TorrentTarget([[V:\_vote-n-remove\The.Rum.Diary.2011.720p.BRRip.x264-x0r [TD].torrent]])
--- ))
