@@ -218,9 +218,6 @@ vim.keymap.set('',     '<C-W>`', ':quit<CR>', { desc = ':quit' } )
 -- move to plugin spec -- vim.keymap.set('', '<leader>jD', vim.cmd.Dashboard, { desc = 'Dashboard' } )
 vim.keymap.set('', '<leader>jm', vim.cmd.MRU, { desc = 'MRU' } )
 
---- vim.keymap.set('', '<S-F2>', ':edit ~/AppData/Local/nvim/lua/mymap.lua<CR>')
---- vim.keymap.set('', '<S-F1>', ':edit ~/AppData/Local/nvim/lua/plugins.lua<CR>')
---- vim.keymap.set('',   '<F1>', ':edit ~/AppData/Local/nvim/init.lua<CR>')
 
 
 
@@ -272,10 +269,17 @@ if ok then
 		te.grep_string({ search = vim.fn.input("Grep: ") })
 	end, {  desc = '() grep'})
 
-	km('n', '<F1>', te.find_files,                    { desc = '() find_files'})
-	km('n', '<S-F1>', te.oldfiles,                    { desc = '() oldfiles'})
+	km('n', '<F1>', te.oldfiles,                    { desc = '() oldfiles'})
+	km('n', '<S-F1>', te.find_files,                    { desc = '() find_files'})
+	km('n', '<C-F1>', te.live_grep,                    { desc = '() live 󰵃'})
+
 	km('n', '<leader>j/.', te.find_files,                    { desc = '() find_files'})
 	km('n', '<leader>j//', ':lua Telescope_find_dirs()<CR>', { desc = '() dirs()'})
+
+--- vim.keymap.set('', '<S-F2>', ':edit ~/AppData/Local/nvim/lua/mymap.lua<CR>')
+--- vim.keymap.set('', '<S-F1>', ':edit ~/AppData/Local/nvim/lua/plugins.lua<CR>')
+--- vim.keymap.set('',   '<F1>', ':edit ~/AppData/Local/nvim/init.lua<CR>')
+
 	-- km('n', '<leader>ff', te.find_files, { desc = 'Telescope find_files'})
 	-- km('n', '<leader>fg', te.live_grep, { desc = 'Telescope live_grep'})
 	-- km('n', '<leader>fb', te.buffers, { desc = 'Telescobe buffers' })

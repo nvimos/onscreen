@@ -218,10 +218,39 @@ function CycleDirs(dirlist)
 	end
 end
 
-function is_started_from_windows_shell()
-	return [[nvim.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim.exe$']])
-		[1]
+function Is_started_from_windows_shell()
+	return false or
+		([[nvim-qt.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim-qt.exe$']])[1]) or
+		([[nvim.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim.exe$']])[1])
 end
+
+
+-- hm...
+function os.capture(cmd, raw)
+	local f = assert(io.popen(cmd, 'r'))
+	local s = assert(f:read('*a'))
+	f:close()
+	if raw then return s end
+	s = string.gsub(s, '^%s+', '')
+	s = string.gsub(s, '%s+$', '')
+	s = string.gsub(s, '[\n\r]+', ' ')
+	return s
+end
+
+function StripNewlines(s)
+	return string.gsub(s, '[\n\r]+', ' ')
+end
+
+function Trim(s)
+	return string.gsub(s, '^%s+', '').gsub(s, '%s+$', '')
+end
+
+-- -- runs command on a sub-process, reads command output, replaces any newline with a space
+-- local handle = io.popen('cmd')
+-- local output = handle:read('*a')
+-- local format = output:gsub('[\n\r]', ' ')
+
+
 
 local tags = {
 	"%.avi$",

@@ -24,9 +24,10 @@ local ask_where_to_move = function(opts)
 		finder = finders.new_table({ results = dirlist(opts) }),
 		sorter = conf.generic_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			map({'i', 'n'}, '<esc>', actions.close)
-			map({'i', 'n'}, '<F2>', actions.move_selection_previous)
-			map({'i', 'n'}, '<F3>', actions.move_selection_next)
+			-- map({'i', 'n'}, '<esc>', actions.close)
+			-- map({'i', 'n'}, '<F2>', actions.move_selection_previous)
+			-- map({'i', 'n'}, '<F3>', actions.move_selection_next)
+			Telemap(map)
 
 			-- would be cool to change the dir on-the-fly in the buffer "under" the prompt...
 			-- like this, it gives a warning about the buffer not being written.

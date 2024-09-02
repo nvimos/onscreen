@@ -39,6 +39,7 @@ PluginSpec = {
 
 	--[[ "debian testing" ]]
 	'folke/zen-mode.nvim', -- todo lazy
+	'equalsraf/neovim-gui-shim', -- neovim-qt fancy context mouse menu popup
 
 	--[[ "debian unstable" ]]
 	'michaeljsmith/vim-indent-object', -- leader + vii vai vaI; cii dii -- TODO lazify

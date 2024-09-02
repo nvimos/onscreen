@@ -89,7 +89,7 @@ end
 
 F.open_in_vlc = function()
 	local _, _, path = F.oil_entry_dir_path()
-	local vlc  = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]])
+	local vlc  = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]], 'vlc.exe', 'vlc')
 	local cmd = { 'start', '"play-file"', '/I',
 		escpath(vlc, 1),
 		escpath(path, 1) }
@@ -145,7 +145,7 @@ F.move_to_cat_delete = function()
 		-- maybe there is oil-reload?
 		vim.cmd ([[edit ]]..vim.fn.expand('%'))
 		local timer = vim.loop.new_timer()
-		timer:start(1000, 0, vim.schedule_wrap(function()
+		timer:start(500, 0, vim.schedule_wrap(function()
 			vim.api.nvim_win_set_cursor(0, pos)
 		end))
 
@@ -237,8 +237,7 @@ function MoveCat( afterFn, opts)
 			[[V:\]] -- cinema
 		}
 	}
-	op = vim.tbl_extend('force', op, opts)
-	vim.notify("MoveCat() op.default_text = " .. op.default_text)
+	op = vim.tbl_extend('force', op, opts or {})
 	require('telescope').extensions.undersort.undersort(op)
 end
 

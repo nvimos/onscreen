@@ -233,6 +233,14 @@ obj1 = obj1
 -- end
 
 
-
+function NetUseDrive(drive)
+	local handle = io.popen('cmd /c "net use  V: 2>nul && echo yes"')
+	if nil ~= handle then
+		local output = handle:read('*a')
+		print(StripNewlines(output))
+		print("wat wat in the butt")
+	end
+	return false
+end
 
 

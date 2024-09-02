@@ -36,7 +36,7 @@ local os_move = function(opts)
 		local from, to = movee.path, JoinPaths(dest_dir, movee.name)
 		local succ, errmsg = os.rename(from, to)
 		if succ then
-			vim.notify('mv ' .. from .. ' ' .. to)
+			-- vim.notify('mv ' .. from .. ' ' .. to)
 		else
 			-- windows fails to move a file between different paths like
 			-- P:/cinema/_movies.2024 and V:/_keep.2024
@@ -63,6 +63,7 @@ local function mv_title(movees)
 	return Join(out, ', ')
 end
 
+
 local ask_where_to_move = function(opts)
 	opts = opts or {}
 	local pi = pickers.new(opts, {
@@ -71,10 +72,7 @@ local ask_where_to_move = function(opts)
 		finder = finders.new_table({ results = discover_cats(opts) }),
 		sorter = conf.generic_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			map({'i', 'n'}, '<esc>', actions.close)
-			map({'i', 'n'}, '<F2>', actions.move_selection_previous)
-			map({'i', 'n'}, '<F3>', actions.move_selection_next)
-
+			Telemap(map)
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				os_move(opts)
@@ -84,6 +82,7 @@ local ask_where_to_move = function(opts)
 	})
 	pi:find()
 end
+
 local undersort = function(opts, foo)
 	local drop = require('telescope.themes').get_dropdown()
 	drop.undersort = opts

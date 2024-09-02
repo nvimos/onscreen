@@ -7,6 +7,8 @@
 -- :help vim.diagnostic.*
 -- :help lspconfig-setup
 
+-- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
+
 -- local err = vim.api.nvim_err_writeln; err("lsp.lua")
 
 
@@ -41,6 +43,9 @@ lspconfig.util.default_config, {
 	-- 	end,
 	-- }
 })
+
+-- -- Capabilities required for the visualstudio lsps (css, html, etc)
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/configs/lspconfig.lua
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -88,9 +93,19 @@ M.setup_mason_lspconfig = function(set, zz)
 
 
 	require('mason').setup({})
+
+	-- require('mason-lspconfig').setup_handlers({
+		-- function(server_name)
+			-- require('lspconfig')[server_name].setup({})
+			-- -- vim.notify("LLLL ".. server_name)
+		-- end
+	-- })
+
 	require('mason-lspconfig').setup({
 		automatic_installation = true,
-		ensure_installed = { 'lua_ls', 'awk_ls', 'bashls', }
+		ensure_installed = { 'lua_ls', 'bashls', 'eslint' }
+		-- ensure_installed = { 'lua_ls', 'bashls', 'harper_ls' }
+		-- ensure_installed = { 'lua_ls', 'awk_ls', 'bashls', }
 		-- 'gofumpt', 'gomodifytags', 'gopls', 'gospel', 'gotests', 
 		-- 'iferr', 'impl', 'json-to-struct', 'nilaway', 'revive', 'staticcheck', 'templ',
 		-- 'semgrep',
@@ -135,13 +150,41 @@ M.setup_mason_lspconfig = function(set, zz)
 		},
 	}
 
+	local fuck_off_with_your_spellcheck_in_code = false
+	lspconfig.harper_ls.setup({
+		settings = {
+			["harper-ls"] = {
+				diagnosticSeverity = "hint", -- hint, information, warning, error
+				userDictPath = [[C:\tmp\harper_ls.dict]],
+				linters = {
+					spell_check = fuck_off_with_your_spellcheck_in_code,
+					sentence_capitalization = fuck_off_with_your_spellcheck_in_code,
+
+					spelled_numbers = false,
+					an_a = true,
+					unclosed_quotes = true,
+					wrong_quotes = false,
+					long_sentences = true,
+					repeated_words = true,
+					spaces = true,
+					matcher = true,
+					correct_number_suffix = true,
+					number_suffix_capitalization = true,
+					multiple_sequential_pronouns = true,
+					linking_verbs = false
+				}
+			}
+		},
+	})
+
 
 	-- lspconfig.pyright.setup {}
 	-- lspconfig.tsserver.setup {}
 	-- lspconfig.rust_analyzer.setup { settings = { ['rust-analyzer'] = {}, }, }
-	lspconfig.awk_ls.setup {}
+	-- lspconfig.awk_ls.setup {}
 	lspconfig.bashls.setup {}
 	lspconfig.gopls.setup {}
+	lspconfig.eslint.setup {}
 
 end
 

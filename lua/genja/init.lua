@@ -40,7 +40,7 @@
 vim.cmd 'colorscheme lunaperche'
 require 'genja.fn'          -- functions
 
-if (is_started_from_windows_shell()) then
+	if (Is_started_from_windows_shell()) then
 	vim.loop.chdir(vim.env.Userprofile) end
 
 Myleige( ' ',   ',')        -- mapleader, maplocalleader
@@ -61,13 +61,31 @@ require 'genja.map'         --
 START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
 	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
-	local function add_dir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
+	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
+	local function add_dir(e, drive) if drive then if NetUseDrive(drive) then InsertDir(e) end else InsertDir(e) end end
+	-- check if `net drive X:` is available.
+	-- This is intended to prevent IO timeouts caused by IsDir() aka vim.loop.fs_stat
+	-- ... the dashboard still seems to hang when drives are unmounted. dunno what's causing that.
+	function NetUseDrive(drive)
+		local handle = io.popen('cmd /c "net use  '..drive..': 2>nul && echo yes"')
+		if nil ~= handle then
+			local output = handle:read('*a')
+			if "yes" == StripNewlines(output) then
+				return true end end return false
+	end
+
+
+
 	if vim.fn.has('Windows') then
-		add_dir('O:/H1/notes')
+		add_dir('A:/_setup/bootstrap')
+		add_dir('J:/bin', 'J')
+		add_dir('J:/notes', 'J')
+		add_dir('J:/reference', 'J')
+		add_dir('O:', 'O') -- outer
 		add_dir('A:/workspace')
-		add_dir('A:/workspace')
-		-- add_dir('P:/cinema')
-		add_dir('V:')
+		add_dir('P:/backup/lin/balmora-2023.files/Base/home/jaroslav', 'p')
+		add_dir('P:/cinema', 'p')
+		add_dir('V:', 'v') --video
 		add_dir(vim.env.Userprofile)
 		else
 		add_dir(vim.env.HOME)
