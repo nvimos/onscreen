@@ -2,7 +2,7 @@
 
 return { {
 	'nvimdev/dashboard-nvim',
-	enabled = false,
+	enabled = true,
 	lazy = false,
 	keys = {
 		{ '<leader>jD', vim.cmd.Dashboard,  desc = 'Dashboard' },

@@ -140,8 +140,6 @@ vim.keymap.set('v', '<C-/>', '<cmd>norm gc<CR>')
 -- vim.keymap.set('v', '<C-/>', ':norm 0i//<CR>')
 -- vim.keymap.set('v', '<M-/>', ':norm 0xx<CR>')
 
-vim.keymap.set('n', '<leader>fml-', '<cmd>CellularAutomaton make_it_rain<CR>')
-vim.keymap.set('n', '<leader>fml=', '<cmd>CellularAutomaton scramble<CR>')
 
 -- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
 vim.keymap.set({'n', 'v'},  '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    {noremap = true, desc = [[remove empty lines in visual block]]})
@@ -187,39 +185,12 @@ vim.keymap.set('n', "<leader>t0", "<cmd>tabmove 0<cr>", { desc = "tabmove 0" })
 vim.keymap.set('n', "<leader>t-", "<cmd>tabmove -1<cr>", { desc = "tabmove left" })
 vim.keymap.set('n', "<leader>t=", "<cmd>tabmove +1<cr>", { desc = "tabmove right" })
 
-vim.keymap.set('n', "<leader>ft", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
-vim.keymap.set('n', "<leader>fw", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
-
-
-
-local function init_harpoon()
-	local ok, _ = pcall( require, "harpoon")
-	if not ok then
-		return
-	end
-	local mark = require("harpoon.mark")
-	local ui = require("harpoon.ui")
-	-- local function toggle_file_mark() harpoon_mark.add_file() end
-
-	vim.keymap.set("n", "<leader>ea", mark.toggle_file, { desc = 'harpoon mark on/off' })
-	vim.keymap.set("n", "<leader>ej", function() ui.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
-
-	-- vim.keymap.set("n", "<M-e>", function() ui.toggle_quick_menu() end, { desc = 'harpoon quickmenu'})
-	-- vim.keymap.set("n", "<M-j>", function() ui.nav_file(1) end, { desc = 'harpoon 1'})
-	-- vim.keymap.set("n", "<M-w>", function() ui.nav_file(2) end, { desc = 'harpoon 2'})
-	-- vim.keymap.set("n", "<M-f>", function() ui.nav_file(3) end, { desc = 'harpoon 3'})
-	-- vim.keymap.set("n", "<M-p>", function() ui.nav_file(4) end, { desc = 'harpoon 4'})
-end; init_harpoon()
-
 
 vim.keymap.set('', '<leader>w`', ':quit<CR>', { desc = ':quit' } )
 vim.keymap.set('',     '<C-W>`', ':quit<CR>', { desc = ':quit' } )
 
 -- move to plugin spec -- vim.keymap.set('', '<leader>jD', vim.cmd.Dashboard, { desc = 'Dashboard' } )
 vim.keymap.set('', '<leader>jm', vim.cmd.MRU, { desc = 'MRU' } )
-
-
-
 
 
 -- vim.keymap.set('n', '<S-F5>', ':source %<CR>
