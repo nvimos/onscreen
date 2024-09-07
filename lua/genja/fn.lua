@@ -106,16 +106,13 @@ end
 
 -- /util
 
-
-function Myleige(g, l)
-	vim.g.mapleader      = g or [[\]]
-	vim.g.maplocalleader = l or [[ ]]
-end
-
 local UserComm = vim.api.nvim_create_user_command
 
 function Cd(to)
-	vim.api.nvim_call_function("chdir", { to }); vim.cmd [[pwd]]
+	vim.api.nvim_call_function('chdir', { to })
+	vim.api.nvim_command('pwd')
+-- vim.cmd [[pwd]]
+-- vim.loop.chdir(vim.env.Userprofile) end
 end
 
 UserComm('Winfo', function(c)
@@ -218,7 +215,7 @@ function CycleDirs(dirlist)
 	end
 end
 
-function Is_started_from_windows_shell()
+function Started_from_windows_shell()
 	return false or
 		([[nvim-qt.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim-qt.exe$']])[1]) or
 		([[nvim.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim.exe$']])[1])

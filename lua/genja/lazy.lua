@@ -1,8 +1,8 @@
---[[
-	This file has new-ish plugins which are under evaluation.
-	As soon as it's confirmed good/needed, it is moved to genja/lazy-plugs
-	There is also the RUNTIME/pluginz for lazy-configs from others.
---]]
+-- This file has new plugins undergoing evaluation.
+-- When confirmed as good enough, they can go to
+--
+-- VIM/genja/lazy.lua
+-- VIM/lua/lazyp/
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -11,10 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
---[[
-	PluginSpec
-	:help lazy.nvim-lazy.nvim-plugin-spec
-]]
+-- :help lazy.nvim-lazy.nvim-plugin-spec
 PluginSpec = {
 	-- { import = "genja.lazy-plug" },   -- custom lazy-plugin-specs
 	-- { import = 'pluginz' },           -- plugin LPSs from other people on github

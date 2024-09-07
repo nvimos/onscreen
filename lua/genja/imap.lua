@@ -94,7 +94,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'diag prev' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'diag next' })
 vim.keymap.set('n', '<leader>cd', vim.diagnostic.setloclist, { desc = 'diag setlocallist' })
 vim.keymap.set('n', '<leader>c?', vim.diagnostic.open_float, { desc = 'diag open float' }) -- just use F4 / shift-F4 instead
-vim.keymap.set('n', '<leader>cc', vim.diagnostic.open_float, { desc = 'diag open float' })
 --[[ map keys when a server attaches to a buffer ]]--
 vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP Actions',

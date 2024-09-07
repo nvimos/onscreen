@@ -15,177 +15,185 @@
 local M = {}
 
 local err = vim.api.nvim_err_writeln
+local notify = vim.notify
 
-local nvims_capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local nvims_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 
-local lspconfig = require('lspconfig')
-local util = require "lspconfig/util"
+-- require('lspconfig').util.default_config = vim.tbl_extend('force',
+-- 	require('lspconfig').util.default_config, {
+-- 		autostart = true,
+-- 		capabilities = vim.lsp.protocol.make_client_capabilities(),
+-- 	})
 
-lspconfig.util.default_config = vim.tbl_extend('force',
-lspconfig.util.default_config, {
-	autostart = true,
-	capabilities = vim.lsp.protocol.make_client_capabilities(),
 
-	-- M.capabilities = vim.lsp.protocol.make_client_capabilities()
-	-- capabilities = M.capabilities,
-	-- capabilities = nvims_capabilities
-	-- handlers = {
-	-- 	["window/logMessage"] = function(err, method, params, client_id)
-	-- 		if params and params.type <= vim.lsp.protocol.MessageType.Log then
-	-- 			vim.lsp.handlers["window/logMessage"](err, method, params, client_id)
-	-- 		end
-	-- 	end,
-	-- 	["window/showMessage"] = function(err, method, params, client_id)
-	-- 		if params and params.type <= vim.lsp.protocol.MessageType.Warning.Error then
-	-- 			vim.lsp.handlers["window/showMessage"](err, method, params, client_id)
-	-- 		end
-	-- 	end,
-	-- }
-})
+-- -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/configs/lspconfig.lua
+-- M.capabilities = vim.lsp.protocol.make_client_capabilities()
+-- -- capabilities.textDocument.completion.completionItem.snippetSupport = true -- required for the visualstudio lsps (css, html, etc)
+-- M.capabilities.textDocument.completion.completionItem = {
+-- 	documentationFormat = { "markdown", "plaintext" },
+-- 	snippetSupport = true,
+-- 	preselectSupport = true,
+-- 	insertReplaceSupport = true,
+-- 	labelDetailsSupport = true,
+-- 	deprecatedSupport = true,
+-- 	commitCharactersSupport = true,
+-- 	tagSupport = { valueSet = { 1 } },
+-- 	resolveSupport = {
+-- 		properties = {
+-- 			"documentation",
+-- 			"detail",
+-- 			"additionalTextEdits",
+-- 		},
+-- 	},
+-- }
+--
 
--- -- Capabilities required for the visualstudio lsps (css, html, etc)
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/configs/lspconfig.lua
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem = {
-	documentationFormat = { "markdown", "plaintext" },
-	snippetSupport = true,
-	preselectSupport = true,
-	insertReplaceSupport = true,
-	labelDetailsSupport = true,
-	deprecatedSupport = true,
-	commitCharactersSupport = true,
-	tagSupport = { valueSet = { 1 } },
-	resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	},
+local eils_not_sure = {
+	'prettier',
+	'awk_ls', -- requires a c compiler?
+	'gofumpt',
+	'gomodifytags',
+	'gopls',
+	'gospel',
+	'gotests',
+	'harper_ls', -- disable spellcheck, works with js?
+	'iferr',
+	'impl',
+	'json-to-struct',
+	'nilaway',
+	'revive',
+	'semgrep',
+	'snyk',
+	'sonarlint-language-server',
+	'staticcheck',
+	'templ',
+	'trivy',
 }
+local eils = {}
+local function ei(ls)
+	if ls then
+		table.insert(eils, ls)
+	end
+	return eils
+end
+ei('lua_ls')
+ei('bashls')
+ei('biome')
+-- ei('eslint')
 
 
-
+-- this is called from NVIM/lua/lazyp/lsp
 M.setup_mason_lspconfig = function(set, zz)
-
-	-- vim.notify [[setup mason]]
-	-- vim.notify ([[caps cmp]] .. vim.inspect(  vim.tbl_keys(nvims_capabilities)))
-	-- vim.notify ([[caps made]] .. vim.inspect( vim.tbl_keys(M.capabilities)))
-
-
-	-- for i, e in pairs(set) do
-		-- vim.notify( [[setup mason1 ]] .. i .. ': ' .. vim.inspect(e))
-	-- end
-
-
-
-	-- vim.notify( [[caps: ]]  .. vim.inspect(nvims_capabilities))
-
-
-	-- local default_setup__bridge_cmp_with_lsp = function(server)
-	-- 	require('lspconfig')[server].setup({
-	-- 		capabilities = nvims_capabilities
-	-- 	})
-	-- end
-
 
 	require('mason').setup({})
 
-	-- require('mason-lspconfig').setup_handlers({
-		-- function(server_name)
-			-- require('lspconfig')[server_name].setup({})
-			-- -- vim.notify("LLLL ".. server_name)
-		-- end
-	-- })
-
 	require('mason-lspconfig').setup({
 		automatic_installation = true,
-		ensure_installed = { 'lua_ls', 'bashls', 'eslint' }
-		-- ensure_installed = { 'lua_ls', 'bashls', 'harper_ls' }
-		-- ensure_installed = { 'lua_ls', 'awk_ls', 'bashls', }
-		-- 'gofumpt', 'gomodifytags', 'gopls', 'gospel', 'gotests', 
-		-- 'iferr', 'impl', 'json-to-struct', 'nilaway', 'revive', 'staticcheck', 'templ',
-		-- 'semgrep',
-		-- 'snyk', 'trivy',
-		-- 'sonarlint-language-server',
+		ensure_installed = ei()
 	})
 
-	require('lspconfig').lua_ls.setup({
-		settings = {
-			Lua = {
-				runtime = { version = 'LuaJIT' },
-				diagnostics = { globals = { 'vim' } },
-				workspace = {
-					library = {
-						[vim.fn.expand "$VIMRUNTIME/lua"] = true,
-						[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-						[vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-						[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-						[vim.fn.stdpath "data" .. "/lazy"] = true,
-					},
-					maxPreload = 100000,
-					preloadFileSize = 10000,
-				},
-			}
-		}
-	})
+	-- require('lspconfig').lua_ls.setup({
+	-- 	filetypes = { 'lua' },
+	-- 	settings = {
+	-- 		Lua = {
+	-- 			runtime = { version = 'LuaJIT' },
+	-- 			diagnostics = { globals = { 'vim' } },
+	-- 			workspace = {
+	-- 				library = {
+	-- 					[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+	-- 					[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+	-- 					[vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+	-- 					[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+	-- 					[vim.fn.stdpath "data" .. "/lazy"] = true,
+	-- 				},
+	-- 				maxPreload = 100000,
+	-- 				preloadFileSize = 10000,
+	-- 			},
+	-- 		}
+	-- 	}
+	-- })
 
-	lspconfig.gopls.setup {
-		-- on_attach = on_attach,
-		-- capabilities = capabilities,
-		cmd = {"gopls"},
-		filetypes = { "go", "gomod", "gowork", "gotmpl" },
-		root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-		settings = {
-			gopls = {
-				completeUnimported = true,
-				usePlaceholders = true,
-				analyses = {
-					unusedparams = true,
-				},
-			},
-		},
-	}
-
-	local fuck_off_with_your_spellcheck_in_code = false
-	lspconfig.harper_ls.setup({
-		settings = {
-			["harper-ls"] = {
-				diagnosticSeverity = "hint", -- hint, information, warning, error
-				userDictPath = [[C:\tmp\harper_ls.dict]],
-				linters = {
-					spell_check = fuck_off_with_your_spellcheck_in_code,
-					sentence_capitalization = fuck_off_with_your_spellcheck_in_code,
-
-					spelled_numbers = false,
-					an_a = true,
-					unclosed_quotes = true,
-					wrong_quotes = false,
-					long_sentences = true,
-					repeated_words = true,
-					spaces = true,
-					matcher = true,
-					correct_number_suffix = true,
-					number_suffix_capitalization = true,
-					multiple_sequential_pronouns = true,
-					linking_verbs = false
-				}
-			}
-		},
-	})
+	-- require('lspconfig').gopls.setup {
+	-- 	-- on_attach = on_attach,
+	-- 	-- capabilities = capabilities,
+	-- 	cmd = { 'gopls' },
+	-- 	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+	-- 	root_dir = require('lspconfig/util').root_pattern('go.work', 'go.mod', '.git'),
+	-- 	settings = {
+	-- 		gopls = {
+	-- 			completeUnimported = true,
+	-- 			usePlaceholders = true,
+	-- 			analyses = {
+	-- 				unusedparams = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- }
+	--
 
 
-	-- lspconfig.pyright.setup {}
-	-- lspconfig.tsserver.setup {}
-	-- lspconfig.rust_analyzer.setup { settings = { ['rust-analyzer'] = {}, }, }
-	-- lspconfig.awk_ls.setup {}
-	lspconfig.bashls.setup {}
-	lspconfig.gopls.setup {}
-	lspconfig.eslint.setup {}
+	--local fuck_off_with_your_spellcheck_in_code = false
+	--require('lspconfig').harper_ls.setup({
+	--	autostart = false,
+	--	-- filetypes = { 'javascript' },
+	--	settings = {
+	--		['harper-ls'] = {
+	--			diagnosticSeverity = 'hint', -- hint, information, warning, error
+	--			userDictPath = [[C:\tmp\harper_ls.dict]],
+	--			linters = {
+	--				spell_check = fuck_off_with_your_spellcheck_in_code,
+	--				sentence_capitalization = fuck_off_with_your_spellcheck_in_code,
+	--				spelled_numbers = false,
+	--				an_a = true,
+	--				unclosed_quotes = true,
+	--				wrong_quotes = false,
+	--				long_sentences = true,
+	--				repeated_words = true,
+	--				spaces = true,
+	--				matcher = true,
+	--				correct_number_suffix = true,
+	--				number_suffix_capitalization = true,
+	--				multiple_sequential_pronouns = true,
+	--				linking_verbs = false
+	--			}
+	--		}
+	--	},
+	--})
 
+
+	-- require('lspconfig').pyright.setup {}
+	-- require('lspconfig').tsserver.setup {}
+	-- require('lspconfig').rust_analyzer.setup { settings = { ['rust-analyzer'] = {}, }, }
+	-- require('lspconfig').awk_ls.setup {}
+
+	-- require('lspconfig').bashls.setup {}
+	-- require('lspconfig').gopls.setup {}
+	-- require('lspconfig').biome.setup {
+	-- 	filetypes = 'javascript',
+	-- 	-- root_dir = require('lspconfig/util').root_pattern('index.js'),
+	-- 	root_dir = function(filename, bufnr)
+	-- 		vim.notify("biome", filename, bufnr)
+	-- 		-- return [[A:\workspace\doodles\js]]
+	-- 		return filename
+	-- 	end,
+	-- }
+
+	-- require('lspconfig').eslint.setup {
+		-- filetypes = 'javascript',
+		-- -- root_dir = require('lspconfig/util').root_pattern('index.js'),
+	-- }
+
+end
+
+
+M.debug = function()
+	-- vim.lsp.get_active_clients()
+
+	for i, e in ipairs(  vim.lsp.get_clients({ bufnr = 0 }) ) do
+		print("client[".. i .."] = ".. e.name)
+
+	end
 end
 
 return M
@@ -194,8 +202,7 @@ return M
 --[[ setup {}
 
 
-Note: all entries passed to `setup {}` override the entry in the default
-configuration. There is no composition.
+Note: all entries passed to `setup {}` override the entry in the default configuration. There is no composition.
 
 
 - {root_dir}

@@ -1,56 +1,15 @@
---[[
-	Inspiration
-	https://github.com/folke/lazy.nvim
-	https://github.com/ThePrimeagen/init.lua
-
-	Docs
-	https://jacobsimpson.github.io/nvim-lua-manual/docs/interacting/
-
-	Distros
-	https://github.com/e-cal/evim
-	https://github.com/LunarVim/Neovim-from-scratch/tree/master/lua/user
-	https://github.com/nvim-lua/kickstart.nvim/tree/master/lua/kickstart/plugins
-
-	Plugins
-	https://vimawesome.com/plugin/vim-devicons
-
-	Examples
-	https://gist.github.com/s1n7ax
-	https://gist.github.com/s1n7ax/6885a550633fa8a285fdef2c0f8044ad generate doc-comments
-	https://github.com/wincent/wincent/blob/aa3a322e3a911dabe0ef398ebb1fd7c77209b8ac/roles/dotfiles/files/.vim/plugin/mappings/leader.vim
-
-
-	Dotfiles (funny, or "simple")
-	https://github.com/Traap/nvim - old timer has his own system.
-	https://github.com/beauwilliams/Dotfiles/tree/master/Vim/nvim - full of life ossie with code comments spanning 88-145 dashes :D
-
-
-	Plugins to study
-	https://github.com/ojroques/nvim-buildme/blob/main/lua/buildme.lua
-
-	Intro to fugitive
-	https://jeancharles.quillet.org/posts/2022-03-02-Practical-introduction-to-fugitive.html
-
-
-	Other
-	https://www.nerdfonts.com/cheat-sheet
-	https://github.com/nvim-neorg/neorg
-]]
-
 vim.cmd 'colorscheme lunaperche'
 require 'genja.fn'          -- functions
 
-	if (Is_started_from_windows_shell()) then
-	vim.loop.chdir(vim.env.Userprofile) end
+if (Started_from_windows_shell()) then
+	vim.loop.chdir(vim.env.Userprofile)
+end
 
-Myleige( ' ',   ',')        -- mapleader, maplocalleader
-Myleige([[ ]], [[,]])       -- mapleader, maplocalleader
+vim.g.mapleader      = ' '
+vim.g.maplocalleader = ','
 
 require 'genja.opt'         -- just static options
--- require 'genja.auto-alias'  -- these should be safe foo
-
--- ./auto-alias.vim
-vim.cmd ([[source ]]..CONFIG..[[/lua/genja/auto-alias.vim]]) --  can vim.cmd[[ ]] support vimscript syntax?
+vim.cmd ([[source ]]..CONFIG..[[/lua/genja/auto-alias.vim]])
 
 require 'genja.imap'        -- early maps, if config breaks
 require 'genja.auto'        -- autocommads, automation
@@ -71,11 +30,7 @@ START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locatio
 		if nil ~= handle then
 			local output = handle:read('*a')
 			if "yes" == StripNewlines(output) then
-				return true end end return false
-	end
-
-
-
+				return true end end return false end
 	if vim.fn.has('Windows') then
 		add_dir('A:/_setup/bootstrap')
 		add_dir('J:/bin', 'J')
@@ -89,7 +44,43 @@ START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locatio
 		add_dir(vim.env.Userprofile)
 		else
 		add_dir(vim.env.HOME)
-		end
-		add_dir(vim.fn.stdpath('config'))
-		add_dir(vim.fn.stdpath('data'))
+	end
+	add_dir(vim.fn.stdpath('config'))
+	add_dir(vim.fn.stdpath('data'))
 	return sd end)()
+
+--[[
+	Inspiration
+	- https://github.com/folke/lazy.nvim
+	- https://github.com/ThePrimeagen/init.lua
+
+	Docs
+	- https://jacobsimpson.github.io/nvim-lua-manual/docs/interacting/
+
+	Distros
+	- https://github.com/e-cal/evim
+	- https://github.com/LunarVim/Neovim-from-scratch/tree/master/lua/user
+	- https://github.com/nvim-lua/kickstart.nvim/tree/master/lua/kickstart/plugins
+
+	Plugins
+	- https://vimawesome.com/plugin/vim-devicons
+
+	Examples
+	- https://gist.github.com/s1n7ax
+	- https://gist.github.com/s1n7ax/6885a550633fa8a285fdef2c0f8044ad generate doc-comments
+	- https://github.com/wincent/wincent/blob/aa3a322e3a911dabe0ef398ebb1fd7c77209b8ac/roles/dotfiles/files/.vim/plugin/mappings/leader.vim
+
+	Dotfiles (funny, or "simple")
+	- https://github.com/Traap/nvim - old timer has his own system.
+	- https://github.com/beauwilliams/Dotfiles/tree/master/Vim/nvim - full of life ossie with code comments spanning 88-145 dashes :D
+
+	Plugins to study
+	- https://github.com/ojroques/nvim-buildme/blob/main/lua/buildme.lua
+
+	Intro to fugitive
+	- https://jeancharles.quillet.org/posts/2022-03-02-Practical-introduction-to-fugitive.html
+
+	Other
+	- https://www.nerdfonts.com/cheat-sheet
+	- https://github.com/nvim-neorg/neorg
+]]
