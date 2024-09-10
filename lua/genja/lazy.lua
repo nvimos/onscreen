@@ -6,15 +6,15 @@
 --
 -- This file also bootstraps the lazy plugin manager.
 
-(function(lazypath)
-	lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-	if not vim.loop.fs_stat(lazypath) then
-		local repo = 'https://github.com/folke/lazy.nvim.git'
-		vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', repo, lazypath })
-		end; vim.opt.rtp:prepend(lazypath) end)()
+(function(LazyData)
+	LazyData = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+	if not vim.loop.fs_stat(LazyData) then
+		vim.fn.system({'git', 'clone', '--filter=blob:none', '--branch=stable',
+			'https://github.com/folke/lazy.nvim.git', LazyData})
+		end; vim.opt.rtp:prepend(LazyData) end)()
 
 -- :help lazy.nvim-lazy.nvim-plugin-spec
-PluginSpec = {{ import = 'lazyp' }} -- lazy plugin specs from (VIM/lua/lazyp)
+PluginSpec = {{import = 'lazyp'}, {import = 'lazyo'}} -- lazy plugin specs from (VIM/lua/lazy{p,o})
 
 NewPlugins = {
 
@@ -36,6 +36,9 @@ NewPlugins = {
 	-- { gopher.nvim },
 
 	-- 2024-09
+	-- https://github.com/stevearc/resession.nvim
+	-- https://github.com/famiu/feline.nvim
+	-- https://github.com/willothy/nvim-cokeline
 	-- https://github.com/skywind3000/asyncrun.vim
 	-- https://github.com/nvimdev/lspsaga.nvim
 	-- https://github.com/debugloop/telescope-undo.nvim
@@ -51,7 +54,7 @@ NewPlugins = {
 
 table.foreach(NewPlugins, function(i, e) table.insert(PluginSpec, e) end)
 
-require('lazy').setup(PluginSpec, {
+require("lazy").setup(PluginSpec, {
 	dev = {
 		---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
 		path = [[A:\workspace]],

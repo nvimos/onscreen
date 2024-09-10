@@ -10,7 +10,12 @@ command!                         Tt      tabedit | Telescope
 command!                         To      tabedit | Telescope oldfiles
 
 
-command! Lazygit :FloatermNew --height=0.9 --width=0.9 --wintype=float --name=lazygit --autoclose=2 lazygit <CR>
+command! Lazygit :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=2 lazygit <cr>
+command! Python  :FloatermNew                            --wintype=vsplit --name=python python <cr>
+
+command! Bash    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=2 bash <cr>
+command! Ranger  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=2 ranger --cmd="cd ~"
+
 
 
 command! QQQ tabdo write | qa
