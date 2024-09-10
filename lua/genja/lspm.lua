@@ -4,6 +4,8 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
 -- https://github.com/luals/lua-language-server {{loop}}
 -- https://lsp-zero.netlify.app/v3.x/blog/you-might-not-need-lsp-zero.html
+--  https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/lsp.lua
+
 -- :help vim.diagnostic.*
 -- :help lspconfig-setup
 

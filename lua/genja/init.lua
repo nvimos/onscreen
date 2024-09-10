@@ -64,6 +64,7 @@ START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locatio
 
 	Plugins
 	- https://vimawesome.com/plugin/vim-devicons
+	- https://kkalamarski.me/essential-neovim-plugins
 
 	Examples
 	- https://gist.github.com/s1n7ax

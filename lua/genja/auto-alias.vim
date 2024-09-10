@@ -10,6 +10,8 @@ command!                         Tt      tabedit | Telescope
 command!                         To      tabedit | Telescope oldfiles
 
 
+command! Lazygit :FloatermNew --height=0.9 --width=0.9 --wintype=float --name=lazygit --autoclose=2 lazygit <CR>
+
 
 command! QQQ tabdo write | qa
 command! JJJ tabdo write | qa
