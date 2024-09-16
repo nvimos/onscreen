@@ -17,7 +17,7 @@ local function dirlist(o)
 	return cat_dirs
 end
 
-local ask_where_to_move = function(opts)
+local ask_where_to_go = function(opts)
 	opts = opts or {}
 	local pi = pickers.new(opts, {
 		prompt_title = 'cd to...',
@@ -52,9 +52,16 @@ local ask_where_to_move = function(opts)
 end
 
 local mydirs = function(opts, foo)
+	-- local drop = require('telescope.themes').get_dropdown()
+
 	local drop = require('telescope.themes').get_dropdown()
+	drop.layout_strategy = drop.layout_strategy
+	drop.layout_config = drop.layout_config
+	drop.layout_config.anchor = "NW"
+
+
 	drop.mydirs = opts
-	ask_where_to_move(drop)
+	ask_where_to_go(drop)
 end
 
 

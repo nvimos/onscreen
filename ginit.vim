@@ -1,4 +1,6 @@
-" Enable Mouse
+" Config for nvim-qt
+
+" enable mouse in all modes
 set mouse=a
 
 " " Set Editor Font
