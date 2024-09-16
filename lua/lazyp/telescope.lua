@@ -9,6 +9,7 @@ vim.api.nvim_create_autocmd({'UIEnter'} , {
 		else
 			ts.load_extension 'mycolors'
 			ts.load_extension 'mydirs'
+			ts.load_extension 'mylunsj'
 			ts.load_extension 'undersort'
 		end
 
