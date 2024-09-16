@@ -5,17 +5,23 @@ if (Started_from_windows_shell()) then
 	vim.loop.chdir(vim.env.Userprofile)
 end
 
+-- vim.o.guifont = 'Cascadia Code Light:h14:l'
+
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
+require 'genja.map-zero'    -- stable early maps, if config breaks
 require 'genja.opt'         -- just static options
-vim.cmd ([[source ]]..CONFIG..[[/lua/genja/auto-alias.vim]])
 
-require 'genja.imap'        -- early maps, if config breaks
-require 'genja.auto'        -- autocommads, automation
-require 'genja.hilite'      --
+vim.cmd ('source '..CONFIG..'/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
+vim.cmd ('source '..CONFIG..'/lua/genja/hilite.vim') -- colors
+require 'genja.hilite'.setup() -- colors
+
+require 'genja.auto'        -- autocommads
 require 'genja.lazy'        -- genja/lazy.lua -> import { lazyp }
-require 'genja.map'         --
+require 'genja.map-lsp'
+require 'genja.map-telescope'
+require 'genja.map-convoluted'
 
 START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
@@ -56,6 +62,7 @@ START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locatio
 
 	Docs
 	- https://jacobsimpson.github.io/nvim-lua-manual/docs/interacting/
+	- https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages
 
 	Distros
 	- https://github.com/e-cal/evim

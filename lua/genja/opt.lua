@@ -31,24 +31,27 @@ vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'mov
 
 
 --[[ status bars , lines ]]--
-
-
 require 'genja.winbar' -- Winbar()
 require 'genja.statusline' -- Statusline()
-
---vim.o.winbar = "%{v:lua.Winbar()}" -- %{} not expanded as statusline
-vim.o.winbar = "%{%v:lua.Winbar()%}" -- %{%} expanded as statusline
-vim.o.statusline = '%!VimStatusline()'
+-- %{} not expanded as statusline
+-- %{%} expanded as statusline
+vim.o.winbar = "%{%v:lua.Winbar()%}"
 vim.o.statusline = '%{%v:lua.Statusline()%}'
+
 vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never
 
 
 --[[ vim options ]]--
 
 vim.opt.foldcolumn = '2'
+vim.opt.hidden = true
 
 
 -- vim.o.listchars = 'leadmultispace:>   ·,lead:>,multispace:· ,space:·,tab: '
+
+vim.o.modeline = true
+vim.o.modelines = 2
+
 vim.o.showbreak = '⬉      '                              -- display this after wrapped
 vim.o.listchars = 'eol:󰭿,tab: '
 vim.o.listchars = 'eol:`,tab: '

@@ -1,14 +1,5 @@
 CONFIG = vim.fn.stdpath('config')
 
-
-function Telescope_find_dirs()
-	local te = require 'telescope.builtin'
-	te.find_files({
-		hidden = false,
-		search_dirs = START_DIRS
-	})
-end
-
 -- util
 function FileExists(path)
 	local stat = vim.loop.fs_stat(path)
@@ -93,8 +84,8 @@ function Split(inputstr, sep)
 		sep = "%s" -- Default separator is any whitespace
 	end
 	if sep == '' then -- Special case: convert the string to a table
-		for i=1, #inputstr do
-			table.insert(t, inputstr:sub(i,i))
+		for i = 1, #inputstr do
+			table.insert(t, inputstr:sub(i, i))
 		end
 		return t
 	end
@@ -111,9 +102,18 @@ local UserComm = vim.api.nvim_create_user_command
 function Cd(to)
 	vim.api.nvim_call_function('chdir', { to })
 	vim.api.nvim_command('pwd')
--- vim.cmd [[pwd]]
--- vim.loop.chdir(vim.env.Userprofile) end
+	-- vim.cmd [[pwd]]
+	-- vim.loop.chdir(vim.env.Userprofile) end
 end
+
+vim.api.nvim_create_user_command('ClearShada', function()
+	local shada_path = vim.fn.stdpath('data') .. '/shada/'
+	local tmp_files = vim.fn.glob(shada_path .. '*.tmp*', true, true)
+	for _, file in ipairs(tmp_files) do
+		os.remove(file)
+	end
+	print('Cleared ' .. #tmp_files .. ' temporary ShaDa files')
+end, {})
 
 UserComm('Winfo', function(c)
 	local zzz = vim.api.nvim_get_current_buf()
@@ -220,7 +220,6 @@ function Started_from_windows_shell()
 		([[nvim-qt.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim-qt.exe$']])[1]) or
 		([[nvim.exe]] == vim.fn.readdir('.', [[v:val =~ 'nvim.exe$']])[1])
 end
-
 
 -- hm...
 function os.capture(cmd, raw)
@@ -348,10 +347,10 @@ local tags = {
 
 	"ebook", "elia", "ethel", "evo", "extras",
 	"ffndvd", "flux", "fqm", "ghosts", "haggis",
-	 "hdtv", "hevc", "hive", "hmax", "%[hst%]",
+	"hdtv", "hevc", "hive", "hmax", "%[hst%]",
 	"hulu", "hybris", "imbt", "internal", "ipt", "kacy",
 	"ktr", "lama", "m00tv", "majestic", "megusta",
-	"mp4", "msd", "naisu", "nogrp",  "npw",
+	"mp4", "msd", "naisu", "nogrp", "npw",
 	"ntb", "ntsc", "paleale", "part", "phase", "proof",
 	"psychd", "qix", "redblade", "remastered", "repack",
 	"reward",
@@ -438,7 +437,8 @@ local strip_test = {
 	["flesh and blood"] = "Flesh and Blood 2017.HDRip.XviD.AC3-EVO/",
 	["four lions"] = "Four.Lions.2010.R1.NTSC.DVDR-CME/",
 	["heneral luna"] = "Heneral.Luna.2015.HC.720p.WEB-DL.AVC-PN/",
-	["i dont feel at home in this world anymore"] = "I.Dont.Feel.at.Home.in.This.World.Anymore.2017.HDRip.x264.AC3-Manning/",
+	["i dont feel at home in this world anymore"] =
+	"I.Dont.Feel.at.Home.in.This.World.Anymore.2017.HDRip.x264.AC3-Manning/",
 	["antz"] = "Antz.1998.DVDrip.x264.Dolby.Digital.5.1-MCH.mkv",
 	["a man for all seasons"] = "A.Man.for.All.Seasons.1966.480p.BluRay.x264-mSD/",
 	["the handmaiden"] = 'The.Handmaiden.2016.LIMITED.EXTENDED.720p.BluRay.x264-USURY/',

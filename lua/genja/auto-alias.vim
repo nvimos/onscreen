@@ -5,9 +5,12 @@ command! -nargs=* -complete=file T       tabedit <args>
 command! -nargs=* -complete=file Te      tabedit <args>
 command! -nargs=* -complete=file Tabedit tabedit <args>
 command! -nargs=1 -complete=help Th      tabedit | help <args> | only
+command! -nargs=1 -complete=help Tr      tabedit | help <args> | only
 command!                         Td      tabedit | Dashboard
 command!                         Tt      tabedit | Telescope
 command!                         To      tabedit | Telescope oldfiles
+
+command! DumpMappings :enew | put=execute('map')
 
 
 command! Lazygit :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=2 lazygit <cr>
@@ -48,13 +51,14 @@ endfunction
 
 " Abbreviations
 
-cnoreabbrev load:  source ~/tmp/viss
+"cnoreabbrev load:  source ~/tmp/viss
+"cnoreabbrev r:     source ~/tmp/viss
 cnoreabbrev j:     source ~/tmp/viss
-cnoreabbrev r:     source ~/tmp/viss
-cnoreabbrev save:  mksession! ~/tmp/viss \| qa
-cnoreabbrev save::  mksession! ~/tmp/viss
+cnoreabbrev s:     mksession! ~/tmp/viss \| qa
+cnoreabbrev save:  mksession! ~/tmp/viss
+"cnoreabbrev save::  mksession! ~/tmp/viss
 
- 
+
 cnoreabbrev e.   edit %:p:h
 cnoreabbrev te.  tabedit %:p:h
 cnoreabbrev te:  tabedit %:p:h
@@ -73,6 +77,9 @@ cnoreabbrev he:  vert help
 
 cnoreabbrev dgen DogeGenerate
 
+inoreabbrev .... …
+inoreabbrev ...( (…)
+inoreabbrev ...) (…)
 
 
 

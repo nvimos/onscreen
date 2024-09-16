@@ -137,8 +137,6 @@ local Triangle_upper = ' ' -- must use Nerd Font ?
 Triangle_upper = '\\'
 Triangle_upper = ' '
 
--- set guifont='3270 Nerd Font Mono:h16'
--- set guifont='Cascadia Code Light:h16:l'
 
 
 

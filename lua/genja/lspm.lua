@@ -4,7 +4,8 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
 -- https://github.com/luals/lua-language-server {{loop}}
 -- https://lsp-zero.netlify.app/v3.x/blog/you-might-not-need-lsp-zero.html
---  https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/lsp.lua
+-- https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/lsp.lua
+-- https://www.freecodecamp.org/news/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2/
 
 -- :help vim.diagnostic.*
 -- :help lspconfig-setup
@@ -14,10 +15,43 @@
 -- local err = vim.api.nvim_err_writeln; err("lsp.lua")
 
 
-local M = {}
-
 local err = vim.api.nvim_err_writeln
 local notify = vim.notify
+
+local eils = {}
+--[[
+	'prettier',
+	'awk_ls', -- requires a c compiler?
+	'gofumpt',
+	'gomodifytags',
+	'gopls',
+	'gospel',
+	'gotests',
+	'harper_ls', -- disable spellcheck, works with js?
+	'iferr',
+	'impl',
+	'json-to-struct',
+	'nilaway',
+	'revive',
+	'semgrep',
+	'snyk',
+	'sonarlint-language-server',
+	'staticcheck',
+	'templ',
+	'trivy',
+	]]
+local function ei(ls)
+	if ls then table.insert(eils, ls) end
+	return eils
+end
+
+local M = {
+	lspConfAugroup = vim.api.nvim_create_augroup('UserLspConfig', {}),
+	ensure_installs = ei
+}
+
+
+
 
 -- local nvims_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -51,88 +85,127 @@ local notify = vim.notify
 -- }
 --
 
-local eils_not_sure = {
-	'prettier',
-	'awk_ls', -- requires a c compiler?
-	'gofumpt',
-	'gomodifytags',
-	'gopls',
-	'gospel',
-	'gotests',
-	'harper_ls', -- disable spellcheck, works with js?
-	'iferr',
-	'impl',
-	'json-to-struct',
-	'nilaway',
-	'revive',
-	'semgrep',
-	'snyk',
-	'sonarlint-language-server',
-	'staticcheck',
-	'templ',
-	'trivy',
-}
-local eils = {}
-local function ei(ls)
-	if ls then
-		table.insert(eils, ls)
-	end
-	return eils
+local function lspconfig_lua()
+	require('lspconfig').lua_ls.setup({
+		filetypes = { 'lua' },
+		settings = {
+			Lua = {
+				runtime = { version = 'LuaJIT' },
+				diagnostics = { globals = { 'vim' } },
+				workspace = {
+					library = {
+						[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+						[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+						[vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+						[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+						[vim.fn.stdpath "data" .. "/lazy"] = true,
+					},
+					maxPreload = 100000,
+					preloadFileSize = 10000,
+				},
+			}
+		}
+	})
 end
-ei('lua_ls')
-ei('bashls')
-ei('biome')
+
+local function lspconfig_ts_js_css_html()
+	-- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
+	local caps = require('cmp_nvim_lsp').default_capabilities()
+	caps.textDocument.completion.completionItem.snippetSupport = true
+	require('lspconfig').tailwindcss.setup { capabilities = caps }
+	require('lspconfig').ts_ls.setup { capabilities = caps }
+	require('lspconfig').jsonls.setup { capabilities = caps }
+	require('lspconfig').eslint.setup { capabilities = caps }
+	require('lspconfig').cssls.setup { capabilities = caps }
+	require('lspconfig').html.setup { capabilities = caps }
+end
+
+
+local function lspconfig_go()
+	require('lspconfig').gopls.setup {
+		-- on_attach = on_attach,
+		-- capabilities = capabilities,
+		cmd = { 'gopls' },
+		filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+		root_dir = require('lspconfig/util').root_pattern('go.work', 'go.mod', '.git'),
+		settings = {
+			gopls = {
+				completeUnimported = true,
+				usePlaceholders = true,
+				analyses = {
+					unusedparams = true,
+				},
+			},
+		},
+	}
+end
+
+
+-- ◍ typescript-language-server
+
 -- ei('eslint')
 
 
 -- this is called from NVIM/lua/lazyp/lsp
+-- when neovim/nvim-lspconfig is loaded
 M.setup_mason_lspconfig = function(set, zz)
-
 	require('mason').setup({})
+	vim.api.nvim_create_autocmd('FileType', {
+		pattern = 'mason',
+		callback = function()
+			vim.api.nvim_buf_set_keymap(0, 'n', '<esc>', ':close<cr>', { noremap = true, silent = true })
+			vim.api.nvim_buf_set_keymap(0, 'n', '<c-w>', ':close<cr>', { noremap = true, silent = true })
+		end
+	})
 
+
+	ei('lua_ls')
+	ei('bashls')
+	-- ei('biome')
+	ei('ts_ls')
+	-- nathan long
+	ei('jsonls')
+	ei('eslint')
+	ei('cssls')
+	ei('html')
 	require('mason-lspconfig').setup({
 		automatic_installation = true,
 		ensure_installed = ei()
 	})
 
-	-- require('lspconfig').lua_ls.setup({
-	-- 	filetypes = { 'lua' },
-	-- 	settings = {
-	-- 		Lua = {
-	-- 			runtime = { version = 'LuaJIT' },
-	-- 			diagnostics = { globals = { 'vim' } },
-	-- 			workspace = {
-	-- 				library = {
-	-- 					[vim.fn.expand "$VIMRUNTIME/lua"] = true,
-	-- 					[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-	-- 					[vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-	-- 					[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-	-- 					[vim.fn.stdpath "data" .. "/lazy"] = true,
-	-- 				},
-	-- 				maxPreload = 100000,
-	-- 				preloadFileSize = 10000,
-	-- 			},
-	-- 		}
-	-- 	}
-	-- })
+	-- set omnifunc and tagfunc if available
+	vim.api.nvim_create_autocmd('LspAttach', {
+		desc = 'LSP capabilities',
+		group = M.lspConfAugroup,
+		callback = function(args)
+			local bufnr = args.buf
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+			if client then
+				if client.server_capabilities.completionProvider then
+					vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc' -- complete with <c-x><c-o>
+				end
+				if client.server_capabilities.definitionProvider then
+					vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
+				end
+			end
+		end,
+	})
+	-- disable omnifunc and tagfunc when client detaches
+	vim.api.nvim_create_autocmd("LspDetach", {
+		callback = function(args)
+			-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+			vim.cmd("setlocal tagfunc< omnifunc<")
+		end,
+	})
 
-	-- require('lspconfig').gopls.setup {
-	-- 	-- on_attach = on_attach,
-	-- 	-- capabilities = capabilities,
-	-- 	cmd = { 'gopls' },
-	-- 	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-	-- 	root_dir = require('lspconfig/util').root_pattern('go.work', 'go.mod', '.git'),
-	-- 	settings = {
-	-- 		gopls = {
-	-- 			completeUnimported = true,
-	-- 			usePlaceholders = true,
-	-- 			analyses = {
-	-- 				unusedparams = true,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- }
-	--
+	lspconfig_ts_js_css_html()
+
+	lspconfig_lua()
+
+	lspconfig_go()
+
+
+
 
 
 	--local fuck_off_with_your_spellcheck_in_code = false
@@ -182,19 +255,17 @@ M.setup_mason_lspconfig = function(set, zz)
 	-- }
 
 	-- require('lspconfig').eslint.setup {
-		-- filetypes = 'javascript',
-		-- -- root_dir = require('lspconfig/util').root_pattern('index.js'),
+	-- filetypes = 'javascript',
+	-- -- root_dir = require('lspconfig/util').root_pattern('index.js'),
 	-- }
-
 end
 
 
 M.debug = function()
 	-- vim.lsp.get_active_clients()
 
-	for i, e in ipairs(  vim.lsp.get_clients({ bufnr = 0 }) ) do
-		print("client[".. i .."] = ".. e.name)
-
+	for i, e in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+		print("client[" .. i .. "] = " .. e.name)
 	end
 end
 
@@ -257,12 +328,12 @@ Note: all entries passed to `setup {}` override the entry in the default configu
   language server attaches. Most commonly used for settings buffer
   local keybindings. See |lspconfig-keybindings| for a usage example.
 
-- {settings} `table <string, string|table|bool>`  
+- {settings} `table <string, string|table|bool>`
 
   The `settings` table is sent after initialization via a
   `workspace/didChangeConfiguration` notification from the Nvim client to
   the language server. These settings allow a user to change optional runtime
-  settings of the language server. 
+  settings of the language server.
 
 
 --
@@ -288,4 +359,4 @@ Note: all entries passed to `setup {}` override the entry in the default configu
     }
   )
 
-]]--
+]] --
