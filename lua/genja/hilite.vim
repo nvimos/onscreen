@@ -29,6 +29,9 @@ hi MatchParen guifg=orange guibg=NONE
 hi MatchParen guisp=orange gui=bold,standout,underline
 hi Visual     guifg=orange guibg=#332277 gui=bold
 
+hi Folded     guifg=#ffd787 guibg=#161616
+hi FoldColumn guifg=#ffd787
+
 " Dashboard
 
 hi DashboardHeader       ctermfg=Yellow guifg=#4793AF

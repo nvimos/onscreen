@@ -1,8 +1,11 @@
 vim.cmd 'colorscheme lunaperche'
 require 'genja.fn'          -- functions
+require 'genja.ft'          -- filetypes
+
+---@global Started_from_windows_shell
 
 if (Started_from_windows_shell()) then
-	vim.loop.chdir(vim.env.Userprofile)
+	vim.uv.chdir(vim.env.Userprofile)
 end
 
 -- vim.o.guifont = 'Cascadia Code Light:h14:l'
@@ -25,29 +28,33 @@ require 'genja.map-convoluted'
 
 START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
-	local function Norm(p) s, _ = p:gsub([[\]], [[/]]); return s end
+	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
 	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
-	local function add_dir(e, drive) if drive then if NetUseDrive(drive) then InsertDir(e) end else InsertDir(e) end end
-	-- check if `net drive X:` is available.
-	-- This is intended to prevent IO timeouts caused by IsDir() aka vim.loop.fs_stat
-	-- ... the dashboard still seems to hang when drives are unmounted. dunno what's causing that.
-	function NetUseDrive(drive)
-		local handle = io.popen('cmd /c "net use  '..drive..': 2>nul && echo yes"')
-		if nil ~= handle then
-			local output = handle:read('*a')
-			if "yes" == StripNewlines(output) then
-				return true end end return false end
+	local function add_dir(e) InsertDir(e) end
+	local home = function(p) local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/'..(p or ''))) end
 	if vim.fn.has('Windows') then
-		add_dir('A:/_setup/bootstrap')
-		add_dir('J:/bin', 'J')
-		add_dir('J:/notes', 'J')
-		add_dir('J:/reference', 'J')
-		add_dir('O:', 'O') -- outer
 		add_dir('A:/workspace')
-		add_dir('P:/backup/lin/balmora-2023.files/Base/home/jaroslav', 'p')
-		add_dir('P:/cinema', 'p')
-		add_dir('V:', 'v') --video
-		add_dir(vim.env.Userprofile)
+		table.insert(sd, '---')
+		add_dir('C:/Games/Openmw.DataFilesExamples')
+		add_dir('C:/Users/jazzo/AppData/Roaming/Vortex/morrowind/mods')
+		add_dir('C:/Games')
+		add_dir('C:/Games/OpenMW.master')
+		add_dir(home('Documents/my games/OpenMW'))
+		add_dir(home())
+
+		-- add_dir('O:')
+		-- add_dir('P:/backup/lin/balmora-2023.files/Base/home/jaroslav')
+		-- add_dir('P:/cinema')
+		-- add_dir('V:')
+
+		-- table.insert(sd, '---')
+		-- add_dir('J:/notes/gaming/morrowind')
+		-- -- add_dir('A:/_setup/bootstrap')
+		-- add_dir('J:/bin')
+		add_dir('J:/notes')
+		-- add_dir('J:/reference')
+
+
 		else
 		add_dir(vim.env.HOME)
 	end

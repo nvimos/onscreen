@@ -7,6 +7,7 @@ vim.g.dosbatch_colons_comment = true
 
 --[[ plugin settings ]]--
 vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
+vim.g.genja_enable_autoresource = false
 
 
 
@@ -46,23 +47,30 @@ vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never
 vim.opt.foldcolumn = '2'
 vim.opt.hidden = true
 
-
--- vim.o.listchars = 'leadmultispace:>   ·,lead:>,multispace:· ,space:·,tab: '
-
 vim.o.modeline = true
 vim.o.modelines = 2
 
-vim.o.showbreak = '⬉      '                              -- display this after wrapped
+-- vim.o.listchars = 'leadmultispace:>   ·,lead:>,multispace:· ,space:·,tab: '
+
+
+vim.o.showbreak = '⬉      ' -- display after wrapped
+vim.o.showbreak = '`      ' -- display after wrapped
+vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
 vim.o.listchars = 'eol:󰭿,tab: '
-vim.o.listchars = 'eol:`,tab: '
 vim.o.listchars = 'tab: '
-                                                --
-												--[[
-z                                               --]]
-vim.opt.listchars:append('space: ,multispace:   ·')
-vim.opt.listchars:append('lead:>,leadmultispace:  ·')
-vim.opt.listchars:append('trail:󱁐,')
+---- how it looks....
+----....====++++
+                                                -- multispace
+												--[[ tabs
+z                                               
+	-tab
+ ---space]]
+vim.opt.listchars:append('space: ,multispace:·   ')
+vim.opt.listchars:append('lead: ,leadmultispace:·   ')
+-- vim.opt.listchars:append('trail:󱁐,')
+vim.opt.listchars:append('trail:_,')
 vim.opt.listchars:append('extends:→,precedes:←')
+vim.opt.listchars:append('tab: ')
 
 
 

@@ -34,7 +34,7 @@ local S = {
 
 return { {
 	'nvimdev/dashboard-nvim',
-	enabled = true,
+	enabled = false,
 	lazy = true,
 	keys = {
 		{ '<leader>jD', '<cmd>Dashboard<cr>', desc = 'Dashboard' },

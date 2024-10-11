@@ -11,113 +11,198 @@
 -- :help lspconfig-setup
 
 -- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
+-- https://vermaden.wordpress.com/2024/03/13/perfect-neovim-ansible-setup/
 
 -- local err = vim.api.nvim_err_writeln; err("lsp.lua")
 
 
-local err = vim.api.nvim_err_writeln
-local notify = vim.notify
-
-local eils = {}
---[[
-	'prettier',
-	'awk_ls', -- requires a c compiler?
-	'gofumpt',
-	'gomodifytags',
-	'gopls',
-	'gospel',
-	'gotests',
-	'harper_ls', -- disable spellcheck, works with js?
-	'iferr',
-	'impl',
-	'json-to-struct',
-	'nilaway',
-	'revive',
-	'semgrep',
-	'snyk',
-	'sonarlint-language-server',
-	'staticcheck',
-	'templ',
-	'trivy',
-	]]
-local function ei(ls)
-	if ls then table.insert(eils, ls) end
-	return eils
-end
+local err    = vim.api.nvim_err_writeln ---@diagnostic disable-line: unused-local
+local notify = vim.notify ---@diagnostic disable-line: unused-local
 
 local M = {
-	lspConfAugroup = vim.api.nvim_create_augroup('UserLspConfig', {}),
-	ensure_installs = ei
+	lspConfAugroup = vim.api.nvim_create_augroup(
+		'UserLspConfig', { clear = true }),
+	servers = {},
 }
 
+M.emerge     = function(ls)
+	if ls then
+		table.insert(M.servers, ls)
+	end
+	return M.servers
+end
+
+local function lspconfig_efmls()
+	local luacheck    = require('efmls-configs.linters.luacheck')
+	local flake8      = require('efmls-configs.linters.flake8')
+	local eslint_d    = require('efmls-configs.linters.eslint_d')
+	local shellcheck  = require('efmls-configs.linters.shellcheck')
+	local alex        = require('efmls-configs.linters.alex')
+	local hadolint    = require('efmls-configs.linters.hadolint')
+	local solhint     = require('efmls-configs.linters.solhint')
+	-- local ansible_lint = require('efmls-configs.linters.ansible_lint')
+
+	local stylua      = require('efmls-configs.formatters.stylua')
+	local black       = require('efmls-configs.formatters.black')
+	local prettierd   = require('efmls-configs.formatters.prettier_d')
+	local fixjson     = require('efmls-configs.formatters.fixjson')
+	local shfmt       = require('efmls-configs.formatters.shfmt')
+
+	local efmls_langs = {
+		-- lua             = { luacheck,    stylua    },
+		python          = { flake8, black },
+		typescript      = { eslint_d, prettierd },
+		json            = { eslint_d, fixjson },
+		jsonc           = { eslint_d, fixjson },
+		sh              = { shellcheck, shfmt },
+		javascript      = { eslint_d, prettierd },
+		javascriptreact = { eslint_d, prettierd },
+		typescriptreact = { eslint_d, prettierd },
+		svelte          = { eslint_d, prettierd },
+		vue             = { eslint_d, prettierd },
+		markdown        = { alex, prettierd },
+		docker          = { hadolint, prettierd },
+		solidity        = { solhint },
+		-- NOT ON WIN 2024-09 -- ansible         = { ansible_lint }, -- double check...
+	}
 
 
+	-- configure efm server
+	require('lspconfig').efm.setup({
+		filetypes = {
+			-- "lua",
+			"python",
+			"json",
+			"jsonc",
+			"sh",
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+			"svelte",
+			"vue",
+			"markdown",
+			"docker",
+			"solidity",
+			-- "ansible", -- double check...
+		},
+		init_options = {
+			documentFormatting = true,
+			documentRangeFormatting = true,
+			hover = true,
+			documentSymbol = true,
+			codeAction = true,
+			completion = true,
+		},
+		settings = {
+			languages = efmls_langs,
+		},
+	})
+end
 
--- local nvims_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-
--- require('lspconfig').util.default_config = vim.tbl_extend('force',
--- 	require('lspconfig').util.default_config, {
--- 		autostart = true,
--- 		capabilities = vim.lsp.protocol.make_client_capabilities(),
--- 	})
-
-
--- -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/configs/lspconfig.lua
--- M.capabilities = vim.lsp.protocol.make_client_capabilities()
--- -- capabilities.textDocument.completion.completionItem.snippetSupport = true -- required for the visualstudio lsps (css, html, etc)
--- M.capabilities.textDocument.completion.completionItem = {
--- 	documentationFormat = { "markdown", "plaintext" },
--- 	snippetSupport = true,
--- 	preselectSupport = true,
--- 	insertReplaceSupport = true,
--- 	labelDetailsSupport = true,
--- 	deprecatedSupport = true,
--- 	commitCharactersSupport = true,
--- 	tagSupport = { valueSet = { 1 } },
--- 	resolveSupport = {
--- 		properties = {
--- 			"documentation",
--- 			"detail",
--- 			"additionalTextEdits",
--- 		},
--- 	},
--- }
---
+local function lspconfig_yaml()
+	require('lspconfig').ansiblels.setup({})
+	require('lspconfig').yamlls.setup {
+		settings = {
+			yaml = {
+				schemas = {
+					-- Add any YAML schemas you want to use here
+					-- For example:
+					["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+					["https://json.schemastore.org/ansible-playbook.json"] = { "*playbook.yml", "*playbook.yaml" },
+					["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+				}
+			}
+		}
+	}
+end
 
 local function lspconfig_lua()
+	local libs = {}
+
+	for _, e in pairs({
+		vim.fn.expand "$VIMRUNTIME/lua",
+		vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+		vim.fn.stdpath 'data' .. '/lazy',
+		vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
+		vim.fn.stdpath 'data' .. '/lazy/nvim-cmp/lua',
+	}) do
+		e = vim.fs.normalize(e)
+		if IsDir(e) then
+			libs[e] = true
+			print('ok ' .. e)
+		else
+			print('not ok ' .. e)
+		end
+	end
+
+	local plugs = vim.fn.stdpath 'data' .. '/lazy/*/lua'
+	for _, e in pairs(vim.fn.glob(plugs, false, true)) do
+		libs[e] = true
+	end
+
+
 	require('lspconfig').lua_ls.setup({
 		filetypes = { 'lua' },
 		settings = {
 			Lua = {
-				runtime = { version = 'LuaJIT' },
-				diagnostics = { globals = { 'vim' } },
-				workspace = {
-					library = {
-						[vim.fn.expand "$VIMRUNTIME/lua"] = true,
-						[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-						[vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-						[vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-						[vim.fn.stdpath "data" .. "/lazy"] = true,
+				-- runtime = {
+				-- version = 'LuaJIT'
+				-- },
+				completion = {
+					displayContext = true,
+					keywordSnippet = 'Both',
+				},
+				diagnostics = {
+					disable = {
+						'lowercase-global'
 					},
-					maxPreload = 100000,
-					preloadFileSize = 10000,
+					globals = {
+						'vim'
+					}
+				},
+				workspace = {
+					-- library = {
+					-- 	-- [im.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+					-- 	-- ["C:/Games/OpenMW.master/resources/lua_api/openmw"] = true,
+					-- 	-- ["C:/Games/OpenMW.master/resources/vfs"] = true,
+					-- },
+					ignoreDir = { '.vscode', '.git' },
+					library = libs,
+					-- maxPreload = 100000,
+					-- preloadFileSize = 10000,
+					maxPreload = 7000, -- max open files ?
+					preloadFileSize = 400, -- kib
+					useGitIgnore = true,
+				},
+				runtime = {
+					path = { '?.lua', '?/init.lua' },
+					pathStrict = false,
+
 				},
 			}
 		}
 	})
 end
 
+
 local function lspconfig_ts_js_css_html()
-	-- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
-	local caps = require('cmp_nvim_lsp').default_capabilities()
-	caps.textDocument.completion.completionItem.snippetSupport = true
-	require('lspconfig').tailwindcss.setup { capabilities = caps }
-	require('lspconfig').ts_ls.setup { capabilities = caps }
-	require('lspconfig').jsonls.setup { capabilities = caps }
-	require('lspconfig').eslint.setup { capabilities = caps }
-	require('lspconfig').cssls.setup { capabilities = caps }
-	require('lspconfig').html.setup { capabilities = caps }
+	-- -- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
+	-- local caps = require('cmp_nvim_lsp').default_capabilities()
+	-- caps.textDocument.completion.completionItem.snippetSupport = true
+	-- -- 2024-08 looks to me like snippetSupport is already enabled.
+	-- require('lspconfig').tailwindcss.setup { capabilities = caps }
+	-- require('lspconfig').ts_ls.setup { capabilities = caps }
+	-- require('lspconfig').jsonls.setup { capabilities = caps }
+	-- require('lspconfig').eslint.setup { capabilities = caps }
+	-- require('lspconfig').cssls.setup { capabilities = caps }
+	-- require('lspconfig').html.setup { capabilities = caps }
+	require('lspconfig').tailwindcss.setup({})
+	require('lspconfig').ts_ls.setup({})
+	require('lspconfig').jsonls.setup({})
+	require('lspconfig').eslint.setup({})
+	require('lspconfig').cssls.setup({})
+	require('lspconfig').html.setup({})
 end
 
 
@@ -159,18 +244,32 @@ M.setup_mason_lspconfig = function(set, zz)
 	})
 
 
-	ei('lua_ls')
-	ei('bashls')
+	M.emerge('lua_ls')
+	M.emerge('bashls')
 	-- ei('biome')
-	ei('ts_ls')
-	-- nathan long
-	ei('jsonls')
-	ei('eslint')
-	ei('cssls')
-	ei('html')
+	M.emerge('ts_ls')
+	-- nathan long (modern javascript tooling)
+	M.emerge('jsonls')
+	M.emerge('eslint')
+	M.emerge('cssls')
+	M.emerge('html')
+	--
+	M.emerge('yamlls')
+	-- vermaden (perfect ansible setup)
+
+	-- needs more work on linux.
+	-- at this point im thinking it's better to run vim from wsl for ansible work.
+	-- ei('ansiblels') -- pip  install --user ansible-lint
+	-- ei('ansible-lint') -- not supported on windows (2024-09)
+
+	M.emerge('dockerls')
+	M.emerge('pyright')
+	M.emerge('bashls')
+	M.emerge('efm')
+
 	require('mason-lspconfig').setup({
 		automatic_installation = true,
-		ensure_installed = ei()
+		ensure_installed = M.servers
 	})
 
 	-- set omnifunc and tagfunc if available
@@ -204,6 +303,15 @@ M.setup_mason_lspconfig = function(set, zz)
 
 	lspconfig_go()
 
+	lspconfig_yaml()
+
+	require('lspconfig').pyright.setup {}
+	require('lspconfig').bashls.setup { filetypes = { 'bash', 'sh' } }
+
+	require('lspconfig').dockerls.setup({})
+
+
+	lspconfig_efmls()
 
 
 
@@ -237,12 +345,10 @@ M.setup_mason_lspconfig = function(set, zz)
 	--})
 
 
-	-- require('lspconfig').pyright.setup {}
 	-- require('lspconfig').tsserver.setup {}
 	-- require('lspconfig').rust_analyzer.setup { settings = { ['rust-analyzer'] = {}, }, }
 	-- require('lspconfig').awk_ls.setup {}
 
-	-- require('lspconfig').bashls.setup {}
 	-- require('lspconfig').gopls.setup {}
 	-- require('lspconfig').biome.setup {
 	-- 	filetypes = 'javascript',

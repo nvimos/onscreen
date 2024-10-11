@@ -23,6 +23,23 @@ return {
 		cmd = 'Mason',
 		config = function(lp, opt)
 			require('genja.lspm').setup_mason_lspconfig(lp, opt)
-		end
+		end,
+
+		dependencies = {
+			"creativenull/efmls-configs-nvim",
+			-- "windwp/nvim-autopairs",
+			"williamboman/mason.nvim",
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp",
+		},
 	},
+
+	-- {
+	-- 	'windwp/nvim-autopairs',
+	-- 	event = "InsertEnter",
+	-- 	config = true
+	-- 	-- use opts = {} for passing setup options
+	-- 	-- this is equivalent to setup({}) function
+	-- }
 }

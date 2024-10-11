@@ -11,21 +11,26 @@
 --     :help lazy.nvim-lazy.nvim-plugin-spec
 
 (function(LazyData, Github)
-	LazyData , Github =  ''..
+	LazyData, Github = '' ..
 		vim.fn.stdpath('data') .. '/lazy/lazy.nvim',
 		'https://github.com/folke/lazy.nvim.git'
 	if not vim.loop.fs_stat(LazyData) then
 		vim.fn.system({
 			'git', 'clone', '--filter=blob:none', '--branch=stable',
-			Github, LazyData }) end;
+			Github, LazyData })
+	end;
 	vim.opt.rtp:prepend(LazyData) -- prenpend to runtime path (to autoload plugins?)
-	vim.api.nvim_create_autocmd('FileType', { pattern = 'lazy',
+	vim.api.nvim_create_autocmd('FileType', {
+		pattern = 'lazy',
 		callback = function(ev)
 			local mo = { noremap = true, silent = true }
 			local bkm = vim.api.nvim_buf_set_keymap
 			bkm(ev.buf, 'n', '<esc>', '<cmd>quit<cr>', mo)
 			bkm(ev.buf, 'n', '<c-w>', '<cmd>quit<cr>', mo)
-			bkm(ev.buf, 'n', 'q',     '<cmd>quit<cr>', mo); end }) end)()
+			bkm(ev.buf, 'n', 'q', '<cmd>quit<cr>', mo);
+		end
+	})
+end)()
 
 PluginSpec = {
 	{ import = 'lazyp' },
@@ -50,11 +55,16 @@ NewPlugins = {
 	},
 	]]
 
+	-- https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/plugins.lua
+
+
+
 	{
 		-- vim-floaterm is better?
 		'akinsho/toggleterm.nvim',
 		version = "*",
 		opts = {},
+		open_mapping = [[<c-\>]],
 		config = function()
 			require("toggleterm").setup {
 				close_on_exit = false
@@ -111,7 +121,6 @@ NewPlugins = {
 
 		2024-07
 		{ 'theprimeagen/refactoring.nvim' },
-		{ 'github/copilot.vim' },
 		{ 'echasnovski/mini.files', version = '*' },
 		{ Vonr/align.nvim },
 		{ gopher.nvim },
@@ -119,12 +128,20 @@ NewPlugins = {
 	]]
 }
 
--- table.foreach(NewPlugins, function(i, e) table.insert(PluginSpec, e) end)
 for _, e in pairs(NewPlugins) do
 	table.insert(PluginSpec, e)
 end
 
-require('lazy').setup(PluginSpec, {
+require('lazy').setup({
+	spec = PluginSpec,
+	defaults = {
+		lazy = false
+	},
+	-- install = { colorscheme = { "nightfox" } },
+	install = { colorscheme = { "habamax" } },
+	change_detection = {
+		notify = false
+	},
 	dev = {
 		---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
 		path = [[A:\workspace]],

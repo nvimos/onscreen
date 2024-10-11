@@ -1,7 +1,8 @@
--- vim: set foldmethod=marker foldlevel=1 foldnestmax=2 foldcolumn=2:
+-- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
 -- Stable mappings sourced early during init
 local nosi = function(d) return { silent = true, noremap = true, desc = d } end
 local function cmd(c) return '<cmd>' .. c .. '<cr>' end
+local function cfg(c, f) f = f or ''; return '<cmd>' .. c .. ' ' .. vim.fn.stdpath('config') .. '/lua/genja/' .. f .. '<cr>'; end
 local km = vim.keymap.set
 local nv = { 'n', 'v' }
 local n = { 'n' }
@@ -61,9 +62,14 @@ km('', '<PageUp>', '<c-u>zz', { noremap = true, silent = true })
 km('', '<C-bs>', '<C-u>zz', { noremap = true, silent = true })
 -- }}}
 
--- Paste from clipboard (+ register) in insert mode {{{
-km('i', '<S-Insert>', '<C-R>+', { noremap = true })
--- paste filename? km('i', '<C-q>f', '<C-R>%', { noremap = true })
+-- Yank & Paste {{{
+-- Paste from clipboard ("+ register) in insert mode
+km('i', '<S-Insert>', '<c-r>+', nosi 'Paste (shift+insert)')
+km(nv, '<leader>y=', '"+yy', nosi 'Vim: yank into clipboard ("+yy)')
+km(nv, '<leader>y8', '"*yy', nosi 'Vim: yank into x11:primary  ("*yy)')
+km(n, '<leader>yf', '"%p', nosi 'Vim: yank filename')
+-- PRIMARY   *
+-- CLIPBOARD +
 -- }}}
 
 -- Comment code line {{{
@@ -94,9 +100,9 @@ vim.keymap.set('n', '<c-leftmouse>', 'gx')
 
 -- Idiosyncratic {{{
 vim.keymap.set('n', '<leader>i.', 'a…<esc>', { noremap = true, desc = "Append: … (ellipsis)" })
-vim.keymap.set('n', '<leader>j.', ':cd %:p:h<cr>:pwd<cr>', { desc = ':cd dirname(%)' })
-vim.keymap.set('n', '<leader>j,', ':cd ..   <cr>:pwd<cr>', { desc = ':cd ..' })
 -- }}}
+
+
 
 -- Code actions {{{
 km('n', '<leader>r0',       cmd 'mjgg=G<cr>`j',   { desc = 'reformat gg=G'   })
@@ -118,23 +124,34 @@ km('v', '<leader>A=1',      cmd ':norm gaip1=',   { desc = 'Align on = 1st'  })
 km('v', '<leader>A==',      cmd ':norm gaip*=',   { desc = 'Align on = all'  })
 km('v', '<leader>A:1',      cmd ':norm gaip1:',   { desc = 'Align on : 1st'  })
 km('v', '<leader>A:z',      cmd ':norm gaip1:',   { desc = 'Align on : last' })
+
+km('n', '<leader>w<right>', cmd ':norm gqj', nosi 'Text: conform to width')
 -- }}}
 
--- Vim actions
--- {{{
+-- Vim actions {{{
 -- vim.keymap.set('n', '<S-F5>', ':source %<cr>
-km('n', '<S-F5>', ':source %<cr>' .. '<cmd>echo "{sourced}" resolve(expand("%:t"))<cr>')
-km('', '<Esc>', '<cmd>nohlsearch<cr><Esc>')
-km(nv, '<leader>.', '&', nosi 'Repeat last command')
+km('',  '<Esc>',      '<cmd>nohlsearch<cr><Esc>')
+km('n', '<S-F5>',     ':source %<cr><cmd>echo "{sourced}" resolve(expand("%:t"))<cr>', nosi 'source current file')
+--
+km(nv, '<leader>.',  '&',    nosi 'Vim: Repeat last command')
+
+
+
 
 --km('n', '<leader><Space>', ':nohlsearch<cr>')
 -- }}}
 
 
+-- Jump dirs {{{
+vim.keymap.set('n', '<leader>j..', ':lcd %:p:h<cr>:pwd<cr>', { desc = ':lcd dirname(%)' })
+vim.keymap.set('n', '<leader>j.,', ':lcd ..   <cr>:pwd<cr>', { desc = ':lcd ..' })
+-- }}}
+
 -- Redo! {{{
 km('n', '!', ':<up><home><c-right>!<cr>') -- repeat last command with a bang
 -- }}}
 
+-- Write, Quit {{
 km("n", "<leader>zz", 'write', { desc = 'write',       silent = true })
 km("n", "<leader>zZ", ':x',    { desc = 'write, quit', silent = true })
 -- }}}
@@ -142,19 +159,18 @@ km("n", "<leader>zZ", ':x',    { desc = 'write, quit', silent = true })
 -- km('', '<F3>', ':tabedit %:p:h<cr>')
 -- {{{ quickly edit init
 
-km('n', '<leader>ei', ':tabedit ' .. (vim.fn.stdpath('config') .. '/lua/genja/' .. '/init.lua<cr>'), { desc = 'edit Init' })
+-- Edit my init file
+km('n', '<leader>eI', cfg('tabedit', 'init.lua') , nosi 'edit init file')
 
-local function confdir(vimc, f) f = f or ""; return '<cmd>' .. vimc .. ' ' .. vim.fn.stdpath('config') .. '/lua/genja/' .. f .. '<cr>'; end
-local function command(vimc) return '<cmd>' .. vimc .. '<cr>' end
 -- Highlight init in the confdir.
-km('n', '<leader>eI',
-	command('lua Close_nerdtree_wins()') ..
-	confdir('cd') ..
-	command('cd ../..') ..
-	confdir('tabedit') ..
-	command('/init.lua') ..
-	command('nohl') ..
-	[[/]], { desc = 'edit init' })
+km('n', '<leader>ei',
+	cmd('lua Close_nerdtree_wins()') ..
+	cfg('cd') ..
+	cmd('cd ../..') ..
+	cfg('tabedit') ..
+	cmd('/init.lua') ..
+	cmd('nohl') ..
+	[[/]], { desc = 'edit init dir' })
 
 -- -- Open both map.lua and init-map.lua
 -- km('n', '<leader>ek',
@@ -165,30 +181,23 @@ km('n', '<leader>eI',
 -- 	, { desc = 'edit map' })
 
 
--- Search for a file in the confdir.
-km('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',   { desc = 'serch in CWD' })
-km('n', '<leader>e.', '<cmd>:edit %:p:h<cr>',    { desc = 'edit CWD %:h (dirname)' })
-km('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', { desc = 'tabedit CWD' })
+local function search_dir_of_file()
+	vim.cmd 'edit %:p:h'
+	vim.schedule(function()
+		local slash = vim.api.nvim_replace_termcodes('/', true, true, true)
+		vim.api.nvim_feedkeys(slash, 'n', false)
+	end)
+end
+-- Search in dir-listing of current file
+-- km('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',   nosi 'seek in `dirname`') 
+km('n', '<leader>ee', search_dir_of_file,        nosi 'seek in `dirname`') -- for Oil
+-- Edit in dir-listing of current file
+km('n', '<leader>e.', '<cmd>:edit %:p:h<cr>',    nosi 'edit in `dirname`')
+km('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', nosi 'tabedit `dirname`')
 
 
 --
 -- km('n', '<leader>lo', command('only'), { desc = 'only this window' })
 -- km('n', '<leader>le', command('wincmd ='), { desc = 'equalize windows' })
 -- km('n', '<leader>lm', command('resize | vertical resize'), { desc = 'maximize current' })
-km('n', '<c-w>m', command('resize | vertical resize'), { desc = 'maximize current' })
-
-
-
-
-
-------------------------------------------------------------------------
-
-function Telemap(map)
-	local ta = require [[telescope.actions]]
-	map({ 'i', 'n' }, '<esc>', ta.close)
-	map({ 'i', 'n' }, '<F2>', ta.move_selection_previous)
-	map({ 'i', 'n' }, '<F3>', ta.move_selection_next)
-	map({ 'i', 'n' }, '<S-F2>', ta.move_selection_previous)
-	map({ 'i', 'n' }, '<S-F3>', ta.move_selection_next)
-
-end
+km('n', '<c-w>m', cmd('resize | vertical resize'), { desc = 'maximize current' })

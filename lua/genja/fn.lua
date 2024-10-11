@@ -7,6 +7,8 @@ function FileExists(path)
 end
 
 function IsDir(path)
+	if (path == nil) then return false end
+	if (path == '') then return false end
 	local stat = vim.loop.fs_stat(path)
 	return stat ~= nil and stat.type == 'directory'
 end
@@ -45,7 +47,7 @@ end
 
 function IsVideoExtension(ext)
 	return TableContains({
-		'mp4', 'mkv', 'avi', 'mpg',
+		'mp4', 'mkv', 'avi', 'mpg', 'm4v',
 		'mov', 'flv', 'f4v', 'vob',
 		'wmv', '3gp', 'ogv', 'drc',
 		'mpeg', 'webm', 'avchd', 'qt',
@@ -106,7 +108,7 @@ function Cd(to)
 	-- vim.loop.chdir(vim.env.Userprofile) end
 end
 
-vim.api.nvim_create_user_command('ClearShada', function()
+vim.api.nvim_create_user_command('PurgeShada', function()
 	local shada_path = vim.fn.stdpath('data') .. '/shada/'
 	local tmp_files = vim.fn.glob(shada_path .. '*.tmp*', true, true)
 	for _, file in ipairs(tmp_files) do

@@ -25,21 +25,21 @@
 -- ==========================================================
 -- require('user')
 --- Reload the entire configuration
-local function reload_config()
-    for name,_ in pairs(package.loaded) do
-        if name:match('^user') then
-            package.loaded[name] = nil
-        end
-    end
-    -- require('user')
-    -- Reload after/ directory
-    local glob = vim.fn.stdpath('config') .. '/after/**/*.lua'
-    local after_lua_filepaths = vim.fn.glob(glob, true, true)
-    for _, filepath in ipairs(after_lua_filepaths) do
-        dofile(filepath)
-    end
-    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
-end
+-- local function reload_config()
+--     for name,_ in pairs(package.loaded) do
+--         if name:match('^user') then
+--             package.loaded[name] = nil
+--         end
+--     end
+--     -- require('user')
+--     -- Reload after/ directory
+--     local glob = vim.fn.stdpath('config') .. '/after/**/*.lua'
+--     local after_lua_filepaths = vim.fn.glob(glob, true, true)
+--     for _, filepath in ipairs(after_lua_filepaths) do
+--         dofile(filepath)
+--     end
+--     vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
+-- end
 
 -- ==========================================================
 
@@ -105,26 +105,27 @@ end
 -- })
 
 
----
--- Define the object prototype
-local Object = {
-	value = 0,
-	new = function(self)
-		local clone = {}
-		for prop, fn in pairs(self) do if type(fn) ~= "function" then clone[prop] = fn end end
-		return setmetatable(clone, {__index = self})
-	end,
-	printValue = function(self)
-		print("Value:", self.value)
-	end,
-	setValue = function(self, value)
-		self.value = value
-	end
-}
--- Create a new object
-local obj1 = Object:new()
-obj1 = obj1
----
+--======================================
+-- -- Define the object prototype
+-- local Object = {
+-- 	value = 0,
+-- 	new = function(self)
+-- 		local clone = {}
+-- 		for prop, fn in pairs(self) do if type(fn) ~= "function" then clone[prop] = fn end end
+-- 		return setmetatable(clone, {__index = self})
+-- 	end,
+-- 	printValue = function(self)
+-- 		print("Value:", self.value)
+-- 	end,
+-- 	setValue = function(self, value)
+-- 		self.value = value
+-- 	end
+-- }
+-- -- Create a new object
+-- local obj1 = Object:new()
+-- obj1 = obj1
+-- ---
+--======================================
 
 
 -- -- Define a Lua function that takes arguments
@@ -223,7 +224,7 @@ obj1 = obj1
 -- 		o = o:gsub('%s*$', '') -- trim trailing spaces
 -- 		if o ~= '' then
 -- 			if not string.match(o, 'pr0n') then
--- 				if IsDir(o) then
+-- 				if IsDir(o
 -- 					print('dir', e:match('pr0n'),  o)
 -- 				end
 -- 				n = n + 1
@@ -233,14 +234,134 @@ obj1 = obj1
 -- end
 
 
-function NetUseDrive(drive)
-	local handle = io.popen('cmd /c "net use  V: 2>nul && echo yes"')
-	if nil ~= handle then
-		local output = handle:read('*a')
-		print(StripNewlines(output))
-		print("wat wat in the butt")
-	end
-	return false
+-- -- command! Lazygit :FloatermNew 
+-- -- --height=0.96 --width=0.94 --wintype=
+-- -- require("toggleterm").exec("lazygit")
+-- local Terminal  = require('toggleterm.terminal').Terminal
+-- local lazygit = Terminal:new({
+--     close_on_exit = true,
+-- 	display_name = 'Lazygit',
+-- 	cmd = 'lazygit',
+-- 	hidden = true,
+-- 	dir = 'git_dir',
+-- 	ection = 'float',
+-- 	float_opts = {
+-- 		width = 94,
+-- 		height = 94,
+-- 	},
+-- 	-- border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+-- 	border = 'single',
+-- 
+-- 	-- on_close = function(term)
+-- 		-- vim.cmd("startinsert!")
+-- 	-- end,
+-- 	-- on_open = function(term)
+-- 	-- 	vim.api.nvim_set_current_win(term.window)
+-- 	-- 	vim.api.nvim_set_current_buf(term.bufnr)
+-- 	-- 	vim.cmd('startinsert!')
+-- 	-- 	-- vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', {noremap = true, silent = true})
+-- 	-- 	-- vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', {noremap = true, silent = true})
+-- 	-- 	-- vim.api.nvim_buf_set_keymap(term.bufnr, 'i', '<esc>', '<cmd>close<CR>', {noremap = true, silent = true})
+-- 	-- end,
+-- 	on_open = function(term)
+-- 		vim.cmd("startinsert!")  -- Automatically enter insert mode after opening
+-- 		vim.api.nvim_set_current_win(term.window)  -- Focus the terminal window
+-- 	end
+-- })
+-- lazygit:toggle()
+
+--[[
+
+    Terminal:new {
+      cmd = string -- command to execute when creating the terminal e.g. 'top'
+      display_name = string -- the name of the terminal
+      direction = string -- the layout for the terminal, same as the main config options
+      dir = string -- the directory for the terminal
+      close_on_exit = bool -- close the terminal window when the process exits
+      highlights = table -- a table with highlights
+      env = table -- key:value table with environmental variables passed to jobstart()
+      clear_env = bool -- use only environmental variables from `env`, passed to jobstart()
+      on_open = fun(t: Terminal) -- function to run when the terminal opens
+      on_close = fun(t: Terminal) -- function to run when the terminal closes
+      auto_scroll = boolean -- automatically scroll to the bottom on terminal output
+      -- callbacks for processing the output
+      on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
+      on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr
+      on_exit = fun(t: Terminal, job: number, exit_code: number, name: string) -- function to run when terminal process exits
+    }
+]]
+
+
+-- for _, e in pairs({
+-- 	'Activator',
+-- 	'Actor',
+-- 	'Apparatus',
+-- 	'Armor',
+-- 	'Book',
+-- 	'Container',
+-- 	'Creature',
+-- 	'Door',
+-- 	'Ingredient',
+-- 	'Item',
+-- 	'Light',
+-- 	'Lockpick',
+-- 	'Miscellaneous',
+-- 	'NPC',
+-- 	'Player',
+-- 	'Potion',
+-- 	'Probe',
+-- 	'Repair',
+-- 	'Static',
+-- 	'Weapon',
+-- }) do
+-- 	print('addHandler '..e)
+-- end
+
+
+
+local function async_fs_stat(path, timeout_ms, callback)
+	local timer = vim.loop.new_timer()
+	local done = false
+
+	vim.loop.fs_stat(path, function(err, stat)
+		if not done then
+			done = true
+			timer:stop()
+			timer:close()
+			callback(err, stat)
+		end
+	end)
+
+	timer:start(timeout_ms, 0, function()
+		if not done then
+			done = true
+			timer:close()
+			callback(nil, false)
+		end
+	end)
 end
+
+
+-- local s;
+-- local e;
+-- local over;
+-- function sleep(n)
+-- 	local t0 = os.clock()
+-- 	while os.clock() - t0 <= n do end
+-- end
+-- async_fs_stat('C:\\tmp', 1300, function(err, stat)
+-- 	over = true
+-- 	s = stat
+-- 	if err ~= nil then
+-- 		e = err
+-- 	end
+-- print('bai')
+-- end)
+-- while not over do
+-- 	print('z')
+-- 	sleep(1)
+-- end
+-- print('hai')
+-- print( vim.inspect( s ) )
 
 

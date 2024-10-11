@@ -5,10 +5,22 @@ end
 local km = vim.keymap.set
 
 
+function Telemap(map)
+	local act = require 'telescope.actions'
+	map({ 'i', 'n' }, '<esc>',  act.close)
+	map({ 'i', 'n' }, '<F3>',   act.move_selection_previous)
+	map({ 'i', 'n' }, '<F2>',   act.move_selection_next)
+	map({ 'i', 'n' }, '<S-F3>', act.move_selection_previous)
+	map({ 'i', 'n' }, '<S-F2>', act.move_selection_next)
+end
+
+
 local function find_in_startdirs()
 	require('telescope.builtin').find_files({
 		hidden = false,
-		search_dirs = START_DIRS }) end
+		search_dirs = START_DIRS
+	})
+end
 
 local function grep_string()
 	require('telescope.builtin').grep_string({

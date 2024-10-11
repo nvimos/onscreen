@@ -29,24 +29,33 @@ local v = { 'v' }
 
 -- Plugin (move to spec…)
 -- vim.keymap.set('', '<leader>jD', vim.cmd.Dashboard, { desc = 'Dashboard' } )
-km('', '<leader>jm', cmd [[MRU]], { desc = 'MRU' })
+km('', '<leader>jm',  cmd 'MRU',  nosi 'MRU')
 
-km('n', '<leader>sf', cmd [[ set guifont=* ]], { desc = 'MRU' })
-km('n', '<F7>', cmd [[ set guifont=* ]], { desc = 'MRU' })
+km('n', '<leader>sf', cmd 'set guifont=*', nosi 'Vim: set guifont')
+km('n', '<F7>',       cmd 'set guifont=*', nosi 'Vim: set guifont')
+
+
+-- -- Remap for dealing with word wrap
+-- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 
 -- Magical and convoluted macros
 vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'remove empty lines in visual block')
-vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]], nosi 'remove trailing space')
-vim.keymap.set(nv, '<leader>w"', [[:s/"/'/g<cr>j]], nosi 'replace " with \' on current line')
-vim.keymap.set(v, '<leader>w"', [[$A",<esc>gvI"<esc>]], nosi 'wrap selection with " "')
+vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'remove trailing space')
+vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'replace " with \' on current line')
+vim.keymap.set(v,  '<leader>w"',  [[$A",<esc>gvI"<esc>]],                  nosi 'wrap selection with " "')
 --vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
 -- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
+
+-- Instant search/replace on the cursor
+km('n', '<leader>cs', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<left><left><left>]], nosi 'search & replace')
 
 
 -- transform «Plug "foo/bar"» to «{ 'foo/bar' },»
 km('n',
 	'<leader>wL',
+	cmd [[silent! s/use *{ *\([^}]*\)}/\1/]] ..
 	cmd [[silent! s/Plug *//]] ..
 	cmd [[silent! s/"//g]] ..
 		[[^ciW{ '' },<esc>hhhhp]]..
