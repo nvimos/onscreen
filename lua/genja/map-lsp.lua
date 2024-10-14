@@ -43,6 +43,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		km(n__, 'gd',   vlb.definition,                       o 'LSP: definition')
 		km(n__, 'gl',   '<cmd>Telescope diagnostics<cr>',     o 'Telescope diagnostics')
 
+		km(n__, '<space>]',  vlb.definition,                  o 'LSP: definition')
+
+
 		km(n__, '<space>Wa', vlb.add_workspace_folder,        o 'LSP: workspace add')
 		km(n__, '<space>Wr', vlb.remove_workspace_folder,     o 'LSP: workspace rm')
 		km(n__, '<space>Wl', list_workspaces,                 o 'LSP: workspace list')

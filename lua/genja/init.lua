@@ -1,66 +1,111 @@
+-- Genja init for nvim
+--
 vim.cmd 'colorscheme lunaperche'
-require 'genja.fn'          -- functions
-require 'genja.ft'          -- filetypes
-
----@global Started_from_windows_shell
-
-if (Started_from_windows_shell()) then
-	vim.uv.chdir(vim.env.Userprofile)
-end
-
--- vim.o.guifont = 'Cascadia Code Light:h14:l'
-
+--
+vim.o.guifont        = 'Cascadia Code Light:h14:l'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
-require 'genja.map-zero'    -- stable early maps, if config breaks
-require 'genja.opt'         -- just static options
+Safeload             = require('genja.fn').Safeload
 
-vim.cmd ('source '..CONFIG..'/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
-vim.cmd ('source '..CONFIG..'/lua/genja/hilite.vim') -- colors
-require 'genja.hilite'.setup() -- colors
+Safeload 'genja.map-zero' -- stable early maps, if config breaks
+Safeload 'genja.opt'      -- just static options
 
-require 'genja.auto'        -- autocommads
-require 'genja.lazy'        -- genja/lazy.lua -> import { lazyp }
-require 'genja.map-lsp'
-require 'genja.map-telescope'
-require 'genja.map-convoluted'
+Safeload 'genja.env'
+Safeload 'genja.fu' -- userfuncs
+Safeload 'genja.ft' -- filetypes
 
-START_DIRS = (function()    -- Telescope_find_dirs() looks in predefined locations
+--[[
+Safeload 'genja.fn' ]]
+
+-- require 'genja.fn'.win_chdir_home() -- if started on windows, cd to ~
+
+vim.cmd(
+	(function(c)
+		return Join({
+				'source %s/lua/genja/auto-alias.vim', -- aliases, onliners, autocommads, abbreviations
+				'source %s/lua/genja/hilite.vim', -- colors
+				'source %s/lua/genja/fn.vim' }, '\n')
+			:format(c, c, c)
+	end)(vim.fn.stdpath('config')))
+
+C = vim.fn.stdpath('config')
+vim.cmd('source ' .. C .. '/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
+vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')  -- colors
+vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
+
+
+Safeload('genja.hilite', function(m) m.setup() end)
+Safeload 'genja.auto' -- autocommads
+Safeload 'genja.lazy' -- genja/lazy.lua -> import { lazyp }
+Safeload 'genja.map-lsp'
+Safeload 'genja.map-telescope'
+Safeload 'genja.map-convoluted'
+
+START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
-	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
+	local function Norm(p)
+		local s, _ = p:gsub('\\', '/'); return s
+	end
 	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
 	local function add_dir(e) InsertDir(e) end
-	local home = function(p) local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/'..(p or ''))) end
-	if vim.fn.has('Windows') then
-		add_dir('A:/workspace')
-		table.insert(sd, '---')
-		add_dir('C:/Games/Openmw.DataFilesExamples')
-		add_dir('C:/Users/jazzo/AppData/Roaming/Vortex/morrowind/mods')
-		add_dir('C:/Games')
-		add_dir('C:/Games/OpenMW.master')
-		add_dir(home('Documents/my games/OpenMW'))
-		add_dir(home())
-
-		-- add_dir('O:')
-		-- add_dir('P:/backup/lin/balmora-2023.files/Base/home/jaroslav')
-		-- add_dir('P:/cinema')
-		-- add_dir('V:')
-
-		-- table.insert(sd, '---')
-		-- add_dir('J:/notes/gaming/morrowind')
-		-- -- add_dir('A:/_setup/bootstrap')
-		-- add_dir('J:/bin')
-		add_dir('J:/notes')
-		-- add_dir('J:/reference')
-
-
-		else
-		add_dir(vim.env.HOME)
+	local home = function(p)
+		local h = vim.env.Userprofile or vim.env.HOME;
+		return (h .. ('/' .. (p or '')))
 	end
+
+	add_dir(home())
+
+	local openmw = false
+	local movies = false
+
+	if vim.fn.has('Windows') then
+		add_dir('J:/notes')
+		add_dir('A:/workspace')
+		add_dir('A:/_setup/bootstrap')
+		add_dir(home('Hj/notes'))
+
+		add_dir('O:')
+
+		if openmw then
+			table.insert(sd, '--- (morrowind)')
+			add_dir('C:/Games/Openmw.DataFilesExamples')
+			add_dir('C:/Games/OpenMW.master')
+			add_dir('C:/Games')
+			add_dir(home('Documents/my games/OpenMW'))
+			add_dir(home('AppData/Roaming/Vortex/morrowind/mods'))
+			add_dir('J:/notes/gaming/morrowind')
+		end
+
+		if movies then
+			table.insert(sd, '--- (movies)')
+			add_dir('P:/cinema')
+			add_dir('P:/backup/lin/balmora-2023.files/Base/home/jaroslav')
+			add_dir('P:/cinema')
+			add_dir('V:')
+		end
+		-- table.insert(sd, '---')
+		-- add_dir('J:/bin')
+		-- add_dir('J:/reference')
+	end
+
 	add_dir(vim.fn.stdpath('config'))
 	add_dir(vim.fn.stdpath('data'))
-	return sd end)()
+	return sd
+end)()
+
+--
+-- function append_to_buffer_end(text)
+-- 	vim.api.nvim_buf_set_lines(
+-- 		vim.api.nvim_get_current_buf(),
+-- 		vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()),
+-- 		-1,
+-- 		false,
+-- 		{text}
+-- 	)
+-- end
+-- append_to_buffer_end('LOADED')
+
 
 --[[
 	Inspiration

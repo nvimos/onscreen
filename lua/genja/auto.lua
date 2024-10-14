@@ -1,10 +1,13 @@
+-- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
+-- {{{ aliases
+local aucmd, augrp = vim.api.nvim_create_autocmd, vim.api.nvim_create_augroup ---@diagnostic disable-line: unused-local
+local err, notify  = vim.api.nvim_err_writeln, vim.notify ---@diagnostic disable-line: unused-local
+local km, bkm      = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnostic disable-line: unused-local
+local nosi         = function(d) return { silent = true, noremap = true, desc = d } end
+-- }}}
 
-local aucmd = vim.api.nvim_create_autocmd
-local err = vim.api.nvim_err_writeln
-
--- reset the search register after
----- cursor movement in insert mode.
----- leaving nerdtree and oil
+-- {{{ reset the search register after;
+-- ✓ cursor movement in insert mode ✓ leaving nerdtree and oil
 -- local clear_search_reg = function() vim.fn.setreg('/@', '') end
 local clear_search_reg = function() vim.cmd[[nohl]] end
 local csag = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
@@ -12,6 +15,17 @@ aucmd({'CursorMovedI'},           { group = csag, callback = clear_search_reg })
 aucmd({ "WinLeave", "BufLeave" }, { group = csag, callback = clear_search_reg,
 									pattern = {'TelescopePrompt', 'NERD_tree*', 'oil'}})
 
+-- }}}
+
+-- {{{ autocmd: close mason tui
+aucmd('FileType', {
+	pattern = 'mason',
+	callback = function()
+		bkm(0, 'n', '<esc>', ':close<cr>', nosi 'Mason: close')
+		bkm(0, 'n', '<c-w>', ':close<cr>', nosi 'Mason: close')
+	end
+})
+-- }}}
 
 ---- local autoOpenDir = vim.api.nvim_create_augroup('AutoOpenDir', { clear = true })
 ---- aucmd({ 'BufEnter',  'BufWinEnter', 'BufNew', },
@@ -70,7 +84,7 @@ aucmd({ "WinLeave", "BufLeave" }, { group = csag, callback = clear_search_reg,
 -- })
 
 
---[[ EXAMPLE 
+--[[ EXAMPLE
 				vim.api.nvim_create_autocmd('UIEnter', {
 				  group = vim.api.nvim_create_augroup('Dashboard', { clear = true }),
 				  callback = function(ev)  --  buf, event, file, group, id, match

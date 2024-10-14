@@ -88,7 +88,16 @@ NewPlugins = {
 	},
 	{ 'stevearc/dressing.nvim' }, -- nicer prompts and dialogs
 	{ 'voldikss/vim-floaterm' }, -- FloatermNew --name=foo bash
-	{ 'jbyuki/quickmath.nvim' }, -- evaluate lua-math line by line
+	{ 'jbyuki/quickmath.nvim' }, -- evaluate lua-math line by line -- literate programming
+
+
+	{
+		'olrtg/nvim-emmet',
+		config = function()
+			vim.keymap.set({ 'n', 'v' }, '<leader>xe', require('nvim-emmet').wrap_with_abbreviation)
+		end,
+		dependencies = {{ 'olrtg/emmet-language-server' }}, -- installed via mason
+	},
 
 	-- cute / games
 
@@ -97,6 +106,19 @@ NewPlugins = {
 	-- https://github.com/rockerBOO/awesome-neovim
 
 	--[[
+		2024-10
+		https://github.com/aca/emmet-ls
+		https://github.com/mattn/emmet-vim
+		script.src=https://jquery.com/jquery-3.6.0.min.js
+		EMMET!
+
+
+		https://github.com/onsails/diaglist.nvim
+		  -- nmap <space>dw <cmd>lua require('diaglist').open_all_diagnostics()<cr>
+		  -- nmap <space>d0 <cmd>lua require('diaglist').open_buffer_diagnostics()<cr>
+…
+
+
 		2024-09
 		https://github.com/psjay/buffer-closer.nvim
 		https://github.com/realprogrammersusevim/md-to-html.nvim
@@ -142,10 +164,10 @@ require('lazy').setup({
 	change_detection = {
 		notify = false
 	},
-	dev = {
-		---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
-		path = [[A:\workspace]],
-	}
+	-- dev = {
+	-- 	---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
+	-- 	path = [[A:\workspace]],
+	-- }
 })
 
 

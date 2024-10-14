@@ -1,0 +1,1 @@
+vim.env['HF_HUB_DISABLE_SYMLINKS_WARNING'] = true

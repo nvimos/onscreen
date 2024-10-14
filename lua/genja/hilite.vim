@@ -21,19 +21,16 @@
 " Heñaral
 hi VertSplit  cterm=NONE ctermbg=235 guibg=#111115
 hi Split      cterm=NONE ctermbg=235 guibg=#111115
-
 hi Search     guifg=orange guibg=#441111
 hi IncSearch  guifg=orange guibg=#441111
 hi CurSearch  guifg=cyan   guibg=#441111
 hi MatchParen guifg=orange guibg=NONE
 hi MatchParen guisp=orange gui=bold,standout,underline
 hi Visual     guifg=orange guibg=#332277 gui=bold
-
 hi Folded     guifg=#ffd787 guibg=#161616
-hi FoldColumn guifg=#ffd787
+hi FoldColumn guifg=#ffffff
 
-" Dashboard
-
+" Dash-eboard
 hi DashboardHeader       ctermfg=Yellow guifg=#4793AF
 hi DashboardFooter       ctermfg=Yellow guifg=#FFC470
 hi DashboardShortCut     ctermfg=Yellow guifg=#FFC470
@@ -42,8 +39,7 @@ hi DashboardFiles        ctermfg=Yellow guifg=#4793AF
 hi DashboardDesc         ctermfg=Yellow guifg=#FFC470
 hi DashboardKey          ctermfg=Yellow guifg=#FFC470
 
-" tabline, statusline
-
+" Tabolino, eStatuslino, Winebar
 hi TablineFill guibg=#161616
 hi TablineSel  gui=none
 hi TablineSel  guifg=#AF4805
@@ -51,7 +47,6 @@ hi TablineSel  guibg=#0e0707
 hi Tabline     gui=none
 hi Tabline     guifg=#656565
 hi Tabline     guibg=#161616
-
 hi StatusLine     gui=bold
 hi StatusLine     gui=none
 hi StatusLine     gui=none
@@ -67,23 +62,29 @@ hi StatusLineNC   guibg=#141414
 hi StatusLineNC   guifg=#ED9455
 "hi StatusLine   cterm=NONE ctermbg=black ctermfg=orange
 "hi StatusLineNC cterm=NONE ctermbg=black ctermfg=orange
+hi WinBarModified guibg=#010101
+hi WinBarModified guifg=#fb8500
+hi WinBarPath     guibg=#010101
+hi WinBarPath     guibg=#0E0707
+hi WinBarPath     guifg=#363636
+hi WinBarPath     guifg=#545454
 
-" spellink
-
+" Spellink
 hi SpellBad guisp=#3C1616
 hi SpellBad guifg=#A34343
 hi SpellBad gui=underline
 
-
-" messagink
-
+" Messagink
 hi ErrorMsg guifg=#ff99c8
 hi ErrorMsg guibg=NONE
 hi ErrorMsg gui=bold
 
+" Diagnostic
+
+hi DiagnosticInfo guifg=#666666 guibg=NONE 
+hi DiagnosticUnderlineInfo guisp=#553333
 
 " OilDir -> Directory
-
 hi Directory guifg=#ffd76a
 hi Directory guifg=#ffe9a9
 hi Directory guifg=#ffe087

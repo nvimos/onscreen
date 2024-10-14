@@ -6,8 +6,8 @@ vim.g.dosbatch_colons_comment = true
 
 
 --[[ plugin settings ]]--
-vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 vim.g.genja_enable_autoresource = false
+vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 
 
 
@@ -31,12 +31,23 @@ vim.g.netrw_sort_direction = 'normal'
 vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'move'; else return 'mv'; end end)()
 
 
---[[ status bars , lines ]]--
-require 'genja.winbar' -- Winbar()
-require 'genja.statusline' -- Statusline()
--- %{} not expanded as statusline
--- %{%} expanded as statusline
+--[[ status bars , lines
+
+	%{} not expanded as statusline
+	%{%}    expanded as statusline
+
+]]
+Statusline = require 'genja.statusline'.Statusline
+Tabline = require 'genja.statusline'.Tabline
+Winbar = require 'genja.winbar'.Winbar
+
+
+vim.o.tabline = '%{%v:lua.Tabline()%}'
+
+vim.g.genja_statusline_rune = false -- display percise information about the cursor position
+
 vim.o.winbar = "%{%v:lua.Winbar()%}"
+vim.o.statusline = 'jwf'
 vim.o.statusline = '%{%v:lua.Statusline()%}'
 
 vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never

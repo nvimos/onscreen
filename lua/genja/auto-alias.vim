@@ -41,12 +41,6 @@ command! Lspclients :lua =vim.lsp.get_clients()
 
 command! YankFilename put =expand('%:p')
 
-command! Ss :call RemoveTrailingSpaces()
-function! RemoveTrailingSpaces()
-	let save_cursor = getpos('.')
-	silent! %s/\s\+$//e
-	call setpos('.', save_cursor)
-endfunction
 
 
 " Abbreviations
@@ -127,7 +121,9 @@ augroup end
 augroup _markdown
 	autocmd!
 	autocmd FileType markdown setlocal wrap
-	autocmd FileType markdown setlocal spell
+	autocmd FileType markdown setlocal nospell
+	autocmd FileType markdown setlocal listchars=tab:\ \ 
+	autocmd FileType markdown setlocal listchars=multispace:\ \ \ \ 
 augroup end
 
 augroup _git

@@ -2,7 +2,12 @@ local ok, te = pcall(require, 'telescope.builtin')
 if not ok then
 	return
 end
+
+local t = require 'telescope'
+te = require 'telescope.builtin'
+
 local km = vim.keymap.set
+local nosi = function(d) return { silent = true, noremap = true, desc = d } end
 
 
 function Telemap(map)
@@ -22,36 +27,48 @@ local function find_in_startdirs()
 	})
 end
 
+local function cmd(c) return '<cmd>' .. c .. '<cr>' end
+
 local function grep_string()
 	require('telescope.builtin').grep_string({
 		search = vim.fn.input("Grep: ") }) end
 
 -- frequently used
 km('n', '<F1>', te.live_grep,           { desc = ' live 󰵃'})
-km('n', '<S-F1>', te.find_files,          { desc = ' find_files'})
+-- km('n', '<S-F1>', te.find_files,          { desc = ' find_files'})
+km('n', '<S-F1>', cmd 'Telescope finn_ivy',          { desc = ' find_files'})
+
+
 km('n', '<C-F1>', te.oldfiles,              { desc = ' oldfiles'})
-km('n', '<leader>j//', find_in_startdirs, { desc = ' find in STARTDIRS'})
+km('n', '<leader>j//', find_in_startdirs, { desc = ' find in START_DIRS'})
 
 -- telescope introspection
 km('n', '<leader>j?', te.builtin,       { desc = ' builtin'})
 
 -- browse / find
 km('n', '<leader>j/.', te.find_files,     { desc = ' find_files'})
-km('n', '<leader>jg',  te.git_files,      { desc = ' git_files'})
 km('n', '<leader>jo',  te.oldfiles,       { desc = ' oldfiles'})
-km('n', '<leader>jd',  find_in_startdirs, { desc = ' dirs󰅲'})
+km('n', '<leader>jd',  find_in_startdirs, { desc = ' find in START_DIRS'})
 
 -- vim help, inspect state
-km('n', '<leader>jh', te.help_tags,     { desc = ' help_tags'})
-km('n', '<leader>jb', te.buffers,       { desc = ' buffers'})
-km('n', '<leader>jr', te.registers,     { desc = ' registers'})
-km('n', '<leader>jm', te.marks,         { desc = ' marks'})
-km('n', '<leader>jq', te.quickfix,      { desc = ' quickfix'})
-km('n', '<leader>jl', te.loclist,       { desc = ' loclist'})
+km('n', '<leader>1',  te.help_tags,             nosi 'Vim help') -- dup-help-tags
+
+km('n', '<leader>4',  te.buffers,       { desc = ' buffers'})
+km('n', '<leader>T',  te.buffers,       { desc = ' buffers'})
+
 km('n', '<leader>jv', te.vim_options,   { desc = ' vim_options'})
 km('n', '<leader>jC', te.colorscheme,   { desc = ' colorscheme'})
 km('n', '<leader>jM', te.keymaps,       { desc = ' keymaps'})
 km('n', '<leader>jA', te.autocommands,  { desc = ' autocommands'})
+
+-- unused
+-- km('n', '<leader>jb', te.buffers,       { desc = ' buffers'})
+-- km('n', '<leader>jh', te.help_tags,     { desc = ' help_tags'})
+-- km('n', '<leader>jg',  te.git_files,      { desc = ' git_files'})
+-- km('n', '<leader>jr', te.registers,     { desc = ' registers'})
+-- km('n', '<leader>jm', te.marks,         { desc = ' marks'})
+-- km('n', '<leader>jq', te.quickfix,      { desc = ' quickfix'})
+-- km('n', '<leader>jl', te.loclist,       { desc = ' loclist'})
 
 -- grep
 km('n', '<leader>jj', te.live_grep,  { desc = ' grep live'})

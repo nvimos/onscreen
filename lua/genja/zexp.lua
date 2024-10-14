@@ -365,3 +365,32 @@ end
 -- print( vim.inspect( s ) )
 
 
+
+
+-- Output: Bob is 30 years old. Happy birthday, Bob!
+
+
+-- require('telescope.builtin').find_files({
+--   prompt_title = 'find string in open buffers...',
+-- }):find()
+
+
+-- -- hm...
+-- function os.capture(cmd, raw)
+-- 	local f = assert(io.popen(cmd, 'r'))
+-- 	local s = assert(f:read('*a'))
+-- 	f:close()
+-- 	if raw then return s end
+-- 	s = string.gsub(s, '^%s+', '')
+-- 	s = string.gsub(s, '%s+$', '')
+-- 	s = string.gsub(s, '[\n\r]+', ' ')
+-- 	return s
+-- end
+
+print( type (  package.loaded ))
+
+package.loaded['genja.fn'] = nil
+
+for _, e in pairs(package.loaded) do
+	-- print(type(e) .. ' ' .. _)
+end

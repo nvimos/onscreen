@@ -21,10 +21,12 @@ M.init = function()
 	M.just_run 'Mason'
 	M.just_run 'Luapad'
 	M.just_run 'Git'
+	M.just_run 'MRU'
 	M.just_run 'OverseerRun'
 	M.just_run 'OverseerToggle'
 	M.just_run 'Telescope mydirs'
 	M.just_run 'checkhealth'
+	M.just_run 'messages clear'
 	M.just_run('split | enew | Quickmath', 'Quickmath')
 
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)

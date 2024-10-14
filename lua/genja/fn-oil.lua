@@ -1,48 +1,81 @@
-local VisualLine = 'V'
-local F = {} -- functions
+-- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
 
+local VisualLine   = 'V'
+local F            = {} -- functions
 
+IsVideoExtension   = require('genja.fn').IsVideoExtension
+IsPictureExtension = require('genja.fn').IsPictureExtension
+Extensionname      = require('genja.fn').Extensionname
+JoinPaths          = require('genja.fn').JoinPaths
 
+-- {{{ util
+local function escpath(p, qq)
+	local q = '"'
+	p = p:gsub("\"", "\\\"")
+	if qq then return q .. p .. q end
+	return p
+end
+--
+local function executable(...)
+	local paths = { ... }
+	for _, path in pairs(paths) do
+		if vim.fn.executable(path) then
+			return path
+		end
+	end
+	for _, path in pairs(paths) do
+		return path
+	end
+	return ""
+end
+-- }}}
+
+-- {{{ sort listing options
+local print_sort_by = function(tup) print('sort by ' .. vim.inspect(tup):gsub('[ {}"]', '')) end
 F.sort_by_mtime_in_certain_paths = function()
 	-- this is a callback for an autocommand
-	local dir = require('oil').get_current_dir()
+	local dir = require('oil').get_current_dir() or ''
+	local m0 = dir:match('nvim[/\\]lua[/\\]*$') or ''
 	local m1 = dir:match('nvim[/\\]lua[/\\]lazyp[/\\]*$') or ''
 	local m2 = dir:match('nvim[/\\]after[/\\]plugin[/\\]*$') or ''
-	local m = m1..m2
-	if m then
-		require('oil').set_sort({ { 'type', 'asc' }, { 'mtime', 'desc' }})
+	local m = m0 .. m1 .. m2
+	local tup = {}
+	if m ~= '' then
+		tup = { { 'type', 'asc' }, { 'mtime', 'desc' } }
 	else
-		require('oil').set_sort({ { 'type', 'asc' }, { 'name', 'asc' }, })
+		tup = { { 'type', 'asc' }, { 'name', 'asc' } }
 	end
+	print_sort_by(tup)
+	require('oil').set_sort(tup)
 end
-
-
-F.sort_by_size = function ()
-	require('oil').set_sort({ { 'size', 'desc' }})
-end
-
-F.sort_by_mtime = function ()
-	-- require('oil').set_sort({ { 'type', 'asc' }, { 'mtime', 'desc' }})
-	require('oil').set_sort({ { 'mtime', 'desc' }})
-end
-
-F.vlc_rar = function()
-	local _, _, path = F.oil_entry_dir_path()
-	os.execute(Join({
-		'start',
-		"A:\\bin\\7z-extract-tmp.bat",
-		path:gsub("%.r%d%d", ".rar")
-	}, ' '))
-end
-
-F.cd_to_entry = function()
-	local _, _, path = F.oil_entry_dir_path()
-	if not IsDir(path) then
-		path = Dirname(path)
+F.dynamic_dir_sort = F.sort_by_mtime_in_certain_paths
+local opp, mi, mo = false, 1, { { { 'name', 'asc' } }, { { 'mtime', 'desc' } }, { { 'size', 'desc' } } }
+function F.toggle_asc_desc()
+	local tup = mo[mi]
+	if tup[1][2] == 'asc' then
+		tup[1][2] = 'desc'
+	elseif tup[1][2] == 'desc' then
+		tup[1][2] = 'asc'
 	end
-	vim.cmd('cd ' .. path)
+	opp = not opp
+	print_sort_by(tup)
+	require 'oil'.set_sort(tup)
 end
 
+function F.cycle_sort_mode()
+	mi = mi + 1
+	if mi > #mo then mi = 1 end
+	local tup = mo[mi]
+	print_sort_by(tup)
+	require 'oil'.set_sort(tup)
+end
+
+F.sort_by_name = function() require('oil').set_sort({ { 'type', 'asc' }, { 'name', 'asc' } }) end
+F.sort_by_size = function() require('oil').set_sort({ { 'size', 'desc' } }) end
+F.sort_by_mtime = function() require('oil').set_sort({ { 'mtime', 'desc' } }) end
+-- }}}
+
+-- {{{ rate on movielens
 F.rate_on_movielens = function()
 	local oil_entries = {}
 	local ok, oil = pcall(require, 'oil')
@@ -66,36 +99,16 @@ F.rate_on_movielens = function()
 		end
 	end
 end
+-- }}}
 
-F.oil_entry_dir_path = function()
-	local entry = require('oil').get_cursor_entry()
-	local dir = require('oil').get_current_dir()
-	local path = JoinPaths(dir, entry.name)
-	return entry, dir, path
+-- {{{ open rar in vlc (extract)
+F.vlc_rar = function()
+	local _, _, path = F.oil_entry_dir_path()
+	os.execute(Join({ 'start', "A:\\bin\\7z-extract-tmp.bat", path:gsub("%.r%d%d", ".rar") }, ' '))
 end
+-- }}}
 
-
-local function escpath(p, qq)
-	local q = '"'
-	p = p:gsub("\"", "\\\"")
-
-	if qq then return q .. p .. q end
-	return p
-end
-
-local function executable(...)
-	local paths = { ... }
-	for _, path in pairs(paths) do
-		if vim.fn.executable(path) then
-			return path
-		end
-	end
-	for _, path in pairs(paths) do
-		return path
-	end
-	return ""
-end
-
+-- {{{ open in vlc
 F.open_in_vlc = function()
 	local _, _, path = F.oil_entry_dir_path()
 	local vlc        = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]], 'vlc.exe', 'vlc')
@@ -108,8 +121,33 @@ F.open_in_vlc = function()
 		F.open_in_explorer()
 	end
 end
+-- }}}
 
+-- {{{ open in browser
+function F.open_in_browser(url)
+	local cmd = { 'xdg-open', url }
+	if vim.fn.executable('rundll32') == 1 then
+		cmd = { 'rundll32', 'url.dll,FileProtocolHandler', url }
+	end
+	local jid = vim.fn.jobstart(cmd, { detach = false })
+	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
+end
 
+-- }}}
+
+-- {{{ open in shell
+function F.open_in_shell(url)
+	local cmd = { 'xdg-open', url }
+	if vim.fn.executable('rundll32') == 1 then
+		cmd = { 'rundll32', 'shell32.dll,ShellExec_RunDLL', url }
+	end
+	local jid = vim.fn.jobstart(cmd, { detach = false })
+	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
+end
+
+-- }}}
+
+-- {{{ open in explorer
 F.open_in_explorer = function()
 	local _, _, path = F.oil_entry_dir_path()
 	if IsDir(path) then
@@ -118,7 +156,9 @@ F.open_in_explorer = function()
 		os.execute('explorer.exe ' .. Dirname(path))
 	end
 end
+-- }}}
 
+-- {{{ open via shell
 F.open_via_shell = function()
 	local get_open_cmd = function(path)
 		if false then
@@ -150,8 +190,9 @@ F.open_via_shell = function()
 		assert(jid > 0, "Failed to start job")
 	end
 end
+-- }}}
 
-
+-- {{{ undersort
 F.move_to_cat_delete = function()
 	local pos = vim.api.nvim_win_get_cursor(0)
 	F.MoveCat(function()
@@ -165,7 +206,6 @@ F.move_to_cat_delete = function()
 	end, { default_text = "_del" })
 end
 
-
 F.move_to_cat = function()
 	local pos = vim.api.nvim_win_get_cursor(0)
 	F.MoveCat(function()
@@ -178,7 +218,9 @@ F.move_to_cat = function()
 		end))
 	end)
 end
+-- }}}
 
+-- {{{ open / select custom : rar, vlc, explorer
 F.select_custom = function()
 	local entry, _, _ = F.oil_entry_dir_path()
 	local ext = Extensionname(entry.name)
@@ -193,6 +235,23 @@ F.select_custom = function()
 	else
 		require('oil.actions').select.callback()
 	end
+end
+-- }}}
+
+-- {{{ oil entry
+F.cd_to_entry = function()
+	local _, _, path = F.oil_entry_dir_path()
+	if not IsDir(path) then
+		path = Dirname(path)
+	end
+	vim.cmd('cd ' .. path)
+end
+
+F.oil_entry_dir_path = function()
+	local entry = require('oil').get_cursor_entry()
+	local dir = require('oil').get_current_dir()
+	local path = JoinPaths(dir, entry.name)
+	return entry, dir, path
 end
 
 F.get_oil_entries = function()
@@ -225,7 +284,6 @@ F.get_oil_entries = function()
 	return oil_entries
 end
 
-
 F.entry_from_path = function(path)
 	local dirname = vim.fn.fnamemodify(path:gsub('/$', ''), ':h')
 	local basename = vim.fn.fnamemodify(path:gsub('/$', ''), ':t')
@@ -239,6 +297,7 @@ F.entry_from_path = function(path)
 		type = stat.type,
 	}
 end
+
 F.entry_from_oil = function(d, e)
 	return {
 		dir = d,
@@ -259,22 +318,6 @@ function F.visual_line_range()
 	return a, b
 end
 
-function F.open_in_browser(url)
-	local cmd = { 'xdg-open', url }
-	if vim.fn.executable('rundll32') == 1 then
-		cmd = { 'rundll32', 'url.dll,FileProtocolHandler', url }
-	end
-	local jid = vim.fn.jobstart(cmd, { detach = false })
-	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
-end
-
-function F.open_in_shell(url)
-	local cmd = { 'xdg-open', url }
-	if vim.fn.executable('rundll32') == 1 then
-		cmd = { 'rundll32', 'shell32.dll,ShellExec_RunDLL', url }
-	end
-	local jid = vim.fn.jobstart(cmd, { detach = false })
-	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
-end
+-- }}}
 
 return F

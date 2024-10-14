@@ -1,8 +1,3 @@
--- how do i split a string by newline?
--- how do i split a string by newline in lua?
--- lua split string by newline
-
-
 return {
 	-- {
 	-- 	'github/copilot.vim',
@@ -38,6 +33,9 @@ return {
 	--
 	--        zbirenbaum/copilot-cmp: Integration with nvim-cmp.
 	--
+
+	-- AndreM222/copilot-lualine: Integration with lualine.nvim.
+
 
 	{
 		'zbirenbaum/copilot-cmp',

@@ -1,37 +1,58 @@
--- https://github.com/google/vimscript-language-server
--- https://github.com/LuaLS/lua-language-server?tab=readme-ov-file
--- https://luals.github.io/#neovim-install
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
--- https://github.com/luals/lua-language-server {{loop}}
--- https://lsp-zero.netlify.app/v3.x/blog/you-might-not-need-lsp-zero.html
--- https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/lsp.lua
--- https://www.freecodecamp.org/news/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2/
+-- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
 
--- :help vim.diagnostic.*
--- :help lspconfig-setup
+-- {{{ aliases
+local aucmd, augrp = vim.api.nvim_create_autocmd, vim.api.nvim_create_augroup ---@diagnostic disable-line: unused-local
+local err, notify  = vim.api.nvim_err_writeln, vim.notify ---@diagnostic disable-line: unused-local
+local km, bkm      = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnostic disable-line: unused-local
+local nosi         = function(d) return { silent = true, noremap = true, desc = d } end
+-- }}}
 
--- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
--- https://vermaden.wordpress.com/2024/03/13/perfect-neovim-ansible-setup/
-
--- local err = vim.api.nvim_err_writeln; err("lsp.lua")
-
-
-local err    = vim.api.nvim_err_writeln ---@diagnostic disable-line: unused-local
-local notify = vim.notify ---@diagnostic disable-line: unused-local
-
-local M = {
-	lspConfAugroup = vim.api.nvim_create_augroup(
-		'UserLspConfig', { clear = true }),
-	servers = {},
-}
-
-M.emerge     = function(ls)
-	if ls then
-		table.insert(M.servers, ls)
-	end
-	return M.servers
+-- {{{ Mylsp module
+Mylsp              = {}
+Mylsp.Augroup      = augrp('UserLspConfig', { clear = true })
+Mylsp.Servers      = {}
+function Mylsp.emerge(...)
+	for _, e in ipairs({ ... })
+	do table.insert(Mylsp.Servers, e) end
+	return Mylsp.Servers
 end
 
+-- }}}
+
+
+local function lspconfig_other()
+
+	require('lspconfig').powershell_es.setup {}
+
+end
+
+Mylsp.emerge(
+	'powershell_es',
+	'emmet_language_server',
+	'dockerls',
+	'pyright',
+	'textlsp',
+	'efm'
+)
+
+-- emerge…  ensure_installed… {{{
+-- emerge…  lua, bash, yaml {{{
+Mylsp.emerge('lua_ls', 'bashls', 'yamlls') -- }}}
+-- emerge…  html, css {{{
+Mylsp.emerge('html', 'cssls')              -- }}}
+-- emerge… jevascrapts {{{
+Mylsp.emerge('ts_ls', 'eslint', 'jsonls')  -- }}}
+
+-- {{{ ansible: needs more work. maybe setup in WSL
+--- vermaden (perfect ansible setup)
+--- at this point im thinking it's better to run vim from wsl for ansible work.
+--- Mylsp.emerge('ansiblels') -- pip  install --user ansible-lint
+--- Mylsp.emerge('ansible-lint') -- not supported on windows (2024-09)
+--- }}}
+
+-- }}}
+
+-- lspconfig… efm {{{
 local function lspconfig_efmls()
 	local luacheck    = require('efmls-configs.linters.luacheck')
 	local flake8      = require('efmls-configs.linters.flake8')
@@ -41,13 +62,11 @@ local function lspconfig_efmls()
 	local hadolint    = require('efmls-configs.linters.hadolint')
 	local solhint     = require('efmls-configs.linters.solhint')
 	-- local ansible_lint = require('efmls-configs.linters.ansible_lint')
-
 	local stylua      = require('efmls-configs.formatters.stylua')
 	local black       = require('efmls-configs.formatters.black')
 	local prettierd   = require('efmls-configs.formatters.prettier_d')
 	local fixjson     = require('efmls-configs.formatters.fixjson')
 	local shfmt       = require('efmls-configs.formatters.shfmt')
-
 	local efmls_langs = {
 		-- lua             = { luacheck,    stylua    },
 		python          = { flake8, black },
@@ -65,8 +84,6 @@ local function lspconfig_efmls()
 		solidity        = { solhint },
 		-- NOT ON WIN 2024-09 -- ansible         = { ansible_lint }, -- double check...
 	}
-
-
 	-- configure efm server
 	require('lspconfig').efm.setup({
 		filetypes = {
@@ -99,7 +116,9 @@ local function lspconfig_efmls()
 		},
 	})
 end
+-- }}}
 
+-- {{{ lspconfig… yaml
 local function lspconfig_yaml()
 	require('lspconfig').ansiblels.setup({})
 	require('lspconfig').yamlls.setup {
@@ -116,32 +135,29 @@ local function lspconfig_yaml()
 		}
 	}
 end
+-- }}}
 
+-- {{{ lspconfig… lua
 local function lspconfig_lua()
 	local libs = {}
-
 	for _, e in pairs({
 		vim.fn.expand "$VIMRUNTIME/lua",
 		vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+		vim.fn.stdpath 'config' .. '/lua',
 		vim.fn.stdpath 'data' .. '/lazy',
 		vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
 		vim.fn.stdpath 'data' .. '/lazy/nvim-cmp/lua',
 	}) do
 		e = vim.fs.normalize(e)
-		if IsDir(e) then
+		local stat = vim.uv.fs_stat(e)
+		if stat ~= nil and stat.type == 'directory' then
 			libs[e] = true
-			print('ok ' .. e)
-		else
-			print('not ok ' .. e)
 		end
 	end
-
 	local plugs = vim.fn.stdpath 'data' .. '/lazy/*/lua'
 	for _, e in pairs(vim.fn.glob(plugs, false, true)) do
 		libs[e] = true
 	end
-
-
 	require('lspconfig').lua_ls.setup({
 		filetypes = { 'lua' },
 		settings = {
@@ -158,7 +174,8 @@ local function lspconfig_lua()
 						'lowercase-global'
 					},
 					globals = {
-						'vim'
+						'vim',
+						'IsDir'
 					}
 				},
 				workspace = {
@@ -178,34 +195,184 @@ local function lspconfig_lua()
 				runtime = {
 					path = { '?.lua', '?/init.lua' },
 					pathStrict = false,
-
 				},
 			}
 		}
 	})
 end
+-- }}}
 
+-- {{{ textlsp… lua
+local function lspconfig_textls()
 
-local function lspconfig_ts_js_css_html()
-	-- -- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
-	-- local caps = require('cmp_nvim_lsp').default_capabilities()
-	-- caps.textDocument.completion.completionItem.snippetSupport = true
-	-- -- 2024-08 looks to me like snippetSupport is already enabled.
-	-- require('lspconfig').tailwindcss.setup { capabilities = caps }
-	-- require('lspconfig').ts_ls.setup { capabilities = caps }
-	-- require('lspconfig').jsonls.setup { capabilities = caps }
-	-- require('lspconfig').eslint.setup { capabilities = caps }
-	-- require('lspconfig').cssls.setup { capabilities = caps }
-	-- require('lspconfig').html.setup { capabilities = caps }
-	require('lspconfig').tailwindcss.setup({})
+	local
+	En = {}
+
+	En.languagetool = false
+	En.languagetool = true
+
+	En.ollama = false
+	En.ollama = true
+
+	En.gramformer = true
+	En.gramformer = false
+
+	En.hf_checker = true
+	En.hf_checker = false
+
+	En.hf_instruction_checker = true
+	En.hf_instruction_checker = false
+
+	En.hf_completion = true
+	En.hf_completion = false
+
+	require('lspconfig').textlsp.setup({
+		filetypes = { 'text', 'markdown', 'asciidoc' },
+		settings = {
+			textLSP = {
+				analysers = {
+					languagetool = {
+						enabled = En.languagetool,
+						check_text = {
+							on_open = false,
+							on_save = true,
+							on_change = false,
+						}
+					},
+					ollama = {
+						enabled = En.ollama,
+						check_text = {
+							on_open = false,
+							on_save = true,
+							on_change = false,
+						},
+						model = "llama3.2", -- smaller but faster model
+						-- model = "phi3:3.8b-instruct", -- smaller but faster model
+						-- model = "phi3:14b-instruct",  -- more accurate
+						max_token = 50,
+					},
+					gramformer = { -- needs to be installed manually
+						enabled = En.gramformer,
+						gpu = true,
+						check_text = {
+							on_open = false,
+							on_save = true,
+							on_change = false,
+						}
+					},
+
+					hf_checker = {
+						enabled = En.hf_checker,
+						gpu = true,
+						quantize = 32,
+						model = 'pszemraj/flan-t5-large-grammar-synthesis',
+						-- pszemraj/grammar-synthesis-small
+						-- pszemraj/grammar-synthesis-large
+						-- pszemraj/flan-t5-large-grammar-synthesis
+						-- pszemraj/flan-t5-xl-grammar-synthesis
+						-- pszemraj/bart-base-grammar-synthesis
+						min_length = 40,
+						check_text = {
+							on_open = false,
+							on_save = true,
+							on_change = false,
+						}
+					},
+					hf_instruction_checker = {
+						enabled = En.hf_instruction_checker,
+						gpu = true,
+						quantize = 32,
+						model = 'grammarly/coedit-large',
+						min_length = 40,
+						check_text = {
+							on_open = false,
+							on_save = true,
+							on_change = false,
+						}
+					},
+					hf_completion = {
+						enabled = En.hf_completion,
+						gpu = true,
+						quantize = 32,
+						model = 'bert-base-multilingual-cased',
+						topk = 5,
+					},
+
+					-- openai = {
+					-- 	enabled = false,
+					-- 	api_key = '<MY_API_KEY>',
+					-- 	-- url = '<CUSTOM_URL>'  -- optional to use an OpenAI-compatible server
+					-- 	check_text = {
+					-- 		on_open = false,
+					-- 		on_save = false,
+					-- 		on_change = false,
+					-- 	},
+					-- 	model = 'gpt-3.5-turbo',
+					-- 	max_token = 16,
+					-- },
+
+					-- grammarbot = {
+					-- 	enabled = false,
+					-- 	api_key = '<MY_API_KEY>',
+					-- 	-- longer texts are split, this parameter sets the maximum number of splits per analysis
+					-- 	input_max_requests = 1,
+					-- 	check_text = {
+					-- 		on_open = false,
+					-- 		on_save = false,
+					-- 		on_change = false,
+					-- 	}
+					-- },
+				},
+				documents = {
+					-- the language of the documents, could be set to `auto` of `auto:<fallback>`
+					-- to detect automatically, default: auto:en
+					language = "auto:en",
+					-- do not autodetect documents with fewer characters
+					min_length_language_detect = 20,
+					org = {
+						org_todo_keywords = {
+							'TODO',
+							'IN_PROGRESS',
+							'DONE'
+						},
+					},
+					txt = {
+						parse = true,
+					},
+				},
+			}
+		}
+	})
+end
+-- }}}
+
+--- -- {{{ lspconfig… html, css,
+--- local function lspconfig_html_css()
+--- 	-- -- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
+--- 	-- local caps = require('cmp_nvim_lsp').default_capabilities()
+--- 	-- caps.textDocument.completion.completionItem.snippetSupport = true
+--- 	-- -- 2024-08 looks to me like snippetSupport is already enabled.
+--- 	-- require('lspconfig').tailwindcss.setup { capabilities = caps }
+--- 	-- require('lspconfig').ts_ls.setup { capabilities = caps }
+--- 	-- require('lspconfig').jsonls.setup { capabilities = caps }
+--- 	-- require('lspconfig').eslint.setup { capabilities = caps }
+--- 	-- require('lspconfig').cssls.setup { capabilities = caps }
+--- 	-- require('lspconfig').html.setup { capabilities = caps }
+--- 	require('lspconfig').html.setup({})
+--- 	require('lspconfig').cssls.setup({})
+--- 	-- require('lspconfig').tailwindcss.setup({})
+--- end
+--- -- }}}
+
+-- {{{ lspconfig… jevascrapts
+local function lspconfig_jevascrapts()
+	require('lspconfig').eslint.setup({})
 	require('lspconfig').ts_ls.setup({})
 	require('lspconfig').jsonls.setup({})
-	require('lspconfig').eslint.setup({})
-	require('lspconfig').cssls.setup({})
-	require('lspconfig').html.setup({})
 end
+-- }}}
 
-
+-- {{{ lspconfig… golang
 local function lspconfig_go()
 	require('lspconfig').gopls.setup {
 		-- on_attach = on_attach,
@@ -224,58 +391,68 @@ local function lspconfig_go()
 		},
 	}
 end
+-- }}}
 
+--[[ {{{ main setup for mason and mason-lspconfig and lspconfig.{{SERVERs}}
+The lazy-plugin-definition in load-lsp.lua for the
+    plugins "neovim/nvim-lspconfig" calls
+	this setup_mason_lspconfig()
 
--- ◍ typescript-language-server
+ { neovim/nvim-lspconfig
+   , config() -> setup_mason_lspconfig() }
 
--- ei('eslint')
+load-lsp.lua is in
+   %AppData%/Local/nvim/lua/lazyp or
+         ~/.config/nvim/lua/lazyp (ItHINK)
+ }}} ]]
+Mylsp.setup_mason_lspconfig = function(set, zz)
+	require('mason').setup {
+		max_concurrent_installers = 12,
+		registries = {
+			'github:mason-org/mason-registry',
+		},
+		ui = {
+			border = 'double'
+		}
+	}
 
-
--- this is called from NVIM/lua/lazyp/lsp
--- when neovim/nvim-lspconfig is loaded
-M.setup_mason_lspconfig = function(set, zz)
-	require('mason').setup({})
-	vim.api.nvim_create_autocmd('FileType', {
-		pattern = 'mason',
-		callback = function()
-			vim.api.nvim_buf_set_keymap(0, 'n', '<esc>', ':close<cr>', { noremap = true, silent = true })
-			vim.api.nvim_buf_set_keymap(0, 'n', '<c-w>', ':close<cr>', { noremap = true, silent = true })
-		end
-	})
-
-
-	M.emerge('lua_ls')
-	M.emerge('bashls')
-	-- ei('biome')
-	M.emerge('ts_ls')
-	-- nathan long (modern javascript tooling)
-	M.emerge('jsonls')
-	M.emerge('eslint')
-	M.emerge('cssls')
-	M.emerge('html')
-	--
-	M.emerge('yamlls')
-	-- vermaden (perfect ansible setup)
-
-	-- needs more work on linux.
-	-- at this point im thinking it's better to run vim from wsl for ansible work.
-	-- ei('ansiblels') -- pip  install --user ansible-lint
-	-- ei('ansible-lint') -- not supported on windows (2024-09)
-
-	M.emerge('dockerls')
-	M.emerge('pyright')
-	M.emerge('bashls')
-	M.emerge('efm')
-
-	require('mason-lspconfig').setup({
+	require('mason-lspconfig').setup {
 		automatic_installation = true,
-		ensure_installed = M.servers
-	})
+		ensure_installed = Mylsp.emerge()
+	}
 
-	-- set omnifunc and tagfunc if available
-	vim.api.nvim_create_autocmd('LspAttach', {
+
+	-- lspconfig_html_css()
+	-- require'lspconfig'.superhtml.setup { filetypes = { 'superhtml' } }
+	require('lspconfig').html.setup { filetypes = { 'html', 'templ', '.tpl', '.twig', '.smarty' } }
+	require('lspconfig').cssls.setup {}
+	require('lspconfig').emmet_language_server.setup {}
+
+	lspconfig_jevascrapts()
+
+	lspconfig_lua()
+
+	lspconfig_go()
+
+	lspconfig_yaml()
+
+	lspconfig_efmls()
+
+	lspconfig_textls()
+
+	lspconfig_other()
+
+	require('lspconfig').pyright.setup {}
+	require('lspconfig').bashls.setup { filetypes = { 'bash', 'sh' } }
+
+	require('lspconfig').dockerls.setup {}
+
+
+
+	-- {{{ autocmd: set omnifunc and tagfunc if available
+	aucmd('LspAttach', {
 		desc = 'LSP capabilities',
-		group = M.lspConfAugroup,
+		group = Mylsp.Augroup,
 		callback = function(args)
 			local bufnr = args.buf
 			local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -289,33 +466,16 @@ M.setup_mason_lspconfig = function(set, zz)
 			end
 		end,
 	})
-	-- disable omnifunc and tagfunc when client detaches
+	-- disable omnifunc and tagfunc when client detaches {{{
 	vim.api.nvim_create_autocmd("LspDetach", {
 		callback = function(args)
 			-- local client = vim.lsp.get_client_by_id(args.data.client_id)
 			vim.cmd("setlocal tagfunc< omnifunc<")
 		end,
 	})
+	-- }}} }}}
 
-	lspconfig_ts_js_css_html()
-
-	lspconfig_lua()
-
-	lspconfig_go()
-
-	lspconfig_yaml()
-
-	require('lspconfig').pyright.setup {}
-	require('lspconfig').bashls.setup { filetypes = { 'bash', 'sh' } }
-
-	require('lspconfig').dockerls.setup({})
-
-
-	lspconfig_efmls()
-
-
-
-
+	-- {{{ todo: configure how to toggle harper in markdown
 	--local fuck_off_with_your_spellcheck_in_code = false
 	--require('lspconfig').harper_ls.setup({
 	--	autostart = false,
@@ -343,8 +503,9 @@ M.setup_mason_lspconfig = function(set, zz)
 	--		}
 	--	},
 	--})
+	-- }}}
 
-
+	-- {{{ more lsp servers
 	-- require('lspconfig').tsserver.setup {}
 	-- require('lspconfig').rust_analyzer.setup { settings = { ['rust-analyzer'] = {}, }, }
 	-- require('lspconfig').awk_ls.setup {}
@@ -364,41 +525,46 @@ M.setup_mason_lspconfig = function(set, zz)
 	-- filetypes = 'javascript',
 	-- -- root_dir = require('lspconfig/util').root_pattern('index.js'),
 	-- }
+	-- }}}
 end
 
 
-M.debug = function()
+Mylsp.debug = function()
 	-- vim.lsp.get_active_clients()
-
 	for i, e in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
 		print("client[" .. i .. "] = " .. e.name)
 	end
 end
 
-return M
+return Mylsp
 
 
---[[ setup {}
+--[[{{{ :help lspconfig-quickstart
 
+1. install server executable to PATH
+2. enable the server: `require'lspconfig'.clangd.setup{}`
+3. projects must a root marker for a given language server
+4. open a file within that project, such as `main.c`.
+5. more info about servers' configuration is in |lspconfig-all|.
 
-Note: all entries passed to `setup {}` override the entry in the default configuration. There is no composition.
+See |lspconfig-all| for the complete list of language server configurations.
+-- }}} ]]
 
+-- {{{ a single SERVERs config parameters
+--[[
 
-- {root_dir}
+- setup {}
+  Note: There is no composition.
+        All entries passed to `setup {}` override
+		the entry in the default configuration.
 
-    `function(filename, bufnr)`
+- {root_dir} `function(filename, bufnr)`
+  Returns either a filepath (string) or nil. The language server will only
+  start if the function returns a filepath.
 
-    Returns either a filepath (string) or nil. The language server will only
-    start if the function returns a filepath.
-
-- {filetypes}
-
-    `list[string] | nil`
-
-- {autostart}
-
-    `bool` (default: true)
-
+- {filetypes} `list[string] | nil`
+- {autostart} `bool` (default: true)
+- {cmd} `list[string]` {'foo', '--bar', 'baz'}
 
 - {on_new_config}
 
@@ -414,17 +580,11 @@ Note: all entries passed to `setup {}` override the entry in the default configu
     should likely be included in your new override. Some configurations
     use `on_new_config` to dynamically set or modify `cmd`.
 
-
 - {capabilities} `table <string, string|table|bool|function>`
 
   a table which represents the neovim client capabilities. Useful for
   broadcasting to the server additional functionality (snippets, off-protocol
   features) provided by plugins.
-
-- {cmd} `list[string]`
-
-  {'foo', '--bar', 'baz'}
-
 
 - {on_attach} `function(client, bufnr)`
 
@@ -440,9 +600,9 @@ Note: all entries passed to `setup {}` override the entry in the default configu
   `workspace/didChangeConfiguration` notification from the Nvim client to
   the language server. These settings allow a user to change optional runtime
   settings of the language server.
+-- }}}
 
-
---
+-- {{{ overriding some lspconfig defaults
 
   local lspconfig = require'lspconfig'
   lspconfig.util.default_config = vim.tbl_extend(
@@ -465,4 +625,4 @@ Note: all entries passed to `setup {}` override the entry in the default configu
     }
   )
 
-]] --
+]] -- }}}
