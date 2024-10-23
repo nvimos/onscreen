@@ -9,7 +9,6 @@ end
 
 cmp = require('cmp')
 
-
 -- Load as needed by filetype from the luasnippets folder in the config dir
 -- TODO: verify / confirm / extend
 require 'luasnip.loaders.from_lua'.lazy_load()
@@ -43,7 +42,8 @@ function Tab.next(fallback)
 	end
 end
 
-function Tab:prev(fallback)
+
+function Tab.prev(fallback)
 	if cmp.visible() then
 		cmp.select_prev_item()
 	elseif Tab.luasnip.jumpable(-1) then
@@ -60,11 +60,13 @@ cmp.setup({
 		['<f3>']      = cmp.mapping.select_prev_item(),
 		['']         = cmp.mapping.abort(), -- on jolemak  <c-e> sends ^K
 		['<c-space>'] = cmp.mapping.complete(),
-		['<cr>']      = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
+		['<cr>']      = cmp.mapping.confirm { behavior = 'insert', select = true },
 		['<tab>']     = cmp.mapping(Tab.next, { 'i', 's' }),
 		['<s-tab>']   = cmp.mapping(Tab.prev, { 'i', 's' }),
 	}),
+})
 
+cmp.setup({
 	snippet = {
 		expand = function(args)
 			local ok, luasnip = pcall(require, 'luasnip');
@@ -72,21 +74,48 @@ cmp.setup({
 			luasnip.lsp_expand(args.body)
 		end,
 	},
-
-	-- sorting = {
-	-- 	comparators = {
-	-- 		function(...)
-	-- 			ok, cmp_b = pcall(require, 'cmp_buffer')
-	-- 			if ok then
-	-- 				return cmp_b:compare_locality(...)
-	-- 			end
-	-- 			return nil
-	-- 		end,
-	-- 		-- The rest of your comparators...
-	-- 	}
-	-- }
-
 })
+
+-- cmp.setup({
+-- 	view = {
+-- 		entries = 'native',
+-- 	}
+-- })
+
+cmp.setup({
+	window = {
+		-- documentation = cmp.config.window.bordered(),
+		documentation = {
+			-- border = cmp.config.window.bordered(),
+			side_padding = 1,
+			scrolloff = 2,
+			winblend = 4,
+		},
+		completion = {
+			-- border = 'rounded',
+			side_padding = 1,
+			scrolloff = 2,
+			winblend = 4,
+			winhighlight = 'NormalFloat:StatusLine,FloatBorder:NormalFloat',
+			-- winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+		}
+	},
+})
+
+-- cmp.setup({
+-- sorting = {
+-- -- 	comparators = {
+-- -- 		function(...)
+-- -- 			ok, cmp_b = pcall(require, 'cmp_buffer')
+-- -- 			if ok then
+-- -- 				return cmp_b:compare_locality(...)
+-- -- 			end
+-- -- 			return nil
+-- -- 		end,
+-- -- 		-- The rest of your comparators...
+-- -- 	}
+-- }
+-- })
 
 cmp.setup {
 	sources = {
@@ -122,6 +151,15 @@ cmp.setup {
 	},
 }
 
+
+
+local function maxwidth()
+	if vim.bo[0].filetype == 'markdown' then
+		return math.floor(0.96 * vim.o.columns)
+	end
+	return math.floor(0.66 * vim.o.columns)
+end
+
 cmp.setup {
 	formatting = {
 		fields = {
@@ -129,10 +167,11 @@ cmp.setup {
 			cmp.ItemField.Abbr,
 			cmp.ItemField.Menu,
 		},
-		expandable_indicator = false,
+		expandable_indicator = true,
 		format = require("lspkind").cmp_format({
 			mode = 'symbol', -- show only symbol annotations
-			maxwidth = function() return math.floor(0.66 * vim.o.columns) end,
+			-- maxwidth = maxwidth,
+			maxwidth = function () return math.floor( 0.96 * vim.o.columns) end,
 			ellipsis_char = '…', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 			show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 

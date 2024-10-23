@@ -2,7 +2,6 @@ lua << EOF
 do
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
-	require('genja')
 	Safeload = require('genja.fn').Safeload
 	if not Safeload('genja') then
 		-- try a subset of the config if the whole thing breaks.
@@ -12,10 +11,11 @@ do
 		Safeload 'genja.map-lsp'
 		Safeload 'genja.map-telescope'
 		Safeload 'genja.map-convoluted'
+		Safeload 'genja.opt'
 		Safeload 'genja.lazy'
-		vim.cmd( 'redraw' )
+		-- vim.cmd( 'redraw' )
 	else
-		vim.notify('LOADED')
+		vim.notify('Safeload genja: ok')
 	end
 end
 EOF

@@ -36,7 +36,7 @@ local function grep_string()
 -- frequently used
 km('n', '<F1>', te.live_grep,           { desc = ' live 󰵃'})
 -- km('n', '<S-F1>', te.find_files,          { desc = ' find_files'})
-km('n', '<S-F1>', cmd 'Telescope finn_ivy',          { desc = ' find_files'})
+km('n', '<S-F1>', cmd 'Telescope finn',          { desc = ' finn filer'})
 
 
 km('n', '<C-F1>', te.oldfiles,              { desc = ' oldfiles'})

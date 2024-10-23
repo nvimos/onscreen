@@ -19,11 +19,34 @@
 ]]
 
 
-local function cmd(c) return '<cmd>' .. c .. '<cr>' end
+
+F = require'genja.api'.fn
+local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
+
+-- local function cmd(c) return '<cmd>' .. c .. '<cr>' end
+
+
 local nosi = function(d) return { silent = true, noremap = true, desc = d } end
 local km = vim.keymap.set
 local nv = { 'n', 'v' }
 local v = { 'v' }
+
+
+--vim.keymap.set(nv, '<leader>wT',  cmd 'mj'..[[]]..cmd 'nohl'..cmd '`j', nosi 'title-case buffer')
+
+vim.keymap.set(nv, '<leader>wT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. cmd 'nohl', nosi 'title-case buffer')
+
+
+-- Magical and convoluted macros
+vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'remove empty lines in visual block')
+vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'remove trailing space')
+vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'replace " with \' on current line')
+vim.keymap.set(v,  '<leader>w"',  [[$A",<esc>gvI"<esc>]],                  nosi 'wrap selection with " "')
+--vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
+-- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
+
+-- Instant search/replace on the cursor
+km('n', '<leader>cs', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<left><left><left>]], nosi 'search & replace')
 
 
 
@@ -40,17 +63,6 @@ km('n', '<F7>',       cmd 'set guifont=*', nosi 'Vim: set guifont')
 -- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 
--- Magical and convoluted macros
-vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'remove empty lines in visual block')
-vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'remove trailing space')
-vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'replace " with \' on current line')
-vim.keymap.set(v,  '<leader>w"',  [[$A",<esc>gvI"<esc>]],                  nosi 'wrap selection with " "')
---vim.keymap.set('v',  '<leader>w"', [[$o0I"<esc>$A",<esc>]],              {noremap = true, desc = [[wrap selection with " ",]]})
--- vim.api.nvim_set_keymap('n', '<leader>w"', [[:%s/"/'/g<CR>]], {noremap = true})
-
--- Instant search/replace on the cursor
-km('n', '<leader>cs', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<left><left><left>]], nosi 'search & replace')
-
 
 -- transform «Plug "foo/bar"» to «{ 'foo/bar' },»
 km('n',
@@ -58,7 +70,7 @@ km('n',
 	cmd [[silent! s/use *{ *\([^}]*\)}/\1/]] ..
 	cmd [[silent! s/Plug *//]] ..
 	cmd [[silent! s/"//g]] ..
-		[[^ciW{ '' },<esc>hhhhp]]..
+	[[^ciW{ '' },<esc>hhhhp]]..
 	cmd [[silent! s/''/'/g]]
 	,nosi 'transform to Lazy')
 

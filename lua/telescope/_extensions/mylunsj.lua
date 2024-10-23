@@ -20,7 +20,6 @@ M.init = function()
 	M.just_run 'Lazy sync'
 	M.just_run 'Mason'
 	M.just_run 'Luapad'
-	M.just_run 'Git'
 	M.just_run 'MRU'
 	M.just_run 'OverseerRun'
 	M.just_run 'OverseerToggle'
@@ -30,6 +29,7 @@ M.init = function()
 	M.just_run('split | enew | Quickmath', 'Quickmath')
 
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)
+	M.add_item('Fugitive', function() vim.cmd('Git') end)
 
 
 	-- Dashboard doesnt start. no idea why… there is <space>jD

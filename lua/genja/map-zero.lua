@@ -1,22 +1,21 @@
 -- Stable mappings sourced early during init
 
 F = require'genja.api'.fn
-local cfg, cmd, nosi =
-F.cfg, F.cmd, F.nosi
+local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
 
--- {{{ aliases, alignment
-local km = vim.keymap.set
-local nv = { 'n', 'v' }
-local nvo = { 'n', 'v', 'o' }
-local d = '' -- default :map, modes n v o (normal, visual, operator pending)
-local n = { 'n' }
-local n_ = n
-local n__ = n
-local n___ = n
-local n____ = n
-local n_____ = n
-local n______ = n
--- }}}
+	-- {{{ aliases, alignment
+	local km = vim.keymap.set
+	local nv = { 'n', 'v' }
+	local nvo = { 'n', 'v', 'o' }
+	local d = '' -- default :map, modes n v o (normal, visual, operator pending)
+	local n = { 'n' }
+	local n_ = n
+	local n__ = n
+	local n___ = n
+	local n____ = n
+	local n_____ = n
+	local n______ = n
+	-- }}}
 
 -- Windows {{{
 km(d, '<c-w>`',         cmd [[quit]],     nosi 'Window: quit')
@@ -139,7 +138,15 @@ km(nv, '<leader>.', '&', nosi 'Vim: Repeat last command')
 -- }}}
 
 -- Jump dirs {{{
-vim.keymap.set('n', '<leader>j..', ':lcd %:p:h<cr>:pwd<cr>', { desc = ':lcd dirname(%)' })
+local function cd_dot()
+	if vim.bo.filetype == 'oil' then
+		require 'genja.fn'.Cd( require 'oil'.get_current_dir() )
+	else
+		vim.cmd ':lcd %:p:h'
+		vim.cmd ':pwd'
+	end
+end
+vim.keymap.set('n', '<leader>j..', cd_dot, { desc = ':lcd dirname(%)' })
 vim.keymap.set('n', '<leader>j.,', ':lcd ..   <cr>:pwd<cr>', { desc = ':lcd ..' })
 -- }}}
 
@@ -154,6 +161,14 @@ km("n", "<leader>zZ", ':x', { desc = 'write, quit', silent = true })
 
 -- Edit my init file {{{
 km('n', '<leader>eI', cfg('tabedit', 'init.lua'), nosi 'edit init file')
+-- }}}
+
+-- Edit notes {{{
+km('n', '<leader>en', function ()
+	if vim.fn.has('windows') then
+		vim.cmd('edit J:\\notes\\todo\\todo.md')
+	end
+	end, nosi 'edit notes')
 -- }}}
 
 -- {{{ edir dir of buffer.

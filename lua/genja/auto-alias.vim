@@ -1,5 +1,6 @@
 " Aliases
 
+command! -nargs=* P Luapad <args>
 command! -nargs=* M MRU <args>
 command! -nargs=* -complete=file T       tabedit <args>
 command! -nargs=* -complete=file Te      tabedit <args>
@@ -12,14 +13,21 @@ command!                         To      tabedit | Telescope oldfiles
 
 command! DumpMappings :enew | put=execute('map')
 
+function! DumpMessages()
+	redir => messages
+	silent messages
+	redir END
+	new
+	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+	silent put=messages
+endfunction
+command! DumpMessages :call DumpMessages()
 
 command! Lazygit :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=2 lazygit <cr>
 command! Python  :FloatermNew                            --wintype=vsplit --name=python python <cr>
 
 command! Bash    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=2 bash <cr>
 command! Ranger  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=2 ranger --cmd="cd ~"
-
-
 
 command! QQQ tabdo write | qa
 command! JJJ tabdo write | qa
@@ -40,7 +48,7 @@ command! DiffOrig    vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wi
 command! Lspclients :lua =vim.lsp.get_clients()
 
 command! YankFilename put =expand('%:p')
-
+command! YankYmd put =luaeval('os.date([[%Y-%m-%d]])')
 
 
 " Abbreviations

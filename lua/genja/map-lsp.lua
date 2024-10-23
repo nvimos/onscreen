@@ -58,9 +58,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- maybe: integrate with Telescope code-actions
 		km(nv_, '<space>ca', vlb.code_action, o 'Code action')
 
-		km('', '<leader>ttd', function(s)
-			s = vim.diagnostic.is_enabled()
-			vim.diagnostic.enable(not s) end, o('toggle diagnostics'))
+		km('', '<leader>ttt', function(s) vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, o('toggle diagnostics'))
 
 
 		-- -- close hover window

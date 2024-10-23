@@ -2,7 +2,7 @@
 --
 vim.cmd 'colorscheme lunaperche'
 --
-vim.o.guifont        = 'Cascadia Code Light:h14:l'
+-- vim.o.guifont        = 'Cascadia Code Light:h14:l'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
@@ -10,30 +10,16 @@ Safeload             = require('genja.fn').Safeload
 
 Safeload 'genja.map-zero' -- stable early maps, if config breaks
 Safeload 'genja.opt'      -- just static options
-
 Safeload 'genja.env'
 Safeload 'genja.fu' -- userfuncs
 Safeload 'genja.ft' -- filetypes
 
---[[
-Safeload 'genja.fn' ]]
-
--- require 'genja.fn'.win_chdir_home() -- if started on windows, cd to ~
-
-vim.cmd(
-	(function(c)
-		return Join({
-				'source %s/lua/genja/auto-alias.vim', -- aliases, onliners, autocommads, abbreviations
-				'source %s/lua/genja/hilite.vim', -- colors
-				'source %s/lua/genja/fn.vim' }, '\n')
-			:format(c, c, c)
-	end)(vim.fn.stdpath('config')))
+require 'genja.fn'.win_chdir_home() -- cd ~ on windows
 
 C = vim.fn.stdpath('config')
 vim.cmd('source ' .. C .. '/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
 vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')  -- colors
 vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
-
 
 Safeload('genja.hilite', function(m) m.setup() end)
 Safeload 'genja.auto' -- autocommads

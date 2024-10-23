@@ -10,6 +10,7 @@ return {
 	fn = {
 		nosi = function(text) return { silent = true, noremap = true, desc = text } end,
 		cmd = function(c) return string.format('<cmd>%s<cr>', c) end,
+
 		cfg = function(c, f) return string.format('<cmd>%s %s/lua/genja/%s<cr>', c, CONFIG, (f or '')) end,
 	}
 }

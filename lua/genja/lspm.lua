@@ -120,7 +120,9 @@ end
 
 -- {{{ lspconfig… yaml
 local function lspconfig_yaml()
-	require('lspconfig').ansiblels.setup({})
+
+	-- require('lspconfig').ansiblels.setup({}) -- windows not supported...
+
 	require('lspconfig').yamlls.setup {
 		settings = {
 			yaml = {
@@ -420,7 +422,6 @@ Mylsp.setup_mason_lspconfig = function(set, zz)
 		automatic_installation = true,
 		ensure_installed = Mylsp.emerge()
 	}
-
 
 	-- lspconfig_html_css()
 	-- require'lspconfig'.superhtml.setup { filetypes = { 'superhtml' } }

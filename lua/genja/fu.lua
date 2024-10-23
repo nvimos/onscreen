@@ -1,6 +1,14 @@
 UserComm('WootA', function(c) print(vim.inspect(c)) end, { nargs = '*', force = true, desc = "What is a function?", bar = true })
 UserComm('WootB', function(c) print(vim.inspect(c)) end, { nargs = '?', force = true, desc = "What is a function?" })
 
+vim.api.nvim_create_user_command('Ymd', function()
+	-- AKA :put =luaeval('Ymd()')
+	vim.api.nvim_buf_set_lines(0,
+		vim.fn.line('.')-1,
+		vim.fn.line('.')-1,
+		false, { os.date('%Y-%m-%d') })
+end, {})
+
 UserComm('PurgeShada', function()
 	local shada_path = vim.fn.stdpath('data') .. '/shada/'
 	local tmp_files = vim.fn.glob(shada_path .. '*.tmp*', true, true)
