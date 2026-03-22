@@ -1,20 +1,32 @@
 local vim = vim
-local err = vim.api.nvim_err_writeln
+local err, notify  = vim.api.nvim_err_writeln, vim.notify ---@diagnostic disable-line: unused-local
 
 local yes, cmp = pcall(require, 'cmp');
 if not yes then
-	err('no cmp module!')
+	notify('no cmp module!')
 	return
 end
 
 cmp = require('cmp')
 
--- Load as needed by filetype from the luasnippets folder in the config dir
--- TODO: verify / confirm / extend
-require 'luasnip.loaders.from_lua'.lazy_load()
+-- FAIL -- breaks stuff in a very annoying way.
+-- FAIL -- not sure where i got this from.
+-- -- Load as needed by filetype from the luasnippets folder in the config dir
+-- -- TODO: verify / confirm / extend
+-- require 'luasnip.loaders.from_lua'.lazy_load()
 
 
-local Tab = { luasnip = require('luasnip') }
+local Tab = { luasnip = {} }
+
+local yes, luasnip = pcall(require, 'luasnip');
+if not yes then
+	notify('no cmp module!')
+	return
+else
+	Tab.luasnip = require('luasnip')
+end
+
+
 function Tab.has_text_before()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	local line_text = vim.api.nvim_buf_get_lines(0, line - 1, line, true)
@@ -35,8 +47,8 @@ function Tab.next(fallback)
 		cmp.select_next_item()
 	elseif Tab:has_text_before() then
 		cmp.complete()
-	elseif Tab.luasnip.expand_or_jumpable() then
-		Tab.luasnip.expand_or_jump()
+	-- FAIL -- elseif Tab.luasnip.expand_or_jumpable() then
+	-- FAIL -- 	Tab.luasnip.expand_or_jump()
 	else
 		fallback()
 	end
@@ -46,8 +58,8 @@ end
 function Tab.prev(fallback)
 	if cmp.visible() then
 		cmp.select_prev_item()
-	elseif Tab.luasnip.jumpable(-1) then
-		Tab.luasnip.jump(-1)
+	-- FAIL -- elseif Tab.luasnip.jumpable(-1) then
+	-- FAIL --	Tab.luasnip.jump(-1)
 	else
 		fallback()
 	end
@@ -71,7 +83,9 @@ cmp.setup({
 		expand = function(args)
 			local ok, luasnip = pcall(require, 'luasnip');
 			if not ok then err('no luasnip') end
-			luasnip.lsp_expand(args.body)
+			if ok then
+				luasnip.lsp_expand(args.body)
+			end
 		end,
 	},
 })
