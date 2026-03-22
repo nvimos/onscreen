@@ -201,6 +201,7 @@ km('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', nosi 'tabedit `dirname`')
 --}}}
 
 -- edit lazy conf {{{
+km('n', '<leader>eh', cmd('tabedit '.. (vim.env.user_home_dir or '')), nosi 'edit home dir')
 km('n', '<leader>el', cfg('tabedit', 'lazy.lua'), nosi 'edit main lazy file')
 -- }}}
 
