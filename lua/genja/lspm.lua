@@ -420,7 +420,7 @@ Mylsp.setup_mason_lspconfig = function(set, zz)
 
 	require('mason-lspconfig').setup {
 		automatic_installation = true,
-		ensure_installed = Mylsp.emerge()
+		ensure_installed = Mylsp.Servers
 	}
 
 	-- lspconfig_html_css()

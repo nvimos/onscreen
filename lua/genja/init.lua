@@ -8,9 +8,9 @@ vim.g.maplocalleader = ','
 
 Safeload             = require('genja.fn').Safeload
 
+Safeload 'genja.env'
 Safeload 'genja.map-zero' -- stable early maps, if config breaks
 Safeload 'genja.opt'      -- just static options
-Safeload 'genja.env'
 Safeload 'genja.fu' -- userfuncs
 Safeload 'genja.ft' -- filetypes
 

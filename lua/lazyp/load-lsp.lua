@@ -13,11 +13,13 @@ return {
 		lazy = true,
 	},{
 		'williamboman/mason-lspconfig.nvim',
+		branch = 'v1.32.0',
 		config = false, -- require('mason-lspconfig').setup({})
 		priority = 71,
 		lazy = true,
 	},{
 		'neovim/nvim-lspconfig',
+		branch = 'v2.5.0', -- neovim 0.11 for later versions
 		priority = 72,
 		lazy = true,
 		cmd = 'Mason',

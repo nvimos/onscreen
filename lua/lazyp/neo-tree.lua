@@ -1,7 +1,7 @@
 return {
 	{
 		'nvim-neo-tree/neo-tree.nvim',
-		enabled = true,
+		enabled = false, -- 2025-01 not using it, prefer oil instad
 		branch = 'v3.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',

@@ -1,6 +1,6 @@
 -- config in: ../../after/plugin/cmp-after.lua
 return {
-	{ 'L3MON4D3/LuaSnip',       priority = 79 },
+	-- FAIL -- { 'L3MON4D3/LuaSnip',       priority = 79 },
 
 	-- completion engine
 	{ 'hrsh7th/nvim-cmp',       priority = 80 },
