@@ -1,5 +1,6 @@
 lua << EOF
 do
+	vim.o.guifont        = 'Cascadia Code Light:h14:l'
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
 	Safeload = require('genja.fn').Safeload
@@ -14,6 +15,9 @@ do
 		Safeload 'genja.opt'
 		Safeload 'genja.lazy'
 		-- vim.cmd( 'redraw' )
+
+		-- assumes vim9, installs plugins with vimplug
+		-- vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimscript/vimrc.almalinux')
 	else
 		vim.notify('Safeload genja: ok')
 	end
