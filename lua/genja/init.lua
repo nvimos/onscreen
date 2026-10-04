@@ -30,17 +30,15 @@ Safeload 'genja.map-convoluted'
 
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
-	local function Norm(p)
-		local s, _ = p:gsub('\\', '/'); return s
-	end
+	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
 	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
 	local function add_dir(e) InsertDir(e) end
-	local home = function(p)
+	local homePath = function(p)
 		local h = vim.env.Userprofile or vim.env.HOME;
 		return (h .. ('/' .. (p or '')))
 	end
 
-	add_dir(home())
+	add_dir(homePath())
 
 	local openmw = false
 	local fonv = false
@@ -51,21 +49,22 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 		add_dir('J:/notes')
 		add_dir('A:/workspace')
 		add_dir('A:/_setup/bootstrap')
-		add_dir(home('Hj/notes'))
+		add_dir(homePath('Hj/notes'))
+		add_dir(homePath('Notez26'))
 
 		add_dir('O:')
 
 		if oni then
 			table.insert(sd, '--- (fonv)')
-			add_dir(home('Documents/Klei/OxygenNotIncluded'))
+			add_dir(homePath('Documents/Klei/OxygenNotIncluded'))
 		end
 
 		if fonv then
 			table.insert(sd, '--- (fonv)')
 			add_dir('C:/Games/standalone/Fallout New Vegas Ultimate Edition/Data/NVSE/plugins/Tweaks/GameSettings')
 			add_dir('C:/Games/standalone/Fallout New Vegas Ultimate Edition/Data')
-			add_dir(home('Documents/My Games/FalloutNV'))
-			add_dir(home('AppData/Local/FalloutNV'))
+			add_dir(homePath('Documents/My Games/FalloutNV'))
+			add_dir(homePath('AppData/Local/FalloutNV'))
 		end
 
 		if openmw then
@@ -73,8 +72,8 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 			add_dir('C:/Games/Openmw.DataFilesExamples')
 			add_dir('C:/Games/OpenMW.master')
 			add_dir('C:/Games')
-			add_dir(home('Documents/my games/OpenMW'))
-			add_dir(home('AppData/Roaming/Vortex/morrowind/mods'))
+			add_dir(homePath('Documents/my games/OpenMW'))
+			add_dir(homePath('AppData/Roaming/Vortex/morrowind/mods'))
 			add_dir('J:/notes/gaming/morrowind')
 		end
 
@@ -95,54 +94,3 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	add_dir(vim.fn.stdpath('data'))
 	return sd
 end)()
-
---
--- function append_to_buffer_end(text)
--- 	vim.api.nvim_buf_set_lines(
--- 		vim.api.nvim_get_current_buf(),
--- 		vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()),
--- 		-1,
--- 		false,
--- 		{text}
--- 	)
--- end
--- append_to_buffer_end('LOADED')
-
-
---[[
-	Inspiration
-	- https://github.com/folke/lazy.nvim
-	- https://github.com/ThePrimeagen/init.lua
-
-	Docs
-	- https://jacobsimpson.github.io/nvim-lua-manual/docs/interacting/
-	- https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages
-
-	Distros
-	- https://github.com/e-cal/evim
-	- https://github.com/LunarVim/Neovim-from-scratch/tree/master/lua/user
-	- https://github.com/nvim-lua/kickstart.nvim/tree/master/lua/kickstart/plugins
-
-	Plugins
-	- https://vimawesome.com/plugin/vim-devicons
-	- https://kkalamarski.me/essential-neovim-plugins
-
-	Examples
-	- https://gist.github.com/s1n7ax
-	- https://gist.github.com/s1n7ax/6885a550633fa8a285fdef2c0f8044ad generate doc-comments
-	- https://github.com/wincent/wincent/blob/aa3a322e3a911dabe0ef398ebb1fd7c77209b8ac/roles/dotfiles/files/.vim/plugin/mappings/leader.vim
-
-	Dotfiles (funny, or "simple")
-	- https://github.com/Traap/nvim - old timer has his own system.
-	- https://github.com/beauwilliams/Dotfiles/tree/master/Vim/nvim - full of life ossie with code comments spanning 88-145 dashes :D
-
-	Plugins to study
-	- https://github.com/ojroques/nvim-buildme/blob/main/lua/buildme.lua
-
-	Intro to fugitive
-	- https://jeancharles.quillet.org/posts/2022-03-02-Practical-introduction-to-fugitive.html
-
-	Other
-	- https://www.nerdfonts.com/cheat-sheet
-	- https://github.com/nvim-neorg/neorg
-]]
