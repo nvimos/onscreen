@@ -23,7 +23,6 @@ vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 Safeload('genja.hilite', function(m) m.setup() end)
 Safeload 'genja.auto' -- autocommads
-Safeload 'genja.boot.boot-lazy' -- genja/lazy-spec.lua -> import { lazy-my }
 Safeload 'genja.lazy-plug-spec'
 Safeload 'genja.map-lsp'
 Safeload 'genja.map-telescope'
