@@ -17,7 +17,8 @@ km({ 'v'      }, '<leader>r2',  ':PrettierFragment<cr>',     nosi 'Prettier (fra
 -- map keys when a server attaches to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP keymaps',
-	group = require('genja.zoldcomp-lspm').Augroup,
+	-- group = vim.api.nvim_create_augroup('UserLspConfig', { clear = false }),
+	group = 'UserLspConfig',
 	callback = function(ev)
 
 		local vlb = vim.lsp.buf

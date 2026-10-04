@@ -20,4 +20,3 @@
 	})
 end)()
 
-Safeload 'genja.lazy-spec'

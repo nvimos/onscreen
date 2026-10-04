@@ -17,6 +17,8 @@ aucmd({ "WinLeave", "BufLeave" }, { group = csag, callback = clear_search_reg,
 
 -- }}}
 
+augrp('UserLspConfig', { clear = true })
+
 -- {{{ autocmd: close mason tui
 aucmd('FileType', {
 	pattern = 'mason',

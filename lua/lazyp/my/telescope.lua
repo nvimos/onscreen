@@ -22,9 +22,16 @@ return {
 		branch = '0.1.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-			'LinArcX/telescope-env.nvim',
+			-- 'LinArcX/telescope-env.nvim', repo gone
 		},
 		config = true
+	},
+
+	{
+		-- hide env stuff?
+		"ph1losof/ecolog.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		opts = {},
 	},
 
 
