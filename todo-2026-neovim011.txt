@@ -1,0 +1,68 @@
+## prep / clean
+
+-[x] branch out as nvim09-2023
+-[x] import solid vimscript config
+-[x] refactor lazy nvim setup
+		- moved plugins to nvim/lua/lazyp/{topic}
+		- moved lazy bootstrap to a separate file
+		- made nvim/lua/lazyp/new for new plugins
+		- old newPlugins array is now in nvim/lua/genja/lazy-spec.lua
+-[x] disable old completion setup
+		- disabled old completion, lsp, llm configs
+				- prefix: zoldcomp-
+-[x] factor out statusline stuff into a separate plugin
+	- [x] move old files
+	- [ ] set up github repo
+	- [ ] delete from home-nvim repo
+-[x] freeze 2023 branch, push
+
+## git / backup
+
+-[x] find backup on usb or external drive
+		- Q:\BACKUP\git\home-nvim.git (4tb samsung)
+		- P:\srv,repos\home-nvim.git (sPectre partition)
+-[x] reconfigure local git-webui
+		- workspace web-ui
+			- npm install -g ungit
+		- repos web repo, windows service
+			- gitea
+-[x] find a free git mirror
+	-[x] push the old branch/tag there
+	- one of Forgejo / gitea / codeberg
+	- Forgejo on codeberg
+		- https://codeberg.org/tox2ik/home-nvim
+
+
+new setup 2026
+
+-[x] describe file names and their purpose in lua/genja
+
+-[ ] migrate lsp, cmp config to neovim 0.11+ api
+	- undo require(lspconfig).«lang».setup()
+	- migrate to vim.lsp.config and vim.lsp.enable
+
+-[ ] integrate online, free tier
+	-[ ] integrate at least one
+		- maybe hack some round-robin, auto retry util
+	-[ ] auto-code-completion suggestions
+	-[ ] chatbot
+
+-[ ] bootstrap core plugins with neovim
+		-[ ] plugin manager (stick with lazy probably)
+			- move to nvim/init.vim
+
+-[ ] look for an alternative shortcut-hint plugin
+	- which binds follow space, g, ` (leader, localleader)
+		- which-key feels clunky
+
+-[ ] look into generating a cheat-sheet from existing keys
+	- exclude or include defaults toggle
+	- maybe save as custom help files
+	- should be a reference at a glance
+	- ideally some logical patterns and rearrangement ideas should emerge
+
+-[ ] maybe: make a plugin that can open a browser and paste a query to perplexity
+
+-[ ] maybe: cook up a way to or look into disabling languages automatically
+
+
