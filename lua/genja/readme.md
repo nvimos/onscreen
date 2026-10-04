@@ -1,29 +1,36 @@
 # Neovim setup
 
+## Files
 
-## Docs
+     boot - init lazy vim
+     api.lua     - source from other config lua scripts
+     auto.lua    - autocmds in lua
+     env.lua     - shell vars
+     fn-keys.lua - custom functions for bound keys
+     fn-oil.lua  - functions for nvim-oil
+     fn.lua      - functions in general, maybe a separate plugin
+     ft.lua      - filetype settings, maybe merge with something
+     fu-test.lua - nicify movie-dir names (for searching imdb, etc)
+     fu.lua      - user functions (lua) :UserFunction
+     hilite.lua  - colors, ui, syntax (lua)
+     init.lua    - Safeload the rest, mapleader, colorscheme,
+                  - font(?), START_DIRS(?)
+     lazy-spec.lua - pluginspec imports and array
+     log.lua       - write errors to a file
+     map-convoluted.lua - keymaps, hard to grok
+     map-jolemak.lua    - keymaps, custom layout quirks
+     map-lsp.lua        - keymaps, code-actions, diagnostics navigation
+     map-telescope.lua  - keymaps, telescope actions, shortcuts
+     map-zero.lua       - keymaps, essential that must not fail
+     opt.lua            - neovim configuration
+     readme.discovery.md - stuff to checkout related to neovim config, plugins
+     zexp.lua            - experiments
 
-- https://github.com/LuaLS/lua-language-server/wiki/Annotations
 
+Vimscript
 
-
-
-## Links LSP setup
-
-- https://github.com/google/vimscript-language-server
-- https://github.com/LuaLS/lua-language-server?tab=readme-ov-file
-- https://luals.github.io/#neovim-install
-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
-- https://github.com/luals/lua-language-server {{loop}}
-- https://lsp-zero.netlify.app/v3.x/blog/you-might-not-need-lsp-zero.html
-- https://github.com/kkalamarski/neovim-config/blob/main/lua/kkalamarski/lsp.lua
-- https://www.freecodecamp.org/news/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2/
-
-- :help vim.diagnostic.*
-- :help lspconfig-setup
-
-- https://nathan-long.com/blog/modern-javascript-tooling-in-neovim/
-- https://vermaden.wordpress.com/2024/03/13/perfect-neovim-ansible-setup/
-
-- local err = vim.api.nvim_err_writeln; err("lsp.lua")
+     vimrc.almalinux.vim - almalinux solid config
+     hilite.vim          - colors, syntax, ui
+     fn.vim              - user functions
+     auto-alias.vim      - aucmds, shorthand commands, :com-aliases
 
