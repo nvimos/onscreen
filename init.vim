@@ -17,7 +17,8 @@ do
 		-- vim.cmd( 'redraw' )
 
 		-- assumes vim9, installs plugins with vimplug
-		-- vim.cmd('source ' .. vim.fn.stdpath('config') .. '/vimscript/vimrc.almalinux')
+		-- vim.cmd('source ' .. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
+
 	else
 		vim.notify('Safeload genja: ok')
 	end
