@@ -6,7 +6,7 @@ return {
 	CONFIG = CONFIG,
 	--
 	UserComm = vim.api.nvim_create_user_command,
-	err = vim.api.nvim_err_writeln,
+	err = function(msg) vim.api.nvim_echo({ { msg } }, true, { err = true }) end,
 	fn = {
 		nosi = function(text) return { silent = true, noremap = true, desc = text } end,
 		cmd = function(c) return string.format('<cmd>%s<cr>', c) end,

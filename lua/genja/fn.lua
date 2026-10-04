@@ -171,9 +171,6 @@ function Ymd()
 	return os.date('%Y-%m-%d')
 end
 
-function Mess(msg)
-		vim.api.nvim_echo({ { msg } }, true, { err = true })
-end
 
 ---@param mod string
 ---@param cb function(e)  -- callback when loaded. e is the loaded module.
@@ -181,11 +178,8 @@ end
 function Safeload(...)
 	mod, cb = unpack({...})
 	local k, req = pcall(require, mod)
-	local mess = print
-	-- mess = vim.notify
-	-- mess = vim.api.nvim_err_writeln
 	if not k then
-		Mess(string.format('cannot load «%s»', mod))
+		require('genja.api').err(string.format('cannot load «%s»', mod))
 	else
 		if cb then
 			cb(req)
@@ -196,10 +190,8 @@ end
 
 M = {
 	win_chdir_home = win_chdir_home,
-
 	Safeload = Safeload,
-	Mess = Mess,
-
+	Mess = require('genja.api').err,
 	Basename = Basename,
 	Cd = Cd,
 	Dirname = Dirname,
