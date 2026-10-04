@@ -3,7 +3,9 @@ do
 	vim.o.guifont        = 'Cascadia Code Light:h14:l'
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
+
 	Safeload = require('genja.fn').Safeload
+	Safeload('lazy-boot')
 	if not Safeload('genja') then
 		-- try a subset of the config if the whole thing breaks.
 		vim.g.mapleader      = ' '
