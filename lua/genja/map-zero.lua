@@ -3,6 +3,8 @@
 F = require'genja.api'.fn
 local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
 
+local IsDir = require 'genja.fn'.IsDir
+
 	-- {{{ aliases, alignment
 	local km = vim.keymap.set
 	local nv = { 'n', 'v' }
@@ -163,10 +165,26 @@ km("n", "<leader>zZ", ':x', { desc = 'write, quit', silent = true })
 km('n', '<leader>eI', cfg('tabedit', 'init.lua'), nosi 'edit init file')
 -- }}}
 
+
 -- Edit notes {{{
 km('n', '<leader>en', function ()
-	if vim.fn.has('windows') then
-		vim.cmd('edit J:\\notes\\todo\\todo.md')
+	local places = {}
+	table.insert(places, 'J:\\notes\\todo\\todo.md')
+	table.insert(places, vim.env.user_home_dir .. '/notes')
+	table.insert(places, vim.env.user_home_dir .. '/Notez')
+	table.insert(places, vim.env.user_home_dir .. '/Notez26')
+	table.insert(places, vim.env.user_home_dir)
+
+	-- if vim.fn.has('windows') then
+		-- IsDir()
+		-- vim.cmd('edit J:\\notes\\todo\\todo.md')
+	-- end
+
+	for _, e in ipairs(places) do
+		if IsDir(e) then
+			vim.cmd('edit '..e)
+			break
+		end
 	end
 	end, nosi 'edit notes')
 -- }}}

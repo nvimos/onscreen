@@ -3,7 +3,8 @@ local err, notify  = vim.api.nvim_err_writeln, vim.notify ---@diagnostic disable
 
 local yes, cmp = pcall(require, 'cmp');
 if not yes then
-	notify('no cmp module!')
+	-- notify('no cmp module!')
+	err('no cmp module!')
 	return
 end
 
@@ -20,7 +21,7 @@ local Tab = { luasnip = {} }
 
 local yes, luasnip = pcall(require, 'luasnip');
 if not yes then
-	notify('no cmp module!')
+	-- notify('no cmp module!')
 	return
 else
 	Tab.luasnip = require('luasnip')

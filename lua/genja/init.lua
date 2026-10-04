@@ -43,6 +43,8 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	add_dir(home())
 
 	local openmw = false
+	local fonv = false
+	local oni = true
 	local movies = false
 
 	if vim.fn.has('Windows') then
@@ -52,6 +54,19 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 		add_dir(home('Hj/notes'))
 
 		add_dir('O:')
+
+		if oni then
+			table.insert(sd, '--- (fonv)')
+			add_dir(home('Documents/Klei/OxygenNotIncluded'))
+		end
+
+		if fonv then
+			table.insert(sd, '--- (fonv)')
+			add_dir('C:/Games/standalone/Fallout New Vegas Ultimate Edition/Data/NVSE/plugins/Tweaks/GameSettings')
+			add_dir('C:/Games/standalone/Fallout New Vegas Ultimate Edition/Data')
+			add_dir(home('Documents/My Games/FalloutNV'))
+			add_dir(home('AppData/Local/FalloutNV'))
+		end
 
 		if openmw then
 			table.insert(sd, '--- (morrowind)')
@@ -70,7 +85,8 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 			add_dir('P:/cinema')
 			add_dir('V:')
 		end
-		-- table.insert(sd, '---')
+		table.insert(sd, '---')
+
 		-- add_dir('J:/bin')
 		-- add_dir('J:/reference')
 	end

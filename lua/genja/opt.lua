@@ -41,16 +41,12 @@ Statusline = require 'genja.statusline'.Statusline
 Tabline = require 'genja.statusline'.Tabline
 Winbar = require 'genja.winbar'.Winbar
 
-
-vim.o.tabline = '%{%v:lua.Tabline()%}'
-
 vim.g.genja_statusline_rune = false -- display percise information about the cursor position
-
+vim.o.tabline = '%{%v:lua.Tabline()%}'
 vim.o.winbar = "%{%v:lua.Winbar()%}"
-vim.o.statusline = 'jwf'
 vim.o.statusline = '%{%v:lua.Statusline()%}'
 
-vim.o.laststatus = 3 -- 3: global 2: one for each 1: if more than one 0: never
+vim.o.laststatus = 3 -- last win status line; only one status line even with several windows
 
 
 --[[ vim options ]]--
@@ -172,6 +168,13 @@ vim.opt.formatoptions:append 'n'
 --- lsp performance
 vim.g.lsp_semantic_enabled = 0
 vim.g.lsp_format_sync_timeout = 1000
+
+
+-- context menu
+-- context menu luaish -- vim.api.nvim_create_user_command('ToggleWrap', function()
+-- context menu luaish -- 	  vim.opt.wrap = not vim.opt.wrap:get()
+-- context menu luaish -- end, {})
+-- context menu luaish -- vim.cmd('amenu PopUp.Toggle\\ Wrap :ToggleWrap<CR>')
 
 
 

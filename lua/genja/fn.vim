@@ -37,3 +37,14 @@ function! RemoveTrailingSpaces()
 	endif
 	call setpos('.', save_cursor)
 endfunction
+
+
+function! ToggleWrap()
+	if &wrap
+		set nowrap
+	else
+		set wrap
+	endif
+endfunction
+
+amenu PopUp.ToggleWrap :call ToggleWrap()<CR>
