@@ -31,13 +31,13 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 			-- vim.g.genja_resource = "FAIL"
 			-- err = vim.inspect(err)
 			err = err or "?{?}?"
-			require('genja.fn').Mess(string.format("Failed to re-source «%s»\n", ev.match))
+			require('genja.api').err(string.format("Failed to re-source «%s»\n", ev.match))
 			local trace = debug.traceback(err)
 			trace = trace:gsub("\t", '   ')
 			trace = trace:gsub("called at", "\n   …called at")
 			trace = trace:gsub("(E%d+:)", "\n   …%1")
 			trace = trace:gsub("%.%.%.", "…")
-			require('genja.fn').Mess(trace)
+			require('genja.api').err(trace)
 		else
 			-- vim.g.genja_resource = "SUCC: " .. ev.match
 		end
