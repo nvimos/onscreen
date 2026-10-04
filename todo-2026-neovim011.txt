@@ -15,17 +15,30 @@
 	-[ ] move the :CheatsheetGenerate snippet to lazy setup
 	-[ ] make the telescope ui first column wider
 	-[ ] adjust the script for more granular groups (first column)
+	-[ ] look into generating several cheatsheets
+		-[ ] one for lsp
+		-[ ] one for map-convoluted
+		-[ ] one for map-*
+		-[ ] add them to Mylunsj
 	- consider
 		- exclude or include defaults toggle
 		- maybe save as custom help files -> cheatsheet.txt
 		- should be a reference at a glance
 		- ideally some logical patterns and rearrangement ideas should emerge
+-[ ] extract Mylunsj into a separate plugin
 
 -[x] open a browser and paste a query to perplexity
 	-[ ] tidy plugin and move somewhere
 	-[ ] same for gemini
 
 -[ ] migrate lsp, cmp config to neovim 0.11+ api
+	- [ ] ask claude to rewrite based on existing files
+	- [ ] make it modular or feature-per-file
+	- [ ] put essential functionality into separate files
+		-[ ] :help completion
+		-[ ] :commands completion
+		-[ ] lua lsp
+		-[ ] shell lsp
 	- undo require(lspconfig).«lang».setup()
 	- migrate to vim.lsp.config and vim.lsp.enable
 
@@ -34,6 +47,9 @@
 		- maybe hack some round-robin, auto retry util
 	-[ ] auto-code-completion suggestions
 	-[ ] chatbot
+
+-[ ] integrate everything search index
+	- maybe use it per default if it's installed, fallback to fzf or whatever
 
 -[ ] look for an alternative shortcut-hint plugin
 	- which binds follow space, g, ` (leader, localleader)
