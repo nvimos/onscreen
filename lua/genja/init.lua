@@ -1,6 +1,6 @@
 -- Genja init for nvim
 --
-vim.o.guifont        = 'Cascadia Code Light:h14:l'
+vim.o.guifont = 'Cascadia Code Light:h11:l'
 vim.cmd 'colorscheme lunaperche'
 --
 vim.g.mapleader      = ' '

@@ -7,5 +7,3 @@ refresh-spell:
 install-ungit:
 	npm install -g ungit
 
-sync:
-	nvim --headless "+Lazy! update" +qa 
