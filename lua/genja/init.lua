@@ -1,8 +1,8 @@
 -- Genja init for nvim
 --
+vim.o.guifont        = 'Cascadia Code Light:h14:l'
 vim.cmd 'colorscheme lunaperche'
 --
--- vim.o.guifont        = 'Cascadia Code Light:h14:l'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
@@ -23,7 +23,7 @@ vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 Safeload('genja.hilite', function(m) m.setup() end)
 Safeload 'genja.auto' -- autocommads
-Safeload 'genja.lazy' -- genja/lazy.lua -> import { lazyp }
+Safeload 'genja.boot.boot-lazy' -- genja/lazy-spec.lua -> import { lazy-my }
 Safeload 'genja.map-lsp'
 Safeload 'genja.map-telescope'
 Safeload 'genja.map-convoluted'
