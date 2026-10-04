@@ -1,5 +1,9 @@
 # Overview of nvim/lua/
 
+## Files
+    
+     lazy-boot.lua - setup lazy plugin manager
+
 ## Dirs
 
     dashboard        - some custom theme for a dashboard plugin
