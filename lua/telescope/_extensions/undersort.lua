@@ -42,9 +42,9 @@ local os_move = function(opts)
 			-- P:/cinema/_movies.2024 and V:/_keep.2024
 			-- even if they are the same location and the user has access.
 			-- the workaround is to use the same "drive letter" in both paths.
-			vim.api.nvim_err_writeln(errmsg)
-			vim.api.nvim_err_writeln(from)
-			vim.api.nvim_err_writeln(to)
+			require('genja.fn').Mess(errmsg)
+			require('genja.fn').Mess(from)
+			require('genja.fn').Mess(to)
 		end
 
 		callback(succ)

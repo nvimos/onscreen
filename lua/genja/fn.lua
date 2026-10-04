@@ -171,6 +171,9 @@ function Ymd()
 	return os.date('%Y-%m-%d')
 end
 
+function Mess(msg)
+		vim.api.nvim_echo({ { msg } }, true, { err = true })
+end
 
 ---@param mod string
 ---@param cb function(e)  -- callback when loaded. e is the loaded module.
@@ -179,10 +182,10 @@ function Safeload(...)
 	mod, cb = unpack({...})
 	local k, req = pcall(require, mod)
 	local mess = print
-	mess = vim.notify
-	mess = vim.api.nvim_err_writeln
+	-- mess = vim.notify
+	-- mess = vim.api.nvim_err_writeln
 	if not k then
-		mess(string.format('cannot load «%s»', mod))
+		Mess(string.format('cannot load «%s»', mod))
 	else
 		if cb then
 			cb(req)
@@ -195,6 +198,7 @@ M = {
 	win_chdir_home = win_chdir_home,
 
 	Safeload = Safeload,
+	Mess = Mess,
 
 	Basename = Basename,
 	Cd = Cd,
