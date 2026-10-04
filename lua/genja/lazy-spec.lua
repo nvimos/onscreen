@@ -20,21 +20,32 @@
 
 PluginSpec = {
 
-		-- { import = 'lazyp.my' },    -- my configs
 		-- { import = 'lazyp.new' },   -- undergoing evaluation
 		-- { import = 'lazyp.no' },   -- not loaded atm
 		{ import = 'lazyp.comps' }, -- lsp, completion, llm
 		{ import = 'lazyp.maybe' }, -- seems ok to keep
-		-- { import = 'lazyp.others' }, -- configs taken from other people
+		{ import = 'lazyp.my' },    -- my configs
+		{ import = 'lazyp.others' }, -- configs taken from other people
 		{ import = 'lazyp.term' },  -- terminal integrations, floaters
 		{ import = 'lazyp.ui' },    -- adjustments for nvim, qt, neovide
 		{ import = 'lazyp.utilqol' }, -- make it better (quality of life and utilities)
+
 }
+
 
 -- below is a list of plugs to maybe try at some point
 -- or that are undergoing evaluation
 for _, e in pairs({
-		-- { Vonr/align.nvim },
+	-- { Vonr/align.nvim },
+	{
+		dir = require('genja.api').CONFIG .. '/plug-wip/genja-statusline.nvim',
+		opts = {},
+		event = "VeryLazy",
+		config = function()
+			require('genja-statusline').setup()
+		end
+	}
+
 }) do
 	table.insert(PluginSpec, e)
 end

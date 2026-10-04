@@ -37,14 +37,7 @@ vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'mov
 	%{%}    expanded as statusline
 
 ]]
-Statusline = require 'genja.statusline'.Statusline
-Tabline = require 'genja.statusline'.Tabline
-Winbar = require 'genja.winbar'.Winbar
 
-vim.g.genja_statusline_rune = false -- display percise information about the cursor position
-vim.o.tabline = '%{%v:lua.Tabline()%}'
-vim.o.winbar = "%{%v:lua.Winbar()%}"
-vim.o.statusline = '%{%v:lua.Statusline()%}'
 
 vim.o.laststatus = 3 -- last win status line; only one status line even with several windows
 
