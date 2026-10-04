@@ -1,3 +1,48 @@
+# Clean and update for neovim 0.11+
+
+
+
+## new setup 2026
+
+-[x] describe file names and their purpose in lua/genja
+-[n] bootstrap core plugins with neovim
+	-[ ] lazy disables pack/ loading
+	-[ ] plugin manager (stick with lazy probably)
+	-[x] move bootstrap to lua/lazy-boot.vim
+
+-[x] look into generating a cheat-sheet from existing keys
+	-[x] sudormrfbin/cheatsheet.nvim
+	-[ ] move the :CheatsheetGenerate snippet to lazy setup
+	-[ ] make the telescope ui first column wider
+	-[ ] adjust the script for more granular groups (first column)
+	- consider
+		- exclude or include defaults toggle
+		- maybe save as custom help files -> cheatsheet.txt
+		- should be a reference at a glance
+		- ideally some logical patterns and rearrangement ideas should emerge
+
+-[x] open a browser and paste a query to perplexity
+	-[ ] tidy plugin and move somewhere
+	-[ ] same for gemini
+
+-[ ] migrate lsp, cmp config to neovim 0.11+ api
+	- undo require(lspconfig).«lang».setup()
+	- migrate to vim.lsp.config and vim.lsp.enable
+
+-[ ] integrate online, free tier
+	-[ ] integrate at least one
+		- maybe hack some round-robin, auto retry util
+	-[ ] auto-code-completion suggestions
+	-[ ] chatbot
+
+-[ ] look for an alternative shortcut-hint plugin
+	- which binds follow space, g, ` (leader, localleader)
+		- which-key feels clunky
+
+
+-[ ] maybe: cook up a way to or look into disabling languages automatically
+
+
 ## prep / clean
 
 -[x] branch out as nvim09-2023
@@ -31,38 +76,5 @@
 	- one of Forgejo / gitea / codeberg
 	- Forgejo on codeberg
 		- https://codeberg.org/tox2ik/home-nvim
-
-
-new setup 2026
-
--[x] describe file names and their purpose in lua/genja
-
--[ ] migrate lsp, cmp config to neovim 0.11+ api
-	- undo require(lspconfig).«lang».setup()
-	- migrate to vim.lsp.config and vim.lsp.enable
-
--[ ] integrate online, free tier
-	-[ ] integrate at least one
-		- maybe hack some round-robin, auto retry util
-	-[ ] auto-code-completion suggestions
-	-[ ] chatbot
-
--[ ] bootstrap core plugins with neovim
-		-[ ] plugin manager (stick with lazy probably)
-			- move to nvim/init.vim
-
--[ ] look for an alternative shortcut-hint plugin
-	- which binds follow space, g, ` (leader, localleader)
-		- which-key feels clunky
-
--[ ] look into generating a cheat-sheet from existing keys
-	- exclude or include defaults toggle
-	- maybe save as custom help files
-	- should be a reference at a glance
-	- ideally some logical patterns and rearrangement ideas should emerge
-
--[ ] maybe: make a plugin that can open a browser and paste a query to perplexity
-
--[ ] maybe: cook up a way to or look into disabling languages automatically
 
 

@@ -1,7 +1,0 @@
-
-new setup 2027
-
--[ ] make a safe fall-back version based on the solid-vimscript
--[ ] bootstrap my own statusline
-	- and split out fn and api maybe
-- [ ] integrate local llm

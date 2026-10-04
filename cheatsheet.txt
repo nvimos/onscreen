@@ -1,0 +1,403 @@
+# Auto-generated cheatsheet from current keymaps
+# Generated on: 2026-10-04 21:41
+
+## Normal @mode-n
+
+`:redo<CR>` | <C-D>
+`<C-D>zz` | <C-G>
+Scroll: extra lines | <C-K>
+`<Tab>` | <C-L>
+`<C-O>` | <C-O>
+Scroll: extra lines reverse | <C-P>
+Window: next | <C-Q>
+`<Cmd>nohlsearch<CR><Esc>` | <Esc>
+Zen Mode (relnum) |  z2
+Zen Mode |  z1
+Zen mode off |  z0
+transform to Lazy |  wL
+Vim: set guifont |  sf
+MRU |  jm
+search & replace |  cs
+replace " with ' on current line |  w"
+remove trailing space |  wss
+remove empty lines in visual block |  wsb
+title-case buffer |  wT
+ grep string |  js
+ grep live |  jj
+ autocommands |  jA
+ keymaps |  jM
+ colorscheme |  jC
+ vim_options |  jv
+ buffers |  T
+ buffers |  4
+ find in START_DIRS |  jd
+ oldfiles |  jo
+ find_files |  j/.
+ builtin |  j?
+ find in START_DIRS |  j//
+Prettier |  r2
+diag open float |  cc
+diag open float |  c?
+diag setlocallist |  cd
+`<Cmd>CellularAutomaton scramble<CR>` |  fml=
+`<Cmd>CellularAutomaton make_it_rain<CR>` |  fml-
+`` |  mz
+Cheat-sheet |  ?
+edit init dir |  ei
+edit main lazy file |  el
+edit home dir |  eh
+tabedit `dirname` |  et
+edit in `dirname` |  e.
+seek in `dirname` |  ee
+edit notes |  en
+edit init file |  eI
+write, quit |  zZ
+write |  zz
+:lcd .. |  j.,
+:lcd dirname(%) |  j..
+Vim: Repeat last command |  .
+Text: conform to width |  w<Right>
+Align on : last |  A:z
+Align on : 1st |  A:1
+Align on = all |  A==
+Align on = 1st |  A=1
+Align on , all |  Aa
+Align on , all |  A,
+Align on spaces |  A 
+reformat gg=G |  r0
+Append: … (ellipsis) |  i.
+`<Cmd>UndotreeToggle<CR>` |  u
+Telescope |  3
+Telescope |  2
+Vim help |  1
+Vim: yank filename |  yf
+Vim: yank into x11:primary  ("*yy) |  y8
+Vim: yank into clipboard ("+yy) |  y=
+rotate to alternative buffer |  bb3
+rotate to alternative buffer |  bb2
+rotate to alternative buffer |   
+Tab: move → |  t=
+Tab: move ← |  t-
+Tab: move 0 |  t0
+Tab: prev |  |
+Tab: next |  \
+Window: next |  `
+Window: quit |  w`
+`:<Up><Home><C-Right>!<CR>` | !
+`<Plug>(MatchitNormalForward)` | %
+:help &-default | &
+Open parent directory | -
+:help Y-default | Y
+`<Plug>(MatchitNormalMultiBackward)` | [%
+Add empty line above cursor | [ 
+:brewind | [B
+:bprevious | [b
+:ptprevious | [<C-T>
+:trewind | [T
+:tprevious | [t
+:rewind | [A
+:previous | [a
+:lpfile | [<C-L>
+:lrewind | [L
+:lprevious | [l
+:cpfile | [<C-Q>
+:crewind | [Q
+:cprevious | [q
+Jump to the first diagnostic in the current buffer | [D
+diag prev | [d
+`<Plug>(MatchitNormalMultiForward)` | ]%
+Add empty line below cursor | ] 
+:blast | ]B
+:bnext | ]b
+:ptnext | ]<C-T>
+:tlast | ]T
+:tnext | ]t
+:last | ]A
+:next | ]a
+:lnfile | ]<C-L>
+:llast | ]L
+:lnext | ]l
+:cnfile | ]<C-Q>
+:clast | ]Q
+:cnext | ]q
+Jump to the last diagnostic in the current buffer | ]D
+diag next | ]d
+`<Plug>(MatchitNormalBackward)` | g%
+EasyAlign | ga
+vim.lsp.buf.document_symbol() | gO
+vim.lsp.buf.type_definition() | grt
+vim.lsp.buf.implementation() | gri
+vim.lsp.buf.references() | grr
+vim.lsp.codelens.run() | grx
+vim.lsp.buf.code_action() | gra
+vim.lsp.buf.rename() | grn
+Toggle comment line | gcc
+Toggle comment | gc
+Opens filepath or URI under cursor with the system handler (file explorer, web browser, …) | gx
+Fold: close | z<Left>
+Vim: set guifont | <F7>
+ oldfiles | <C-F1>
+ live 󰵃 | <F1>
+`:lua require('plenary.test_harness').test_file(vim.fn.expand("%:p"))<CR>` | <Plug>PlenaryTestFile
+Extract zip archive entry | <Plug>(nvim-zip-extract)
+`:<C-U>call matchit#MultiMatch("W",  "n")<CR>` | <Plug>(MatchitNormalMultiForward)
+`:<C-U>call matchit#MultiMatch("bW", "n")<CR>` | <Plug>(MatchitNormalMultiBackward)
+`:<C-U>call matchit#Match_wrapper('',0,'n')<CR>` | <Plug>(MatchitNormalBackward)
+`:<C-U>call matchit#Match_wrapper('',1,'n')<CR>` | <Plug>(MatchitNormalForward)
+Reload directory | <Plug>(nvim-dir-reload)
+Open parent directory | <Plug>(nvim-dir-up)
+Open directory entry | <Plug>(nvim-dir-open)
+`:<C-U>call fzf#vim#maps('n', 0)<CR>` | <Plug>(fzf-maps-n)
+`` | <S-F2>
+`` | <Plug>(fzf-normal)
+`i` | <Plug>(fzf-insert)
+ finn filer | <S-F1>
+maximize current | <C-W>m
+edit in `dirname` | <C-->
+source current file | <S-F5>
+`gx` | <C-LeftMouse>
+Telescope mydirs | <S-F3>
+Telescope mylunsj | <F3>
+`:norm gcc<CR>k` | <C-S-/>
+`:norm gcc<CR>j` | <C-/>
+`<C-U>zz` | <C-BS>
+`<C-U>zz` | <PageUp>
+`<C-U>zz` | <C-U>
+`<C-D>zz` | <C-CR>
+`<C-D>zz` | <PageDown>
+`<C-D>zz` | <C-D>
+Tab: prev | <M-[>
+Tab: next | <M-]>
+move window left | <C-W><S-Left>
+move window left | <C-W><S-Right>
+Window: only | <C-W>1
+Window: right | <C-Right>
+Window: up | <C-Up>
+Window: down | <C-Down>
+Window: left | <C-Left>
+Window: next | <C-Q>
+Window: quit | <C-W>`
+Show diagnostics under the cursor | <C-W><C-D>
+Show diagnostics under the cursor | <C-W>d
+:help CTRL-L-default | <C-L>
+
+## Insert @mode-i
+
+Luasnip: next | <C-P>
+Luasnip: next | <C-N>
+`<C-O>:call fzf#vim#maps('i', 0)<CR>` | <Plug>(fzf-maps-i)
+`fzf#vim#complete#buffer_line()` | <Plug>(fzf-complete-buffer-line)
+`fzf#vim#complete#line()` | <Plug>(fzf-complete-line)
+`fzf#vim#complete#path('ag -l -g ""')` | <Plug>(fzf-complete-file-ag)
+`fzf#vim#complete#path('dir /s/b/a:-d')` | <Plug>(fzf-complete-file)
+`fzf#vim#complete#path('dir /s/b')` | <Plug>(fzf-complete-path)
+`fzf#vim#complete#word()` | <Plug>(fzf-complete-word)
+Paste (shift+insert) | <S-Insert>
+vim.snippet.jump if active, otherwise <S-Tab> | <S-Tab>
+vim.lsp.buf.signature_help() | <C-S>
+:help i_CTRL-W-default | <C-W>
+:help i_CTRL-U-default | <C-U>
+vim.snippet.jump if active, otherwise <Tab> | <Tab>
+
+## Visual + Select @mode-v
+
+`:redo<CR>` | <C-D>
+`<C-D>zz` | <C-G>
+vim.snippet.jump if active, otherwise <Tab> | <Tab>
+`<Tab>` | <C-L>
+`<C-O>` | <C-O>
+`<Cmd>nohlsearch<CR><Esc>` | <Esc>
+MRU |  jm
+wrap selection with " " |  w"
+remove trailing space |  wss
+remove empty lines in visual block |  wsb
+title-case buffer |  wT
+Prettier (frag) |  r2
+Vim: Repeat last command |  .
+Align on : last |  A:z
+Align on : 1st |  A:1
+Align on = all |  A==
+Align on = 1st |  A=1
+Align on , all |  Aa
+Align on , all |  A,
+Align on spaces |  A 
+Vim: yank into x11:primary  ("*yy) |  y8
+Vim: yank into clipboard ("+yy) |  y=
+Window: quit |  w`
+:help v_#-default | #
+`<Plug>(MatchitVisualForward)` | %
+:help v_star-default | *
+:help v_@-default | @
+`<Plug>(MatchitVisualMultiBackward)` | [%
+Select previous sibling node | [N
+Select previous node | [n
+`<Plug>(MatchitVisualMultiForward)` | ]%
+Select next sibling node | ]N
+Select next node | ]n
+`<Plug>(MatchitVisualTextObject)` | a%
+Select parent (outer) node | an
+`<Plug>(MatchitVisualBackward)` | g%
+EasyAlign | ga
+vim.lsp.buf.code_action() | gra
+Toggle comment | gc
+Opens filepath or URI under cursor with the system handler (file explorer, web browser, …) | gx
+Select child (inner) node | in
+Luasnip: next | <C-P>
+Luasnip: next | <C-N>
+`<Plug>(MatchitVisualMultiBackward)o<Plug>(MatchitVisualMultiForward)` | <Plug>(MatchitVisualTextObject)
+`:<C-U>call matchit#MultiMatch("W",  "n")<CR>m'gv``` | <Plug>(MatchitVisualMultiForward)
+`:<C-U>call matchit#MultiMatch("bW", "n")<CR>m'gv``` | <Plug>(MatchitVisualMultiBackward)
+`:<C-U>call matchit#Match_wrapper('',0,'v')<CR>m'gv``` | <Plug>(MatchitVisualBackward)
+`:<C-U>call matchit#Match_wrapper('',1,'v')<CR>:if line("''") != line(".") || col("''") != col("$") | exe ":normal! m'" | endif<CR>gv``` | <Plug>(MatchitVisualForward)
+`:<C-U>call fzf#vim#maps('x', 0)<CR>` | <Plug>(fzf-maps-x)
+`<Cmd>norm gc<CR>` | <C-/>
+`<C-U>zz` | <C-BS>
+`<C-U>zz` | <PageUp>
+`<C-U>zz` | <C-U>
+`<C-D>zz` | <C-CR>
+`<C-D>zz` | <PageDown>
+`<C-D>zz` | <C-D>
+Tab: prev | <M-[>
+Tab: next | <M-]>
+Window: quit | <C-W>`
+vim.snippet.jump if active, otherwise <S-Tab> | <S-Tab>
+vim.lsp.buf.signature_help() | <C-S>
+
+## Visual @mode-x
+
+`:redo<CR>` | <C-D>
+`<C-D>zz` | <C-G>
+`<Tab>` | <C-L>
+`<C-O>` | <C-O>
+`<Cmd>nohlsearch<CR><Esc>` | <Esc>
+MRU |  jm
+wrap selection with " " |  w"
+remove trailing space |  wss
+remove empty lines in visual block |  wsb
+title-case buffer |  wT
+Prettier (frag) |  r2
+Vim: Repeat last command |  .
+Align on : last |  A:z
+Align on : 1st |  A:1
+Align on = all |  A==
+Align on = 1st |  A=1
+Align on , all |  Aa
+Align on , all |  A,
+Align on spaces |  A 
+Vim: yank into x11:primary  ("*yy) |  y8
+Vim: yank into clipboard ("+yy) |  y=
+Window: quit |  w`
+:help v_#-default | #
+`<Plug>(MatchitVisualForward)` | %
+:help v_star-default | *
+:help v_@-default | @
+`<Plug>(MatchitVisualMultiBackward)` | [%
+Select previous sibling node | [N
+Select previous node | [n
+`<Plug>(MatchitVisualMultiForward)` | ]%
+Select next sibling node | ]N
+Select next node | ]n
+`<Plug>(MatchitVisualTextObject)` | a%
+Select parent (outer) node | an
+`<Plug>(MatchitVisualBackward)` | g%
+EasyAlign | ga
+vim.lsp.buf.code_action() | gra
+Toggle comment | gc
+Opens filepath or URI under cursor with the system handler (file explorer, web browser, …) | gx
+Select child (inner) node | in
+`<Plug>(MatchitVisualMultiBackward)o<Plug>(MatchitVisualMultiForward)` | <Plug>(MatchitVisualTextObject)
+`:<C-U>call matchit#MultiMatch("W",  "n")<CR>m'gv``` | <Plug>(MatchitVisualMultiForward)
+`:<C-U>call matchit#MultiMatch("bW", "n")<CR>m'gv``` | <Plug>(MatchitVisualMultiBackward)
+`:<C-U>call matchit#Match_wrapper('',0,'v')<CR>m'gv``` | <Plug>(MatchitVisualBackward)
+`:<C-U>call matchit#Match_wrapper('',1,'v')<CR>:if line("''") != line(".") || col("''") != col("$") | exe ":normal! m'" | endif<CR>gv``` | <Plug>(MatchitVisualForward)
+`:<C-U>call fzf#vim#maps('x', 0)<CR>` | <Plug>(fzf-maps-x)
+`<Cmd>norm gc<CR>` | <C-/>
+`<C-U>zz` | <C-BS>
+`<C-U>zz` | <PageUp>
+`<C-U>zz` | <C-U>
+`<C-D>zz` | <C-CR>
+`<C-D>zz` | <PageDown>
+`<C-D>zz` | <C-D>
+Tab: prev | <M-[>
+Tab: next | <M-]>
+Window: quit | <C-W>`
+
+## Select @mode-s
+
+`:redo<CR>` | <C-D>
+`<C-D>zz` | <C-G>
+vim.snippet.jump if active, otherwise <Tab> | <Tab>
+`<Tab>` | <C-L>
+`<C-O>` | <C-O>
+`<Cmd>nohlsearch<CR><Esc>` | <Esc>
+MRU |  jm
+wrap selection with " " |  w"
+remove trailing space |  wss
+remove empty lines in visual block |  wsb
+title-case buffer |  wT
+Prettier (frag) |  r2
+Vim: Repeat last command |  .
+Align on : last |  A:z
+Align on : 1st |  A:1
+Align on = all |  A==
+Align on = 1st |  A=1
+Align on , all |  Aa
+Align on , all |  A,
+Align on spaces |  A 
+Vim: yank into x11:primary  ("*yy) |  y8
+Vim: yank into clipboard ("+yy) |  y=
+Window: quit |  w`
+Luasnip: next | <C-P>
+Luasnip: next | <C-N>
+`<Cmd>norm gc<CR>` | <C-/>
+`<C-U>zz` | <C-BS>
+`<C-U>zz` | <PageUp>
+`<C-U>zz` | <C-U>
+`<C-D>zz` | <C-CR>
+`<C-D>zz` | <PageDown>
+`<C-D>zz` | <C-D>
+Tab: prev | <M-[>
+Tab: next | <M-]>
+Window: quit | <C-W>`
+vim.snippet.jump if active, otherwise <S-Tab> | <S-Tab>
+vim.lsp.buf.signature_help() | <C-S>
+
+## Operator-pending @mode-o
+
+`:redo<CR>` | <C-D>
+`<C-D>zz` | <C-G>
+`<Tab>` | <C-L>
+`<C-O>` | <C-O>
+`<Cmd>nohlsearch<CR><Esc>` | <Esc>
+MRU |  jm
+Window: quit |  w`
+`<Plug>(MatchitOperationForward)` | %
+`<Plug>(MatchitOperationMultiBackward)` | [%
+`<Plug>(MatchitOperationMultiForward)` | ]%
+Select parent (outer) node | an
+`<Plug>(MatchitOperationBackward)` | g%
+Comment textobject | gc
+Select child (inner) node | in
+`:<C-U>call matchit#MultiMatch("W",  "o")<CR>` | <Plug>(MatchitOperationMultiForward)
+`:<C-U>call matchit#MultiMatch("bW", "o")<CR>` | <Plug>(MatchitOperationMultiBackward)
+`:<C-U>call matchit#Match_wrapper('',0,'o')<CR>` | <Plug>(MatchitOperationBackward)
+`:<C-U>call matchit#Match_wrapper('',1,'o')<CR>` | <Plug>(MatchitOperationForward)
+`<C-C>:<C-U>call fzf#vim#maps('o', 0)<CR>` | <Plug>(fzf-maps-o)
+`<C-U>zz` | <C-BS>
+`<C-U>zz` | <PageUp>
+`<C-U>zz` | <C-U>
+`<C-D>zz` | <C-CR>
+`<C-D>zz` | <PageDown>
+`<C-D>zz` | <C-D>
+Tab: prev | <M-[>
+Tab: next | <M-]>
+Window: quit | <C-W>`
+
+## Command-line @mode-c
+
+`<C-\>e "lua require('telescope.builtin').command_history { default_text = [=[" . escape(getcmdline(), '"') . "]=] }"<CR><CR>` | <Plug>(TelescopeFuzzyCommandSearch)
+
+## Terminal @mode-t
+
+`<C-\><C-N>` | <Plug>(fzf-normal)
+`<C-\><C-N>i` | <Plug>(fzf-insert)
