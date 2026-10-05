@@ -34,11 +34,8 @@ Mylsp.emerge(
 	'textlsp',
 	'efm'
 )
-vim.o.guifont        = 'Cascadia Code Light:h14:l'
 
 -- emerge…  ensure_installed… {{{
-vim.o.guifont        = 'Cascadia Code Light:h14:l'
-vim.o.guifont        = 'Cascadia Code Light:h14:l'
 -- emerge…  lua, bash, yaml {{{
 Mylsp.emerge('lua_ls', 'bashls', 'yamlls') -- }}}
 -- emerge…  html, css {{{
