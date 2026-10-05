@@ -1,0 +1,105 @@
+-- LSP entry point (Neovim 0.11+).
+--
+-- Every file in lua/genja/lang/ returns:
+--
+--   {
+--     servers = { <lspconfig name> = <vim.lsp.Config overrides>, ... },
+--     tools   = { <mason package name>, ... }, -- optional: linters, formatters
+--   }
+--
+-- This module collects them, hands the overrides to vim.lsp.config(), and lets
+-- mason install the servers and enable each one once it is installed.
+-- To add a language, add a file to lua/genja/lang/.
+
+local M = {}
+
+---@class genja.Lang
+---@field servers? table<string, vim.lsp.Config>
+---@field tools? string[]
+
+--- Load every lua/genja/lang/*.lua found on the runtimepath.
+---@return table<string, genja.Lang>
+local function languages()
+	local langs = {}
+	for _, path in ipairs(vim.api.nvim_get_runtime_file('lua/genja/lang/*.lua', true)) do
+		local basename = vim.fn.fnamemodify(path, ':t:r')
+		local ok, lang = pcall(require, 'genja.lang.' .. basename)
+		if ok and type(lang) == 'table' then
+			if langs[basename] then
+				vim.notify( ('duplicate language module: %s'):format(path), vim.log.levels.WARN)
+			else
+				langs[basename] = lang -- todo: merge if exists, don't override (support e.g. php-inteliphense and php-phpactor. needs some thuking. maybe no need)
+			end
+
+		else
+			vim.notify(('genja.lang.%s: %s'):format(basename, ok and 'must return a table' or lang), vim.log.levels.ERROR)
+		end
+	end
+	return langs
+end
+
+--- Install mason packages that are not language servers.
+---@param tools string[]
+local function install_tools(tools)
+	if #tools == 0 then
+		return
+	end
+	local registry = require('mason-registry')
+	registry.refresh(vim.schedule_wrap(function()
+		for _, name in ipairs(tools) do
+			local ok, pkg = pcall(registry.get_package, name)
+			if not ok then
+				vim.notify(('mason: unknown package %q'):format(name), vim.log.levels.WARN)
+			elseif not pkg:is_installed() and not pkg:is_installing() then
+				pkg:install()
+			end
+		end
+	end))
+end
+
+function M.setup()
+	require('genja.lsp.diagnostics')
+
+	-- Defaults for every server.
+	local has_cmp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+	if has_cmp then
+		vim.lsp.config('*', { capabilities = cmp_lsp.default_capabilities() })
+	end
+
+	-- Collect the language files.
+	local servers, tools, seen = {}, {}, {}
+	for _, lang in pairs(languages()) do
+		for name, config in pairs(lang.servers or {}) do
+			-- todo: dump original config and compare, or maybe just browse the repo and look at them there.
+			vim.lsp.config(name, config) -- merged over nvim-lspconfig's lsp/<name>.lua
+			if not seen[name] then
+				seen[name] = true -- todo: lexically first file wins? why?
+				table.insert(servers, name)
+			end
+		end
+		for _, tool in ipairs(lang.tools or {}) do
+			if not seen[tool] then
+				seen[tool] = true
+				table.insert(tools, tool)
+			end
+		end
+	end
+	table.sort(servers)
+
+	require('mason').setup({
+		max_concurrent_installers = 4, -- todo: ask os for cpu-count? can lua provide that?
+		ui = { border = 'double' },
+	})
+
+	require('mason-lspconfig').setup({
+		ensure_installed = servers,
+		-- vim.lsp.enable() only these, and only once mason has installed them.
+		-- todo: needs leaner approach. detect file types?
+		-- todo: check what's actually enabled with the built in command in neovim :Lsp....
+		automatic_enable = servers,
+	})
+
+	install_tools(tools)
+end
+
+return M
