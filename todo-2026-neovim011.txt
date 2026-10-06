@@ -31,6 +31,16 @@
 		-[ ] how to extract into minimal config?
 	-[x] undo require(lspconfig).«lang».setup()
 	-[x] migrate to vim.lsp.config and vim.lsp.enable
+	-[x] fix: no completion menu while typing (cmp.setup() was never called)
+		- genja-completion011 spec ran genja-statusline's setup
+		- entry point is require('genja.comps'), not main = 'genja'
+-[ ] evaluate completion engines other than nvim-cmp
+	(notes: plug-wip/genja-completion011.nvim/README.md, "Alternatives to nvim-cmp")
+	-[ ] built-in: vim.lsp.completion.enable({ autotrigger = true }) / 'autocomplete'
+		- is LSP-only enough? what about buffer words, paths, cmdline?
+	-[ ] blink.cmp
+		- port lua/genja/completion/* features
+		- compare speed and menu feel with nvim-cmp
 -[x] figure out the runtimepath issue
 	-[x] or load via lazy { dir = … }
 	-[x] or restructure as a proper-ish plugin

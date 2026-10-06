@@ -1,4 +1,6 @@
 -- Plugins for completion. All configuration lives in lua/genja/completion/.
+-- No config here: genja-completion011 (lua/genja/lazy-plug-spec.lua) calls
+-- cmp.setup() through require('genja.comps').setup().
 return {
 	{
 		'hrsh7th/nvim-cmp',
@@ -10,12 +12,5 @@ return {
 			'hrsh7th/cmp-cmdline', -- : commands and :help topics
 			'onsails/lspkind.nvim', -- kind icons
 		},
-		config = function()
-			Safeload = require('genja.api').Safeload
-			Safeload('genja.lsp', function(mod)
-				-- require('genja.completion').setup()
-				mod.setup()
-			end)
-		end,
 	},
 }

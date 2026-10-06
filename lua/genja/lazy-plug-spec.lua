@@ -3,16 +3,24 @@ PluginSpec = {}
 -- below is a list of plugs to maybe try at some point
 -- or that are undergoing evaluation
 for _, e in pairs({
-	-- { Vonr/align.nvim },
+	-- e.g. { Vonr/align.nvim },
+
 	{
 		dir = require('genja.api').CONFIG .. '/plug-wip/genja-statusline.nvim',
-		opts = {},
-		-- event = "VeryLazy",
-		-- config = function() require('genja-statusline').setup() end
+		opts = { },
 	},
 
 	{
 		dir = require('genja.api').CONFIG .. '/plug-wip/genja-completion011.nvim/',
+		-- BufReadPre/BufNewFile: servers are enabled before the first file's FileType.
+		-- VeryLazy: cmdline completion is ready on an empty start screen too.
+		cmd = 'Mason',
+		event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
+		dependencies = {
+			'hrsh7th/nvim-cmp',         -- lua/lazyp/comps/nvim-cmp.lua
+			'neovim/nvim-lspconfig',    -- lua/lazyp/comps/nvim-lspconfig.lua
+		},
+
 		opts = {
 			lsp = {
 				enabled = {
@@ -44,28 +52,18 @@ for _, e in pairs({
 					'cmdline',
 					'appearance'
 				},
-
 			},
-
 		},
-		event = "VeryLazy",
-		config = function()
-			require('genja-statusline').setup()
+
+		config = function(_, opts)
+			Safeload = require('genja.api').Safeload
+			Safeload('genja.comps', function(genja_comps)
+				genja_comps.setup(opts)
+			end)
 		end
 	},
 
 
-	{
-		"sudormrfbin/cheatsheet.nvim",
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		cmd = "Cheatsheet",
-		keys = {
-			{ "<leader>?", "<cmd>Cheatsheet<cr>", desc = "Cheat-sheet" },
-		},
-	},
 
 }) do
 	table.insert(PluginSpec, e)
