@@ -5,7 +5,7 @@ vim.cmd 'colorscheme lunaperche'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
-Safeload             = require('genja.api').Safeload
+Safeload = require('genja.api').Safeload
 
 Safeload 'genja.env'
 Safeload 'genja.map-zero' -- stable early maps, if config breaks
@@ -28,6 +28,7 @@ Safeload 'genja.map-telescope'
 Safeload 'genja.map-convoluted'
 
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
+
 	local sd = {}
 	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
 	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
@@ -39,10 +40,9 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 
 	add_dir(homePath())
 
-	CONFIG = require('genja.api').CONFIG
 
-	add_dir(CONFIG..'/lua/lazyp')
-	add_dir(CONFIG..'/plug-wip/genja-completion011.nvim/lua/genja/')
+	local C = vim.fn.stdpath('config')
+	add_dir(C..'/plug-wip/genja-completion011.nvim/lua/genja/')
 
 
 	local openmw = false
