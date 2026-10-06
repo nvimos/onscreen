@@ -35,17 +35,11 @@ function IsDir(path)
 	return stat ~= nil and stat.type == 'directory'
 end
 
-function Dirname(path)
-	return vim.fn.fnamemodify(path, ':h')
-end
-
-function Basename(path)
-	return vim.fn.fnamemodify(path, ':t')
-end
-
-function Extensionname(path)
-	return string.lower(vim.fn.fnamemodify(path, ':e'))
-end
+-- {{{ Dirname, Basename, Extensionname
+function Dirname(path) return vim.fn.fnamemodify(path, ':h') end
+function Basename(path) return vim.fn.fnamemodify(path, ':t') end
+function Extensionname(path) return string.lower(vim.fn.fnamemodify(path, ':e')) end
+-- }}}
 
 function IndexOf(arr, target)
 	for i, value in ipairs(arr) do
@@ -75,17 +69,6 @@ function IsVideoExtension(ext)
 		'mpeg', 'webm', 'avchd', 'qt',
 	}, string.lower(ext))
 end
-
--- function JoinPaths(...)
--- 	local aa = {}
--- 	for i = 1, select("#", ...) do
--- 		table.insert(aa, (select(i, ...)):gsub('[\\/]+$', ''))
--- 	end
--- 	-- Get the OS-specific path separator
--- 	local separator = package.config:sub(1, 1)
--- 	return table.concat(aa, separator)
--- 	-- return table.concat({...}, separator)
--- end
 
 function JoinPaths(...)
 	return (table.concat({ ... }, package.config:sub(1, 1))
