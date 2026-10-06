@@ -1,12 +1,11 @@
 -- Genja init for nvim
 --
-vim.o.guifont = 'Cascadia Code Light:h11:l'
 vim.cmd 'colorscheme lunaperche'
 --
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
-Safeload             = require('genja.fn').Safeload
+Safeload             = require('genja.api').Safeload
 
 Safeload 'genja.env'
 Safeload 'genja.map-zero' -- stable early maps, if config breaks
@@ -39,6 +38,12 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	end
 
 	add_dir(homePath())
+
+	CONFIG = require('genja.api').CONFIG
+
+	add_dir(CONFIG..'/lua/lazyp')
+	add_dir(CONFIG..'/plug-wip/genja-completion011.nvim/lua/genja/')
+
 
 	local openmw = false
 	local fonv = false
