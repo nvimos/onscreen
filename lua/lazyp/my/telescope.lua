@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd({'UIEnter'} , {
 return {
 	{
 		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
+		-- branch = '0.1.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
 			-- 'LinArcX/telescope-env.nvim', repo gone
