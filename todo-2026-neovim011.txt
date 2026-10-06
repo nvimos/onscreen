@@ -1,13 +1,31 @@
 # Clean and update for neovim 0.11+
 
-
-
 ## new setup 2026
+
+-[ ] migrate lsp, cmp config to neovim 0.11+ api
+	- [ ] ask claude to rewrite based on existing files
+	- [ ] make it modular or feature-per-file
+	- [ ] put essential functionality into separate files
+		-[ ] :help completion
+		-[ ] :commands completion
+		-[ ] lua lsp
+		-[ ] shell lsp
+	- undo require(lspconfig).«lang».setup()
+	- migrate to vim.lsp.config and vim.lsp.enable
+-[ ] figure out the runtimepath issue
+	- or load via lazy { dir = … }
+	- or restructure as a proper-ish plugin
+	- or move-merge the files to the lua/genja dir
+
+
+-[ ] extract Mylunsj into a separate plugin
 
 -[x] describe file names and their purpose in lua/genja
 -[n] bootstrap core plugins with neovim
-	-[ ] lazy disables pack/ loading
-	-[ ] plugin manager (stick with lazy probably)
+	-[ ] lazy disables pack/ loading (vim.pkg.add)
+		- ~/.local/share/nvim/site/pack/core/opt/ (Linux/macOS) (or under $XDG_DATA_HOME/nvim)
+		- %LOCALAPPDATA%\nvim-data\site\pack\core\opt\ (Windows)
+	-[x] plugin manager: stick with lazy
 	-[x] move bootstrap to lua/lazy-boot.vim
 
 -[x] look into generating a cheat-sheet from existing keys
@@ -25,22 +43,10 @@
 		- maybe save as custom help files -> cheatsheet.txt
 		- should be a reference at a glance
 		- ideally some logical patterns and rearrangement ideas should emerge
--[ ] extract Mylunsj into a separate plugin
 
 -[x] open a browser and paste a query to perplexity
 	-[ ] tidy plugin and move somewhere
 	-[ ] same for gemini
-
--[ ] migrate lsp, cmp config to neovim 0.11+ api
-	- [ ] ask claude to rewrite based on existing files
-	- [ ] make it modular or feature-per-file
-	- [ ] put essential functionality into separate files
-		-[ ] :help completion
-		-[ ] :commands completion
-		-[ ] lua lsp
-		-[ ] shell lsp
-	- undo require(lspconfig).«lang».setup()
-	- migrate to vim.lsp.config and vim.lsp.enable
 
 -[ ] integrate online, free tier
 	-[ ] integrate at least one

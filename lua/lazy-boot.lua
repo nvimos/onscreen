@@ -1,4 +1,3 @@
-
 (function()
 	-- Bootstrap the lazy plugin manager
 	local LazyData, Github = '' ..
