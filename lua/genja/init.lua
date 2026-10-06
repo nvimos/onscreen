@@ -28,27 +28,17 @@ Safeload 'genja.map-telescope'
 Safeload 'genja.map-convoluted'
 
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
-
 	local sd = {}
 	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
 	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
 	local function add_dir(e) InsertDir(e) end
-	local homePath = function(p)
-		local h = vim.env.Userprofile or vim.env.HOME;
-		return (h .. ('/' .. (p or '')))
-	end
-
-	add_dir(homePath())
-
-
-	local C = vim.fn.stdpath('config')
-	add_dir(C..'/plug-wip/genja-completion011.nvim/lua/genja/')
-
-
+	local homePath = function(p) local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/' .. (p or ''))); end
 	local openmw = false
 	local fonv = false
 	local oni = true
 	local movies = false
+
+	add_dir(homePath())
 
 	if vim.fn.has('Windows') then
 		add_dir('J:/notes')
@@ -97,5 +87,6 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 
 	add_dir(vim.fn.stdpath('config'))
 	add_dir(vim.fn.stdpath('data'))
+
 	return sd
 end)()
