@@ -1,5 +1,9 @@
 lua << EOF
 do
+	if not string.find(vim.env.PATH, 'a:\\bin', 1, true) then
+		vim.env.PATH = 'a:\\bin;' .. vim.env.PATH
+	end
+
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
 	Safeload = require('genja.api').Safeload
