@@ -1,13 +1,19 @@
 -- LSP entry point (Neovim 0.11+).
 --
---   lua/genja/lsp/config.lua    which languages are on, mason options
---   lua/genja/lsp/local.lua     optional per-machine overrides, same shape
+--   lua/genja/lsp/config.lua    defaults: which languages are on, mason options
+--   setup(opts)                 the same shape, merged over the defaults
+--   lua/genja/lsp/local.lua     optional per-machine overrides, same shape,
+--                               merged last. Lives in your Neovim config
+--                               directory, not in this plugin.
 --   lua/genja/lang/<name>.lua   one language each, returning:
 --
 --     {
 --       servers = { <lspconfig name> = <vim.lsp.Config overrides>, ... },
 --       tools   = { <mason package name>, ... },
 --     }
+--
+-- Language files are found on the runtimepath, so one in your Neovim config
+-- directory adds a language, or replaces the one of the same name shipped here.
 
 local M = {}
 
@@ -15,9 +21,11 @@ local M = {}
 ---@field servers? table<string, vim.lsp.Config>
 ---@field tools? string[]
 
----config.lua, with local.lua merged over it when that file exists.
-local function load_config()
-	local config = require('genja.lsp.config')
+---config.lua, then setup() opts, then local.lua when that file exists.
+---@param opts? genja.lsp.Opts
+---@return genja.lsp.Opts
+local function load_config(opts)
+	local config = vim.tbl_deep_extend('force', require('genja.lsp.config'), opts or {})
 	if #vim.api.nvim_get_runtime_file('lua/genja/lsp/local.lua', false) > 0 then
 		config = vim.tbl_deep_extend('force', config, require('genja.lsp.local'))
 	end
@@ -27,6 +35,11 @@ end
 ---@param name string
 ---@return genja.Lang?
 local function load_lang(name)
+	local file = ('lua/genja/lang/%s.lua'):format(name)
+	if #vim.api.nvim_get_runtime_file(file, false) == 0 then
+		vim.notify(('genja: language %q is enabled but there is no %s'):format(name, file), vim.log.levels.WARN)
+		return
+	end
 	local ok, lang = pcall(require, 'genja.lang.' .. name)
 	if ok and type(lang) == 'table' then
 		return lang
@@ -64,10 +77,13 @@ local function install_tools(tools)
 	end))
 end
 
-function M.setup()
-	M.config = load_config() -- inspect with :lua =require('genja.lsp').config
+---@param opts? genja.lsp.Opts
+function M.setup(opts)
+	M.config = load_config(opts) -- inspect with :lua =require('genja.lsp').config
 
-	require('genja.lsp.diagnostics')
+	if M.config.diagnostics then
+		vim.diagnostic.config(M.config.diagnostics)
+	end
 
 	-- Add nvim-cmp capabilities to every server.
 	local has_cmp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')

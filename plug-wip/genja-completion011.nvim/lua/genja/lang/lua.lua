@@ -1,5 +1,5 @@
 -- Lua
--- lazydev.nvim (lua/lazyp/lsp.lua) supplies the Neovim runtime and plugin
+-- lazydev.nvim (a dependency, see README) supplies the Neovim runtime and plugin
 -- libraries, so no workspace.library list is needed here.
 return {
 	servers = {

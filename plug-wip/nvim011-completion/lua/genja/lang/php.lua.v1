@@ -1,8 +1,0 @@
--- PHP
--- intelephense is the fast one. Rename, code actions and a few other features
--- need a paid licence (init_options.licenceKey). Free alternative: phpactor.
-return {
-	servers = {
-		intelephense = {},
-	},
-}
