@@ -172,21 +172,6 @@ function Ymd()
 end
 
 
----@param mod string
----@param cb function(e)  -- callback when loaded. e is the loaded module.
----@return boolean
-function Safeload(...)
-	mod, cb = unpack({...})
-	local k, req = pcall(require, mod)
-	if not k then
-		require('genja.api').err(string.format('cannot load «%s»', mod))
-	else
-		if cb then
-			cb(req)
-		end
-	end
-	return k
-end
 
 M = {
 	win_chdir_home = win_chdir_home,
