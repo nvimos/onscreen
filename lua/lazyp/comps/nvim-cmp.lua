@@ -11,7 +11,11 @@ return {
 			'onsails/lspkind.nvim', -- kind icons
 		},
 		config = function()
-			require('genja.completion').setup()
+			Safeload = require('genja.api').Safeload
+			Safeload('genja.lsp', function(mod)
+				-- require('genja.completion').setup()
+				mod.setup()
+			end)
 		end,
 	},
 }

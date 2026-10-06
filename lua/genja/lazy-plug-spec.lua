@@ -7,11 +7,54 @@ for _, e in pairs({
 	{
 		dir = require('genja.api').CONFIG .. '/plug-wip/genja-statusline.nvim',
 		opts = {},
+		-- event = "VeryLazy",
+		-- config = function() require('genja-statusline').setup() end
+	},
+
+	{
+		dir = require('genja.api').CONFIG .. '/plug-wip/genja-completion011.nvim/',
+		opts = {
+			lsp = {
+				enabled = {
+					-- files from lua/genja/lang/ sans .lua
+					bash = true,
+					lua = true,
+					c_cpp = false,
+					go = false,
+					php = false,
+					powershell = false,
+					python = false,
+					typescript = false,
+				},
+				mason = { ui = { border = 'double' } }, -- for require('mason').setup()
+				-- for vim.diagnostic.config()
+				diagnostics = {
+					virtual_text = true,
+					severity_sort = true
+				},
+			},
+			completion = {
+				features = {
+					'keymaps',
+					'snippets',
+					'lsp',
+					'path',
+					'buffer',
+					'lazydev',
+					'cmdline',
+					'appearance'
+				},
+
+			},
+
+		},
 		event = "VeryLazy",
 		config = function()
 			require('genja-statusline').setup()
 		end
 	},
+
+
 	{
 		"sudormrfbin/cheatsheet.nvim",
 		dependencies = {
@@ -51,6 +94,7 @@ end
 for _, value in ipairs({
 	-- { import = 'lazyp.new' },   -- undergoing evaluation
 	-- { import = 'lazyp.no' },   -- not loaded atm
+	-- { import = 'lazyp' }, -- CONFIG/lua/lazyp/*
 	{ import = 'lazyp.comps' }, -- lsp, completion, llm
 	{ import = 'lazyp.maybe' }, -- seems ok to keep
 	{ import = 'lazyp.my' },    -- my configs
@@ -64,15 +108,15 @@ end
 
 
 require('lazy').setup({
-		spec = PluginSpec,
-		defaults = {
-				lazy = true
-		},
-		install = { colorscheme = { "habamax" } }, -- nightfox is also nice
-		change_detection = {
-				notify = false
-		},
-		--[[
+	spec = PluginSpec,
+	defaults = {
+		lazy = true
+	},
+	install = { colorscheme = { "habamax" } }, -- nightfox is also nice
+	change_detection = {
+		notify = false
+	},
+	--[[
 		dev = {
 				---@type string | fun(plugin: LazyPlugin): string
 				---directory where you store your local plugin projects
