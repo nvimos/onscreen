@@ -90,13 +90,16 @@ end
 	VIM/lua/lazy-{topic}
 --]]
 for _, value in ipairs({
-	-- { import = 'lazyp.new' },   -- undergoing evaluation
-	-- { import = 'lazyp.no' },   -- not loaded atm
 	-- { import = 'lazyp' }, -- CONFIG/lua/lazyp/*
 	{ import = 'lazyp.comps' }, -- lsp, completion, llm
+	{ import = 'lazyp.git' },
+	{ import = 'lazyp.langs' },
 	{ import = 'lazyp.maybe' }, -- seems ok to keep
 	{ import = 'lazyp.my' },    -- my configs
+	{ import = 'lazyp.new' },   -- undergoing evaluation
+	-- { import = 'lazyp.no' },   -- not loaded atm
 	{ import = 'lazyp.others' }, -- configs taken from other people
+	{ import = 'lazyp.phunnee' }, -- fun, cool stuff
 	{ import = 'lazyp.term' },  -- terminal integrations, floaters
 	{ import = 'lazyp.ui' },    -- adjustments for nvim, qt, neovide
 	{ import = 'lazyp.utilqol' }, -- make it better (quality of life and utilities)
