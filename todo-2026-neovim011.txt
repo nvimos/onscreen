@@ -2,23 +2,40 @@
 
 ## new setup 2026
 
--[ ] migrate lsp, cmp config to neovim 0.11+ api
-	- [ ] ask claude to rewrite based on existing files
-	- [ ] make it modular or feature-per-file
-	- [ ] put essential functionality into separate files
-		-[ ] :help completion
-		-[ ] :commands completion
-		-[ ] lua lsp
-		-[ ] shell lsp
-	- undo require(lspconfig).«lang».setup()
-	- migrate to vim.lsp.config and vim.lsp.enable
--[ ] figure out the runtimepath issue
-	- or load via lazy { dir = … }
-	- or restructure as a proper-ish plugin
-	- or move-merge the files to the lua/genja dir
-
-
 -[ ] extract Mylunsj into a separate plugin
+
+-[ ] integrate online, free tier
+	-[ ] integrate at least one
+		- maybe hack some round-robin, auto retry util
+	-[ ] auto-code-completion suggestions
+	-[ ] chatbot
+
+-[ ] integrate everything search index
+	- maybe use it per default if it's installed, fallback to fzf or whatever
+
+-[ ] look for an alternative shortcut-hint plugin
+	- which binds follow space, g, ` (leader, localleader)
+		- which-key feels clunky
+
+-[ ] maybe: cook up a way to or look into disabling languages automatically
+
+-[x] migrate treesitter config
+-[x] migrate lsp, cmp config to neovim 0.11+ api
+	- [x] ask claude to rewrite based on existing files
+	- [x] make it modular or feature-per-file
+	- [x] put essential functionality into separate files
+		-[x] :help completion
+		-[x] :commands completion
+		-[x] lua lsp
+		-[x] shell lsp
+		-[ ] how to extract into minimal config?
+	-[x] undo require(lspconfig).«lang».setup()
+	-[x] migrate to vim.lsp.config and vim.lsp.enable
+-[x] figure out the runtimepath issue
+	-[x] or load via lazy { dir = … }
+	-[x] or restructure as a proper-ish plugin
+	-[ ] or move-merge the files to the lua/genja dir
+
 
 -[x] describe file names and their purpose in lua/genja
 -[n] bootstrap core plugins with neovim
@@ -48,21 +65,6 @@
 	-[ ] tidy plugin and move somewhere
 	-[ ] same for gemini
 
--[ ] integrate online, free tier
-	-[ ] integrate at least one
-		- maybe hack some round-robin, auto retry util
-	-[ ] auto-code-completion suggestions
-	-[ ] chatbot
-
--[ ] integrate everything search index
-	- maybe use it per default if it's installed, fallback to fzf or whatever
-
--[ ] look for an alternative shortcut-hint plugin
-	- which binds follow space, g, ` (leader, localleader)
-		- which-key feels clunky
-
-
--[ ] maybe: cook up a way to or look into disabling languages automatically
 
 
 ## prep / clean
