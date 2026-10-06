@@ -60,6 +60,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		km(nv_, '<space>ca', vlb.code_action, o 'Code action')
 
 		km('', '<leader>ttt', function(s) vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, o('toggle diagnostics'))
+		-- parameter names, types, [1] table indexes shown inline; off by default
+		km('', '<leader>tth', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end, o('toggle inlay hints'))
 
 
 		-- -- close hover window
