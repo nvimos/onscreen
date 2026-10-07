@@ -31,7 +31,8 @@ return {
 			require('nvim-treesitter').install({
 				'bash',
 				'powershell',
-				'batch',
+				-- 'batch',
+				-- 'bat',
 
 				'xml',
 				'html',
