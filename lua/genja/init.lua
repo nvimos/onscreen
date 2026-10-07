@@ -27,6 +27,8 @@ Safeload 'genja.map-lsp'
 Safeload 'genja.map-telescope'
 Safeload 'genja.map-convoluted'
 
+
+
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
 	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end

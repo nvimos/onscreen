@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		km(n__, '<space>r1', reformat,                        o 'LSP: reformat')
 		km(n__, '<space>k', vlb.hover,                        o 'LSP: hover/man')
-		km(n__, '<space>?', vlb.hover,                        o 'LSP: hover/man')
+		-- km(n__, '<space>?', vlb.hover,                        o 'LSP: hover/man')
 		km(n__, 'K',        vlb.hover,                        o 'LSP: hover/man')
 
 		-- maybe: integrate with Telescope code-actions
