@@ -7,8 +7,12 @@
     - go to implementation, definition, rename.
     - like a lazy catch-all-action "right-click"
 
+- json/yaml: display the outer key, or even path somewhere in the statusbar or tabbar
+
 cheatsheet always forget
 
     <c-w>T  -  send split to a new tab
 - 
     
+
+

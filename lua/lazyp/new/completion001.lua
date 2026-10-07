@@ -1,5 +1,5 @@
 return {
-	dir = require('genja.api').CONFIG .. '/plug-wip/genja-completion011.nvim/',
+	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-completion011.nvim/',
 	-- BufReadPre/BufNewFile: servers are enabled before the first file's FileType.
 	-- VeryLazy: cmdline completion is ready on an empty start screen too.
 	cmd = 'Mason',
