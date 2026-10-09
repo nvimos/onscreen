@@ -4,3 +4,4 @@
 /study-other-scripts/
 /undodir/
 lua/lazyp/maybe/*
+/lua/genja/lsp/local.lua
