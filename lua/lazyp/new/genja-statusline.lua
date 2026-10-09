@@ -10,7 +10,6 @@ return {
 
 	config = function (_, opts)
 		require('genja-statusline').setup()
-		vim.notify('herr herr')
 		opts = opts
 	end
 }
