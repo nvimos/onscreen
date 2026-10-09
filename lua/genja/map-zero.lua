@@ -1,48 +1,53 @@
 -- Stable mappings sourced early during init
 
-F = require'genja.api'.fn
+F = require 'genja.api'.fn
 local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
 
 local IsDir = require 'genja.fn'.IsDir
 
-	-- {{{ aliases, alignment
-	local km = vim.keymap.set
-	local nv = { 'n', 'v' }
-	local nvo = { 'n', 'v', 'o' }
-	local d = '' -- default :map, modes n v o (normal, visual, operator pending)
-	local n = { 'n' }
-	local v = { 'v' }
-	local n_ = n
-	local n__ = n
-	local n___ = n
-	local n____ = n
-	local n_____ = n
-	local n______ = n
-	-- }}}
+-- {{{ aliases, alignment
+local km = vim.keymap.set
+local nv = { 'n', 'v' }
+local nvo = { 'n', 'v', 'o' }
+local d = ''  -- default :map, modes n v o (normal, visual, operator pending)
+local n = { 'n' }
+local v = { 'v' }
+local n_ = n
+local n__ = n
+local n___ = n
+local n____ = n
+local n_____ = n
+local n______ = n
+-- }}}
 
 -- Windows {{{
-km(d, '<c-w>`',         cmd [[quit]],     nosi 'Window: quit')
-km(d, '<leader>w`',     cmd [[quit]],     nosi 'Window: quit')
-km(n, '<leader>`',      cmd [[wincmd w]], nosi 'Window: next')
-km(n, '<C-q>',          cmd [[wincmd w]], nosi 'Window: next') -- same as <c-w>w
-km(n, '',             cmd [[wincmd q]], nosi 'Window: next') -- same as <c-w>w
-km(n, '<C-left>',       cmd [[wincmd h]], nosi 'Window: left')
-km(n, '<C-down>',       cmd [[wincmd j]], nosi 'Window: down')
-km(n, '<C-up>',         cmd [[wincmd k]], nosi 'Window: up')
-km(n, '<C-right>',      cmd [[wincmd l]], nosi 'Window: right')
-km(n, '<C-w>1',         cmd [[only]],     nosi 'Window: only')
-km(n, '<c-w><s-right>', '<c-w>L',         nosi 'move window left')
-km(n, '<c-w><s-left>',  '<c-w>R',         nosi 'move window left')
+km(d, '<c-w>`', cmd [[quit]], nosi 'Window: quit')
+km(d, '<leader>w`', cmd [[quit]], nosi 'Window: quit')
+km(n, '<leader>`', cmd [[wincmd w]], nosi 'Window: next')
+km(n, '<C-q>', cmd [[wincmd w]], nosi 'Window: next')          -- same as <c-w>w
+km(n, '', cmd [[wincmd q]], nosi 'Window: next')              -- same as <c-w>w
+km(n, '<C-left>', cmd [[wincmd h]], nosi 'Window: left')
+km(n, '<C-down>', cmd [[wincmd j]], nosi 'Window: down')
+km(n, '<C-up>', cmd [[wincmd k]], nosi 'Window: up')
+km(n, '<C-right>', cmd [[wincmd l]], nosi 'Window: right')
+km(n, '<C-w>1', cmd [[only]], nosi 'Window: only')
+km(n, '<c-w><s-right>', '<c-w>L', nosi 'move window left')
+km(n, '<c-w><s-left>', '<c-w>R', nosi 'move window left')
 -- }}}
 
 -- Tabs {{{
-km('',  '<M-]>',      cmd [[tabnext]],    nosi 'Tab: next')
-km('',  '<M-[>',      cmd [[tabprev]],    nosi 'Tab: prev')
-km('n', '<leader>\\', cmd [[tabnext]],    nosi 'Tab: next')
-km('n', '<leader>|',  cmd [[tabprev]],    nosi 'Tab: prev')
-km('n', '<leader>t0', cmd [[tabmove 0]],  nosi 'Tab: move 0')
+km('', '<M-]>', cmd [[tabnext]], nosi 'Tab: next')
+km('', '<M-[>', cmd [[tabprev]], nosi 'Tab: prev')
+km('n', '<leader>\\', cmd [[tabnext]], nosi 'Tab: next')
+km('n', '<leader>|', cmd [[tabprev]], nosi 'Tab: prev')
+km('n', '<leader>t0', cmd [[tabmove 0]], nosi 'Tab: move 0')
 km('n', '<leader>t-', cmd [[tabmove -1]], nosi 'Tab: move ←')
 km('n', '<leader>t=', cmd [[tabmove +1]], nosi 'Tab: move →')
+-- }}}
+
+-- {{{ Toggles
+km('n', '<leader>tw', function() vim.o.wrap = ! vim.o.wrap end, nosi 'Toggle: wrap')
+km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle: number')
 -- }}}
 
 -- Folds {{{
@@ -81,14 +86,14 @@ km(n, '<leader>yf', '"%p', nosi 'Vim: yank filename')
 -- }}}
 
 -- Comment code line {{{
-km('n', '<C-/>', ':norm gcc<cr>j')
-km('n', '<C-S-/>', ':norm gcc<cr>k')
-km('v', '<C-/>', '<cmd>norm gc<cr>')
+km('n', '<C-/>', ':norm gcc<cr>j', nosi 'Edit: Comment and move down')
+km('n', '<C-S-/>', ':norm gcc<cr>k', nosi 'Edit: Comment and move up')
+km('v', '<C-/>', '<cmd>norm gc<cr>', nosi 'Edit: Comment and move down (visual)')
 -- }}}
 
 -- Telescope {{{
--- <SPACE>1 - Modules
--- <SPACE>2 - PickFolder
+-- <SPACE>1 - Telescope Modules
+-- <SPACE>2 - Telescope PickFolder
 -- local function start_cl() require('lua.telescope._extensions.mylunsj').show_picker() end
 vim.keymap.set('n', '<leader>1', cmd 'Telescope help_tags', nosi 'Vim help') -- dup-help-tags
 vim.keymap.set('n', '<leader>2', cmd 'Telescope', nosi 'Telescope')
@@ -144,7 +149,7 @@ km(nv, '<leader>.', '&', nosi 'Vim: Repeat last command')
 -- Jump dirs {{{
 local function cd_dot()
 	if vim.bo.filetype == 'oil' then
-		require 'genja.fn'.Cd( require 'oil'.get_current_dir() )
+		require 'genja.fn'.Cd(require 'oil'.get_current_dir())
 	else
 		vim.cmd ':lcd %:p:h'
 		vim.cmd ':pwd'
@@ -168,30 +173,18 @@ km('n', '<leader>eI', cfg('tabedit', 'init.lua'), nosi 'edit init file')
 -- }}}
 
 
--- Edit notes {{{
-km('n', '<leader>en', function ()
-	local places = {}
-	table.insert(places, 'J:\\notes\\todo\\todo.md')
-	table.insert(places, vim.env.user_home_dir .. '/notes')
-	table.insert(places, vim.env.user_home_dir .. '/Notez')
-	table.insert(places, vim.env.user_home_dir .. '/Notez26')
-	table.insert(places, vim.env.user_home_dir)
-
-	-- if vim.fn.has('windows') then
-		-- IsDir()
-		-- vim.cmd('edit J:\\notes\\todo\\todo.md')
-	-- end
-
-	for _, e in ipairs(places) do
-		if IsDir(e) then
-			vim.cmd('edit '..e)
-			break
-		end
-	end
-	end, nosi 'edit notes')
+-- Spelling {{{
+km(nv, '<leader><space>sa', 'zg', nosi 'Spell: add word to dict')
+km(nv, '<leader><space>ss', ']s', nosi 'Spell: spell next')
+km(nv, '<leader><space>sS', '[s', nosi 'Spell: spell next')
 -- }}}
 
--- {{{ edir dir of buffer.
+-- Edit notes {{{
+km('n', '<leader>en', require('genja.fn-keys').EditFindNotes, nosi 'edit notes')
+-- km('n', '<leader>en', '', nosi 'edit notes')
+-- }}}
+
+-- {{{ Edit dir of buffer.
 --
 -- -- Open both map.lua and init-map.lua
 -- km('n', '<leader>ek',
@@ -209,7 +202,7 @@ local function search_dir_of_file()
 		vim.api.nvim_feedkeys(slash, 'n', false)
 	end)
 end
-km('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/',   nosi 'seek in `dirname`')
+km('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/', nosi 'seek in `dirname`')
 km('n', '<leader>ee', search_dir_of_file, nosi 'seek in `dirname`') -- for Oil
 -- }}}
 
@@ -221,11 +214,10 @@ km('n', '<leader>et', '<cmd>:tabedit %:p:h<cr>', nosi 'tabedit `dirname`')
 --}}}
 
 -- edit lazy conf {{{
-km('n', '<leader>eh', cmd('tabedit '.. (vim.env.user_home_dir or '')), nosi 'edit home dir')
+km('n', '<leader>eh', cmd('tabedit ' .. (vim.env.user_home_dir or '')), nosi 'edit home dir')
 km('n', '<leader>el', cfg('tabedit', '../lazyp/'), nosi 'edit lazyp dir')
 -- }}}
 
-require'genja.fn-keys'
 
 -- Highlight init in the confdir. {{{
 km('n', '<leader>ei',

@@ -24,7 +24,24 @@ function CheckAndRunMRU() -- <S-F1>
 	end
 end
 
+function EditFindNotes()
+	local places = {}
+	table.insert(places, 'J:\\notes')
+	table.insert(places, vim.env.user_home_dir .. '/notes')
+	table.insert(places, vim.env.user_home_dir .. '/Notez')
+	table.insert(places, vim.env.user_home_dir .. '/Notez26')
+	table.insert(places, vim.env.user_home_dir)
+	for _, e in ipairs(places) do
+		if IsDir(e) then
+			vim.cmd('edit ' .. e)
+			break
+		end
+	end
+end
+
+
 return {
+	EditFindNotes = EditFindNotes,
 	Close_nerdtree_wins = Close_nerdtree_wins,
 	CheckAndRunMRU = CheckAndRunMRU,
 }
