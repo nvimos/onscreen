@@ -36,6 +36,14 @@ return {
 
 				'xml',
 				'html',
+				'json',
+
+				'php',
+				'php_only', -- PHP injected into blade and others
+				'phpdoc',
+				'blade',
+				'vue', -- blade-nav.nvim wants it
+
 				'yaml',
 
 				'go',

@@ -7,7 +7,9 @@ return {
 				require('overseer').setup({
 						templates = {
 								'builtin',
-								'user.run_script'
+								'user.run_script',
+								'user.php_test_file',
+								'user.php_test_all',
 						},
 				})
 		end
