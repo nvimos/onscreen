@@ -11,6 +11,7 @@ local IsDir = require 'genja.fn'.IsDir
 	local nvo = { 'n', 'v', 'o' }
 	local d = '' -- default :map, modes n v o (normal, visual, operator pending)
 	local n = { 'n' }
+	local v = { 'v' }
 	local n_ = n
 	local n__ = n
 	local n___ = n
@@ -73,6 +74,7 @@ km('n', '', '<C-e>', { silent = true, noremap = true, desc = 'Scroll: extra lin
 km('i', '<S-Insert>', '<c-r>+', nosi 'Paste (shift+insert)')
 km(nv, '<leader>y=', '"+yy', nosi 'Vim: yank into clipboard ("+yy)')
 km(nv, '<leader>y8', '"*yy', nosi 'Vim: yank into x11:primary  ("*yy)')
+km(v, '<leader>yy', '"+y', { desc = 'Vim: yank into clipboard visual ("+yy)' })
 km(n, '<leader>yf', '"%p', nosi 'Vim: yank filename')
 -- PRIMARY   *
 -- CLIPBOARD +
