@@ -1,30 +1,11 @@
-" Open help using the whole window instead of splitting
-" Then skip the help.txt when using <C-o> and go back to the file that was open before.
-command -bar -nargs=? -complete=help F1 execute s:HelpCurwin(<q-args>)
-command -bar -nargs=? -complete=help H execute s:HelpCurwin(<q-args>)
-command -bar -nargs=? -complete=help J execute s:HelpCurwin(<q-args>)
-let s:init_help_tags = v:false
-function s:HelpCurwin(subject) abort
-  if !s:init_help_tags
-    execute 'silent noautocmd keepalt help'
-    execute 'silent noautocmd keepalt helpclose'
-    let s:init_help_tags = v:true
-  endif
-  if !empty(a:subject)
-    "execute 'silent noautocmd keepalt edit ' .. &helpfile
-    set buftype=help
-    execute 'help ' .. a:subject
-	nnoremap <silent> <C-o> :call GotoMark2()<CR>
-  endif
-  return ''
-endfunction
-function! GotoMark2()
-	execute "normal! 2\<C-o>"
-	execute "nunmap <C-o>"
+
+command! LogEdit :call EditLogDir()
+function! EditLogDir()
+	let logpath = stdpath('data')
+	execute 'edit ' .. logpath .. '/logs'
 endfunction
 
-
-" Strip trailing spaces
+" :Ss - Strip trailing spaces
 command! Ss :call RemoveTrailingSpaces()
 function! RemoveTrailingSpaces()
 	let save_cursor = getpos('.')
@@ -39,6 +20,7 @@ function! RemoveTrailingSpaces()
 endfunction
 
 
+" Right click menu: ToggleWrap
 function! ToggleWrap()
 	if &wrap
 		set nowrap
@@ -48,3 +30,30 @@ function! ToggleWrap()
 endfunction
 
 amenu PopUp.ToggleWrap :call ToggleWrap()<CR>
+
+
+" Modal Help
+command -bar -nargs=? -complete=help F1 execute s:HelpCurwin(<q-args>)
+command -bar -nargs=? -complete=help H execute s:HelpCurwin(<q-args>)
+command -bar -nargs=? -complete=help J execute s:HelpCurwin(<q-args>)
+let s:init_help_tags = v:false
+function s:HelpCurwin(subject) abort
+	" Open help using the whole window instead of splitting
+	" Then skip the help.txt when using <C-o> and go back to the file that was open before.
+	if !s:init_help_tags
+		execute 'silent noautocmd keepalt help'
+		execute 'silent noautocmd keepalt helpclose'
+		let s:init_help_tags = v:true
+	endif
+	if !empty(a:subject)
+		"execute 'silent noautocmd keepalt edit ' .. &helpfile
+		set buftype=help
+		execute 'help ' .. a:subject
+		nnoremap <silent> <C-o> :call GotoMark2()<CR>
+	endif
+	return ''
+endfunction
+function! GotoMark2()
+	execute "normal! 2\<C-o>"
+	execute "nunmap <C-o>"
+endfunction
