@@ -19,6 +19,7 @@ function! DumpMessages()
 	redir END
 	new
 	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+	enew
 	silent put=messages
 endfunction
 command! DumpMessages :call DumpMessages()
