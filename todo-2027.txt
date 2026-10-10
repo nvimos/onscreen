@@ -5,3 +5,6 @@ new setup 2027
 -[ ] bootstrap my own statusline
 	- and split out fn and api maybe
 - [ ] integrate local llm
+
+- auto-format and check ansible => too slow on silver
+	- scan / lint for errors.
