@@ -48,6 +48,7 @@ command! DiffOrigGit vert new | set bt=nofile | execute 'silent r !git show HEAD
 command! DiffOrig    vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis | wincmd r
 command! Lspclients :lua =vim.lsp.get_clients()
 
+command! YankFilenameClipboard let @+ = expand('%:p')
 command! YankFilename put =expand('%:p')
 command! YankYmd put =luaeval('os.date([[%Y-%m-%d]])')
 
