@@ -1,3 +1,5 @@
+highlight Normal guibg=#000000 guifg=#FFFFFF
+
 lua << EOF
 do
 	local Safeload = require('genja.api').Safeload
