@@ -1,30 +1,35 @@
 -- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
 -- {{{ aliases
-local aucmd, augrp = vim.api.nvim_create_autocmd, vim.api.nvim_create_augroup ---@diagnostic disable-line: unused-local
-local err, notify  = vim.api.nvim_err_writeln, vim.notify ---@diagnostic disable-line: unused-local
-local km, bkm      = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnostic disable-line: unused-local
-local nosi         = function(d) return { silent = true, noremap = true, desc = d } end
+local aucmd, augrp     = vim.api.nvim_create_autocmd,
+	vim.api.nvim_create_augroup ---@diagnostic disable-line: unused-local
+local err, notify      = require('genja.fn').Mess, vim.notify ---@diagnostic disable-line: unused-local
+local km, bkm          = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnostic disable-line: unused-local
+local nosi             = function(d) return { noremap = true, silent = true, desc = d } end
 -- }}}
 
 -- {{{ reset the search register after;
 -- ✓ cursor movement in insert mode ✓ leaving nerdtree and oil
 -- local clear_search_reg = function() vim.fn.setreg('/@', '') end
-local clear_search_reg = function() vim.cmd[[nohl]] end
-local csag = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
-aucmd({'CursorMovedI'},           { group = csag, callback = clear_search_reg })
-aucmd({ "WinLeave", "BufLeave" }, { group = csag, callback = clear_search_reg,
-									pattern = {'TelescopePrompt', 'NERD_tree*', 'oil'}})
+local clear_search_reg = function() vim.cmd [[nohl]] end
+local csag             = vim.api.nvim_create_augroup('ClearSearch', { clear = true })
+aucmd({ 'CursorMovedI' }, { group = csag, callback = clear_search_reg })
+aucmd({ "WinLeave", "BufLeave" }, {
+	group = csag,
+	callback = clear_search_reg,
+	pattern = { 'TelescopePrompt', 'NERD_tree*', 'oil' }
+})
 
 -- }}}
 
 augrp('UserLspConfig', { clear = true })
 
--- {{{ autocmd: close mason tui
+-- {{{ autocmd: close mason and lazy tui
 aucmd('FileType', {
-	pattern = 'mason',
-	callback = function()
-		bkm(0, 'n', '<esc>', ':close<cr>', nosi 'Mason: close')
-		bkm(0, 'n', '<c-w>', ':close<cr>', nosi 'Mason: close')
+	pattern = { 'mason', 'lazy' },
+	callback = function(ev)
+		bkm(ev.buf, 'n', '<esc>', '<cmd>quit<cr>', nosi "Close: TUI")
+		bkm(ev.buf, 'n', '<c-w>', '<cmd>quit<cr>', nosi "Close: TUI")
+		bkm(ev.buf, 'n', 'q', '<cmd>quit<cr>', nosi "Close: TUI")
 	end
 })
 -- }}}
@@ -68,7 +73,7 @@ aucmd('FileType', {
 ----     })
 
 
---[[x]]--
+--[[x]] --
 
 
 -- vim.schedule_wrap(function() end)
