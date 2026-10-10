@@ -51,6 +51,8 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 		add_dir(homePath('Desktop/tmp'))
 		add_dir(homePath('Local Sites/norway4u'))
 
+		add_dir('C:/Users/jazzo/AppData/Local/nvim/plug-wip/genja-completion011.nvim')
+
 		add_dir('O:')
 
 		if oni then
