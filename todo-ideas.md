@@ -25,3 +25,5 @@
 
 - code actions - view in telescope
 
+
+- oil: auto confirm creation of a single dir / file

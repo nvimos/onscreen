@@ -13,6 +13,11 @@ km({ 'i', 's' }, '<C-p>', '<Plug>luasnip-prev-choice', nosi 'Luasnip: next')
 km({ 'n' }, '<leader>r2', '<Plug>(Prettier)', nosi 'Prettier')
 km({ 'v' }, '<leader>r2', ':PrettierFragment<cr>', nosi 'Prettier (frag)')
 -- }}}
+
+-- {{{ genja-completion011: lsp check
+-- global, not in LspAttach: it has to work when no server is attached
+km({ 'n' }, '<leader>ch', '<Plug>CheckHealthLspSimple', nosi 'LSP: check server is attached')
+-- }}}
 -- }}}
 
 
