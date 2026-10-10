@@ -21,6 +21,7 @@ return {
 				powershell = false,
 				python = false,
 				typescript = false,
+				vim = true,
 			},
 			mason = { ui = { border = 'double' } }, -- for require('mason').setup()
 			-- for vim.diagnostic.config()
