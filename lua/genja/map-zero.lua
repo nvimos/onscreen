@@ -1,7 +1,7 @@
 -- Stable mappings sourced early during init
 
-F = require 'genja.api'.fn
-local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
+local cfg, cmd, nosi = require'genja.api'.cfg, require'genja.api'.cmd, require'genja.api'.nosi
+
 
 local IsDir = require 'genja.fn'.IsDir
 
@@ -21,18 +21,18 @@ local n______ = n
 -- }}}
 
 -- Windows {{{
-km(d, '<c-w>`', cmd [[quit]], nosi 'Window: quit')
-km(d, '<leader>w`', cmd [[quit]], nosi 'Window: quit')
-km(n, '<leader>`', cmd [[wincmd w]], nosi 'Window: next')
-km(n, '<C-q>', cmd [[wincmd w]], nosi 'Window: next')          -- same as <c-w>w
-km(n, '', cmd [[wincmd q]], nosi 'Window: next')              -- same as <c-w>w
-km(n, '<C-left>', cmd [[wincmd h]], nosi 'Window: left')
-km(n, '<C-down>', cmd [[wincmd j]], nosi 'Window: down')
-km(n, '<C-up>', cmd [[wincmd k]], nosi 'Window: up')
-km(n, '<C-right>', cmd [[wincmd l]], nosi 'Window: right')
-km(n, '<C-w>1', cmd [[only]], nosi 'Window: only')
-km(n, '<c-w><s-right>', '<c-w>L', nosi 'move window left')
-km(n, '<c-w><s-left>', '<c-w>R', nosi 'move window left')
+km(d, '<c-w>`',         cmd [[quit]],       nosi 'Window: quit')
+km(d, '<leader>w`',     cmd [[quit]],       nosi 'Window: quit')
+km(n, '<leader>`',      cmd [[wincmd w]],   nosi 'Window: next')
+km(n, '<C-q>',          cmd [[wincmd w]],   nosi 'Window: next') -- same as <c-w>w
+km(n, '',             cmd [[wincmd q]],   nosi 'Window: next') -- same as <c-w>w
+km(n, '<C-left>',       cmd [[wincmd h]],   nosi 'Window: left')
+km(n, '<C-down>',       cmd [[wincmd j]],   nosi 'Window: down')
+km(n, '<C-up>',         cmd [[wincmd k]],   nosi 'Window: up')
+km(n, '<C-right>',      cmd [[wincmd l]],   nosi 'Window: right')
+km(n, '<C-w>1',         cmd [[only]]..'zz', nosi 'Window: only') -- center on line
+km(n, '<c-w><s-right>', '<c-w>L',           nosi 'Window: move left')
+km(n, '<c-w><s-left>',  '<c-w>R',           nosi 'Window: move left')
 -- }}}
 
 -- Tabs {{{

@@ -20,7 +20,7 @@
 
 
 
-F = require'genja.api'.fn
+F = require'genja.api'
 local cfg, cmd, nosi = F.cfg, F.cmd, F.nosi
 
 -- local function cmd(c) return '<cmd>' .. c .. '<cr>' end
