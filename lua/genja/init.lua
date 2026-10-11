@@ -11,7 +11,6 @@ Safeload 'genja.env'
 Safeload 'genja.map-zero' -- stable early maps, if config breaks
 Safeload 'genja.opt'      -- just static options
 Safeload 'genja.fu' -- userfuncs
-Safeload 'genja.ft' -- filetypes
 
 require 'genja.fn'.win_chdir_home() -- cd ~ on windows
 

@@ -36,6 +36,8 @@ return {
 				'snippets',
 				'lsp',
 				'path',
+				'gitignore',
+				'dictionary',
 				'buffer',
 				'lazydev',
 				'cmdline',

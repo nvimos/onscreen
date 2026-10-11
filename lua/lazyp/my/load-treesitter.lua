@@ -48,6 +48,15 @@ return {
 
 				'go',
 
+				'make',
+
+				'git_config', -- .gitconfig, .git/config, .gitmodules
+				'gitignore',
+				'gitattributes',
+				'gitcommit',
+				'git_rebase',
+				'diff', -- injected into gitcommit (verbose commit)
+
 				'vim',
 				'vimdoc',
 
