@@ -91,7 +91,8 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	end
 
 	add_dir(vim.fn.stdpath('config'))
-	add_dir(vim.fn.stdpath('data'))
+	add_dir(homePath('ws/'))
+	-- add_dir(vim.fn.stdpath('data'))
 
 	return sd
 end)()
