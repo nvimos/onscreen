@@ -45,6 +45,7 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 		add_dir('J:/notes')
 		add_dir('A:/workspace')
 		add_dir('A:/_setup/bootstrap')
+		add_dir('A:/bin')
 		add_dir(homePath('Hj/notes'))
 		add_dir(homePath('Notez26'))
 		add_dir(homePath('Desktop/tmp'))
