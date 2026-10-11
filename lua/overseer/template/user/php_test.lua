@@ -1,5 +1,6 @@
 -- lua/overseer/template/user/php_test.lua
 -- Shared by php_test_file and php_test_all: the project's pest, else phpunit.
+-- Not a template itself: disabled in lua/lazyp/maybe/overseer.lua.
 
 local M = {}
 
@@ -18,28 +19,34 @@ function M.runner()
 	end
 end
 
+---A provider, so the task is only offered when a runner exists (v2 dropped condition.callback).
 ---@param name string
 ---@param args fun(): string[]
+---@return overseer.TemplateFileProvider
 function M.template(name, args)
 	return {
-		name = name,
-		builder = function()
+		condition = { filetype = { 'php' } },
+		generator = function()
 			local runner, root = M.runner()
-			return {
-				cmd = vim.list_extend({ runner }, args()),
-				cwd = root,
-				components = {
-					{ 'on_output_quickfix', open_on_exit = 'failure' },
-					'default',
-				},
+			if not runner then
+				return 'no vendor/bin/pest or vendor/bin/phpunit'
+			end
+			---@type overseer.TemplateDefinition
+			local tmpl = {
+				name = name,
+				builder = function()
+					return {
+						cmd = vim.list_extend({ runner }, args()),
+						cwd = root,
+						components = {
+							{ 'on_output_quickfix', open_on_exit = 'failure' },
+							'default',
+						},
+					}
+				end,
 			}
+			return { tmpl }
 		end,
-		condition = {
-			filetype = { 'php' },
-			callback = function()
-				return M.runner() ~= nil
-			end,
-		},
 	}
 end
 
