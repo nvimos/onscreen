@@ -1,4 +1,6 @@
+
 - claude: frcom nvim
+
 
 - voice input in nvim
 
@@ -7,6 +9,12 @@
 - <S-F1>: search from oil plugin current dir.
 - <c-?>:  popup with ai chat to ask some random question. output should be mega brief and text-only (no markdown)
 
+- context-sensitive telescope dropdown on <F2>
+    -make: list targets to execute
+    -oil: git worktree: files to add with preview
+
+- cmp: delay popup by 500 ms if it starts with :w
+    - the popup flashes annoyingly when auto-saving
 
 - treesitter: add a gui-trigger key that lists further actions (maybe g.)
     - go to implementation, definition, rename.
@@ -27,3 +35,7 @@
 
 
 - oil: auto confirm creation of a single dir / file
+
+- gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
+    - nvim-lint is not installed yet; would also cover other non-LSP linters
+    - gitcommit currently has treesitter highlighting only

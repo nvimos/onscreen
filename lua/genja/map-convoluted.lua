@@ -38,6 +38,7 @@ vim.keymap.set(nv, '<leader>wT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. c
 
 
 -- Magical and convoluted macros
+vim.keymap.set(nv, '<leader>sp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
 vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'remove empty lines in visual block')
 vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'remove trailing space')
 vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'replace " with \' on current line')
