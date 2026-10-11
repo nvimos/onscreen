@@ -1,4 +1,5 @@
 -- lua/overseer/template/user/run_script.lua
+---@type overseer.TemplateFileDefinition
 return {
   name = "run script",
   builder = function()
