@@ -1,3 +1,7 @@
+---path_display: "file.lua (dir/)", file name highlighted.
+---@param path string
+---@return string display
+---@return table? highlights { { {start, end}, hl_group }, ... }
 local function telescope_pretty_path(_, path)
 	-- 1. Grab just the filename (the tail end of the path)
 	local filename = path:match("[^/]+$") or ""
