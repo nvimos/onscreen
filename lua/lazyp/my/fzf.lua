@@ -2,6 +2,7 @@ function Cd_fzf()
 	vim.cmd('cd %:p:h')
 	vim.cmd('FZF')
 end
+---@type LazySpec
 return {
 	-- Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	-- Plug 'junegunn/fzf.vim'

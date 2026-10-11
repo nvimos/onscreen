@@ -1,10 +1,11 @@
+---@type LazySpec
 return {
 	{
+		-- not used: 2026-10
 		'nvim-neo-tree/neo-tree.nvim',
 		enabled = false, -- 2025-01 not using it, prefer oil instad
 		branch = 'v3.x',
 		dependencies = {
-			'nvim-lua/plenary.nvim',
 			'nvim-lua/plenary.nvim',
 			'nvim-tree/nvim-web-devicons',
 			'MunifTanjim/nui.nvim',
@@ -12,7 +13,7 @@ return {
 		},
 		cmd = 'Neotree',
 		keys = {
-			{ '<leader>fw', '<cmd>Neotree toggle<cr>', { noremap = true, silent = true, desc = "NeoTree" } }
+			{ '<leader>fw', '<cmd>Neotree toggle<cr>', silent = true, desc = "NeoTree" }
 		-- vim.keymap.set('n', "<leader>ft", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
 		-- vim.keymap.set('n', "<leader>fw", "<cmd>Neotree toggle<cr>", { desc = "NeoTree" })
 		},

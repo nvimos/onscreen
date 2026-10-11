@@ -5,6 +5,7 @@ local function laravel()
 	return vim.uv.fs_stat('artisan') ~= nil
 end
 
+---@type LazySpec
 return {
 	-- Tests: run the nearest test, a file or the suite, with results inline.
 	{

@@ -15,6 +15,7 @@ end
 -- 	plugin = M.log_name,
 -- })
 
+---@return string path of the log file
 M.where = function()
 	local ca = vim.api.nvim_call_function("stdpath", { "cache" })
 	local log = M.log_name.. ".log"
@@ -25,6 +26,7 @@ M.nuke = function()
 	os.remove(M.where())
 end
 
+---@param name string plugin name for plenary.log
 M.init = function(name)
 
 	local log_levels = { "trace", "debug", "info", "warn", "error", "fatal" }

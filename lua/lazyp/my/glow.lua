@@ -1,5 +1,7 @@
+---@type LazySpec
 return {
 	{
+		-- archived: 2025-03
 		"ellisonleao/glow.nvim",
 		config = function ()
 			require('glow').setup({

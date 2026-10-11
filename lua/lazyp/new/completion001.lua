@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-completion011.nvim/',
 	-- BufReadPre/BufNewFile: servers are enabled before the first file's FileType.
@@ -9,6 +10,7 @@ return {
 		'neovim/nvim-lspconfig', -- lua/lazyp/comps/nvim-lspconfig.lua
 	},
 
+	---@type genja.Opts
 	opts = {
 		lsp = {
 			enabled = {
@@ -47,8 +49,9 @@ return {
 		},
 	},
 
+	---@param opts genja.Opts
 	config = function(_, opts)
-		Safeload = require('genja.api').Safeload
+		local Safeload = require('genja.api').Safeload
 		Safeload('genja.comps', function(genja_comps)
 			genja_comps.setup(opts)
 		end)

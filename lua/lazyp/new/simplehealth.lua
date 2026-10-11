@@ -2,6 +2,7 @@
 -- virtual plugin (not downloaded)
 ---@type LazyPluginSpec
 return {
+  -- not used: 2026-10
   "simple-checkhealth",
   enabled = false,
   virtual = true, -- Tells Lazy it's an inline configuration

@@ -1,6 +1,7 @@
 -- Plugins for completion. All configuration lives in lua/genja/completion/.
 -- No config here: genja-completion011 (lua/genja/lazy-plug-spec.lua) calls
 -- cmp.setup() through require('genja.comps').setup().
+---@type LazySpec
 return {
 	{
 		'hrsh7th/nvim-cmp',

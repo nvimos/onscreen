@@ -16,6 +16,7 @@ vim.api.nvim_create_autocmd({'UIEnter'} , {
 	end, })
 
 
+---@type LazySpec
 return {
 	{
 		'nvim-telescope/telescope.nvim',
@@ -29,8 +30,11 @@ return {
 
 	{
 		-- hide env stuff?
+		-- not used: 2026-10
 		"ph1losof/ecolog.nvim",
+		branch = "v1", -- upstream asks to pin v1; ecolog2.nvim is the rewrite
 		dependencies = { "nvim-telescope/telescope.nvim" },
+		---@type EcologConfig
 		opts = {},
 	},
 

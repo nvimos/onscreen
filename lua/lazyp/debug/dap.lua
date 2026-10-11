@@ -6,6 +6,7 @@ Debup ui for…
 - many more
 
 --]]
+---@type LazySpec
 return {
 	"rcarriga/nvim-dap-ui",
 	dependencies = {

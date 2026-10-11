@@ -1,3 +1,4 @@
+---@type LazySpec[]
 PluginSpec = {}
 for _, e in pairs({
 	-- e.g. { Vonr/align.nvim },

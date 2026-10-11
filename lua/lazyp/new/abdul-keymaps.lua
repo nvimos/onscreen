@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	"abdul-hamid-achik/keymaps.nvim",
 	dependencies = {
@@ -5,6 +6,7 @@ return {
 	},
 	-- opts = { -- your configuration (see below) },
 	-- require("keymaps").setup({ })
+	---@type KeymapsConfig
 	opts = {
 		-- Main keybinding to open the cheatsheet (set to "" to disable)
 		key = "<leader>?",

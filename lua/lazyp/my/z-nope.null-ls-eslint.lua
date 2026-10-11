@@ -1,10 +1,11 @@
 return {
 	{
+		-- not used: 2026-10
 		'MunifTanjim/eslint.nvim',
 		enabled = false,
 		dependencies = {
 			'neovim/nvim-lspconfig',
-			'jose-elias-alvarez/null-ls.nvim',
+			'jose-elias-alvarez/null-ls.nvim', -- archived: 2023-08 (community fork: nvimtools/none-ls.nvim)
 		},
 		config = function ()
 			local null_ls = require("null-ls")

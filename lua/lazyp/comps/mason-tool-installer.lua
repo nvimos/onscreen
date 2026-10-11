@@ -2,6 +2,7 @@
 --   nvim --headless "+Lazy! sync" "+MasonToolsInstallSync" +qa
 -- The list is not kept here: it is whatever the enabled languages in
 -- lua/genja/lsp/ ask for (servers + tools), see require('genja.lsp').packages().
+---@type LazySpec
 return {
 	'WhoIsSethDaniel/mason-tool-installer.nvim',
 	dependencies = { 'mason-org/mason.nvim' },
@@ -12,6 +13,7 @@ return {
 		'MasonToolsUpdateSync',
 		'MasonToolsClean',
 	},
+	---@return MasonToolInstallerSettings
 	opts = function()
 		return {
 			ensure_installed = require('genja.lsp').packages(),

@@ -2,6 +2,7 @@
 --
 --		require'nvim-treesitter.configs'.setup { compilers = { "gcc" }, }
 
+---@type LazySpec
 return {
 	{
 		'nvim-treesitter/nvim-treesitter',
@@ -9,13 +10,14 @@ return {
 		lazy = false,
 		build = ':TSUpdate',
 
+		---@type TSConfig
 		opts = {
 			install_dir = vim.fn.stdpath('data') .. '/site',
 		},
 
+		---@param opts TSConfig
 		config = function(_, opts)
-			opts = opts
-			require('nvim-treesitter').setup()
+			require('nvim-treesitter').setup(opts)
 
 
 			--   require('nvim-treesitter.install').compilers = { "clang" } -- force compiler from «winget install LLVM.LLVM»
@@ -81,7 +83,9 @@ return {
 	},
 
 	{
+		-- not used: 2026-10
 		'windwp/nvim-ts-autotag',
+		---@type nvim-ts-autotag.Opts
 		opts = {},
 	},
 }

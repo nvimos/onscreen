@@ -1,6 +1,7 @@
+---@type LazySpec
 return {
 
-	{ 'michaeljsmith/vim-indent-object' }, -- leader + vii vai vaI; cii dii -- TODO lazify
+	{ 'michaeljsmith/vim-indent-object', event = 'VeryLazy' }, -- text objects ii ai aI: vii, cii, dai (see readme.cheatsheet.md)
 
 	-- {
 	-- 	'numToStr/Comment.nvim',

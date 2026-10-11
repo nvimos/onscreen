@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	-- Neovim plugin for Go
 	"ray-x/go.nvim",

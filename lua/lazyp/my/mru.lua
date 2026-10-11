@@ -1,10 +1,11 @@
 --vim.keymap.set('', '<S-F1>', ':lua CheckAndRunMRU()<CR>', { noremap = true, silent = true })
 
+---@type LazySpec
 return {
 	{ 'vim-scripts/mru.vim',       -- most recently used (old school)
 	lazy = true,
 	keys = { 
-		{ '<S-F1>', ':lua CheckAndRunMRU()<cr>', { noremap = true, silent = true } },
+		{ '<S-F1>', '<cmd>lua CheckAndRunMRU()<cr>', silent = true, desc = 'MRU: toggle' },
 	},
 	cmd = { 'CheckAndRunMRU', 'MRU' },
 	init = function()

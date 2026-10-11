@@ -11,6 +11,7 @@ Xdebug must be on in PHP with xdebug.mode=debug and xdebug.start_with_request=ye
 next request stops at your breakpoints. Local runs PHP on Windows itself, so the
 paths match and need no pathMappings.
 --]]
+---@type LazySpec
 return {
 	'mfussenegger/nvim-dap',
 	ft = 'php',
@@ -30,11 +31,13 @@ return {
 			local adapter = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages',
 				'php-debug-adapter', 'extension', 'out', 'phpDebug.js')
 
+			---@type dap.ExecutableAdapter
 			dap.adapters.php = {
 				type = 'executable',
 				command = 'node',
 				args = { adapter },
 			}
+			---@type dap.Configuration[]
 			dap.configurations.php = {
 				{
 					type = 'php',

@@ -8,6 +8,7 @@ vim.lsp.log.set_level("warn")
 -- lua/genja/lang/
 -- No config here: genja-completion011 (lua/genja/lazy-plug-spec.lua) runs the
 -- LSP setup through require('genja.comps').setup().
+---@type LazySpec
 return {
 	{
 		'neovim/nvim-lspconfig', -- only ships default server configs (lsp/*.lua)

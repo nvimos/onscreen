@@ -21,6 +21,7 @@ local ColorTable = {
 
 local cc = ColorTable:new()
 
+---Highlight groups that the colorscheme doesn't set.
 function M.setup()
 	vim.api.nvim_set_hl(0, 'Git', cc("#f14e32"):bold():t())
 

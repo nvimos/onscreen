@@ -32,7 +32,9 @@ local S = {
 }
 
 
+---@type LazySpec
 return { {
+	-- not used: 2026-10
 	'nvimdev/dashboard-nvim',
 	enabled = false,
 	lazy = true,

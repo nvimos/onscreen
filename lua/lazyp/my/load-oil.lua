@@ -113,6 +113,7 @@ O.keymaps = {
 }
 -- }}}
 
+---@type LazySpec
 return {
 	{
 		'stevearc/oil.nvim',
@@ -127,6 +128,7 @@ return {
 		-- 	{ '<LocalLeader>,', nil },
 		-- 	{ '<localleader>j', nil },
 		-- },
+		---@type oil.SetupOpts
 		opts = {
 			skip_confirm_for_simple_edits = true,
 

@@ -1,4 +1,6 @@
+---@type LazySpec
 return {
+	-- not used: 2026-10
 	{ 'preservim/nerdtree',         -- file navigation reeplacing netrw
 	enabled = false,
 	lazy = true,

@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	{
 		'folke/which-key.nvim',
@@ -63,10 +64,21 @@ return {
 
 		init = function()
 			vim.o.timeout = true
-			vim.o.timeoutlen = 800
-			vim.o.timeoutlen = 200
-			vim.o.timeoutlen = 1
+			-- 'timeoutlen': ms Neovim waits for the next key of a mapped sequence
+			-- (<leader>f, then f for <leader>ff) before it gives up, or before it
+			-- runs a shorter mapping that is also a prefix (<leader>f vs <leader>ff).
+			-- which-key opens its popup after its own opts.delay, not this value,
+			-- but this still decides how long ambiguous prefixes wait.
+			-- Low (1-200): ambiguous mappings fire almost at once; slow multi-key
+			--   sequences get cut off. For fast typists with few overlapping maps.
+			-- High (500-1000): time to finish long sequences, but a shorter
+			--   overlapping map waits that long before it runs.
+			-- Set to 300 in lua/genja/opt.lua; uncomment to override it here.
+			-- vim.o.timeoutlen = 800
+			-- vim.o.timeoutlen = 200
+			-- vim.o.timeoutlen = 1
 		end,
+		---@type wk.Opts
 		opts = {
 			-- preset = "helix",
 		},

@@ -1,4 +1,6 @@
+---@type LazySpec
 return {
+	-- not used: 2026-10
 	{ 'beauwilliams/statusline.lua',
 		lazy = false,
 		config = function()
@@ -9,7 +11,7 @@ return {
 		end,
 		dependencies = {
 			"kosayoda/nvim-lightbulb",
-			"nathunsmitty/nvim-ale-diagnostic",
+			"nathunsmitty/nvim-ale-diagnostic", -- archived: 2021-11
 		},
 		enabled = false --[[ laughably bad code.
 		implemented through autocommands on buffer enter and leave
@@ -23,6 +25,7 @@ return {
 
 
 	-- [[ statusline ]]
+	-- not used: 2026-10
 	{ 'ojroques/nvim-hardline', }
 	-- 'vim-airline/vim-airline'
 }

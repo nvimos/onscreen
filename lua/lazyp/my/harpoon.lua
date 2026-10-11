@@ -3,11 +3,13 @@
 	-- return { 'theprimeagen/harpoon', enabled = false }
 -- end
 
+---@type LazySpec
 return {
 	{
+		-- not used: 2026-10
 		'theprimeagen/harpoon',
 		enabled = false, --  meh... https://www.youtube.com/watch?v=CdXH-LaX6Ms&ab_channel=Traap
-		configure = function()
+		config = function()
 
 			local ok, _ = pcall( require, "harpoon")
 			if not ok then

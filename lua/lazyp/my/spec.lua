@@ -2,6 +2,7 @@
 
 -- pcall(require, 'genja.plugins-dashboard')
 -- pcall(require, 'genja.plugins-lsp')
+---@type LazySpec
 return {
 
 	-- { 'folke/neoconf.nvim', cmd = "Neoconf" },

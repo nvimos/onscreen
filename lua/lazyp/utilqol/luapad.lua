@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
 	-- evaluate lua in realtime
 	'rafcamlet/nvim-luapad',
