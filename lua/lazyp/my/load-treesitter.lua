@@ -57,6 +57,8 @@ return {
 				'git_rebase',
 				'diff', -- injected into gitcommit (verbose commit)
 
+				'ssh_config', -- ~/.ssh/config, ssh_config (not sshd_config: vim syntax)
+
 				'vim',
 				'vimdoc',
 

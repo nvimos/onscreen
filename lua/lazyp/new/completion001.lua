@@ -37,6 +37,7 @@ return {
 				'lsp',
 				'path',
 				'gitignore',
+				'sshconfig',
 				'dictionary',
 				'buffer',
 				'lazydev',
