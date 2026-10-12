@@ -1,0 +1,12 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "require",
+        "IsDir",
+        "NewPlugins"
+    ],
+    "diagnostics.disable": [
+        "lowercase-global",
+        "missing-fields"
+    ]
+}
