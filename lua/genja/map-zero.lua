@@ -95,11 +95,11 @@ km('v', '<C-/>', '<cmd>norm gc<cr>', nosi 'Edit: Comment and move down (visual)'
 -- <SPACE>1 - Telescope Modules
 -- <SPACE>2 - Telescope PickFolder
 -- local function start_cl() require('lua.telescope._extensions.mylunsj').show_picker() end
-vim.keymap.set('n', '<leader>1', cmd 'Telescope help_tags', nosi 'Vim help') -- dup-help-tags
-vim.keymap.set('n', '<leader>2', cmd 'Telescope', nosi 'Telescope')
-vim.keymap.set('n', '<leader>3', cmd 'Telescope mylunsj', nosi 'Telescope')
-vim.keymap.set('n', '<F3>', cmd 'Telescope mylunsj', nosi 'Telescope mylunsj')
-vim.keymap.set('n', '<S-F3>', cmd 'Telescope mydirs', nosi 'Telescope mydirs')
+vim.keymap.set('n', '<leader>1', cmd 'Telescope help_tags', nosi 'Telescope: vim help') -- dup-help-tags
+vim.keymap.set('n', '<leader>2', cmd 'Telescope',           nosi 'Telescope: builtins')
+vim.keymap.set('n', '<leader>3', cmd 'Telescope mylunsj',   nosi 'Telescope: mylunsj')
+vim.keymap.set('n', '<F3>',      cmd 'Telescope mylunsj',   nosi 'Telescope: mylunsj')
+vim.keymap.set('n', '<S-F3>',    cmd 'Telescope mydirs',    nosi 'Telescope: mydirs')
 -- }}}
 
 -- Browse undo-history (plugin) {{{

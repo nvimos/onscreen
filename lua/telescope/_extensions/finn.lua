@@ -1,48 +1,18 @@
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
+-- local actions = require "telescope.actions"
+-- local action_state = require "telescope.actions.state"
+
+local log = require('genja.log').log
+
+
 
 local M = { items = {} }
 
 function M.add_item(n, fn, d) table.insert(M.items, { name = n, callback = fn, display = d }) end
-
 function M.just_run(cmd, d) M.add_item(cmd, function() vim.cmd(cmd) end, d) end
-
 function M.just_command(cmd, d) M.add_item(cmd, function() vim.api.nvim_command(cmd) end, d) end
-
--- function M.finn()
--- 	local opts = {
--- 		-- find_command = { "rg", "--files", "--color", "never" },
--- 		-- finder = finders.new_table {
--- 		-- 	results = M.items,
--- 		-- 	entry_maker = function(entry)
--- 		-- 		return {
--- 		-- 			value = entry,
--- 		-- 			display = entry.display or entry.name,
--- 		-- 			ordinal = entry.name,
--- 		-- 		}
--- 		-- 	end
--- 		-- },
--- 		finder = finders.new,
--- 		sorter = conf.generic_sorter({}),
--- 		attach_mappings = function(prompt_bufnr, map)
--- 			Telemap(map)
--- 			actions.select_default:replace(function()
--- 				actions.close(prompt_bufnr)
--- 				local selection = action_state.get_selected_entry()
--- 				selection.value.callback()
--- 			end)
--- 			return true
--- 		end,
--- 	}
--- 	local drop = require('telescope.themes').get_dropdown()
--- 	opts.layout_strategy = drop.layout_strategy
--- 	opts.layout_config = drop.layout_config
--- 	opts.layout_config.anchor = "NW"
--- 	pickers.new(opts, {}):find()
--- end
 
 -- from telescope.nvim/lua/telescope/builtin/__files.lua
 local find_files = function(opts)
@@ -54,25 +24,25 @@ local find_files = function(opts)
 				return opts.find_command(opts)
 			end
 			return opts.find_command
-		elseif 1 == vim.fn.executable "rg" then
-			return { "rg", "--files", "--color", "never" }
-		elseif 1 == vim.fn.executable "fd" then
-			return { "fd", "--type", "f", "--color", "never" }
-		elseif 1 == vim.fn.executable "fdfind" then
-			return { "fdfind", "--type", "f", "--color", "never" }
-		elseif 1 == vim.fn.executable "find" and vim.fn.has "win32" == 0 then
-			return { "find", ".", "-type", "f" }
-		elseif 1 == vim.fn.executable "where" then
-			return { "where", "/r", ".", "*" }
+		elseif 1 == vim.fn.executable "rg" then     return { "rg", "--files", "--color", "never" }
+		elseif 1 == vim.fn.executable "fd" then     return { "fd", "--type", "f", "--color", "never" }
+		elseif 1 == vim.fn.executable "fdfind" then return { "fdfind", "--type", "f", "--color", "never" }
+		elseif 1 == vim.fn.executable "find" and
+			vim.fn.has "win32" == 0 then            return { "find", ".", "-type", "f" }
+		elseif 1 == vim.fn.executable "where" then  return { "where", "/r", ".", "*" }
 		end
 	end)()
 
 	if not find_command then
-		utils.notify("builtin.find_files", {
-			msg = "You need to install either find, fd, or rg",
-			level = "ERROR",
-		})
+		-- utils.notify("builtin.find_files", {
+		-- 	msg = "You need to install either find, fd, or rg",
+		-- 	level = "ERROR",
+		-- 	once = true,
+		-- })
+		vim.notify('you need to install either find, fd or rg', vim.log.levels.ERROR)
 		return
+	else
+		vim.notify_once('finn command: '..find_command, vim.log.levels.INFO)
 	end
 
 	local command = find_command[1]
@@ -175,7 +145,7 @@ local find_files = function(opts)
 		previewer = conf.file_previewer(opts),
 		sorter = conf.file_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			Telemap(map)
+			require('genja.fn-keys').Telemap(map)
 
 			-- map({ 'i', 'n' }, '<F1>',  function()
 				-- vim.cmd 'cd ..'
@@ -197,20 +167,6 @@ local find_files = function(opts)
 
 	finn:find()
 end
-
-
-
-
-
-
-
-
--- local default_opts = {
--- 	a = 1,
--- 	b = 2,
--- }
--- local opts = {}
-
 
 local function finn_ivy(opts)
 	local thm = {}
@@ -237,19 +193,4 @@ M = require 'telescope'.register_extension {
 	},
 }
 
-
--- M.finn = find_files
-
--- local function apply_checks(mod)
---   for k, v in pairs(mod) do
---     mod[k] = function(opts)
---       opts = opts or {}
---       v(opts)
---     end
---   end
---   return mod
--- end
--- return apply_checks(M)
-
 return M
--- M.show_picker()

@@ -7,6 +7,24 @@ local km, bkm          = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnos
 local nosi             = function(d) return { noremap = true, silent = true, desc = d } end
 -- }}}
 
+
+-- {{{ telescope: my extensions
+vim.api.nvim_create_autocmd({ 'UIEnter' }, {
+	group = vim.api.nvim_create_augroup('Plugins', { clear = false }),
+	callback = function(_)
+		local ok, ts = pcall(require, 'telescope')
+		if ok then
+			ts.load_extension 'mycolors'
+			ts.load_extension 'mydirs'
+			ts.load_extension 'mylunsj'
+			ts.load_extension 'undersort'
+		else
+			vim.notify('cannot load telescope module', vim.log.levels.WARN)
+		end
+	end,
+})
+-- }}}
+
 -- {{{ reset the search register after;
 -- ✓ cursor movement in insert mode ✓ leaving nerdtree and oil
 -- local clear_search_reg = function() vim.fn.setreg('/@', '') end

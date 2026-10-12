@@ -1,23 +1,11 @@
-local ok, te = pcall(require, 'telescope.builtin')
+local ok, tsbuiltin = pcall(require, 'telescope.builtin')
 if not ok then
+	vim.notify('there is no module: telescope.builtin')
 	return
 end
 
-local t = require 'telescope'
-te = require 'telescope.builtin'
-
 local km = vim.keymap.set
 local nosi = function(d) return { silent = true, noremap = true, desc = d } end
-
-
-function Telemap(map)
-	local act = require 'telescope.actions'
-	map({ 'i', 'n' }, '<esc>',  act.close)
-	map({ 'i', 'n' }, '<F3>',   act.move_selection_previous)
-	map({ 'i', 'n' }, '<F2>',   act.move_selection_next)
-	map({ 'i', 'n' }, '<S-F3>', act.move_selection_previous)
-	map({ 'i', 'n' }, '<S-F2>', act.move_selection_next)
-end
 
 
 local function find_in_startdirs()
@@ -33,46 +21,46 @@ local function grep_string()
 	require('telescope.builtin').grep_string({
 		search = vim.fn.input("Grep: ") }) end
 
+-- Telescope:
 -- frequently used
-km('n', '<F1>', te.live_grep,           { desc = ' live 󰵃'})
--- km('n', '<S-F1>', te.find_files,          { desc = ' find_files'})
-km('n', '<S-F1>', cmd 'Telescope finn',          { desc = ' finn filer'})
+km('n', '<F1>', tsbuiltin.live_grep,           { desc = 'Telescope: grep files'})
+km('n', '<S-F1>', cmd 'Telescope finn',          { desc = 'Telescope: grep paths'}) -- tsbuiltin.find_files
 
 
-km('n', '<C-F1>', te.oldfiles,              { desc = ' oldfiles'})
-km('n', '<leader>j//', find_in_startdirs, { desc = ' find in START_DIRS'})
+km('n', '<C-F1>', tsbuiltin.oldfiles,              { desc = 'Telescope: oldfiles'})
+km('n', '<leader>j//', find_in_startdirs, { desc = 'Telescope: find in START_DIRS'})
 
 -- telescope introspection
-km('n', '<leader>j?', te.builtin,       { desc = ' builtin'})
+km('n', '<leader>j?', tsbuiltin.builtin,       { desc = 'Telescope: builtin'})
 
 -- browse / find
-km('n', '<leader>j/.', te.find_files,     { desc = ' find_files'})
-km('n', '<leader>jo',  te.oldfiles,       { desc = ' oldfiles'})
-km('n', '<leader>jd',  find_in_startdirs, { desc = ' find in START_DIRS'})
+km('n', '<leader>j/.', tsbuiltin.find_files,     { desc = 'Telescope: find_files'})
+km('n', '<leader>jo',  tsbuiltin.oldfiles,       { desc = 'Telescope: oldfiles'})
+km('n', '<leader>jd',  find_in_startdirs, { desc = 'Telescope: find in START_DIRS'})
 
 -- vim help, inspect state
-km('n', '<leader>1',  te.help_tags,             nosi 'Vim help') -- dup-help-tags
+km('n', '<leader>1',  tsbuiltin.help_tags,             nosi 'Vim help') -- dup-help-tags
 
-km('n', '<leader>4',  te.buffers,       { desc = ' buffers'})
-km('n', '<leader>T',  te.buffers,       { desc = ' buffers'})
+km('n', '<leader>4',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})
+km('n', '<leader>T',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})
 
-km('n', '<leader>jv', te.vim_options,   { desc = ' vim_options'})
-km('n', '<leader>jC', te.colorscheme,   { desc = ' colorscheme'})
-km('n', '<leader>jM', te.keymaps,       { desc = ' keymaps'})
-km('n', '<leader>jA', te.autocommands,  { desc = ' autocommands'})
+km('n', '<leader>jv', tsbuiltin.vim_options,   { desc = 'Telescope: vim_options'})
+km('n', '<leader>jC', tsbuiltin.colorscheme,   { desc = 'Telescope: colorscheme'})
+km('n', '<leader>jM', tsbuiltin.keymaps,       { desc = 'Telescope: keymaps'})
+km('n', '<leader>jA', tsbuiltin.autocommands,  { desc = 'Telescope: autocommands'})
 
 -- unused
--- km('n', '<leader>jb', te.buffers,       { desc = ' buffers'})
--- km('n', '<leader>jh', te.help_tags,     { desc = ' help_tags'})
--- km('n', '<leader>jg',  te.git_files,      { desc = ' git_files'})
--- km('n', '<leader>jr', te.registers,     { desc = ' registers'})
--- km('n', '<leader>jm', te.marks,         { desc = ' marks'})
--- km('n', '<leader>jq', te.quickfix,      { desc = ' quickfix'})
--- km('n', '<leader>jl', te.loclist,       { desc = ' loclist'})
+-- km('n', '<leader>jb', te.buffers,       { desc = 'Telescope: buffers'})
+-- km('n', '<leader>jh', te.help_tags,     { desc = 'Telescope: help_tags'})
+-- km('n', '<leader>jg',  te.git_files,      { desc = 'Telescope: git_files'})
+-- km('n', '<leader>jr', te.registers,     { desc = 'Telescope: registers'})
+-- km('n', '<leader>jm', te.marks,         { desc = 'Telescope: marks'})
+-- km('n', '<leader>jq', te.quickfix,      { desc = 'Telescope: quickfix'})
+-- km('n', '<leader>jl', te.loclist,       { desc = 'Telescope: loclist'})
 
 -- grep
-km('n', '<leader>jj', te.live_grep,  { desc = ' grep live'})
-km('n', '<leader>js', grep_string,   { desc = ' grep string'})
+km('n', '<leader>jj', tsbuiltin.live_grep,  { desc = 'Telescope: grep live'})
+km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 
 
 
