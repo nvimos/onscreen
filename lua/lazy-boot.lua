@@ -8,6 +8,7 @@
 			Github, LazyData })
 	end;
 	vim.opt.rtp:prepend(LazyData) -- prepend to runtime path to autoload plugins
+	--[[
 	vim.api.nvim_create_autocmd('FileType', {
 		pattern = 'lazy',
 		callback = function(ev)
@@ -19,4 +20,5 @@
 			bkm(ev.buf, 'n', 'q',     quit, mo);
 		end
 	})
+	--]]
 end)()
