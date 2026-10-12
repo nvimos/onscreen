@@ -30,10 +30,10 @@ end
 --]]
 for _, value in ipairs({
 	-- { import = 'lazyp' }, -- CONFIG/lua/lazyp/*
-	{ import = 'lazyp.comps' }, -- lsp, completion, llm
 	{ import = 'lazyp.debug' },
 	{ import = 'lazyp.git' },
 	{ import = 'lazyp.langs' },
+	{ import = 'lazyp.langs-comps' }, -- lsp, completion, llm
 	{ import = 'lazyp.maybe' }, -- seems ok to keep
 	{ import = 'lazyp.my' },    -- my configs
 	{ import = 'lazyp.new' },   -- undergoing evaluation

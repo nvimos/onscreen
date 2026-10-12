@@ -5,6 +5,9 @@
 - voice input in nvim
 
 - git:    gitsigns.nvim (Neovim): stage or reset hunks from the buffer. 
+- oil:    hide a set of predefined folders based on PWD/.oily.
+    - nvim custom plugin or an existing one, or just config?
+    - also add keybind to hide current item from the oil ui
 - oil:    normal gga -> git add
 - <S-F1>: search from oil plugin current dir.
 - <c-?>:  popup with ai chat to ask some random question. output should be mega brief and text-only (no markdown)

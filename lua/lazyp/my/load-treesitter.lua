@@ -82,10 +82,4 @@ return {
 		end,
 	},
 
-	{
-		-- not used: 2026-10
-		'windwp/nvim-ts-autotag',
-		---@type nvim-ts-autotag.Opts
-		opts = {},
-	},
 }

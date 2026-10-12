@@ -28,15 +28,6 @@ return {
 		config = true
 	},
 
-	{
-		-- hide env stuff?
-		-- not used: 2026-10
-		"ph1losof/ecolog.nvim",
-		branch = "v1", -- upstream asks to pin v1; ecolog2.nvim is the rewrite
-		dependencies = { "nvim-telescope/telescope.nvim" },
-		---@type EcologConfig
-		opts = {},
-	},
 
 
 	{  'nvim-telescope/telescope-symbols.nvim', event = 'VeryLazy', lazy = true }, -- UIEnter

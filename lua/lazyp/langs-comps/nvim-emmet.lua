@@ -1,6 +1,7 @@
 ---@type LazySpec
 return {
-		-- not used: 2026-10
+		-- todo: test me 2026-10
+		event = {'LazyFile'},
 		'olrtg/nvim-emmet',
 		config = function()
 				vim.keymap.set( { 'n', 'v' }, '<leader>xe', require('nvim-emmet').wrap_with_abbreviation)

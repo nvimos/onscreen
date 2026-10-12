@@ -6,9 +6,10 @@
 ---@type LazySpec
 return {
 	{
-		-- not used: 2026-10
+		-- todo: test me 2026-10
 		'theprimeagen/harpoon',
-		enabled = false, --  meh... https://www.youtube.com/watch?v=CdXH-LaX6Ms&ab_channel=Traap
+		-- enabled = false, --  meh... https://www.youtube.com/watch?v=CdXH-LaX6Ms&ab_channel=Traap
+		event = { 'Lazy' },
 		config = function()
 
 			local ok, _ = pcall( require, "harpoon")
