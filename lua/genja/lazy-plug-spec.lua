@@ -34,15 +34,15 @@ for _, value in ipairs({
 	{ import = 'lazyp.git' },
 	{ import = 'lazyp.langs' },
 	{ import = 'lazyp.langs-comps' }, -- lsp, completion, llm
-	{ import = 'lazyp.maybe' }, -- seems ok to keep
-	{ import = 'lazyp.my' },    -- my configs
-	{ import = 'lazyp.new' },   -- undergoing evaluation
+	{ import = 'lazyp.maybe' },    -- seems ok to keep
+	{ import = 'lazyp.my' },       -- my configs
+	{ import = 'lazyp.new' },      -- undergoing evaluation
 	-- { import = 'lazyp.no' },   -- not loaded atm
-	{ import = 'lazyp.others' }, -- configs taken from other people
-	{ import = 'lazyp.phunnee' }, -- fun, cool stuff
-	{ import = 'lazyp.term' },  -- terminal integrations, floaters
-	{ import = 'lazyp.ui' },    -- adjustments for nvim, qt, neovide
-	{ import = 'lazyp.utilqol' }, -- make it better (quality of life and utilities)
+	{ import = 'lazyp.others' },   -- configs taken from other people
+	{ import = 'lazyp.phunnee' },  -- fun, cool stuff
+	{ import = 'lazyp.term' },     -- terminal integrations, floaters
+	{ import = 'lazyp.ui' },       -- adjustments for nvim, qt, neovide
+	{ import = 'lazyp.utilqol' },  -- make it better (quality of life and utilities)
 }) do
 	table.insert(PluginSpec, value)
 end
@@ -57,6 +57,7 @@ require('lazy').setup({
 	change_detection = {
 		notify = false
 	},
+
 	--[[
 		dev = {
 				---@type string | fun(plugin: LazyPlugin): string
