@@ -34,11 +34,11 @@ return {
 	end,
 	cmd = 'NERDTreeToggle',
 	keys = {
-		{ '<F1>', '<cmd>NERDTreeToggle<cr>', mode = {'n'} },
-		{ '<leader>e.', nil },
-		{ '<leader>ee', nil },
-		{ '<leader>et', nil },
-		-- { '<leader>ei', nil },
+		-- { '<F1>', '<cmd>NERDTreeToggle<cr>', mode = {'n'} },
+		-- { '<leader>e.', nil },
+		-- { '<leader>ee', nil },
+		-- { '<leader>et', nil },
+		-- -- { '<leader>ei', nil },
 	}
 },
 }
