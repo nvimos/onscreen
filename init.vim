@@ -4,12 +4,6 @@ lua << EOF
 do
 	local Safeload = require('genja.api').Safeload
 
-	-- env
-	vim.env.SSH_AUTH_SOCK = vim.fn.expand("~/.ssh/agent.sock")
-	if not string.find(vim.env.PATH, 'a:\\bin', 1, true) then
-		vim.env.PATH = 'a:\\bin;' .. vim.env.PATH
-	end
-
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
 	-- lazy plugin manager
@@ -27,6 +21,7 @@ do
 		Safeload 'genja.opt'
 		-- vim.cmd( 'redraw' )
 
+		-- todo: incorporate alma-solid-vimrc
 		-- fail: alma solid assumes vim9, installs plugins with vimplug
 		--       maybe set an env SKIP_PLUGINS and skip those parts
 		-- vim.cmd('source ' .. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
