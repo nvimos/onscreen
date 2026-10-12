@@ -2,7 +2,7 @@
 -- todo: test-me-2026-10
 return {
 	'windwp/nvim-ts-autotag',
-	event = 'LazyFile', -- For LazyVim, defer loading until a relevant file is opened:
+	event = 'BufEnter *.html,*.xml,*.php,*.jsx',
 
 	-- Automatically close and rename <> tags
 	-- Useful for HTML, JSX/TSX, Vue, Svelte, PHP, Markdown, etc

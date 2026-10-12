@@ -1,7 +1,7 @@
 ---@type LazySpec
 return {
 		-- todo: test me 2026-10
-		event = {'LazyFile'},
+		event = {'BufRead *.html,*.xml,*.php,*.jsx'},
 		'olrtg/nvim-emmet',
 		config = function()
 				vim.keymap.set( { 'n', 'v' }, '<leader>xe', require('nvim-emmet').wrap_with_abbreviation)
