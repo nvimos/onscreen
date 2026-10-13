@@ -7,9 +7,10 @@ return {
 
 	---@type genja-finder.Opts
 	opts = {
-		exclude = { 'node_modules', 'vendor', 'dist' },
+		exclude = { 'node_modules', 'vendor', 'dist', 'go/pkg/mod' },
 		exclude_files = { '*.min.js', '*.min.css' },
 		attach = function(map) require('genja.fn.telemap').Telemap(map) end,
+		hidden = false,
 	},
 
 	config = function(_, opts)
