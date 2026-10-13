@@ -1,7 +1,7 @@
 local function pplx(q)
   q = vim.trim(q or "")
   if q ~= "" then
-    vim.ui.open("https://www.perplexity.ai/search?q=" .. vim.uri_encode(q))
+    vim.ui.open("https://www.perplexity.ai/search?q=" .. vim.uri_encode(q, "rfc2396"))
   end
 end
 
