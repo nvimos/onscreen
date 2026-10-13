@@ -52,7 +52,7 @@ function M.show_picker()
 		},
 		sorter = conf.generic_sorter({}),
 		attach_mappings = function(prompt_bufnr, map)
-			require('genja.fn-keys').Telemap(map)
+			require('genja.fn.telemap').Telemap(map)
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				local selection = action_state.get_selected_entry()

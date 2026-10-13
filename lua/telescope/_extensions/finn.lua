@@ -42,7 +42,7 @@ local find_files = function(opts)
 		vim.notify('you need to install either find, fd or rg', vim.log.levels.ERROR)
 		return
 	else
-		vim.notify_once('finn command: '..find_command, vim.log.levels.INFO)
+		vim.notify_once('finn command: ' .. table.concat(find_command, ' '), vim.log.levels.INFO)
 	end
 
 	local command = find_command[1]
@@ -145,7 +145,7 @@ local find_files = function(opts)
 		previewer = conf.file_previewer(opts),
 		sorter = conf.file_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			require('genja.fn-keys').Telemap(map)
+			require('genja.fn.telemap').Telemap(map)
 
 			-- map({ 'i', 'n' }, '<F1>',  function()
 				-- vim.cmd 'cd ..'

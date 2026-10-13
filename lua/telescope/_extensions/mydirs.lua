@@ -28,7 +28,7 @@ local ask_where_to_go = function(opts)
 			-- map({'i', 'n'}, '<F2>', actions.move_selection_previous)
 			-- map({'i', 'n'}, '<F3>', actions.move_selection_next)
 			-- Telemap(map)
-			require('genja.fn-keys').Telemap(map)
+			require('genja.fn.telemap').Telemap(map)
 
 			-- would be cool to change the dir on-the-fly in the buffer "under" the prompt...
 			-- like this, it gives a warning about the buffer not being written.
