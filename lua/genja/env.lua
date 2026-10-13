@@ -1,4 +1,4 @@
-vim.env['HOME'] = (vim.env.HOME or vim.env.Userprofile)
+vim.env['HOME'] = (vim.env.HOME or vim.env.Userprofile or vim.uv.os_homedir())
 
 
 if vim.fn.has('windows') == 1 then
