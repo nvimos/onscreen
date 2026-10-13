@@ -17,7 +17,7 @@ function! DumpMessages()
 	redir => messages
 	silent messages
 	redir END
-	new
+	enew
 	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
 	enew
 	silent put=messages
