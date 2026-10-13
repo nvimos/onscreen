@@ -42,7 +42,7 @@ for _, value in ipairs({
 	{ import = 'lazyp.phunnee' },  -- fun, cool stuff
 	{ import = 'lazyp.term' },     -- terminal integrations, floaters
 	{ import = 'lazyp.ui' },       -- adjustments for nvim, qt, neovide
-	{ import = 'lazyp.utilqol' },  -- make it better (quality of life and utilities)
+	{ import = 'lazyp.util-qol' },  -- make it better (quality of life and utilities)
 }) do
 	table.insert(PluginSpec, value)
 end
