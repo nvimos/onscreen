@@ -121,32 +121,86 @@ require('telescope').setup {
 		-- vimgrep_arguments is only used for grep_string and live_grep
 		vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden' },
 		border = true,
+		-- Lua patterns, matched anywhere in the path: anchor extensions with $ ("%.a" alone hides *.ahk),
+		-- escape . and - with %, [\\/] for either separator. genja-finder heeds these too.
+		-- Directory names: "%f[%w_%.]name[\\/]" matches name/ at the path start or after a separator or
+		-- '-', but not inside a longer word (target/ yes, subtarget/ no).
+		--
+		-- How others manage ignore lists (looked up 2026-10-13):
+		-- * What the lists are for, usually: hide build output and vendored deps (node_modules, target,
+		--   __pycache__); hide binaries a previewer can't show (exe, dll, media, archives); hide OS/editor
+		--   junk (Thumbs.db, .DS_Store, *.swp); and speed, since skipping big trees is the largest win.
+		-- * Telescope's own docs suggest leaving this list short: it applies in every picker that has a
+		--   file, so lsp_references/diagnostics in node_modules etc. are hidden too. For find/grep they
+		--   recommend .gitignore + fd/rg, which never even list ignored files.
+		--   https://github.com/nvim-telescope/telescope.nvim/blob/master/doc/telescope.txt
+		-- * This list is a Lua post-filter: rg/fd still walk and print every file, then each path is checked
+		--   against every pattern. Big trees go in genja-finder `exclude` (rg --glob !x / fd --exclude x).
+		--   Very long lists are slow in rg/fd too (a 16k-line ignore file used ~7 GiB in rg).
+		--   https://github.com/BurntSushi/ripgrep/issues/2750
+		-- * One list for every tool: the global git ignore (core.excludesFile, default
+		--   ~/.config/git/ignore) is read by git, rg and fd (fd only inside a repo unless --no-require-git).
+		--   For non-git rules: ~/.config/fd/ignore and a .ignore file per directory, which rg and fd both
+		--   read. People build their global file from github/gitignore's Global/ templates (Windows,
+		--   macOS, Vim, JetBrains...) instead of writing it by hand.
+		--   https://adamj.eu/tech/2022/11/06/git-set-up-a-global-ignore-file/
+		--   https://github.com/github/gitignore/tree/main/Global   https://man.archlinux.org/man/fd.1.en
+		-- * Bringing files back: a `!pattern` line in .ignore beats .gitignore, e.g. `!*.log` makes rg
+		--   search gitignored logs. Negation in --ignore-file has known bugs; a .ignore file works.
+		--   https://mbork.pl/2021-02-06_Unignoring_some_files_by_ripgrep
+		-- * Separate lists by purpose: VS Code keeps files.exclude (hide from the tree; search too),
+		--   search.exclude (search only) and files.watcherExclude (perf only). The same split here:
+		--   this list = never show, genja-finder exclude = don't search, <M-i> cycles it off.
+		-- * Toggles instead of one fixed list: togglescope flips a picker between two configs (e.g. with and
+		--   without hidden/ignored files) with one key, the same idea as genja-finder's <M-i>.
+		--   https://github.com/Theo-Steiner/togglescope
+		-- * `.git/[^h]` hides .git but keeps .git/hooks findable.  https://lee-phillips.org/nvimTelescopeConfig
 		file_ignore_patterns = {
-			--
-			'AMD_RyzenMaster.log',
 			-- Files
-			"%.a",
-			"%.class",
-			"%.mkv",
-			"%.mp4",
-			"%.mp3",
-			"%.o",
-			"%.out",
-			"%.pdf",
-			"%.zip",
+			"%.a$",
+			"%.class$",
+			"%.mkv$",
+			"%.mp4$",
+			"%.mp3$",
+			"%.o$",
+			"%.out$",
+			"%.pdf$",
+			"%.zip$",
+			-- Build output / binaries
+			"%.exe$", "%.dll$", "%.pdb$", "%.obj$", "%.lib$", "%.so$", "%.dylib$",
+			"%.pyc$", "%.jar$", "%.wasm$",
+			-- Archives / installers
+			"%.7z$", "%.rar$", "%.tar$", "%.gz$", "%.tgz$", "%.iso$", "%.msi$",
+			-- Media / fonts
+			"%.wav$", "%.flac$", "%.webm$", "%.avi$", "%.mov$",
+			"%.ttf$", "%.otf$", "%.woff2?$",
+			-- OS / editor junk
+			"Thumbs%.db$", "desktop%.ini$", "%.DS_Store$", "%.lnk$",
+			"%.sw[po]$", "~$",
+			-- Logs (also covers AMD_RyzenMaster.log) and lockfiles
+			"%.log$",
+			"package%-lock%.json$", "pnpm%-lock%.yaml$", "yarn%.lock$", "Cargo%.lock$",
 			-- Directories
-			"undodir/",
-			".cache",
-			".git/",
-			".github/",
+			"undodir[\\/]",
+			"%.cache[\\/]",
+			"%.git[\\/][^h]",        -- hides .git/ but keeps .git/hooks/ findable
+			"%.github[\\/]",
+			"node_modules[\\/]",
+			"__pycache__[\\/]",
+			"%f[%w_%.]%.?venv[\\/]", -- venv/ and .venv/
+			"%.mypy_cache[\\/]",
+			"%.pytest_cache[\\/]",
+			"%f[%w_%.]target[\\/]",  -- Rust/Maven
+			"%.gradle[\\/]",
+			"%.idea[\\/]",
+			"%f[%w_%.]%.vs[\\/]",    -- Visual Studio
+			"%f[%w_%.]obj[\\/]",     -- .NET
+			"%.next[\\/]",
+			"%.terraform[\\/]",
+			"%f[%w_%.]coverage[\\/]",
 			--
-			".node_modules/",
-			".node_modules\\",
-			"node%_modules",
-			--
-			"lazy-lock.json",
-			"go.pkg.mod",
-			"go\\pkg\\"
+			"lazy%-lock%.json$",
+			"go[\\/]pkg[\\/]mod[\\/]",
 		}
 	}
 }
