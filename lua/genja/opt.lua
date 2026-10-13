@@ -39,12 +39,102 @@ vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'mov
 ]]
 
 
-vim.o.laststatus = 3 -- last win status line; only one status line even with several windows
 
 
 --[[ vim options ]]--
 
-vim.opt.foldcolumn = '2'
+vim.opt.shada = [[%27,'133,<50,/202,:9801,<9950,s16,h,ra:,r:b,r/tmp]]
+
+vim.opt.inccommand = "nosplit"
+
+vim.opt.synmaxcol = 1020
+
+vim.opt.shortmess= 'flmnxS'
+vim.opt.shortmess:remove('I') -- I disables greeting
+
+vim.o.laststatus = 3 -- only one status line even with several windows
+-- {{{ folds (from vimrc.almalinux.vim)
+vim.opt.foldcolumn = '3'                     -- fdc=2 ; overrides the '2' above
+vim.opt.fillchars = 'fold:│'
+vim.opt.fillchars = 'fold:·'
+vim.opt.fillchars = vim.opt.fillchars + 'stl: '      -- statusline
+vim.opt.fillchars = vim.opt.fillchars + 'stlnc:─'    -- statusline (non-current)
+vim.opt.fillchars = vim.opt.fillchars + 'vert::'     -- v:version >= 800 is always true in nvim
+vim.opt.fillchars = vim.opt.fillchars + 'foldopen:▼'
+vim.opt.fillchars = vim.opt.fillchars + 'foldclose:▶'
+vim.opt.fillchars = vim.opt.fillchars + 'foldsep:│'
+vim.opt.foldopen:remove 'block'
+
+-- maybe-todo: redo this for nvim
+-- vim.cmd[[
+-- " {{{ command WrapFold -- insert fold marker around selection
+-- function! s:wrap_fold_with_marker(fold_title='NamelessFold') range
+--   let csp = split(&commentstring, '%s')
+--   if len(csp) == 2
+--     let prefix = substitute(csp[0], '\s*$', '', '')
+--     let suffix = substitute(csp[1], '^\s*', '', '')
+--   else
+--     let suffix = ''
+--     let prefix = substitute(&commentstring, '%s', '', 'g')
+--   endif
+--   " call append(a:firstline - 1, printf('%s %s %s', prefix, repeat('{', 3), a:fold_title))
+--   let m1 = repeat('{', 3)
+--   let m2 = repeat('}', 3)
+--   let a = printf('%s %s %s', prefix, m1, a:fold_title)
+--   let b = printf('%s %s', prefix, m2)
+--   call append(a:firstline - 1, a)
+--   call append(getpos("'>")[1], b)
+-- endfunction
+-- command! -range -nargs=* WrapFold call <SID>wrap_fold_with_marker(<f-args>)
+-- " }}}
+-- " {{{ generate foldtext
+-- function s:generate_foldtext1()
+-- 	let margin = &fdc + &number * &numberwidth
+-- 	let extra = 0
+-- 	let wwin = winwidth(0) - margin - extra
+-- 	let hidden = v:foldend - v:foldstart
+-- 	let line = getline(v:foldstart)
+-- 	let csp = split(&commentstring, '%s')
+-- 	let comment1 = len(csp)>0 ? csp[0] : ' '
+-- 	let line = substitute(line, comment1 , ' ', '')
+-- 	let mark = split(&foldmarker, ',')
+-- 	let mark1 = len(mark) > 0 ? mark[0] : ''
+-- 	let line = substitute(line, mark1 , repeat(' ', len(mark1)), '')
+--  	let stab = strpart(repeat(' ', 99), 0, &tabstop)
+--  	let line = substitute(line, '\t', stab, 'g')
+-- " {{{ zzz
+--  	let line = strpart(line, 0, wwin -len(hidden))
+--  	let fill = wwin - len(line) - len(hidden)
+-- 	let prefixlen = len(matchstr(line, '^\s*'))
+-- 	let line = strpart(line, prefixlen)
+-- " }}}
+-- 	let left = '-'
+-- 	let left = '⏤'
+-- 	while prefixlen > 0 && strdisplaywidth(prefixs) < 3
+-- 		let left = '⏤'.prefixs
+-- 		let prefixlen -= 1
+-- 	endwhile
+-- 	" U+23E4 STRAIGHTNESS
+--  	return repeat(' ', prefixlen-2).left .' '
+-- 				\. line  . ' ⏤⏤⏤' .
+-- 				\. repeat(' ', fill-4) .
+-- 				\ hidden
+-- 
+--  	" return line . ' '
+-- " 				\ . repeat(' ', fillcharcount-3)
+-- " 				\ . repeat('…', 3)
+-- " 				\ .' '. hidden .' '
+-- endfunction
+-- set foldtext=s:generate_foldtext1()
+-- 
+-- ]]
+
+
+-- }}}
+
+
+
+
 vim.opt.hidden = true
 
 vim.o.modeline = true
@@ -65,7 +155,9 @@ vim.o.listchars = 'tab: '
 z                                               
 	-tab
  ---space]]
-vim.opt.listchars:append('space: ,multispace:·   ')
+-- vim.opt.listchars:append('space: ,multispace:·   ') -- multispace is distracting more than anything
+vim.opt.listchars:append('space: ,multispace:    ')
+
 vim.opt.listchars:append('lead: ,leadmultispace:·   ')
 -- vim.opt.listchars:append('trail:󱁐,')
 vim.opt.listchars:append('trail:_,')
@@ -124,6 +216,7 @@ vim.o.numberwidth = 3                         -- set number column width to 2 {d
 
 vim.o.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
 vim.o.wrap = false                            -- display lines as one long line
+vim.o.wrapmargin = 1                          -- hard-wraps typed text 1 column before the window edge
 vim.o.linebreak = true                        -- companion to wrap, don't split words
 vim.o.scrolloff = 4                           -- minimal number of screen lines to keep above and below the cursor
 vim.o.sidescrolloff = 4                       -- minimal number of screen columns either side of cursor if wrap is `false`

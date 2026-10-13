@@ -19,13 +19,7 @@ do
 		Safeload 'genja.map-telescope'
 		Safeload 'genja.map-convoluted'
 		Safeload 'genja.opt'
-		-- vim.cmd( 'redraw' )
-
-		-- todo: incorporate alma-solid-vimrc
-		-- fail: alma solid assumes vim9, installs plugins with vimplug
-		--       maybe set an env SKIP_PLUGINS and skip those parts
-		-- vim.cmd('source ' .. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
-
+		vim.cmd('source ' .. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
 	else
 		-- vim.notify('Safeload genja: ok')
 	end
