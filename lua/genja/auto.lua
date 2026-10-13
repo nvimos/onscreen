@@ -39,6 +39,51 @@ aucmd({ "WinLeave", "BufLeave" }, {
 
 -- }}}
 
+-- {{{ from vimrc.almalinux.vim
+local almag = augrp('VimrcAlmalinux', { clear = true })
+
+-- help: <cr> follows a tag, <bs> jumps back, x closes
+aucmd('FileType', {
+	group = almag,
+	pattern = 'help',
+	callback = function(ev)
+		bkm(ev.buf, 'n', '<cr>', '<c-]>', nosi "Help: follow tag")
+		bkm(ev.buf, 'n', '<bs>', '<c-o>', nosi "Help: jump back")
+		bkm(ev.buf, 'n', 'x', '<cmd>close<cr>', nosi "Help: close")
+	end
+})
+
+-- plain text: soft wrap at word boundaries, hard wrap at 76
+aucmd('FileType', {
+	group = almag,
+	pattern = 'text',
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.textwidth = 76
+	end
+})
+
+-- files over 1 MiB: no syntax/treesitter, no cursorline
+aucmd('BufReadPre', {
+	group = almag,
+	callback = function(ev)
+		local stat = vim.uv.fs_stat(ev.match)
+		if stat and stat.size > 1024 * 1024 then vim.b[ev.buf].genja_bigfile = true end
+	end
+})
+aucmd('FileType', {
+	group = almag,
+	callback = function(ev)
+		if not vim.b[ev.buf].genja_bigfile then return end
+		pcall(vim.treesitter.stop, ev.buf)
+		vim.bo[ev.buf].syntax = 'OFF'
+		vim.opt_local.cursorline = false
+		vim.opt_local.cursorcolumn = false
+	end
+})
+-- }}}
+
 augrp('UserLspConfig', { clear = true })
 
 -- {{{ autocmd: close mason and lazy tui
