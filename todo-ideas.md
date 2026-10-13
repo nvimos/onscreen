@@ -42,3 +42,5 @@
 - gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
     - nvim-lint is not installed yet; would also cover other non-LSP linters
     - gitcommit currently has treesitter highlighting only
+
+- genja-finder.nvim: move live grep/find and their togglers into plug-wip/genja-finder.nvim (see plug-wip/genja-finder.nvim/move-plan.md)
