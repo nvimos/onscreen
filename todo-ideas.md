@@ -4,6 +4,8 @@
 
 - voice input in nvim
 
+- quickfix list close with x
+
 - git:    gitsigns.nvim (Neovim): stage or reset hunks from the buffer. 
 - oil:    hide a set of predefined folders based on PWD/.oily.
     - nvim custom plugin or an existing one, or just config?
