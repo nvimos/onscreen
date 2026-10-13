@@ -1,0 +1,24 @@
+Upstream mbbill/undotree @ 6fa6b57: quote DiffCommand path and temp files. Apply in plugin dir: git apply undotree.diff
+
+--- a/autoload/undotree.vim
++++ b/autoload/undotree.vim
+@@ -1175,7 +1175,7 @@
+             if writefile(new,tempfile2) == -1
+                 echoerr "Can not write to temp file:".tempfile2
+             endif
+-            let diffresult = split(system(g:undotree_DiffCommand.' '.tempfile1.' '.tempfile2),"\n")
++            let diffresult = split(system(self.diffcommand.' '.shellescape(tempfile1).' '.shellescape(tempfile2)),"\n")
+             call s:log("diffresult: ".string(diffresult))
+             if delete(tempfile1) != 0
+                 echoerr "Can not delete temp file:".tempfile1
+@@ -1312,7 +1312,10 @@
+     let self.cache = {}
+     let self.changes = {'add':0, 'del':0}
+     let self.diffexecutable = executable(g:undotree_DiffCommand)
++    " A bare path may contain spaces (e.g. C:\Program Files\Git\usr\bin\diff.exe), so quote it.
++    let self.diffcommand = shellescape(g:undotree_DiffCommand)
+     if !self.diffexecutable
++        let self.diffcommand = g:undotree_DiffCommand
+         " If the command contains parameters, strip out the executable itself
+         let cmd = matchstr(g:undotree_DiffCommand.' ', '.\{-}\ze\s.*')
+         let self.diffexecutable = executable(cmd)
