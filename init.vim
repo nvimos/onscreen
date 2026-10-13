@@ -6,6 +6,8 @@ do
 
 	vim.o.errorfile = vim.fn.expand('~/Desktop/nvim.log')
 
+	vim.g.genja_enable_autoresource = false
+
 	-- lazy plugin manager
 	Safeload('lazy-boot')
 

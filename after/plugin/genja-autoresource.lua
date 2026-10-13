@@ -1,5 +1,5 @@
 --[[
-	genja-autoresource: always reload lua init-files on safe
+	genja-autoresource: always reload lua init-files on save
 
 	setup({
 
