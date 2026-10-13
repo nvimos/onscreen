@@ -158,13 +158,6 @@ vim.opt.formatoptions:append 'q'
 vim.opt.formatoptions:append 't'
 vim.opt.formatoptions:append 'n'
 
---[[ from vimrc.almalinux.vim ]]--
-vim.o.synmaxcol = 1020                        -- stop syntax-highlighting long lines early {default 3000}
-vim.o.undolevels = 1337                       -- {default 1000}
-vim.o.foldlevelstart = 2                      -- folds deeper than level 2 start closed
-vim.opt.foldopen:remove('block')              -- (, {, [[, [{ do not open folds
-vim.opt.fillchars:append { fold = '│', foldopen = '▼', foldclose = '▶', foldsep = '│' }
-
 --- lsp performance
 vim.g.lsp_semantic_enabled = 0
 vim.g.lsp_format_sync_timeout = 1000
