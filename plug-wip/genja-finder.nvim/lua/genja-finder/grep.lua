@@ -1,36 +1,39 @@
 
--- LiveGrep: custom telescope live interactive full text search with rg, ack, grep, …
+-- genja-finder.grep (live grep): custom telescope live interactive full text search with rg, ack, grep, …
 -- Backends: rg, ack, GNU grep. The first one of `binary` found in PATH is used (see grep_builders).
 -- Prompt syntax: `pattern  -g *.lua -t php`  (two spaces split the pattern from extra args,
 -- which go to the backend as typed, so they must be that backend's flags).
 --
 -- In the picker:
 --
---         <M-r> root and <M-i> skip: see fn/telescope-togglers.lua (shared with LiveFind <S-F1>).
+--         <M-r>, <M-i>, <F1>, <M-c>, <C-p>: see genja-finder/scope.lua (shared with live find).
 --         <M-g> cycle a file filter after the pattern (text > make > web > js > sys > shell > none),
---               see `filters` in LiveGrepDefaults. It is written as the backend's own flags:
+--               see `filters` in M.defaults. It is written as the backend's own flags:
 --               rg    `foo  -g *.{md,txt}`
 --               grep  `foo  --include=*.md --include=*.txt`
 --               ack   `foo  --type-set=gx:ext:md,txt --type=gx`
 --               Other extra args you typed after the filter are kept. Filters by hand work the same:
 --               rg `-g !*.min.js` skips files, grep has --exclude=GLOB, `ack --help-types` lists ack types.
 
-local tg = require 'genja.fn.telescope-togglers'
+local tg = require 'genja-finder.scope'
 
 ---A named set of file globs, cycled with <M-g>.
----@class genja.GrepFilter
+---@class genja-finder.GrepFilter
 ---@field name string
 ---@field globs string[]  `*.ext` or a basename glob like `[Mm]akefile*`
 
 ---binary defaults to rg, ack, grep; `backend` e.g. 'ggrep' -> 'grep'; `hidden` is rg only.
----@class genja.LiveGrepOpts : genja.ScanOpts
+---@class genja-finder.GrepOpts : genja-finder.ScanOpts
 ---@field extra_args? string[]     always passed to the backend
 ---@field separator? string        splits pattern from extra args in the prompt (default '  ')
 ---@field min_chars? integer       pattern length before the search runs (default 2)
----@field filters? genja.GrepFilter[] file filters cycled with <M-g>
+---@field filters? genja-finder.GrepFilter[] file filters cycled with <M-g>
 
----@type genja.LiveGrepOpts
-local LiveGrepDefaults = vim.tbl_extend('force', tg.defaults, {
+local M = {}
+
+---Grep-only defaults; merged over scope.defaults on each call (setup() can change both).
+---@type genja-finder.GrepOpts
+M.defaults = {
 	binary = { 'rg', 'ack', 'grep' },
 	extra_args = {},
 	separator = '  ',
@@ -43,7 +46,7 @@ local LiveGrepDefaults = vim.tbl_extend('force', tg.defaults, {
 		{ name = 'sys',   globs = { '*.go', '*.c', '*.h', '*.cpp', '*.hpp', '*.cc' } },
 		{ name = 'shell', globs = { '*.sh', '*.bash', '*.zsh', '*.fish', '*.ps', '*.ps1', '*.bat' } },
 	},
-})
+}
 
 ---`*.ext` globs folded into one `*.{a,b}` (rg brace syntax); other globs kept as they are.
 ---@param globs string[]
@@ -67,14 +70,14 @@ local function glob_to_regex(g)
 end
 
 ---One backend: how to turn options + prompt into a command line.
----@class genja.GrepBuilder
+---@class genja-finder.GrepBuilder
 ---@field filter fun(globs: string[]): string file filter as this backend's flags (for <M-g>)
 ---@field column boolean output is file:line:col:text (false: file:line:text)
----@field base fun(exe: string, o: genja.LiveGrepOpts): string[] fixed part of the command
+---@field base fun(exe: string, o: genja-finder.GrepOpts): string[] fixed part of the command
 ---@field tail fun(pat: string): string[] args after the prompt's extra args
 
 ---Command builders, keyed by binary name without extension.
----@type table<string, genja.GrepBuilder>
+---@type table<string, genja-finder.GrepBuilder>
 local grep_builders = {
 	-- ripgrep: honours .gitignore, has --hidden, --smart-case and --column.
 	rg = {
@@ -174,9 +177,9 @@ local function split_args(s)
 	return out
 end
 
----@param b genja.GrepBuilder
+---@param b genja-finder.GrepBuilder
 ---@param exe string resolved binary path
----@param o genja.LiveGrepOpts
+---@param o genja-finder.GrepOpts
 ---@return fun(prompt: string): string[]?
 local function grep_command_generator(b, exe, o)
 	local base = vim.list_extend(b.base(exe, o), o.extra_args)
@@ -193,21 +196,21 @@ local function grep_command_generator(b, exe, o)
 	end
 end
 
----@param opts? genja.LiveGrepOpts
-local function LiveGrep(opts)
+---@param opts? genja-finder.GrepOpts
+function M.live_grep(opts)
 	local action_state = require 'telescope.actions.state'
 	local conf = require('telescope.config').values
 
-	---@type genja.LiveGrepOpts
-	local o = vim.tbl_extend('force', LiveGrepDefaults, opts or {})
+	---@type genja-finder.GrepOpts
+	local o = vim.tbl_extend('force', tg.defaults, M.defaults, opts or {})
 	local exe, name = tg.find_binary(o.binary)
 	if not exe then
-		vim.notify('LiveGrep: none of ' .. vim.inspect(o.binary) .. ' found in PATH', vim.log.levels.ERROR)
+		vim.notify('genja-finder: none of ' .. vim.inspect(o.binary) .. ' found in PATH', vim.log.levels.ERROR)
 		return
 	end
 	local b = grep_builders[o.backend or name]
 	if not b then
-		vim.notify('LiveGrep: no command builder for ' .. name .. ', set opts.backend', vim.log.levels.ERROR)
+		vim.notify('genja-finder: no command builder for ' .. name .. ', set opts.backend', vim.log.levels.ERROR)
 		return
 	end
 
@@ -244,8 +247,7 @@ local function LiveGrep(opts)
 		end,
 		sorter = require('telescope.sorters').highlighter_only(o),
 		attach_mappings = function(_, map)
-			require('genja.fn.telemap').Telemap(map)
-			tg.map(map, o, LiveGrep, 'find', gen)
+			tg.map(map, o, M.live_grep, 'find', gen)
 			map('i', '<M-g>', function(bufnr)
 				local line = tg.prompt(bufnr)
 				local pat, rest = line, ''
@@ -269,7 +271,4 @@ local function LiveGrep(opts)
 	})), o)
 end
 
-return {
-	LiveGrep = LiveGrep,
-	LiveGrepDefaults = LiveGrepDefaults,
-}
+return M

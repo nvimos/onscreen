@@ -1,24 +1,27 @@
 
--- LiveFind: custom telescope file finder, fuzzy match over the file list from rg --files or fd.
+-- genja-finder.find (live find): custom telescope file finder, fuzzy match over the file list from rg --files or fd.
 -- Backends: rg, fd (fdfind on Debian). The first one of `binary` found in PATH is used (see find_builders).
 -- Layout: ivy bottom pane like the old `Telescope finn` (tg.look; ivy = false: global layout).
 -- Preview hidden by default, <C-p> toggles it (file shown from the top).
 --
--- In the picker: <M-r> root and <M-i> skip, same as LiveGrep (see fn/telescope-togglers.lua).
+-- In the picker: <M-r>, <M-i>, <F1>, <M-c>, <C-p>, same as live grep (see genja-finder/scope.lua).
 
-local tg = require 'genja.fn.telescope-togglers'
+local tg = require 'genja-finder.scope'
 
----@class genja.LiveFindOpts : genja.ScanOpts
+---@class genja-finder.FindOpts : genja-finder.ScanOpts
 ---@field follow? boolean          follow symlinks (default false)
 
----@type genja.LiveFindOpts
-local LiveFindDefaults = vim.tbl_extend('force', tg.defaults, {
+local M = {}
+
+---Find-only defaults; merged over scope.defaults on each call (setup() can change both).
+---@type genja-finder.FindOpts
+M.defaults = {
 	binary = { 'rg', 'fd', 'fdfind' },
 	follow = false,
-})
+}
 
 ---Command builders, keyed by binary name without extension.
----@type table<string, fun(exe: string, o: genja.LiveFindOpts): string[]>
+---@type table<string, fun(exe: string, o: genja-finder.FindOpts): string[]>
 local find_builders = {
 	rg = function(exe, o)
 		local cmd = { exe, '--files', '--color=never', '--glob', '!.git' }
@@ -45,20 +48,20 @@ local find_builders = {
 }
 find_builders.fdfind = find_builders.fd
 
----@param opts? genja.LiveFindOpts
-local function LiveFind(opts)
+---@param opts? genja-finder.FindOpts
+function M.live_find(opts)
 	local conf = require('telescope.config').values
 
-	---@type genja.LiveFindOpts
-	local o = vim.tbl_extend('force', LiveFindDefaults, opts or {})
+	---@type genja-finder.FindOpts
+	local o = vim.tbl_extend('force', tg.defaults, M.defaults, opts or {})
 	local exe, name = tg.find_binary(o.binary)
 	if not exe then
-		vim.notify('LiveFind: none of ' .. vim.inspect(o.binary) .. ' found in PATH', vim.log.levels.ERROR)
+		vim.notify('genja-finder: none of ' .. vim.inspect(o.binary) .. ' found in PATH', vim.log.levels.ERROR)
 		return
 	end
 	local build = find_builders[o.backend or name]
 	if not build then
-		vim.notify('LiveFind: no command builder for ' .. name .. ', set opts.backend', vim.log.levels.ERROR)
+		vim.notify('genja-finder: no command builder for ' .. name .. ', set opts.backend', vim.log.levels.ERROR)
 		return
 	end
 	tg.prepare(o)
@@ -77,14 +80,10 @@ local function LiveFind(opts)
 		previewer = conf.file_previewer(o), -- whole file from the top, hidden until <C-p>
 		sorter = conf.file_sorter(o),
 		attach_mappings = function(_, map)
-			require('genja.fn.telemap').Telemap(map)
-			tg.map(map, o, LiveFind, 'grep', function() return cmd end)
+			tg.map(map, o, M.live_find, 'grep', function() return cmd end)
 			return true
 		end,
 	})), o)
 end
 
-return {
-	LiveFind = LiveFind,
-	LiveFindDefaults = LiveFindDefaults,
-}
+return M

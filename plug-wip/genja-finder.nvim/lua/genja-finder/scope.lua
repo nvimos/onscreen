@@ -1,5 +1,5 @@
 
--- Shared scope togglers for the live pickers (telescope-livegrep <F1>, telescope-livefind <S-F1>):
+-- genja-finder.scope: shared scope togglers for live grep (genja-finder.grep) and live find (genja-finder.find):
 -- where the scan starts (<M-r>), what it skips (<M-i>), and the titles that show both.
 --
 --         <M-r> cycle root (pwd > …/.git > bufdir > home), shown as `from:<root>`,
@@ -14,28 +14,32 @@
 --         <M-c> popup with the command being run; `y` copies it to the clipboard, <M-c> closes it.
 --         <C-p> toggle the preview (off by default; replaces telescope's <C-p> = previous item).
 
----@alias genja.ScanRoot 'pwd'|'git'|'bufdir'|'home'
----@alias genja.ScanIgnore 'gitignore+'|'vend+mods+dist'|'unrestricted'
+---@alias genja-finder.ScanRoot 'pwd'|'git'|'bufdir'|'home'
+---@alias genja-finder.ScanIgnore 'gitignore+'|'vend+mods+dist'|'unrestricted'
+
+---The `map` that telescope passes to attach_mappings(prompt_bufnr, map).
+---@alias genja-finder.TelescopeMap fun(mode: 'i'|'n'|('i'|'n')[], lhs: string, action: string|table|fun(prompt_bufnr: integer), opts?: vim.keymap.set.Opts)
 
 ---Options shared by the live pickers.
----@class genja.ScanOpts
+---@class genja-finder.ScanOpts
 ---@field binary? string|string[]  binaries tried in PATH, first found wins
 ---@field backend? string          builder to use, if the binary name isn't a known one
----@field root? genja.ScanRoot     where the scan starts (default 'pwd')
+---@field root? genja-finder.ScanRoot     where the scan starts (default 'pwd')
 ---@field cwd? string|false        explicit directory, overrides root
 ---@field hidden? boolean          include dotfiles (default true)
----@field ignore? genja.ScanIgnore what is excluded from the scan (default 'gitignore+')
+---@field ignore? genja-finder.ScanIgnore what is excluded from the scan (default 'gitignore+')
 ---@field exclude? string[]        names excluded in 'gitignore+' and 'vend+mods+dist' (default node_modules, vendor, dist)
 ---@field exclude_files? string[]  file globs excluded in the same states (default *.min.js, *.min.css)
 ---@field default_text? string     initial prompt
 ---@field ivy? boolean             ivy bottom pane layout, the old finn look (default true)
 ---@field show_preview? boolean    show the preview when the picker opens (default false, <C-p> toggles)
+---@field attach? fun(map: genja-finder.TelescopeMap) extra picker keys, e.g. your own shared mappings
 ---@field origin_win? integer      window the picker was opened from (set internally, kept on reopen)
 ---@field origin_pwd? string       :pwd when the picker was first opened (set internally, kept on reopen)
 
 local M = {}
 
----@type genja.ScanOpts
+---@type genja-finder.ScanOpts
 M.defaults = {
 	root = 'pwd',
 	hidden = true,
@@ -46,7 +50,7 @@ M.defaults = {
 	show_preview = false, -- not `preview`: that key is telescope's own preview config
 }
 
----@type genja.ScanRoot[]
+---@type genja-finder.ScanRoot[]
 M.roots = {
 	'pwd',    -- Neovim's working directory (:pwd), same as builtin live_grep. Scans everything below it.
 	'git',    -- shown as `…/.git`: nearest parent of the current file (or of pwd) holding .git,
@@ -57,10 +61,10 @@ M.roots = {
 }
 
 ---Title text per root, where it differs from the name.
----@type table<genja.ScanRoot, string>
+---@type table<genja-finder.ScanRoot, string>
 M.root_labels = { git = '…/.git' }
 
----@type genja.ScanIgnore[]
+---@type genja-finder.ScanIgnore[]
 M.ignores = {
 	'gitignore+',     -- .gitignore/.ignore rules + `exclude` (node_modules, vendor, dist)
 	'vend+mods+dist', -- only `exclude`; .gitignore'd paths are searched (--no-ignore)
@@ -84,14 +88,18 @@ end
 ---@return string? exe full path
 ---@return string? name binary without dir and extension
 function M.find_binary(bins)
-	for _, b in ipairs(type(bins) == 'string' and { bins } or bins) do
+	local list = bins
+	if type(bins) == 'string' then
+		list = { bins }
+	end
+	for _, b in ipairs(list) do
 		local exe = vim.fn.exepath(b)
 		if exe ~= '' then return exe, vim.fn.fnamemodify(b, ':t:r') end
 	end
 end
 
 ---Scan dir for `root`, seen from window `win` (its :pwd and its buffer).
----@param root genja.ScanRoot
+---@param root genja-finder.ScanRoot
 ---@param win integer
 ---@return string dir
 function M.resolve_root(root, win)
@@ -127,14 +135,14 @@ end
 
 ---Layout for pickers.new defaults: ivy bottom pane, screen height minus 5 lines (min 35),
 ---file list left, preview right.
----@param o genja.ScanOpts
+---@param o genja-finder.ScanOpts
 ---@return table
 function M.look(o)
 	if not o.ivy then return {} end
 	return vim.tbl_deep_extend('force', require('telescope.themes').get_ivy(), {
 		layout_config = {
 			height = function(_, _, max_lines) return math.max(max_lines - 5, 35) end,
-			preview_width = 0.5,
+			preview_width = 0.4,
 			mirror = false, -- global `mirror = true` would put the preview left; keep the list left
 		},
 	})
@@ -144,7 +152,7 @@ end
 ---Telescope only reads preview.hide_on_startup from the global config, so hide it the way
 ---actions.layout.toggle_preview does: move it to `hidden_previewer`, <C-p> brings it back.
 ---@param picker table from pickers.new
----@param o genja.ScanOpts
+---@param o genja-finder.ScanOpts
 function M.find(picker, o)
 	if not o.show_preview and picker.previewer then
 		picker.hidden_previewer = picker.previewer
@@ -166,7 +174,7 @@ function M.prompt(bufnr)
 end
 
 ---Pin the origin window and resolve `o.cwd` from `o.root`. Call before building the picker.
----@param o genja.ScanOpts
+---@param o genja-finder.ScanOpts
 function M.prepare(o)
 	-- resolve roots against the window we came from, not whatever is current during a reopen
 	if not (o.origin_win and vim.api.nvim_win_is_valid(o.origin_win)) then
@@ -177,7 +185,7 @@ function M.prepare(o)
 end
 
 ---Prompt title `<label> <:pwd at first open>` and results title `from:<root> <path> skip:<ignore>`.
----@param o genja.ScanOpts
+---@param o genja-finder.ScanOpts
 ---@param label string e.g. 'recurseinteractive rg text-scan'
 ---@return string prompt_title
 ---@return string results_title
@@ -189,11 +197,11 @@ function M.titles(o, label)
 		from .. M.short_path(o.cwd, vim.fn.strdisplaywidth(from .. skip)) .. skip
 end
 
----The other live picker, for <F1> switching (required lazily: the modules require this one).
----@type table<string, fun(): fun(opts: genja.ScanOpts)>
+---The other live picker, for <F1> switching
+---@type table<string, fun(): fun(opts: genja-finder.ScanOpts)>
 M.switch = {
-	grep = function() return require('genja.fn.telescope-livegrep').LiveGrep end,
-	find = function() return require('genja.fn.telescope-livefind').LiveFind end,
+	grep = function() return require('genja-finder.grep').live_grep end,
+	find = function() return require('genja-finder.find').live_find end,
 }
 
 ---Command as one copyable line; args with spaces or shell characters get double quotes.
@@ -253,7 +261,7 @@ function M.show_command(bufnr, cmd, cwd)
 		vim.keymap.set({ 'i', 'n' }, 'y', function()
 			vim.fn.setreg('+', line)
 			close_command(bufnr)
-		end, { buffer = bufnr, nowait = true, desc = 'scan: copy command' })
+		end, { buffer = bufnr, nowait = true, desc = 'scan: copy command (rg/ack/fd/find)' })
 	end
 	-- picker closed (<Esc>, <CR>, ...) while the popup is up
 	vim.api.nvim_create_autocmd({ 'BufLeave', 'BufWipeout' }, {
@@ -261,18 +269,20 @@ function M.show_command(bufnr, cmd, cwd)
 	})
 end
 
+---Call `o.attach(map)` first (user keys), then map the togglers below.
 ---Map <M-c>: command popup (see show_command), when `command` is given.
 ---Map <M-r> and <M-i>: each closes the picker and reopens it via `open` with the changed
 ---option, keeping the prompt text.
 ---Map <F1>: close and open the other picker (`other`: 'grep' or 'find') with the same
 ---root, skip, origin window and search text (grep's extra args after the separator are dropped).
----@param map genja.TelescopeMap
----@param o genja.ScanOpts
----@param open fun(opts: genja.ScanOpts) the picker function itself (LiveGrep, LiveFind)
+---@param map genja-finder.TelescopeMap
+---@param o genja-finder.ScanOpts
+---@param open fun(opts: genja-finder.ScanOpts) the picker function itself (live_grep, live_find)
 ---@param other? 'grep'|'find' picker <F1> switches to
 ---@param command? fun(prompt: string): string[]? command line for the current prompt
 function M.map(map, o, open, other, command)
 	local actions = require 'telescope.actions'
+	if o.attach then o.attach(map) end
 
 	local function reopen(bufnr, patch)
 		local prompt = M.prompt(bufnr)
@@ -295,7 +305,7 @@ function M.map(map, o, open, other, command)
 					ivy = o.ivy, show_preview = o.show_preview, origin_win = o.origin_win, origin_pwd = o.origin_pwd, default_text = prompt,
 				}
 			end)
-		end, { desc = 'scan: switch live grep <-> live find' })
+		end, { desc = 'scan: switch between live grep and find' })
 	end
 
 	if command then

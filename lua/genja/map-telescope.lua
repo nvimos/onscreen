@@ -15,8 +15,8 @@ local function find_in_startdirs()
 	})
 end
 
-local function live_grep() require('genja.fn-keys').LiveGrep() end
-local function live_find() require('genja.fn-keys').LiveFind() end
+local function live_grep() require('genja-finder').live_grep() end
+local function live_find() require('genja-finder').live_find() end
 
 local function cmd(c) return '<cmd>' .. c .. '<cr>' end
 
@@ -26,8 +26,8 @@ local function grep_string()
 
 -- Telescope:
 -- frequently used
-km('n', '<F1>', live_grep,                     { desc = 'Telescope: grep files (fn-keys LiveGrep)'})
-km('n', '<S-F1>', live_find,                     { desc = 'Telescope: find files (fn-keys LiveFind)'}) -- was: cmd 'Telescope finn'
+km('n', '<F1>', live_grep,                     { desc = 'Telescope: grep files (genja-finder)'})
+km('n', '<S-F1>', live_find,                     { desc = 'Telescope: find files (genja-finder)'}) -- was: cmd 'Telescope finn'
 
 
 km('n', '<C-F1>', tsbuiltin.oldfiles,              { desc = 'Telescope: oldfiles'})
@@ -62,7 +62,7 @@ km('n', '<leader>jA', tsbuiltin.autocommands,  { desc = 'Telescope: autocommands
 -- km('n', '<leader>jl', te.loclist,       { desc = 'Telescope: loclist'})
 
 -- grep
-km('n', '<leader>jj', live_grep,  { desc = 'Telescope: grep live (fn-keys LiveGrep)'})
+km('n', '<leader>jj', live_grep,  { desc = 'Telescope: grep live (genja-finder)'})
 km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 
 

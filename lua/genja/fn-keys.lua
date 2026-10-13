@@ -1,5 +1,3 @@
-local livegrep = require 'genja.fn.telescope-livegrep'
-local livefind = require 'genja.fn.telescope-livefind'
 
 function Close_nerdtree_wins() -- <space> ee | e. | et
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -47,9 +45,5 @@ return {
 	EditFindNotes = EditFindNotes,
 	Close_nerdtree_wins = Close_nerdtree_wins,
 	CheckAndRunMRU = CheckAndRunMRU,
-	LiveGrep = livegrep.LiveGrep,
-	LiveGrepDefaults = livegrep.LiveGrepDefaults,
-	LiveFind = livefind.LiveFind,
-	LiveFindDefaults = livefind.LiveFindDefaults,
 }
 
