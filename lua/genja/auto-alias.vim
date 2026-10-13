@@ -5,11 +5,10 @@ command! -nargs=* M MRU <args>
 command! -nargs=* -complete=file T       tabedit <args>
 command! -nargs=* -complete=file Te      tabedit <args>
 command! -nargs=* -complete=file Tabedit tabedit <args>
-command! -nargs=1 -complete=help Th      tabedit | help <args> | only
-command! -nargs=1 -complete=help Tr      tabedit | help <args> | only
-command!                         Td      tabedit | Dashboard
-command!                         Tt      tabedit | Telescope
-command!                         To      tabedit | Telescope oldfiles
+command!                         Tet     tabedit | Telescope
+command!                         Tm      tabmove +1
+command!                         Tmm     tabmove -1
+command!                         TM      tabmove -1
 
 command! DumpMappings :enew | put=execute('map')
 
@@ -35,9 +34,6 @@ command! JJJ tabdo write | qa
 command! QQ qa
 command! JJ qa
 command! O only
-command! Tm tabmove +1
-command! Tmm tabmove -1
-command! TM tabmove -1
 command! -nargs=* W write <args>
 command! -nargs=* So source <args>
 

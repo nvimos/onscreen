@@ -208,18 +208,22 @@ set formatoptions -=t
 " call mkdir(expand('~/tmp/vimZ'), 'p', 0o700)
 " call mkdir(expand('~/tmp/vimZ/backupZ'), 'p', 0o700)
 
-call mkdir(expand('~/tmp/vimZ/undoZ'), 'p', 0o700)
-call mkdir(expand('~/tmp/vimZ/swapZ'), 'p', 0o700)
-let &backupdir = expand('~/tmp/vimZ/backupZ//')
-set nobackup
 
-set undofile
-let &undodir = expand('~/tmp/vimZ/undoZ//')
-set undolevels=1337
+if !has('nvim')
+	call mkdir(expand('~/tmp/vimZ/undoZ'), 'p', 448) " 0o700
+	call mkdir(expand('~/tmp/vimZ/swapZ'), 'p', 448) " 0o700
+	let &backupdir = expand('~/tmp/vimZ/backupZ//')
+	set nobackup
 
-"set swapfile
-set noswapfile
-let &directory = expand('~/tmp/vimZ/swapZ//')
+	set undofile
+	let &undodir = expand('~/tmp/vimZ/undoZ//')
+	set undolevels=1337
+
+	"set swapfile
+	set noswapfile
+	let &directory = expand('~/tmp/vimZ/swapZ//')
+	let &viminfofile = expand('~/tmp/vimZ/viminfoZ')
+endif
 
 "set directory=$MYVIMDIR/tmp//,$HOME/tmp//
 
@@ -228,7 +232,6 @@ set viminfo=%27,'133,<50,/202,:9801,<9950,s16,h,
 set viminfo+=ra:,r:b,r/tmp
 " ,r$HOME/tmp
 "set viminfo+=n$HOME/tmp/viminfo
-let &viminfofile = expand('~/tmp/vimZ/viminfoZ')
 
 " {{{ listchars
 
@@ -280,10 +283,9 @@ set tabstop=4     " width of tabs
 
 set hlsearch
 
-" {{{ neovim built in for "traces" plugin
+" {{{Show effects of a substitution command incrementally in the buffer, not in a preview buffer
 if exists('&inccommand')
 	set inccommand=nosplit
-	set inc=nosplit
 endif
  " }}}
 
@@ -669,10 +671,12 @@ command! JJJ tabdo write | qa
 command! JJ qa
 command! J q
 command! O only
-command! Tm tabmove -1
-command! Tmm tabmove +1
+command! Tm  tabmove +1
+command! Tmm tabmove -1
+command! TM  tabmove -1
 
-command! -nargs=1 -complete=option  To  if type(&<args>) == 0 | set <args>! | endif
+" Toggle boolean option (:To wrap , :To number, …)
+command! -nargs=1 -complete=option -bar To execute 'set ' . <q-args> . '!'
 command! -nargs=0 ExampleIfElse
       \ if 0 | echo "Condition true" |
       \ else | echo "Condition false" |
@@ -924,23 +928,27 @@ endif
 
 " {{{ curl stuff
 " {{{ plunder github raw
-call  s:curld({
-	\ '$MYVIMDIR/plugin/toggle-ui-elements.vim'   : 'https://raw.githubusercontent.com/muellan/vim-toggle-ui-elements/refs/heads/master/plugin/toggle_ui_elements.vim',
-	\ '$MYVIMDIR/after/ftplugin/qf.vim'           : 'https://raw.githubusercontent.com/muellan/vim-toggle-ui-elements/refs/heads/master/after/ftplugin/qf.vim',
-	\ '~/.local/dot/bash/wsi-fzf-key-bindings.sh' : 'https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/key-bindings.bash',
-	\ '~/.local/bin/fzf-tmux'                     : 'https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/bin/fzf-tmux',
-	\ '~/.local/bin/yadm'                         : 'https://raw.githubusercontent.com/yadm-dev/yadm/refs/heads/develop/yadm',
-	\ '~/.local/bin/transcrypt'                   : 'https://raw.githubusercontent.com/elasticdog/transcrypt/refs/heads/main/transcrypt',
-	\}) " }}}
+if !has('nvim')
+	call  s:curld({
+				\ '$MYVIMDIR/plugin/toggle-ui-elements.vim'   : 'https://raw.githubusercontent.com/muellan/vim-toggle-ui-elements/refs/heads/master/plugin/toggle_ui_elements.vim',
+				\ '$MYVIMDIR/after/ftplugin/qf.vim'           : 'https://raw.githubusercontent.com/muellan/vim-toggle-ui-elements/refs/heads/master/after/ftplugin/qf.vim',
+				\ '~/.local/dot/bash/wsi-fzf-key-bindings.sh' : 'https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/key-bindings.bash',
+				\ '~/.local/bin/fzf-tmux'                     : 'https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/bin/fzf-tmux',
+				\ '~/.local/bin/yadm'                         : 'https://raw.githubusercontent.com/yadm-dev/yadm/refs/heads/develop/yadm',
+				\ '~/.local/bin/transcrypt'                   : 'https://raw.githubusercontent.com/elasticdog/transcrypt/refs/heads/main/transcrypt',
+				\}) " }}}
 	" \ '~/.local/install-fzf'                   : 'https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/install',
-" {{{ download fzf binary
-if ! filereadable(expand('~/.local/bin/fzf'))
-	if !has('win64')
-		call system('bash ~/.vim/plugged/fzf/install --no-zsh --no-fish --no-completion --xdg --key-bindings --no-update-rc --bin')
-		call system('ln ~/.vim/plugged/fzf/bin/fzf ~/.local/bin/fzf')
-	endif
-	" silent! echo "got fzf bin"
-endif " }}}
+	" {{{ download fzf binary
+	if ! filereadable(expand('~/.local/bin/fzf'))
+		if !has('win64')
+			call system('bash ~/.vim/plugged/fzf/install --no-zsh --no-fish --no-completion --xdg --key-bindings --no-update-rc --bin')
+			call system('ln ~/.vim/plugged/fzf/bin/fzf ~/.local/bin/fzf')
+		else
+			" todo: handle this on windows
+		endif
+		" silent! echo "got fzf bin"
+	endif " }}}
+endif
  " }}}
 
 " {{{ functions and usercommands
