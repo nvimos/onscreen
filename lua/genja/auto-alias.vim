@@ -54,8 +54,8 @@ command! YankYmd put =luaeval('os.date([[%Y-%m-%d]])')
 "cnoreabbrev load:  source ~/tmp/viss
 "cnoreabbrev r:     source ~/tmp/viss
 cnoreabbrev j:     source ~/tmp/viss
-cnoreabbrev s:     mksession! ~/tmp/viss \| qa
-cnoreabbrev save:  mksession! ~/tmp/viss
+cnoreabbrev s:     pclose \| mksession! ~/tmp/viss \| qa
+cnoreabbrev save:  pclose \| mksession! ~/tmp/viss
 "cnoreabbrev save::  mksession! ~/tmp/viss
 
 
