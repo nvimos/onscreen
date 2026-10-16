@@ -33,6 +33,7 @@ for _, value in ipairs({
 	{ import = 'lazyp.debug' },
 	{ import = 'lazyp.git' },
 	{ import = 'lazyp.langs' },
+	{ import = 'lazyp.explorer' },
 	{ import = 'lazyp.langs-comps' }, -- lsp, completion, llm
 	{ import = 'lazyp.maybe' },    -- seems ok to keep
 	{ import = 'lazyp.my' },       -- my configs

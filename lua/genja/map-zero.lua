@@ -81,6 +81,9 @@ km(nv, '<leader>y=', '"+yy', nosi 'Vim: yank into clipboard ("+yy)')
 km(nv, '<leader>y8', '"*yy', nosi 'Vim: yank into x11:primary  ("*yy)')
 km(v, '<leader>yy', '"+y', { desc = 'Vim: yank into clipboard visual ("+yy)' })
 km(n, '<leader>yf', '"%p', nosi 'Vim: yank filename')
+
+-- km('x', '<leader>sv', require('genja.fn-keys').SubstituteVisualSelection, { desc = 'Edit Substitute visual selection' })
+
 -- PRIMARY   *
 -- CLIPBOARD +
 -- }}}

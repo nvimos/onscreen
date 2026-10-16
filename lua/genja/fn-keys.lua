@@ -1,4 +1,3 @@
-
 function Close_nerdtree_wins() -- <space> ee | e. | et
 	for _, win in ipairs(vim.api.nvim_list_wins()) do
 		local buf = vim.api.nvim_win_get_buf(win)
@@ -24,13 +23,23 @@ function CheckAndRunMRU() -- <S-F1>
 	end
 end
 
+-- local function SubstituteVisualSelection()
+-- 	-- Vimscript equivalent (no escaping):
+-- 	-- xnoremap <leader>r "ly:%s/<C-r>l//g<Left><Left>
+-- 	vim.cmd('normal! "ly')
+-- 	local s = vim.fn.escape(vim.fn.getreg('l'), [[\/]]):gsub('\n', [[\n]])
+-- 	local keys = ':%s/\\V' .. s .. '//g' .. vim.api.nvim_replace_termcodes('<Left><Left>', true, false, true)
+-- 	vim.api.nvim_feedkeys(keys, 'n', false)
+-- end
+
+
 function EditFindNotes()
 	local places = {}
 	table.insert(places, 'J:\\notes')
-	table.insert(places, vim.env.user_home_dir .. '/notes')
-	table.insert(places, vim.env.user_home_dir .. '/Notez')
-	table.insert(places, vim.env.user_home_dir .. '/Notez26')
-	table.insert(places, vim.env.user_home_dir)
+	table.insert(places, vim.env.HOME .. '/notes')
+	table.insert(places, vim.env.HOME .. '/Notez')
+	table.insert(places, vim.env.HOME .. '/Notez26')
+	table.insert(places, vim.env.HOME)
 	for _, e in ipairs(places) do
 		if IsDir(e) then
 			vim.cmd('edit ' .. e)
@@ -39,11 +48,9 @@ function EditFindNotes()
 	end
 end
 
-
-
 return {
 	EditFindNotes = EditFindNotes,
 	Close_nerdtree_wins = Close_nerdtree_wins,
 	CheckAndRunMRU = CheckAndRunMRU,
+	-- SubstituteVisualSelection = SubstituteVisualSelection,
 }
-
