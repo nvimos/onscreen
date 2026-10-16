@@ -29,6 +29,7 @@ set synmaxcol=1020
 
  " }}}
 
+set hlsearch
 set nocompatible
 set nowrap
 
@@ -91,7 +92,6 @@ set tabstop=4     " width of tabs
 " set softtabstop=4   " Pressing Tab inserts 4 spaces
  " }}}
 
-set hlsearch
 
 " {{{Show effects of a substitution command incrementally in the buffer, not in a preview buffer
 if exists('&inccommand')
@@ -191,8 +191,8 @@ cnoreabbrev eps. e ~/.config/bash
 
 " {{{ session
 cnoreabbrev j:     source     $MYVIMDIR/tmp/viss
-cnoreabbrev s:     mksession! $MYVIMDIR/tmp/viss \| qa
-cnoreabbrev save:  mksession! $MYVIMDIR/tmp/viss
+cnoreabbrev s:     pclose \| mksession! $MYVIMDIR/tmp/viss \| qa
+cnoreabbrev save:  pclose \| mksession! $MYVIMDIR/tmp/viss
  " }}}
 
 " {{{ substitute global, paragraph, section
