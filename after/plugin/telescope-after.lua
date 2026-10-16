@@ -1,3 +1,6 @@
+-- vim: foldmethod=marker
+
+-- {{{ telescope_pretty_path
 ---path_display: "file.lua (dir/)", file name highlighted.
 ---@param path string
 ---@return string display
@@ -37,6 +40,7 @@ local function telescope_pretty_path(_, path)
 
 	return display_string, highlights
 end
+-- }}}
 
 -- :lua require('telescope.builtin').find_files({layout_strategy='vertical',layout_config={width=0.5}})
 
@@ -75,6 +79,7 @@ local action_generate = require("telescope.actions.generate")
 
 
 require('telescope').setup {
+
 	defaults = {
 		-- winblend = 2,
 
@@ -111,6 +116,7 @@ require('telescope').setup {
 
 		prompt_prefix = '󰧚 ',
 		layout_strategy = 'vertical', -- 'horizontal',
+
 		layout_config = {
 			scroll_speed = 6,
 			prompt_position = 'top',
@@ -121,6 +127,9 @@ require('telescope').setup {
 		-- vimgrep_arguments is only used for grep_string and live_grep
 		vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden' },
 		border = true,
+
+
+		-- {{{ ignore patterns
 		-- Lua patterns, matched anywhere in the path: anchor extensions with $ ("%.a" alone hides *.ahk),
 		-- escape . and - with %, [\\/] for either separator. genja-finder heeds these too.
 		-- Directory names: "%f[%w_%.]name[\\/]" matches name/ at the path start or after a separator or
@@ -202,6 +211,8 @@ require('telescope').setup {
 			"lazy%-lock%.json$",
 			"go[\\/]pkg[\\/]mod[\\/]",
 		}
+
+		-- }}}
 	}
 }
 
