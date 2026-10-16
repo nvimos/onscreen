@@ -19,6 +19,7 @@ return {
 				lua = true,
 				c_cpp = false,
 				go = false,
+				json = true,
 				php = false,
 				powershell = false,
 				python = false,
