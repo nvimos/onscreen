@@ -1,5 +1,9 @@
 
-- claude: frcom nvim
+
+- move nvim-data to p:
+    - avoid searching undodir and the plugins 
+
+- claude: from nvim
 
 
 - voice input in nvim

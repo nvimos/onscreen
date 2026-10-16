@@ -39,9 +39,11 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local oni = true
 	local movies = false
 
+		add_dir( [[C:/_setup.bauss/]] )
 	add_dir(homePath())
 
 	if vim.fn.has('Windows') then
+
 		add_dir('J:/notes')
 		add_dir('A:/workspace')
 		add_dir('A:/_setup/bootstrap')
