@@ -145,9 +145,15 @@ vim.o.modelines = 2
 
 vim.o.showbreak = '⬉      ' -- display after wrapped
 vim.o.showbreak = '`      ' -- display after wrapped
-vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
-vim.o.listchars = 'eol:󰭿,tab: '
-vim.o.listchars = 'tab: '
+
+-- {{{ tab replcement character
+if vim.fn.has('gui_running') then
+	vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
+	vim.o.listchars = 'eol:󰭿,tab: '
+	vim.o.listchars = 'tab: '
+else
+	vim.o.listchars = 'eol:`'
+end
 ---- how it looks....
 ----....====++++
                                                 -- multispace
@@ -157,25 +163,23 @@ z
  ---space]]
 -- vim.opt.listchars:append('space: ,multispace:·   ') -- multispace is distracting more than anything
 vim.opt.listchars:append('space: ,multispace:    ')
-
 vim.opt.listchars:append('lead: ,leadmultispace:·   ')
 -- vim.opt.listchars:append('trail:󱁐,')
 vim.opt.listchars:append('trail:_,')
 vim.opt.listchars:append('extends:→,precedes:←')
 vim.opt.listchars:append('tab: ')
 
-
-
 vim.o.list = true
+-- }}}
 
 
 
 vim.o.shiftwidth = 4
 
+vim.o.backupcopy = "yes" -- copy to backup location first, overwrite the original file directly -- ntfs symlink workaround
 vim.o.backup = false
 vim.o.swapfile = false
--- pcall(vim.opt.undodir, os.getenv("HOME") .. "/.vim/undodir")
-vim.opt.undodir = (vim.fn.stdpath('config') .. '/undodir'):gsub([[\]], [[/]])
+vim.opt.undodir = (vim.fn.stdpath('data') .. '/undodir'):gsub([[\]], [[/]])
 vim.opt.undofile = true
 
 
