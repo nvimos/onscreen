@@ -27,5 +27,6 @@ do
 	end
 
 	vim.o.guifont = 'Cascadia Code:h14:l'
+	vim.cmd('source ' .. vim.fn.stdpath('config') .. '/ginit.vim')
 end
 EOF
