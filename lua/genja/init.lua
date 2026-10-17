@@ -5,18 +5,18 @@ vim.cmd 'colorscheme lunaperche'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
-Safeload = require('genja.api').Safeload
+Safeload             = require('genja.api').Safeload
 
 Safeload 'genja.env'
-Safeload 'genja.map-zero' -- stable early maps, if config breaks
-Safeload 'genja.opt'      -- just static options
-Safeload 'genja.fu' -- userfuncs
+Safeload 'genja.map-zero'           -- stable early maps, if config breaks
+Safeload 'genja.opt'                -- just static options
+Safeload 'genja.fu'                 -- userfuncs
 
 require 'genja.fn'.win_chdir_home() -- cd ~ on windows
 
 C = vim.fn.stdpath('config')
 vim.cmd('source ' .. C .. '/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
-vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')  -- colors
+vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')     -- colors
 vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 Safeload('genja.hilite', function(m) m.setup() end)
@@ -30,20 +30,25 @@ Safeload 'genja.map-convoluted'
 
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
-	local function Norm(p) local s, _ = p:gsub('\\', '/'); return s end
-	local function InsertDir(e) if IsDir(e) then table.insert(sd, Norm(e)) end end
+	local function Norm(p)
+		local s, _ = p:gsub('\\', '/'); return vim.fn.trim(s)
+	end
+	local function InsertDir(e) if IsDir(Norm(e)) then table.insert(sd, Norm(e)) end end
 	local function add_dir(e) InsertDir(e) end
-	local homePath = function(p) local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/' .. (p or ''))); end
+	local homePath = function(p)
+		local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/' .. (p or '')));
+	end
 	local openmw = false
 	local fonv = false
 	local oni = true
 	local movies = false
 
-		add_dir( [[C:/_setup.bauss/]] )
+	add_dir [[ C:\_setup.new\setup-2026-cut                      ]]
+	add_dir [[ Q:\Dedupe\home-jaro.q4.26\Tilde27\__hj.2025\notes ]]
+	add_dir [[ C:/_setup.bauss                                   ]]
 	add_dir(homePath())
 
 	if vim.fn.has('Windows') then
-
 		add_dir('J:/notes')
 		add_dir('A:/workspace')
 		add_dir('A:/_setup/bootstrap')
