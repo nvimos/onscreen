@@ -15,8 +15,20 @@ local function find_in_startdirs()
 	})
 end
 
-local function genja_finder_grep() require('genja-finder').live_grep() end
-local function genja_finder_find() require('genja-finder').live_find() end
+-- in oil: scan oil's directory instead of :pwd (an oil buffer has no file for 'bufdir')
+local function oil_dir_opts()
+	if vim.bo.filetype ~= 'oil' then
+		return nil
+	end
+	local dir = require('oil').get_current_dir()
+	if not dir then
+		return nil
+	end
+	return { cwd = dir }
+end
+
+local function genja_finder_grep() require('genja-finder').live_grep(oil_dir_opts()) end
+local function genja_finder_find() require('genja-finder').live_find(oil_dir_opts()) end
 
 local function grep_string()
 	require('telescope.builtin').grep_string({
