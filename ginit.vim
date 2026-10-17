@@ -9,6 +9,12 @@ set mouse=a
 " 	GuiFont {font_name}:h{size}
 " endif
 
+if exists('*GuiWindowFrameless')
+	" added in nvim-qt 0.2.19 ? why no work?
+	call GuiWindowFrameless(1)
+endif
+
+
 " Disable GUI Tabline
 if exists(':GuiTabline')
 	GuiTabline 0
