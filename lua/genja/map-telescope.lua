@@ -72,8 +72,8 @@ km('n', '<leader>jA', tsbuiltin.autocommands,  { desc = 'Telescope: autocommands
 -- km('n', '<leader>jl', te.loclist,       { desc = 'Telescope: loclist'})
 
 -- grep
-km('n', '<leader>jj', genja_finder_grep,  { desc = 'Telescope: genja-finder grep'})
-km('n', '<leader>jf', genja_finder_find,  { desc = 'Telescope: genja-finder find'})
+km('n', '<leader>jj', genja_finder_grep,  { desc = 'Telescope: genja grep'})
+km('n', '<leader>jf', genja_finder_find,  { desc = 'Telescope: genja find'})
 km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 
 
