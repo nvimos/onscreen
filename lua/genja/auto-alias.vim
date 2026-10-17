@@ -23,7 +23,7 @@ function! DumpMessages()
 endfunction
 command! DumpMessages :call DumpMessages()
 
-command! LazygitFterm :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=2 lazygit <cr>
+command! LazygitFterm :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=smart lazygit <cr>
 command! PythonFterm  :FloatermNew                            --wintype=vsplit --name=python python <cr>
 
 command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=2 bash <cr>
