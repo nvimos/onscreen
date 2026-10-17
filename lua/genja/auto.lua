@@ -39,6 +39,13 @@ aucmd({ "WinLeave", "BufLeave" }, {
 
 -- }}}
 
+-- {{{ intro screen without the charity lines (shortmess+=I in opt.lua)
+aucmd('VimEnter', {
+	group = augrp('StartupIntro', { clear = true }),
+	callback = function() require('genja.intro').show() end,
+})
+-- }}}
+
 augrp('UserLspConfig', { clear = true })
 
 -- {{{ autocmd: close mason and lazy tui

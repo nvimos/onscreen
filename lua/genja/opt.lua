@@ -50,7 +50,7 @@ vim.opt.inccommand = "nosplit"
 vim.opt.synmaxcol = 1020
 
 vim.opt.shortmess= 'flmnxS'
-vim.opt.shortmess:remove('I') -- I disables greeting
+vim.opt.shortmess:append('I') -- no intro screen (charity nag); genja/intro.lua draws one without it
 
 vim.o.laststatus = 3 -- only one status line even with several windows
 -- {{{ folds (from vimrc.almalinux.vim)
