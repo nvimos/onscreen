@@ -6,3 +6,4 @@
 lua/lazyp/maybe/*
 /lua/genja/lsp/local.lua
 /.claude
+/doc-wip/*
