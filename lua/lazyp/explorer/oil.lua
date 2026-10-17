@@ -65,6 +65,7 @@ O.select_custom        = { desc = "Oil: Select (custom)", callback = F.select_cu
 O.preview_fit          = { desc = "Oil: Toggle preview (list snug, preview >= 50%)", callback = F.toggle_preview_fit }
 O.git_add              = { desc = "Oil: git add (entry or visual lines)", callback = F.git_add }
 O.git_unstage          = { desc = "Oil: git unstage, keeps changes (entry or visual lines)", callback = F.git_unstage }
+O.diff_preview         = { desc = "Oil: Toggle diff preview (plain preview if unchanged; <CR> in diff opens file at line)", callback = F.toggle_diff_preview }
 O.oily_hide            = { desc = "Oil: hide entry via <pwd>/.oily (g. shows all)", callback = F.oily_hide }
 
 
@@ -117,6 +118,7 @@ O.keymaps             = {
 	['<LocalLeader>a'] = O.git_add,
 	['ggr'] = O.git_unstage,
 	['<LocalLeader>r'] = O.git_unstage,
+	['<C-S-p>'] = O.diff_preview,
 	['<LocalLeader>M'] = O.oily_hide,
 	['<CR>'] = O.select_custom,
 	['<cr>'] = O.select_custom,
