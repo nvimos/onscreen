@@ -73,6 +73,8 @@ O.oily_hide            = { desc = "Oil: hide entry via <pwd>/.oily (g. shows all
 -- Oil: dynamic file sorting {{{
 MyOil = augrp('MyOil', { clear = true })
 aucmd({ 'BufEnter' }, { group = MyOil, callback = F.dynamic_dir_sort, pattern = 'oil:///*', })
+-- E211 workaround (oil #762): drop buffers of files oil is about to delete
+aucmd('User', { group = MyOil, pattern = 'OilActionsPre', callback = F.forget_deleted_buffers })
 -- }}}
 
 O.sort_name           = { desc = "Oil: Sort by name", callback = F.sort_by_name }
