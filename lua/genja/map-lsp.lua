@@ -18,6 +18,52 @@ km({ 'v' }, '<leader>r2', ':PrettierFragment<cr>', nosi 'Prettier (frag)')
 -- global, not in LspAttach: it has to work when no server is attached
 km({ 'n' }, '<leader>ch', '<Plug>CheckHealthLspSimple', nosi 'LSP: check server is attached')
 -- }}}
+
+-- {{{ LSP float (hover, signature, diagnostic): <Esc> closes, <C-f>/<C-b> scroll
+-- global maps: the float is found through the source buffer, so no LspAttach needed
+
+-- window id set on the source buffer by vim.lsp.util.open_floating_preview
+local function lsp_float_win()
+	local win = vim.b.lsp_floating_preview
+	if win and vim.api.nvim_win_is_valid(win) then
+		return win
+	end
+	return nil
+end
+
+-- scroll the float by half its height, else run the key as usual
+local function scroll_lsp_float(float_key, fallback_key)
+	return function()
+		local win = lsp_float_win()
+		if not win then
+			vim.cmd('normal! ' .. vim.v.count1 .. vim.keycode(fallback_key))
+			return
+		end
+		local half = math.max(math.floor(vim.api.nvim_win_get_height(win) / 2), 1)
+		vim.api.nvim_win_call(win, function()
+			vim.cmd('normal! ' .. half .. vim.keycode(float_key))
+		end)
+	end
+end
+km('n', '<C-f>', scroll_lsp_float('<C-e>', '<C-f>'), nosi 'LSP: scroll float down, else page down')
+km('n', '<C-b>', scroll_lsp_float('<C-y>', '<C-b>'), nosi 'LSP: scroll float up, else page up')
+
+-- works from the source buffer and from inside a focused float
+local function close_lsp_float()
+	local win = lsp_float_win()
+	if vim.w.lsp_floating_bufnr then
+		win = vim.api.nvim_get_current_win() -- cursor is inside the float
+	end
+	if win and vim.api.nvim_win_is_valid(win) then
+		vim.api.nvim_win_close(win, true)
+	end
+	-- fed as keys ('n' = noremap): :nohlsearch has no effect inside a function,
+	-- and a remapped <Esc> would re-enter this mapping
+	vim.api.nvim_feedkeys(vim.keycode('<Cmd>nohlsearch<CR><Esc>'), 'n', false)
+end
+-- replaces map-zero.lua's normal-mode <Esc>, keeps its nohlsearch
+km('n', '<Esc>', close_lsp_float, nosi 'LSP: close float, nohlsearch')
+-- }}}
 -- }}}
 
 
