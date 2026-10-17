@@ -79,8 +79,14 @@ return {
 			-- vim.o.timeoutlen = 1
 		end,
 		---@type wk.Opts
+		---@type wk.Opts
 		opts = {
 			-- preset = "helix",
+			-- keep ':' mappings (map-zero.lua's :w<CR>) out of the tree, so ':' never
+			-- becomes a which-key trigger and opens the cmdline as usual
+			filter = function(mapping)
+				return not vim.startswith(mapping.lhs or '', ':')
+			end,
 		},
 		-- keys = {
 		-- 	{

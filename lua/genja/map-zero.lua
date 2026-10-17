@@ -167,8 +167,12 @@ km('n', '!', ':<up><home><c-right>!<cr>') -- repeat last command with a bang
 -- }}}
 
 -- Write, Quit {{{
-km("n", "<leader>zz", 'write', { desc = 'write', silent = true })
-km("n", "<leader>zZ", ':x', { desc = 'write, quit', silent = true })
+km("n", "<leader>zz", '<cmd>write<cr>', { desc = 'Vim: write', silent = true })
+-- :w<CR> without the command line, so cmp's cmdline popup can't flash.
+-- ':' now waits for the next key (timeoutlen) before the cmdline opens;
+-- which-key skips ':' mappings (filter in lazyp/my/which-key.lua), else it would claim ':'.
+km('n', ':w<cr>', '<cmd>write<cr>', { desc = 'Vim: write (no cmdline, no completion popup)' })
+km("n", "<leader>zZ", '<cmd>x<cr>', { desc = 'Vim: write, quit', silent = true })
 -- }}}
 
 -- Edit my init file {{{

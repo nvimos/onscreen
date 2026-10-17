@@ -52,7 +52,7 @@ km('n', '<leader>jo',  tsbuiltin.oldfiles,       { desc = 'Telescope: oldfiles'}
 km('n', '<leader>jd',  find_in_startdirs, { desc = 'Telescope: find in START_DIRS'})
 
 -- vim help, inspect state
-km('n', '<leader>1',  tsbuiltin.help_tags,             nosi 'Vim help') -- dup-help-tags
+km('n', '<leader>1',  tsbuiltin.help_tags,             nosi 'Telescope: Vim help') -- dup-help-tags
 
 km('n', '<leader>4',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})
 km('n', '<leader>T',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})

@@ -207,6 +207,7 @@ vim.o.splitright = true
 
 vim.o.timeoutlen = 300                        -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.o.updatetime = 300                        -- faster completion (4000ms default)
+vim.o.updatetime = 200
 
 vim.o.expandtab = false                       -- convert tabs to spaces, if true
 vim.o.shiftwidth = 4                          -- the number of spaces inserted for each indentation
