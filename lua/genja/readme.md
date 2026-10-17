@@ -24,6 +24,7 @@ config
 
 custom funcs
 
+     actions.lua - g. / <LocalLeader>/ action menu (telescope), cur: = item under cursor
      api.lua     - source from other config lua scripts
      fn-oil.lua  - functions for nvim-oil
      f2.lua      - <F2> context picker: make targets (telescope) run via overseer
