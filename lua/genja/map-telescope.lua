@@ -41,6 +41,7 @@ km('n', '<S-F1>', genja_finder_find, { desc = 'Telescope: find files (genja-find
 
 
 km('n', '<C-F1>',      tsbuiltin.oldfiles, { desc = 'Telescope: oldfiles'})
+km('n', '<F2>', function() require('genja.f2').open() end, { desc = 'Telescope: context picker (make targets -> overseer)'})
 km('n', '<leader>j//', find_in_startdirs,  { desc = 'Telescope: find in START_DIRS'})
 
 -- telescope introspection

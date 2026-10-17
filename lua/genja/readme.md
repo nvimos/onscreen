@@ -26,6 +26,7 @@ custom funcs
 
      api.lua     - source from other config lua scripts
      fn-oil.lua  - functions for nvim-oil
+     f2.lua      - <F2> context picker: make targets (telescope) run via overseer
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
 

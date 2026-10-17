@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		local o = function(desc) return { silent = true, noremap = true,  desc = desc, buffer = ev.buf } end -- buffer-local mappings
 
 		-- {{{ Actions
-		km(n__, '<F2>',      vlb.rename, o 'LSP: rename')
+		-- km(n__, '<F2>',      vlb.rename, o 'LSP: rename') -- <F2> is the context picker (genja/f2.lua)
 		km(n__, '<space>r1', reformat,   o 'LSP: reformat')
 
 		km(nv_, '<space>ca', vlb.code_action, o 'LSP: Code action')

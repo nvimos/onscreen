@@ -1,4 +1,4 @@
-MAKE = /a/cygwin64/bin/make.exe
+# MAKE = /a/cygwin64/bin/make.exe -- off: included from Makefile, it would set MAKE for all of it
 
 DATA_DIR ?= C:/gitea
 SERVICE_NAME ?= gitea
