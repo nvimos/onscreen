@@ -29,6 +29,7 @@ custom funcs
      f2.lua      - <F2> context picker: make targets (telescope) run via overseer
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
+     ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
 
 mappings and funcs for them
 
