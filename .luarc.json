@@ -4,5 +4,8 @@
         "require",
         "IsDir",
         "NewPlugins"
-    ]
+    ],
+    "runtime.special": {
+        "Safeload": "require"
+    }
 }
