@@ -221,7 +221,64 @@ end
 -- }}}
 
 -- {{{ open / select custom : rar, vlc, explorer
+
+-- line of the entry called `name` in the current oil buffer
+local function find_entry_line(name)
+	local oil = require('oil')
+	for lnum = 1, vim.api.nvim_buf_line_count(0) do
+		local e = oil.get_entry_on_line(0, lnum)
+		if e and e.id and e.name == name then -- id: skip a stale, unsaved typed line
+			return lnum
+		end
+	end
+	return nil
+end
+
+-- A typed, unsaved entry: save, then open it. Oil's own select would ask
+-- "Save changes?" and then not open it. save() with confirm=nil respects
+-- skip_confirm_for_simple_edits, so deletes etc. still show the popup.
+-- The entry is found again by name: saving re-sorts the listing.
+local function save_then_select(typed_name)
+	local src = 'nvim/lua/genja/fn-oil.lua: '
+	local dir = require('oil').get_current_dir()
+	require('oil').save(nil, function(err)
+		if err then
+			if err ~= 'Canceled' then
+				vim.notify(src .. err, vim.log.levels.ERROR)
+			end
+			return
+		end
+
+		-- cursor on the new entry, so going back to oil lands there;
+		-- 'a/b/c.txt' creates nested entries and the listing shows only 'a'
+		local listed_name = vim.split(typed_name, '/', { plain = true })[1]
+		local lnum = find_entry_line(listed_name)
+		if lnum then
+			vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+		end
+
+		-- open by path, not by cursor line: doesn't depend on sorting or render timing
+		local path = dir .. typed_name
+		if vim.fn.isdirectory(path) == 1 then
+			require('oil').open(path)
+		elseif vim.fn.filereadable(path) == 1 then
+			if vim.w.is_oil_win then
+				require('oil').close() -- like oil's select: leave the float before opening a file
+			end
+			vim.cmd.edit(vim.fn.fnameescape(path))
+		else
+			vim.notify(src .. 'saved, but cannot find ' .. typed_name, vim.log.levels.WARN)
+		end
+	end)
+end
+
 F.select_custom = function()
+	local cursor_entry = require('oil').get_cursor_entry()
+	if cursor_entry and cursor_entry.id == nil then
+		save_then_select(cursor_entry.name) -- oil strips the trailing '/' of new dirs
+		return
+	end
+
 	local entry, _, _ = F.oil_entry_dir_path()
 	local ext = Extensionname(entry.name)
 	if false then
