@@ -63,6 +63,8 @@ O.move_category        = { desc = "Oil: Move to _category", callback = F.move_to
 O.move_category_delete = { desc = "Oil: Move to _delete", callback = F.move_to_cat_delete }
 O.select_custom        = { desc = "Oil: Select (custom)", callback = F.select_custom }
 O.preview_fit          = { desc = "Oil: Toggle preview (list snug, preview >= 50%)", callback = F.toggle_preview_fit }
+O.git_add              = { desc = "Oil: git add (entry or visual lines)", callback = F.git_add }
+O.git_unstage          = { desc = "Oil: git unstage, keeps changes (entry or visual lines)", callback = F.git_unstage }
 
 
 -- Oil: dynamic file sorting {{{
@@ -110,6 +112,10 @@ O.keymaps             = {
 	['ss'] = O.move_category,
 	['sj'] = O.move_category,
 	['<C-p>'] = O.preview_fit,
+	['gga'] = O.git_add, -- note: gga/ggr make gg wait timeoutlen in oil buffers
+	['<LocalLeader>a'] = O.git_add,
+	['ggr'] = O.git_unstage,
+	['<LocalLeader>r'] = O.git_unstage,
 	['<CR>'] = O.select_custom,
 	['<cr>'] = O.select_custom,
 }
