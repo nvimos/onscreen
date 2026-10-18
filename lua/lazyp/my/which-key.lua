@@ -2,78 +2,17 @@
 return {
 	{
 		'folke/which-key.nvim',
+		event = "VeryLazy",
+
 		dependencies = {
-			'nvim-mini/mini.icons', -- was echasnovski/mini.icons (moved to the nvim-mini org)
+			'nvim-mini/mini.icons',
 			'nvim-tree/nvim-web-devicons',
 		},
-		event = "VeryLazy",
-		-- config = function()
-		-- 	-- DEPRECATED https://medium.com/@shaikzahid0713/which-key-7554ac347c9d
-		-- 	-- local status_ok, which_key = pcall(require, "which-key")
-		-- 	-- if not status_ok then vim.notify('failed to load which-key.nvim') return
-		-- 	-- end
-		--
-		-- 	local setup = {
-		-- 		keys = {
-		-- 			-- scroll_down = "<c-d>", -- binding to scroll down inside the popup
-		-- 			-- scroll_up = "<c-u>", -- binding to scroll up inside the popup
-		-- 			scroll_down = "<F3>", -- binding to scroll down inside the popup
-		-- 			scroll_up = "<F2>", -- binding to scroll up inside the popup
-		-- 		},
-		--
-		-- 		icons = {
-		-- 			breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-		-- 			-- separator = "➜", -- symbol used between a key and it's label
-		-- 			separator = "-", -- symbol used between a key and it's label
-		-- 			group = "+", -- symbol prepended to a group
-		-- 		},
-		--
-		-- 		win = {
-		-- 			border = "rounded", -- none, single, double, shadow
-		-- 			position = "bottom", -- bottom, top
-		-- 			margin = { 1, 3, 1, 3 }, -- extra window margin [top, right, bottom, left]
-		-- 			padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
-		-- 			winblend = 0,
-		-- 		},
-		-- 		preset = "modern",
-		-- 		layout = {
-		-- 			-- height = { min = 3, max = 25 }, -- min and max height of the columns
-		-- 			-- width = { min = 20, max = 50 }, -- min and max width of the columns
-		-- 			spacing = 0, -- spacing between columns
-		-- 			align = "center", -- align columns left, center or right
-		-- 		},
-		-- 	}
-		-- 	require("which-key").setup(setup)
-		--
-		-- 	-- local mappings = {
-		-- 	-- 	-- ["k"] = { "<cmd>bdelete<CR>", "Kill Buffer" },  -- Close current file
-		-- 	-- 	-- ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
-		-- 	-- 	-- ["q"] = { "<cmd>wqall!<CR>", "Quit" }, -- Quit Neovim after saving the file
-		-- 	-- 	-- ["w"] = { "<cmd>w!<CR>", "Save" }, -- Save current file
-		-- 	-- }
-		-- 	-- local map_opts = {
-		-- 	-- 	mode = "n", -- NORMAL mode
-		-- 	-- 	prefix = "<leader>",
-		-- 	-- 	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-		-- 	-- 	silent = true, -- use `silent` when creating keymaps
-		-- 	-- 	noremap = true, -- use `noremap` when creating keymaps
-		-- 	-- 	nowait = true, -- use `nowait` when creating keymaps
-		-- 	-- }
-		-- 	-- require("which-key").register()
-		-- end,
 
 		init = function()
 			vim.o.timeout = true
-			-- 'timeoutlen': ms Neovim waits for the next key of a mapped sequence
-			-- (<leader>f, then f for <leader>ff) before it gives up, or before it
-			-- runs a shorter mapping that is also a prefix (<leader>f vs <leader>ff).
-			-- which-key opens its popup after its own opts.delay, not this value,
-			-- but this still decides how long ambiguous prefixes wait.
-			-- Low (1-200): ambiguous mappings fire almost at once; slow multi-key
-			--   sequences get cut off. For fast typists with few overlapping maps.
-			-- High (500-1000): time to finish long sequences, but a shorter
-			--   overlapping map waits that long before it runs.
-			-- Set to 300 in lua/genja/opt.lua; uncomment to override it here.
+
+			-- To override opt.lua for this setup, uncomment one line below.
 			-- vim.o.timeoutlen = 800
 			-- vim.o.timeoutlen = 200
 			-- vim.o.timeoutlen = 1
@@ -87,13 +26,56 @@ return {
 			filter = function(mapping)
 				return not vim.startswith(mapping.lhs or '', ':')
 			end,
-		},
-		-- keys = {
-		-- 	{
-		-- 		"<leader>?", function() require("which-key").show({ global = false }) end, desc = "local maps (which-key)",
-		-- 	},
-		-- },
+			-- group labels; the mappings themselves live elsewhere
+			-- empty groups are hidden, so labelling both modes is harmless
+			spec = {
 
+				mode = { 'n', 'v' },
+
+				{ '<leader>A',        group = 'Edit: alignment' },
+				{ '<leader>a',        group = 'AI: companion' },
+				{ '<leader>b',        group = 'Buffer: alternate' },
+				{ '<leader>c',        group = 'Code: lsp' },
+				{ '<leader>cA',       group = 'Code: php' },
+				{ '<leader>cW',       group = 'Code: workspace' },
+				{ '<leader>cc',       group = 'Diag: float' },
+				{ '<leader>cd',       group = 'Diag: list' },
+				{ '<leader>e',        group = 'Edit: dirs, files' },
+				{ '<leader>f',        group = 'Find: telescope' },
+				{ '<leader>fm',       group = 'Fun: automaton' },
+				{ '<leader>g',        group = 'Go: env' },
+				{ '<leader>gE',       group = 'Env: ecolog' },
+				{ '<leader>i',        group = 'Insert: chars' },
+				{ '<leader>j',        group = 'Find: pickers, cd' },
+				{ '<leader>m',        group = 'UI: panels' },
+				{ '<leader>p',        group = 'AI: claude, pplx' },
+				{ '<leader>r',        group = 'Code: format' },
+				{ '<leader>s',        group = 'Misc: font, sort' },
+				{ '<leader><space>s', group = 'Spell: check, add' },
+				{ '<leader>t',        group = 'Tab: move, toggle' },
+				{ '<leader>tt',       group = 'Toggle: diag, hints' },
+				{ '<leader>w',        group = 'Text: wrap, trim' },
+				{ '<leader>ws',       group = 'Text: strip' },
+				{ '<leader>y',        group = 'Yank: clipboard' },
+				{ '<leader>z',        group = 'Zen: and write' },
+
+			},
+			sort = { 'local', 'buffer-local', 'desc', 'natural', 'mod' },
+		}
 	},
 
 }
+
+--[[
+
+'timeoutlen' (ms), set to 300 in lua/genja/opt.lua.
+
+To make a shorter map that is also a prefix (<leader>f vs <leader>ff) fire almost at once, set it low (1-200).
+Slow multi-key sequences then get cut off; suits fast typing and few overlapping maps.
+
+To have time to finish long sequences (<leader>f, pause, f), set it high (500-1000).
+The shorter overlapping map then waits that long.
+
+To change when the which-key popup opens, set which-key's opts.delay; 'timeoutlen' does not affect it.
+
+]]

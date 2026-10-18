@@ -105,8 +105,13 @@ vim.keymap.set('n', '<F3>',      cmd 'Telescope mylunsj',   nosi 'Telescope: myl
 vim.keymap.set('n', '<S-F3>',    cmd 'Telescope mydirs',    nosi 'Telescope: mydirs')
 -- }}}
 
--- Browse undo-history (plugin) {{{
-vim.keymap.set("n", "<leader>u", cmd [[UndotreeToggle]])
+-- UI toggles, plugins {{{
+-- ui Browse undo-history (plugin) {{{
+vim.keymap.set("n", "<leader>mu", cmd [[UndotreeToggle]], nosi 'UI: UndooTree') -- }}}
+-- ui claude in a float term {{{
+vim.keymap.set("n", "<leader>mc", cmd [[ClaudeFterm]], nosi 'UI: ClaudeFterm') -- }}}
+-- ui fugitive {{{
+vim.keymap.set("n", "<leader>mg", cmd [[Git]], nosi 'UI: Fugitive') -- }}}
 -- }}}
 
 -- Mouse opens links in a browser {{{
