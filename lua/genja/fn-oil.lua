@@ -898,8 +898,6 @@ F.git_commit = function()
 end
 -- }}}
 
--- .oily (hide entries in oil) moved to plug-wip/genja-oily.nvim
-
 -- {{{ oil entry
 F.cd_to_entry = function()
 	local _, _, path = F.oil_entry_dir_path()
