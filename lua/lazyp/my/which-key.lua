@@ -3,6 +3,10 @@ return {
 	{
 		'folke/which-key.nvim',
 		event = "VeryLazy",
+		-- other specs append to opts.spec; without this lazy would replace the list:
+		-- { 'folke/which-key.nvim', optional = true, opts = { spec = { ... } } }
+		-- (e.g. lua/lazyp/explorer/oil.lua)
+		opts_extend = { 'spec' },
 
 		dependencies = {
 			'nvim-mini/mini.icons',
@@ -28,7 +32,8 @@ return {
 			end,
 			-- group labels; the mappings themselves live elsewhere
 			-- empty groups are hidden, so labelling both modes is harmless
-			spec = {
+			-- one nested entry: opts_extend keeps only list items, so `mode` sits inside it
+			spec = { {
 
 				mode = { 'n', 'v' },
 
@@ -59,7 +64,7 @@ return {
 				{ '<leader>y',        group = 'Yank: clipboard' },
 				{ '<leader>z',        group = 'Zen: and write' },
 
-			},
+			} },
 			sort = { 'local', 'buffer-local', 'desc', 'natural', 'mod' },
 		}
 	},
