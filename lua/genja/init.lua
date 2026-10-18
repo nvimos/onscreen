@@ -5,7 +5,7 @@ vim.cmd 'colorscheme lunaperche'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
-Safeload             = require('genja.api').Safeload
+local Safeload = require('genja.api').Safeload
 
 Safeload 'genja.env'
 Safeload 'genja.map-zero'           -- stable early maps, if config breaks
