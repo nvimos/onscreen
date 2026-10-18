@@ -26,8 +26,8 @@ command! DumpMessages :call DumpMessages()
 command! LazygitFterm :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=smart lazygit <cr>
 command! PythonFterm  :FloatermNew                            --wintype=vsplit --name=python python <cr>
 
-command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=2 bash <cr>
-command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=2 ranger --cmd="cd ~"
+command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=smart bash <cr>
+command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=smart ranger --cmd="cd ~"
 command! ClaudeFterm  lua require('genja.claude').toggle({ title = 'claude', wintype = 'vsplit', position = 'botright', width = 0.45, autoclose = 'smart', cmd = 'claude' })
 
 command! QQQ tabdo write | qa
@@ -96,11 +96,12 @@ inoreabbrev ...) (…)
 
 augroup FileType c,cpp,java set mps+==:;
 augroup FileType lua set mps+function(:end
-augroup _general_settings
+augroup GenjaGeneralSettings
 	autocmd!
 
-	" close with q
+	" close with q, x
 	autocmd FileType qf,help,man,lspinfo,telescope nnoremap <silent> <buffer> q :close<CR>
+	autocmd FileType qf,help,man                   nnoremap <silent> <buffer> x :close<CR>
 
 	" -cro : do not insert comment leaders, and do not auto wrap comments
 	autocmd BufWinEnter * :set formatoptions-=cro
@@ -113,9 +114,10 @@ augroup _general_settings
 				\   exe "normal! g`\"" |
 				\ endif
 
-
 	" show what was yanked, briefly
-	autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 333})
+	if has('nvim')
+		autocmd TextYankPost * silent! lua vim.hl.on_yank({higroup = 'Visual', timeout = 333})
+	end
 
 augroup end
 
