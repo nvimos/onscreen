@@ -39,6 +39,7 @@ mappings and funcs for them
      map-convoluted.lua - keymaps, hard to grok
      map-jolemak.lua    - keymaps, custom layout quirks
      map-lsp.lua        - keymaps, code-actions, diagnostics navigation
+     map-oil.lua        - keymaps, oil buffers (passed to oil setup)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-zero.lua       - keymaps, essential that must not fail
 

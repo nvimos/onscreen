@@ -193,6 +193,32 @@ end
 -- }}}
 
 -- {{{ undersort
+-- telescope undersort picker over the oil entries; afterFn runs after the move
+F.MoveCat = function(afterFn, opts)
+	local op = {
+		afterFn = afterFn,
+		movees = F.get_oil_entries(),
+		pats = { -- {{{ patterns
+			-- [[-*]],
+			-- [[-*/_*]],
+			-- [[-*/*/_*]],
+			[[%d+%-*]],
+			[[%d+%-*/_*]],
+			[[%d+%-*/*/_*]],
+			[[_*]],
+			[[_*/_*]],
+		}, -- }}}
+		input = '',
+		dirs = { -- {{{ dirs
+			-- [[Q:\audio-balmora\musikkkk]],
+			-- [[Q:\audio-balmora\muzica]],
+			[[V:\]] -- cinema
+		}  -- }}}
+	}
+	op = vim.tbl_extend('force', op, opts or {})
+	require('telescope').extensions.undersort.undersort(op)
+end
+
 F.move_to_cat_delete = function()
 	local pos = vim.api.nvim_win_get_cursor(0)
 	F.MoveCat(function()
