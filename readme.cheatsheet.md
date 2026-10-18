@@ -18,4 +18,4 @@ Breadcrumbs and outline (dropbar, aerial)
 
 Floaterm commands (lua/genja/auto-alias.vim)
 
-    :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm
+    :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm

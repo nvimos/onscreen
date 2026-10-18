@@ -28,6 +28,7 @@ command! PythonFterm  :FloatermNew                            --wintype=vsplit -
 
 command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=2 bash <cr>
 command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=2 ranger --cmd="cd ~"
+command! ClaudeFterm  lua require('genja.claude').toggle({ title = 'claude', wintype = 'vsplit', position = 'botright', width = 0.45, autoclose = 'smart', cmd = 'claude' })
 
 command! QQQ tabdo write | qa
 command! JJJ tabdo write | qa
@@ -51,12 +52,20 @@ command! YankYmd put =luaeval('os.date([[%Y-%m-%d]])')
 
 " Abbreviations
 
-"cnoreabbrev load:  source ~/tmp/viss
-"cnoreabbrev r:     source ~/tmp/viss
+" s:SessionSweepOperations() {{{
+" Before :mksession: close the buffers and splits that shouldn't be saved
+" or can't be restored, and anything that would block :qa.
+function! s:SessionSweepOperations() abort
+	call mkdir(expand('~/tmp'), 'p', 493) " 493 = 0755; 'p': no error when it exists
+	pclose " previews
+	lua require('genja.claude').kill()
+endfunction
+" }}}
+
 cnoreabbrev j:     source ~/tmp/viss
-cnoreabbrev s:     pclose \| mksession! ~/tmp/viss \| qa
-cnoreabbrev save:  pclose \| mksession! ~/tmp/viss
-"cnoreabbrev save::  mksession! ~/tmp/viss
+" <SID>: a script-local function can't be called by name from the cmdline
+cnoreabbrev s:     call <SID>SessionSweepOperations() \| mksession! ~/tmp/viss \| qa
+cnoreabbrev save:  call <SID>SessionSweepOperations() \| mksession! ~/tmp/viss
 
 
 cnoreabbrev e.   edit %:p:h

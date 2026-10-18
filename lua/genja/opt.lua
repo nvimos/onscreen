@@ -52,6 +52,10 @@ vim.opt.synmaxcol = 1020
 vim.opt.shortmess= 'flmnxS'
 vim.opt.shortmess:append('I') -- no intro screen (charity nag); genja/intro.lua draws one without it
 
+-- a restored terminal reruns its command (e.g. claude --session-id, which then clashes);
+-- claude comes back through the session marker instead (genja/claude.lua)
+vim.opt.sessionoptions:remove('terminal')
+
 vim.o.laststatus = 3 -- only one status line even with several windows
 -- {{{ folds (from vimrc.almalinux.vim)
 vim.opt.foldcolumn = '3'                     -- fdc=2 ; overrides the '2' above
