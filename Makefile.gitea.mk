@@ -1,6 +1,6 @@
 # MAKE = /a/cygwin64/bin/make.exe -- off: included from Makefile, it would set MAKE for all of it
 
-DATA_DIR ?= C:/gitea
+DATA_DIR ?= C:/srv/gitea
 SERVICE_NAME ?= gitea
 GITEA_EXE = $(DATA_DIR)/gitea.exe
 CONFIG_FILE = $(DATA_DIR)/custom/conf/app.ini
