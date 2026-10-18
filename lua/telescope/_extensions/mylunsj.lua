@@ -13,6 +13,17 @@ function M.just_run(cmd, d)     M.add_item(cmd, function() vim.cmd(cmd) end, d) 
 function M.just_command(cmd, d) M.add_item(cmd, function() vim.api.nvim_command(cmd) end, d) end
 
 
+-- First andy.bat found wins.
+function M.run_andy()
+	for _, path in ipairs({ 'a:/bin/andy.bat', 'c:/bin/andy.bat' }) do
+		if vim.fn.filereadable(path) == 1 then
+			vim.system({ 'cmd.exe', '/c', path })
+			return
+		end
+	end
+	vim.notify('nvim/lua/telescope/_extensions/mylunsj.lua: andy.bat not found in a:/bin or c:/bin', vim.log.levels.WARN)
+end
+
 M.init = function()
 	M.items = {}
 
@@ -30,6 +41,7 @@ M.init = function()
 
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)
 	M.add_item('Fugitive', function() vim.cmd('Git') end)
+	M.add_item('andy.bat', M.run_andy)
 
 
 	-- Dashboard doesnt start. no idea why… there is <space>jD
