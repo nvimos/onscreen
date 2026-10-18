@@ -27,7 +27,8 @@ custom funcs
      actions.lua - g. / <LocalLeader>/ action menu (telescope), cur: = item under cursor
      api.lua     - source from other config lua scripts
      claude.lua  - idea #19 A: claude in a floaterm, <leader>pc paste, <leader>pC prompt popup
-     fn-oil.lua  - functions for nvim-oil
+     oil/        - functions for nvim-oil, by topic; oil/init.lua lists the files
+     oil-actions.lua - oil actions (desc + callback), wires map-oil.lua to them
      f2.lua      - <F2> context picker: make targets (telescope) run via overseer
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
@@ -39,7 +40,7 @@ mappings and funcs for them
      map-convoluted.lua - keymaps, hard to grok
      map-jolemak.lua    - keymaps, custom layout quirks
      map-lsp.lua        - keymaps, code-actions, diagnostics navigation
-     map-oil.lua        - keymaps, oil buffers (passed to oil setup)
+     map-oil.lua        - keymaps, oil buffers: key -> action name; which-key groups
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-zero.lua       - keymaps, essential that must not fail
 

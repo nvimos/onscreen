@@ -61,7 +61,7 @@ local function diagnostic_cursor_actions(list, bufnr)
 end
 
 local function oil_cursor_actions(list)
-	local oil_fn = require('genja.fn-oil')
+	local oil_fn = require('genja.oil')
 	add(list, 'git add', oil_fn.git_add, true)
 	add(list, 'git unstage (keeps changes)', oil_fn.git_unstage, true)
 	add(list, 'diff preview', oil_fn.toggle_diff_preview, true)
@@ -106,7 +106,7 @@ local function general_actions(list, bufnr)
 	add(list, 'diagnostics to quickfix', function() vim.diagnostic.setqflist() end)
 	add(list, 'toggle diagnostics', function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end)
 	if vim.bo.filetype == 'oil' then
-		add(list, 'git commit (popup)', require('genja.fn-oil').git_commit)
+		add(list, 'git commit (popup)', require('genja.oil').git_commit)
 	end
 	add(list, 'context picker (<F2>: make targets)', function() require('genja.f2').open() end)
 	add(list, 'find files', function() require('genja-finder').live_find() end)

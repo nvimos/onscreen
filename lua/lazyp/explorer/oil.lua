@@ -5,7 +5,7 @@ local augrp = vim.api.nvim_create_augroup
 local UserComm = vim.api.nvim_create_user_command
 
 
-local F = require 'genja.fn-oil'
+local F = require 'genja.oil'
 
 UserComm('OilVlcRar', F.vlc_rar, { desc = 'Oil: open rar in vlc (extract to c:/tmp)' })
 UserComm('OilCd2Entry', F.cd_to_entry, { desc = 'Oil: cd to entry' })
@@ -64,7 +64,7 @@ return {
 				end,
 			},
 
-			keymaps = require 'genja.map-oil',
+			keymaps = require('genja.oil-actions').keymaps(),
 			win_options = {
 				wrap = false,
 				signcolumn = "yes",
@@ -118,5 +118,12 @@ return {
 		end,
 
 
-	}
+	},
+
+	-- oil's which-key groups, appended to the main spec's opts.spec (opts_extend)
+	{
+		'folke/which-key.nvim',
+		optional = true,
+		opts = { spec = require('genja.map-oil').which_key },
+	},
 }
