@@ -10,6 +10,12 @@ Indent text objects (vim-indent-object, loads on VeryLazy)
     aI  same, plus the lines above and below  vaI  caI  daI
     repeat in visual mode to grow the selection
 
+Breadcrumbs and outline (dropbar, aerial)
+
+    <leader>;   pick a crumb, open its menu     [;  ];   context start / next context
+    <leader>mo  outline sidebar                  <leader>mO  outline nav float
+    <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
+
 Floaterm commands (lua/genja/auto-alias.vim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm
