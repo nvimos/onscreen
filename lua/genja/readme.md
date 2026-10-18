@@ -57,29 +57,6 @@ Vimscript
 
 ## Oil: hiding entries with .oily
 
-`<pwd>/.oily` lists entries that oil hides, on top of dotfiles (oil's
-default). `g.` in oil still toggles showing everything. Code:
-`F.is_hidden_file` / `F.oily_hide` in `fn-oil.lua`, wired up as
-`view_options.is_hidden_file` in `lua/lazyp/explorer/oil.lua`.
-
-One rule per line; blank lines and `#` comments are ignored, a trailing `/`
-is dropped:
-
-     node_modules         bare name: hidden in every directory
-     lua/lazyp/unused     path, relative to the .oily dir: hides that entry
-     C:/tmp/scratch       absolute path: hides that entry
-     *.log                bare glob: matched against names in every directory
-     lua/**/zold*         glob with '/': matched against the path relative to the .oily dir
-     C:/tmp/*.bak         absolute glob: matched against the absolute path
-
-- Globs use `vim.glob` syntax (`*`, `?`, `**`, `[abc]`, `{a,b}`) and must
-  match the whole name or path.
-- Matching ignores case on Windows.
-- `.oily` is re-read when its mtime changes; a broken glob warns once with
-  its line number and is skipped.
-- `.oily` is looked up in `:pwd` only, not in oil's directory or its parents.
-
-Key, in oil buffers:
-
-     <LocalLeader>M   append the entry under the cursor (or the V-selected lines)
-                      to .oily as a path, create the file if needed, re-render oil
+Moved to `plug-wip/genja-oily.nvim` (README.md there). oil shows a folder:
+the nearest `.oily` in it or up the tree applies, child folders included.
+Wired up in `lua/lazyp/explorer/oil.lua` (`is_hidden_file`, `<LocalLeader>M`).

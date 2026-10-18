@@ -65,7 +65,7 @@ local function oil_cursor_actions(list)
 	add(list, 'git add', oil_fn.git_add, true)
 	add(list, 'git unstage (keeps changes)', oil_fn.git_unstage, true)
 	add(list, 'diff preview', oil_fn.toggle_diff_preview, true)
-	add(list, 'hide via .oily', oil_fn.oily_hide, true)
+	add(list, 'hide via .oily', function() require('genja-oily').hide() end, true)
 end
 
 local function word_cursor_actions(list)

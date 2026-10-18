@@ -67,7 +67,7 @@ O.git_add              = { desc = "Oil: git add (entry or visual lines)", callba
 O.git_unstage          = { desc = "Oil: git unstage, keeps changes (entry or visual lines)", callback = F.git_unstage }
 O.diff_preview         = { desc = "Oil: Toggle diff preview (plain preview if unchanged; <CR> in diff opens file at line)", callback = F.toggle_diff_preview }
 O.git_commit           = { desc = "Oil: git commit (message popup)", callback = F.git_commit }
-O.oily_hide            = { desc = "Oil: hide entry via <pwd>/.oily (g. shows all)", callback = F.oily_hide }
+O.oily_hide            = { desc = "Oil: hide entry via .oily (nearest up the tree; g. shows all)", callback = function() require("genja-oily").hide() end }
 
 
 -- Oil: dynamic file sorting {{{
@@ -179,7 +179,8 @@ return {
 
 
 			view_options = {
-				is_hidden_file = F.is_hidden_file, -- dotfiles + <pwd>/.oily entries
+				-- dotfiles + the nearest .oily up the tree (plug-wip/genja-oily.nvim)
+				is_hidden_file = function(name, bufnr) return require("genja-oily").is_hidden_file(name, bufnr) end,
 				natural_order = false,
 				case_insensitive = true,
 				sort = {
