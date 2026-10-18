@@ -51,6 +51,8 @@ vim.opt.synmaxcol = 1020
 
 vim.opt.shortmess= 'flmnxS'
 vim.opt.shortmess:append('I') -- no intro screen (charity nag); genja/intro.lua draws one without it
+vim.opt.shortmess:append("F")
+
 
 -- a restored terminal reruns its command (e.g. claude --session-id, which then clashes);
 -- claude comes back through the session marker instead (genja/claude.lua)
@@ -64,6 +66,12 @@ vim.opt.fillchars = 'fold:·'
 vim.opt.fillchars = vim.opt.fillchars + 'stl: '      -- statusline
 vim.opt.fillchars = vim.opt.fillchars + 'stlnc:─'    -- statusline (non-current)
 vim.opt.fillchars = vim.opt.fillchars + 'vert::'     -- v:version >= 800 is always true in nvim
+vim.opt.fillchars = vim.opt.fillchars + 'vert:│'     -- v:version >= 800 is always true in nvim
+
+
+-- vim.opt.fillchars:append({ vert = '  │' }) -- Two spaces before the line
+
+
 vim.opt.fillchars = vim.opt.fillchars + 'foldopen:▼'
 vim.opt.fillchars = vim.opt.fillchars + 'foldclose:▶'
 vim.opt.fillchars = vim.opt.fillchars + 'foldsep:│'
@@ -212,6 +220,7 @@ vim.o.splitright = true
 vim.o.timeoutlen = 300                        -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.o.updatetime = 300                        -- faster completion (4000ms default)
 vim.o.updatetime = 200
+
 
 vim.o.expandtab = false                       -- convert tabs to spaces, if true
 vim.o.shiftwidth = 4                          -- the number of spaces inserted for each indentation
