@@ -1,13 +1,36 @@
 
 - [~] 19. claude: from nvim (wip)
-    - talk to claude desktop or claude from nvim
-    - need to work out a spec.
+    - [ ] prettier winbar names
+        - figure out how floaterm sets them
+        - use renamed session name instead of uuid
+        - use first block of uuid if no name
+            - or use dirname of workspace / project / Claude.md / lsp root marker
+    - [x] talk to claude desktop or claude from nvim
+        -[x] claude in float term for now. using claude.exe
+    - need to work out a spec
+        - [x] resume sessions based on commentstring
+            - [ ] also if started from an oil buffer?
+        - one claude float term per project?
+            - [ ] or use the <- session manager inside claude?
     - so far (untested): claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
       codecompanion «idea 19 companion» (lua/lazyp/langs-comps/codecompanion.lua)
-    - session marker (untested): /rename in claude writes `claude-session: <uuid> <title>`
+        - the pasting is WIP, need to work out / test out a spec
+        - floaterm works ok
+            - [ ] fix hourglass cursor
+    - session marker: /rename in claude writes `claude-session: <uuid> <title>`
       into the buffer claude was started from; :ClaudeFterm from that file resumes the session
+        - not sure if this is a fantastic idea
+            - can accumulate context
+            - convenient for restarting nvim
+            - maybe the commentstring can have enabled:false which can be toggled manually
+        - works for files
+        - resume does not work if opened from oil,
+          because there are no commentstrings to put the session marker
 
 - [ ] 20. voice input in nvim
+    - check out windows input possibilities
+    - check out via chrome
+    - claude.exe voice input works well enough
 
 - [x] 2. quickfix list close with x
 
@@ -95,6 +118,24 @@
 - [ ] almavimrc: incorporate / rewrite to lua
     - put submodules lua/genja/alma
     - [ ] the ~ behavior to toggle false and other switches
+
+- [ ] telescope: mousability
+    - select lines (actions in code actions from lsp, F1, F2, F3, scroll list)
+
+- [ ] nvim-init
+    - for lazy mornings, or planning sessions
+        - some mouseability
+        - navigate notes, todo
+        - better context support
+        - check out what other people are doing
+
+- [ ] bug in winbar or statusbar
+    - resizing activates right-most tab
+
+- [ ] move gitea definition to w11s cut project
+
+- [ ] consider adopting
+    - https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
 
 ## wip
 
