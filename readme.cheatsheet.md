@@ -19,3 +19,11 @@ Breadcrumbs and outline (dropbar, aerial)
 Floaterm commands (lua/genja/auto-alias.vim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm
+
+Code actions by kind (map-lsp.lua; visual mode sends the selection)
+
+    <leader>ca  all              <leader>cq  quickfix
+    <leader>ce  extract (select first: statements, or one expression)
+    <leader>cr  rewrite: fill struct/switch, invert if, split/join lines
+    <leader>cs  source: organize imports, doc, add test
+    Go saves run organize imports + format; :let b:go_format_on_save = v:false
