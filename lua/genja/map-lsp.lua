@@ -88,6 +88,10 @@ local goto_next = function() vim.diagnostic.jump({ count = 1,  float = true }) e
 local list_workspaces     = function() print(vim.inspect(vlb.list_workspace_folders())) end
 local toggle_diagnostics  = function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
 local toggle_inline_hints = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end
+
+-- code actions of one kind and its subkinds ('refactor.extract' also matches
+-- 'refactor.extract.function'); in visual mode the selection is the range
+local action_kind = function(kind) return function() vlb.code_action({ context = { only = { kind } } }) end end
 -- }}}
 
 
@@ -101,16 +105,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		-- {{{ Actions
 		-- km(n__, '<F2>',      vlb.rename, o 'LSP: rename') -- <F2> is the context picker (genja/f2.lua)
-		km(n__, '<space>r1', reformat,   o 'LSP: reformat')
+		km(n__, '<leader>r1', reformat,   o 'LSP: reformat')
 
-		km(nv_, '<space>ca', vlb.code_action, o 'LSP: Code action')
-		km(nv_, '<space>!', vlb.code_action, o 'LSP: Code action')
+		km(nv_, '<leader>ca', vlb.code_action, o 'LSP: Code action')
+		km(nv_, '<leader>!', vlb.code_action, o 'LSP: Code action')
+
+		-- by kind. Extract needs a visual selection (statements, or one expression);
+		-- rewrite, quickfix and source work at the cursor.
+		-- search & replace is <leader>cS (map-convoluted.lua)
+		km(nv_, '<leader>cq', action_kind('quickfix'),         o 'LSP: Code action: quickfix')
+		km(nv_, '<leader>ce', action_kind('refactor.extract'), o 'LSP: Code action: extract (select first)')
+		km(nv_, '<leader>cr', action_kind('refactor.rewrite'), o 'LSP: Code action: rewrite')
+		km(nv_, '<leader>cs', action_kind('source'),           o 'LSP: Code action: source (imports, docs, tests)')
 		-- }}}
 
 		-- {{{ Man or Doc or Hover
 		km(n__, 'K',         vlb.hover, o 'LSP: hover/man')
-		km(n__, '<space>k',  vlb.hover, o 'LSP: hover/man')
-		km(n__, '<space>c?', vlb.hover, o 'LSP: hover/man')
+		km(n__, '<leader>k',  vlb.hover, o 'LSP: hover/man')
+		km(n__, '<leader>c?', vlb.hover, o 'LSP: hover/man')
 		km(i__, '<c-?>',     vlb.hover, o 'LSP: hover/man') -- testing 2026-10
 		-- }}}
 
@@ -126,7 +138,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		km(n__, 'gDs', split_and(vlb.definition), o 'LSP: definition (split)')
 
 		km(n__, 'gd',  vlb.definition,            o 'LSP: definition')
-		km(n__, '<space>]', vlb.definition, o 'LSP: definition')
+		km(n__, '<leader>]', vlb.definition, o 'LSP: definition')
 		-- }}}
 
 		-- {{{ Diagnostics
@@ -141,9 +153,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- }}}
 
 		-- {{{ Workspace dirs
-		km(n__, '<space>cWa', vlb.add_workspace_folder, o 'LSP: workspace add')
-		km(n__, '<space>cWr', vlb.remove_workspace_folder, o 'LSP: workspace rm')
-		km(n__, '<space>cWl', list_workspaces, o 'LSP: workspace list')
+		km(n__, '<leader>cWa', vlb.add_workspace_folder, o 'LSP: workspace add')
+		km(n__, '<leader>cWr', vlb.remove_workspace_folder, o 'LSP: workspace rm')
+		km(n__, '<leader>cWl', list_workspaces, o 'LSP: workspace list')
 		-- }}}
 
 
@@ -154,7 +166,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		if vim.bo[ev.buf].filetype == 'php' then
 			-- PHP: add @param & @return in file or selection, all at once
-			km(nv_, '<space>cAp', ':PhpDocParams<cr>', o 'LSP: PHP: add @param and @return tags')
+			km(nv_, '<leader>cAp', ':PhpDocParams<cr>', o 'LSP: PHP: add @param and @return tags')
 		end
 
 	end,
