@@ -1,54 +1,55 @@
--- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
+-- vim: set foldmethod=marker foldlevel=1 foldnestmax=2 foldcolumn=2:
 
--- oil buffer keymaps: lhs -> action name in lua/genja/oil-actions.lua,
--- or a table oil takes as is. No requires: the which-key spec reads this at startup.
+-- oil buffer keymaps, passed to oil's setup (lua/lazyp/explorer/oil.lua)
+
+local O = require('genja.oil-actions')
 
 local M = {}
 
 -- {{{ keymaps
 M.keymaps = {
 
-	['gSa'] = 'sort_name', -- mnemonic: mp3 id3 tag %a% for album or %A% for artist
-	['gSt'] = 'sort_mtime',
-	['gSs'] = 'sort_size',
-	['<F12>'] = 'cycle_sort',
-	['<S-F12>'] = 'cycle_sort_opposite',
-	['<F11>'] = 'cycle_sort_opposite',
+	['gSa'] = O.sort_name, -- mnemonic: mp3 id3 tag %a% for album or %A% for artist
+	['gSt'] = O.sort_mtime,
+	['gSs'] = O.sort_size,
+	['<F12>'] = O.cycle_sort,
+	['<S-F12>'] = O.cycle_sort_opposite,
+	['<F11>'] = O.cycle_sort_opposite,
 
-	['ge'] = 'open_explorer',
-	['gX'] = 'open_external',
-	['<LocalLeader>x'] = 'open_external',
-	['<LocalLeader>e'] = 'open_explorer',
-	['<LocalLeader>,'] = 'vote_movielens',
-	['<localleader>j'] = 'move_category',
+	['ge'] = O.open_explorer,
+	['gX'] = O.open_external,
+	['<LocalLeader>x'] = O.open_external,
+	['<LocalLeader>e'] = O.open_explorer,
+	['<LocalLeader>,'] = O.vote_movielens,
+	['<localleader>j'] = O.move_category,
 
-	['ze'] = 'open_explorer',
-	['za'] = 'open_external',
-	['zr'] = 'vote_movielens',
-	['zj'] = 'move_category',
+	['ze'] = O.open_explorer,
+	['za'] = O.open_external,
+	['zr'] = O.vote_movielens,
+	['zj'] = O.move_category,
 
-	['<C-j>'] = 'move_category',
-	['<C-q>'] = 'move_category_delete', -- on windows
+	['<C-j>'] = O.move_category,
+	['<C-q>'] = O.move_category_delete, -- on windows
 
 	['}'] = { '3j', },
 	['{'] = { '3k', },
 
-	['se'] = 'open_explorer',
-	['sa'] = 'open_external',
-	['sr'] = 'vote_movielens',
-	['ss'] = 'move_category',
-	['sj'] = 'move_category',
-	['<C-p>'] = 'preview_fit',
-	['gga'] = 'git_add', -- note: gga/ggr make gg wait timeoutlen in oil buffers
-	['<LocalLeader>a'] = 'git_add',
-	['ggr'] = 'git_unstage',
-	['<LocalLeader>r'] = 'git_unstage',
-	['ggc'] = 'git_commit',
-	['<LocalLeader>c'] = 'git_commit',
-	['<C-S-p>'] = 'diff_preview',
-	['<LocalLeader>M'] = 'oily_hide',
-	['<CR>'] = 'select_custom',
-	['<cr>'] = 'select_custom',
+	['se'] = O.open_explorer,
+	['sa'] = O.open_external,
+	['sr'] = O.vote_movielens,
+	['ss'] = O.move_category,
+	['sj'] = O.move_category,
+	['<C-p>'] = O.preview_fit,
+	['gga'] = O.git_add, -- note: gga/ggr make gg wait timeoutlen in oil buffers
+	['<LocalLeader>a'] = O.git_add,
+	['ggr'] = O.git_unstage,
+	['<LocalLeader>r'] = O.git_unstage,
+	['ggc'] = O.git_commit,
+	['<LocalLeader>c'] = O.git_commit,
+	['<C-S-p>'] = O.diff_preview,
+	['<LocalLeader>M'] = O.oily_hide,
+	['<CR>'] = O.select_custom,
+	['<cr>'] = O.select_custom,
 }
 -- }}}
 

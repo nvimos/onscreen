@@ -36,7 +36,10 @@ M.move_to_cat_delete = function()
 		-- move cursor back to where it was after reloading
 		-- maybe there is oil-reload?
 		vim.cmd([[edit ]] .. vim.fn.expand('%'))
-		local timer = vim.loop.new_timer()
+		local timer = vim.uv.new_timer()
+		if not timer then
+			return -- cursor stays where the reload put it
+		end
 		timer:start(500, 0, vim.schedule_wrap(function()
 			vim.api.nvim_win_set_cursor(0, pos)
 		end))
@@ -49,7 +52,10 @@ M.move_to_cat = function()
 		-- move cursor back to where it was after reloading
 		-- maybe there is oil-reload?
 		vim.cmd([[edit ]] .. vim.fn.expand('%'))
-		local timer = vim.loop.new_timer()
+		local timer = vim.uv.new_timer()
+		if not timer then
+			return -- cursor stays where the reload put it
+		end
 		timer:start(1000, 0, vim.schedule_wrap(function()
 			vim.api.nvim_win_set_cursor(0, pos)
 		end))

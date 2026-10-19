@@ -6,7 +6,7 @@ local git = require('genja.oil.git')
 
 local M = {}
 
-local src = 'nvim/lua/genja/oil/commit.lua: '
+local src = 'nvim/lua/genja/oil/git-commit.lua: '
 
 -- message kept between popups: saved on close, cleared after a successful commit
 local commit_draft = nil

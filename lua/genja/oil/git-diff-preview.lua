@@ -1,6 +1,6 @@
 -- git diff preview: diff when the entry has changes, oil's preview otherwise
 
-local preview = require('genja.oil.preview')
+local preview = require('genja.oil.plug.preview')
 
 local M = {}
 
@@ -50,7 +50,7 @@ local function open_diff_target(diff_buf, dir, oil_win)
 	local lines = vim.api.nvim_buf_get_lines(diff_buf, 0, -1, false)
 	local path, line_nr = diff_target(lines, vim.fn.line('.'))
 	if not path then
-		vim.notify('nvim/lua/genja/oil/diff.lua: no file for this diff line (deleted?)', vim.log.levels.WARN)
+		vim.notify('nvim/lua/genja/oil/git-diff-preview.lua: no file for this diff line (deleted?)', vim.log.levels.WARN)
 		return
 	end
 	vim.api.nvim_win_close(0, true) -- the preview

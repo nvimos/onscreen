@@ -64,7 +64,7 @@ return {
 				end,
 			},
 
-			keymaps = require('genja.oil-actions').keymaps(),
+			keymaps = require('genja.map-oil').keymaps,
 			win_options = {
 				wrap = false,
 				signcolumn = "yes",

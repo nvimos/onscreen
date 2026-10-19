@@ -1,20 +1,14 @@
--- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
+-- vim: set foldmethod=marker foldlevel=1 foldnestmax=2 foldcolumn=2:
 
 -- open oil entries outside nvim: explorer, shell, browser, vlc, rar
 
 local G = require('genja.oil.globals')
 local entry = require('genja.oil.entry')
+local utils = require('genja.oil.utils')
 
 local M = {}
 
 -- {{{ util
-local function escpath(p, qq)
-	local q = '"'
-	p = p:gsub("\"", "\\\"")
-	if qq then return q .. p .. q end
-	return p
-end
-
 -- first of the paths that is executable; else the first one, so the caller's
 -- command fails with that name
 local function executable(...)
@@ -55,7 +49,10 @@ end
 
 -- {{{ open in explorer
 M.open_in_explorer = function()
-	local _, _, path = entry.oil_entry_dir_path()
+	local _, _, path = utils.oil_entry_dir_path()
+	if not path then
+		return
+	end
 	if G.IsDir(path) then
 		os.execute('explorer.exe ' .. path)
 	else
@@ -78,7 +75,7 @@ M.open_via_shell = function()
 			return nil, "no handler found";
 		end
 	end
-	local e, dir, path = entry.oil_entry_dir_path()
+	local e, dir, path = utils.oil_entry_dir_path()
 	if not e or not dir then
 		return
 	end
@@ -105,7 +102,7 @@ M.rate_on_movielens = function()
 	if ok then
 		if entry.VisualLine == vim.fn.mode() then
 			local buf = vim.api.nvim_get_current_buf()
-			local a, b = entry.visual_line_range()
+			local a, b = utils.visual_line_range()
 			for i = a, b do
 				local m = entry.entry_from_oil(oil.get_current_dir(), oil.get_entry_on_line(buf, i))
 				table.insert(oil_entries, m)
@@ -126,18 +123,25 @@ end
 
 -- {{{ open rar in vlc (extract)
 M.vlc_rar = function()
-	local _, _, path = entry.oil_entry_dir_path()
+	local _, _, path = utils.oil_entry_dir_path()
+	if not path then
+		return
+	end
 	os.execute(G.Join({ 'start', "A:\\bin\\7z-extract-tmp.bat", path:gsub("%.r%d%d", ".rar") }, ' '))
 end
 -- }}}
 
 -- {{{ open in vlc
 M.open_in_vlc = function()
-	local _, _, path = entry.oil_entry_dir_path()
+	local _, _, path = utils.oil_entry_dir_path()
+	if not path then
+		return
+	end
 	local vlc        = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]], 'vlc.exe', 'vlc')
+	-- 'shell' is cmd.exe, which os.execute uses too, so shellescape quotes with "..."
 	local cmd        = { 'start', '"play-file"', '/I',
-		escpath(vlc, 1),
-		escpath(path, 1) }
+		vim.fn.shellescape(vlc),
+		vim.fn.shellescape(path) }
 	local z          = G.Join(cmd, ' ')
 	local e          = os.execute(z)
 	if e ~= 0 then
@@ -205,7 +209,10 @@ M.select_custom = function()
 		return
 	end
 
-	local e, _, _ = entry.oil_entry_dir_path()
+	local e, _, _ = utils.oil_entry_dir_path()
+	if not e then
+		return
+	end
 	local ext = G.Extensionname(e.name)
 	if false then
 	elseif 'rar' == ext or ext:match('r[a%d][r%d]$') then

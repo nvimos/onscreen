@@ -1,6 +1,7 @@
 -- git add / unstage the oil entries under the cursor or on the visual lines
 
 local entry = require('genja.oil.entry')
+local utils = require('genja.oil.utils')
 
 local M = {}
 
@@ -13,7 +14,7 @@ local function git_entry_names()
 	local last = first
 	local visual = entry.VisualLine == vim.fn.mode()
 	if visual then
-		first, last = entry.visual_line_range()
+		first, last = utils.visual_line_range()
 	end
 	local names = {}
 	for lnum = first, last do

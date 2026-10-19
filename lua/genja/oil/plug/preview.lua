@@ -5,6 +5,8 @@ local M = {}
 local name_to_preview_gap = 3
 
 -- width of the widest listing line, without oil's concealed '/<id> ' prefix
+---@param buf integer
+---@return integer
 local function widest_listing_line(buf)
 	local widest = 0
 	for _, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
@@ -16,6 +18,8 @@ local function widest_listing_line(buf)
 end
 
 -- gutter (signs, numbers) + longest name + a little air before the preview
+---@param oil_win integer
+---@return integer
 local function wanted_listing_width(oil_win)
 	local oil_buf = vim.api.nvim_win_get_buf(oil_win)
 	local gutter_width = vim.fn.getwininfo(oil_win)[1].textoff
@@ -23,17 +27,25 @@ local function wanted_listing_width(oil_win)
 end
 
 -- never more than half, so the preview keeps at least 50%
+---@param oil_win integer
+---@param total_width integer listing + preview
+---@return integer
 local function listing_width(oil_win, total_width)
 	local half = math.floor(total_width / 2)
 	return math.min(wanted_listing_width(oil_win), half)
 end
 
+-- splits: narrow the listing, the preview takes what is freed
+---@param oil_win integer
+---@param preview_win integer
 local function fit_split(oil_win, preview_win)
 	local total_width = vim.api.nvim_win_get_width(oil_win) + vim.api.nvim_win_get_width(preview_win)
-	vim.api.nvim_win_set_width(oil_win, listing_width(oil_win, total_width))
+	vim.api.nvim_win_set_config(oil_win, { width = listing_width(oil_win, total_width) })
 end
 
 -- oil places the floats side by side with float.padding between them
+---@param oil_win integer
+---@param preview_win integer
 local function fit_float(oil_win, preview_win)
 	local oil_cfg = vim.api.nvim_win_get_config(oil_win)
 	local preview_cfg = vim.api.nvim_win_get_config(preview_win)
@@ -59,6 +71,9 @@ local function fit_float(oil_win, preview_win)
 	vim.api.nvim_win_set_config(preview_win, preview_cfg)
 end
 
+-- resize listing and preview, for floats or splits
+---@param oil_win integer
+---@param preview_win integer
 function M.fit_preview(oil_win, preview_win)
 	local is_float = vim.api.nvim_win_get_config(oil_win).relative ~= ''
 	if is_float then
@@ -68,6 +83,9 @@ function M.fit_preview(oil_win, preview_win)
 	end
 end
 
+-- whether oil's preview window shows `entry`
+---@param entry oil.Entry
+---@return boolean
 function M.is_previewing(entry)
 	local preview_win = require('oil.util').get_preview_win()
 	if not preview_win then
@@ -76,6 +94,7 @@ function M.is_previewing(entry)
 	return vim.w[preview_win].oil_entry_id == entry.id
 end
 
+-- open the preview for the cursor entry and fit it; closes it when already shown
 M.toggle_preview_fit = function()
 	local oil = require('oil')
 	local entry = oil.get_cursor_entry()
