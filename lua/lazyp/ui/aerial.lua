@@ -12,6 +12,7 @@ return {
 	cmd = { 'AerialToggle', 'AerialOpen', 'AerialNavToggle', 'AerialNavOpen', 'AerialNext', 'AerialPrev' },
 	keys = {
 		-- ! keeps the cursor in the code
+		{ '<c-s>', '<cmd>AerialToggle!<cr>', desc = 'UI: outline sidebar (aerial)' },
 		{ '<leader>mo', '<cmd>AerialToggle!<cr>', desc = 'UI: outline sidebar (aerial)' },
 		{ '<leader>mO', '<cmd>AerialNavToggle<cr>', desc = 'UI: outline nav float (aerial)' },
 		-- extension loaded here, so [o ]o don't pull in telescope
