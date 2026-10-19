@@ -6,8 +6,9 @@ vim.g.dosbatch_colons_comment = true
 
 
 --[[ plugin settings ]]--
-vim.g.genja_enable_autoresource = false
-vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
+-- set in init.vim
+-- vim.g.genja_enable_autoresource = false
+-- vim.g.genja_enable_autoresource = true -- genja-autoresource.lua
 
 
 
