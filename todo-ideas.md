@@ -51,6 +51,13 @@
 - [.] 18. context-sensitive telescope dropdown on <F2> (partly: make done, oil open)
     -make: list targets to execute
     -oil: git worktree: files to add with preview
+    - sources (2026-10-19): lua/genja/f2/ (adhoc, git, make); items prefixed `group: `
+    - notes and user guide: doc-wip/readme.idea18-f2-context.md
+        - adhoc: `go mod init <dirname>` when no go.mod/go.work, then gopls restarts
+        - [x] git source (oil only): `git: add (N files)` sub-picker with status codes, diff preview, <Tab> marks
+        - [x] f2.add_tasks(tasks, { buffer? }) / f2.add_task(group, label):…:add() builder / f2.remove_tasks({ group, label?, buffer? }), f2.group_order
+            - task: label, group, action (keys|function) or cmd (+ runner overseer|floaterm, cwd), order, cond, autoremove
+            - [ ] first caller
 
 - [x] 10. cmp: delay popup by 500 ms if it starts with :w
     - the popup flashes annoyingly when auto-saving

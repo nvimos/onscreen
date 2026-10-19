@@ -1,26 +1,12 @@
--- <F2>: context picker (idea #18). Contexts so far:
---   make  a Makefile above the buffer's dir (oil: oil's dir): telescope list of
---         its targets (includes too), the chosen one runs as an overseer task.
+-- <F2> source, group `make`: one item, `targets (N)  (<folder>)`, opening a sub-picker
+-- over the targets of the Makefile above ctx.dir (includes too). <Tab> marks;
+-- each chosen target runs as an overseer task.
+
+local picker = require('genja.f2.picker')
 
 local M = {}
 
-local src = 'nvim/lua/genja/f2.lua: '
-
--- where to look for context: oil's dir, the file's dir, else :pwd.
--- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path as is,
--- and oil gives 'C:\...\nvim\'.
-local function start_dir()
-	local dir = vim.fn.getcwd()
-	local name = vim.api.nvim_buf_get_name(0)
-	if vim.bo.filetype == 'oil' then
-		dir = require('oil').get_current_dir() or dir
-	elseif name ~= '' and vim.bo.buftype == '' then
-		dir = vim.fs.dirname(name)
-	end
-	return vim.fs.normalize(dir)
-end
-
--- {{{ make
+local src = 'nvim/lua/genja/f2/make.lua: '
 
 local function find_makefile(dir)
 	local names = { 'GNUmakefile', 'makefile', 'Makefile' }
@@ -91,90 +77,79 @@ local function target_prefixes(dir, makefiles)
 	return prefixes
 end
 
-local function run_target(target, dir)
-	local overseer = require('overseer')
-	local task = overseer.new_task({ name = 'make ' .. target, cmd = { 'make', target }, cwd = dir })
-	task:start()
-	overseer.open({ enter = false })
-end
-
--- main Makefile's targets first, then by prefix, then by name
-local function sorted_items(targets, prefixes)
-	local items = {}
+-- main Makefile's targets first, then by prefix, then by name (as `order`).
+-- Label: `sync`, or `lazy: sync` for a target from Makefile.lazy.mk.
+---@return genja.f2.Task[]
+local function sorted_tasks(targets, prefixes, dir)
+	local rows = {}
 	for _, target in ipairs(targets) do
-		local prefix = prefixes[target] or ''
-		local display = target
-		if prefix ~= '' then
-			display = prefix .. ': ' .. target
-		end
-		table.insert(items, { target = target, prefix = prefix, display = display })
+		table.insert(rows, { target = target, prefix = prefixes[target] or '' })
 	end
-	table.sort(items, function(a, b)
+	table.sort(rows, function(a, b)
 		if a.prefix ~= b.prefix then
 			return a.prefix < b.prefix -- '' sorts first
 		end
 		return a.target < b.target
 	end)
-	return items
+	local tasks = {}
+	for i, row in ipairs(rows) do
+		local label = row.target
+		if row.prefix ~= '' then
+			label = row.prefix .. ': ' .. row.target
+		end
+		table.insert(tasks, { group = 'make', label = label, cmd = { 'make', row.target }, cwd = dir, order = i })
+	end
+	return tasks
 end
 
-local function pick_target(items, dir)
-	local actions = require('telescope.actions')
-	local action_state = require('telescope.actions.state')
-	local title = 'make targets: ' .. vim.fn.fnamemodify(dir, ':~')
-	require('telescope.pickers').new(require('telescope.themes').get_dropdown(), {
-		prompt_title = title,
-		finder = require('telescope.finders').new_table({
-			results = items,
-			entry_maker = function(item)
-				return { value = item, display = item.display, ordinal = item.display }
-			end,
-		}),
-		sorter = require('telescope.config').values.generic_sorter({}),
-		attach_mappings = function(bufnr)
-			actions.select_default:replace(function()
-				local entry = action_state.get_selected_entry()
-				actions.close(bufnr)
-				if entry then
-					run_target(entry.value.target, dir)
-				end
-			end)
-			return true
-		end,
-	}):find()
-end
-
-local function make_context(makefile)
+---@param ctx genja.f2.Ctx
+---@param done fun(tasks: genja.f2.Task[])
+function M.collect(ctx, done)
+	local makefile = find_makefile(ctx.dir)
+	if not makefile then
+		done({})
+		return
+	end
+	if vim.fn.executable('make') == 0 then
+		vim.notify(src .. 'found ' .. makefile .. ', but no make in nvim\'s PATH', vim.log.levels.WARN)
+		done({})
+		return
+	end
 	local dir = vim.fs.dirname(makefile)
-	local cmd = { 'make', '-rRpq' }
-	vim.system(cmd, { cwd = dir, text = true, env = { LANG = 'C' } }, vim.schedule_wrap(function(res)
+	vim.system({ 'make', '-rRpq' }, { cwd = dir, text = true, env = { LANG = 'C' } }, vim.schedule_wrap(function(res)
 		-- -q: exit 1 just means "something is out of date"
 		if res.code ~= 0 and res.code ~= 1 then
 			vim.notify(src .. 'make -rRpq failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
+			done({})
 			return
 		end
 		local targets, makefiles = parse_targets(res.stdout or '')
 		if #targets == 0 then
 			vim.notify(src .. 'no targets in ' .. makefile, vim.log.levels.WARN)
+			done({})
 			return
 		end
-		pick_target(sorted_items(targets, target_prefixes(dir, makefiles)), dir)
+		local entries = {}
+		local nothing = function() end -- targets aren't stored
+		for _, task in ipairs(sorted_tasks(targets, target_prefixes(dir, makefiles), dir)) do
+			table.insert(entries, { task = task, remove = nothing })
+		end
+		done({
+			{
+				group = 'make',
+				-- folder name: shows which Makefile was found (e.g. ~/makefile from oil at ~)
+				label = ('targets (%d)  (%s)'):format(#entries, vim.fs.basename(dir)),
+				action = function(pick_ctx)
+					picker.entries(entries, pick_ctx, { title = 'make targets: ' .. vim.fn.fnamemodify(dir, ':~') })
+				end,
+			},
+		})
 	end))
 end
--- }}}
 
-function M.open()
-	local dir = start_dir()
-	local makefile = find_makefile(dir)
-	if not makefile then
-		vim.notify(src .. 'no context here: no Makefile in or above ' .. dir, vim.log.levels.WARN)
-		return
-	end
-	if vim.fn.executable('make') == 0 then
-		vim.notify(src .. 'found ' .. makefile .. ', but no make in nvim\'s PATH', vim.log.levels.WARN)
-		return
-	end
-	make_context(makefile)
-end
+-- exposed for tests/f2
+M._parse_targets = parse_targets
+M._makefile_prefix = makefile_prefix
+M._sorted_tasks = sorted_tasks
 
 return M

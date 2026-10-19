@@ -41,7 +41,7 @@ km('n', '<S-F1>', genja_finder_find, { desc = 'Telescope: find files (genja-find
 
 
 km('n', '<C-F1>',      tsbuiltin.oldfiles, { desc = 'Telescope: oldfiles'})
-km('n', '<F2>', function() require('genja.f2').open() end, { desc = 'Telescope: context picker (make targets -> overseer)'})
+km('n', '<F2>', function() require('genja.f2').open() end, { desc = 'Telescope: context picker (adhoc, git, make, added tasks)'})
 local function action_menu() require('genja.actions').open() end
 km('n', 'g.',             action_menu, { desc = 'Telescope: actions here (cur: = item under cursor)'})
 km('n', '<LocalLeader>/', action_menu, { desc = 'Telescope: actions here (cur: = item under cursor)'})

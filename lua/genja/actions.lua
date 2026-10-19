@@ -108,7 +108,7 @@ local function general_actions(list, bufnr)
 	if vim.bo.filetype == 'oil' then
 		add(list, 'git commit (popup)', require('genja.oil').git_commit)
 	end
-	add(list, 'context picker (<F2>: make targets)', function() require('genja.f2').open() end)
+	add(list, 'context picker (<F2>: adhoc, git, make)', function() require('genja.f2').open() end)
 	add(list, 'find files', function() require('genja-finder').live_find() end)
 	add(list, 'grep files', function() require('genja-finder').live_grep() end)
 	add(list, 'recent files', telescope('oldfiles'))
