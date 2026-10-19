@@ -5,6 +5,7 @@
 --   <leader>pC     prompt popup (draft, history, brief mode). <CR> sends and submits;
 --                  the cursor stays in the editor. In visual mode the selection is attached.
 --   <C-q>, <C-j>, <C-Space>   in the claude terminal: back to the previous window
+--   <C-Left>                  in the claude terminal: to the window on the left
 -- Pasting into the running session avoids `claude -p` startup time and keeps context.
 --
 -- Session marker: :ClaudeFterm resumes the session named in the file.
@@ -350,6 +351,8 @@ local function set_term_keys(bufnr)
 	vim.keymap.set('t', '<C-j>', back, { buffer = bufnr, desc = 'Claude: back to previous window' })
 	-- a terminal (e.g. Windows Terminal) may send <C-Space> as <C-@>; map that too if this doesn't fire
 	vim.keymap.set('t', '<C-Space>', back, { buffer = bufnr, desc = 'Claude: back to previous window' })
+	-- replaces claude's own <C-Left> word-left
+	vim.keymap.set('t', '<C-Left>', '<C-\\><C-n><C-w>h', { buffer = bufnr, desc = 'Claude: to the window on the left' })
 end
 
 ---:FloatermNew arguments from `opts`: sorted `--option=value`, then the command.
@@ -382,7 +385,13 @@ local function open(focus, cb)
 		if vim.bo.buftype == '' and vim.api.nvim_buf_get_name(0) ~= '' then
 			state.origin_buf = vim.api.nvim_get_current_buf()
 		end
+		-- claude's title updates make the mouse cursor flicker between normal and hourglass;
+		-- related: "terminalProgressBarEnabled": false in claude's settings.json.
+		-- Set only while the job starts, so other terminals keep their titles.
+		local old_title_env = vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE
+		vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE = '1'
 		vim.cmd('FloatermNew ' .. fterm_args(start.term_opts))
+		vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE = old_title_env
 		bufnr = term_bufnr()
 		if bufnr then
 			set_term_keys(bufnr)
