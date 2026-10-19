@@ -3,7 +3,8 @@
         "vim",
         "require",
         "IsDir",
-        "NewPlugins"
+        "NewPlugins",
+        "MiniTest"
     ],
     "runtime.special": {
         "Safeload": "require"
