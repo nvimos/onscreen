@@ -119,7 +119,8 @@ vim.keymap.set('n', '<c-leftmouse>', 'gx')
 -- }}}
 
 -- Idiosyncratic {{{
-vim.keymap.set('n', '<leader>i.', 'a…<esc>', { noremap = true, desc = "Append: … (ellipsis)" })
+vim.keymap.set('n', '<leader>i.', 'a…<esc>',                                nosi 'Append: … (ellipsis)')
+vim.keymap.set('n', '<leader>id', [[a<C-r>=strftime('%Y-%m-%d')<CR><esc>]], nosi 'Append: ymd date')
 -- }}}
 
 -- Code actions {{{
