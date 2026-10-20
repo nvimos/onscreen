@@ -77,6 +77,30 @@ end
 
 local action_generate = require("telescope.actions.generate")
 
+local which_key = action_generate.which_key {
+	name_width = 20, -- typically leads to smaller floats
+	max_height = 0.5, -- increase potential maximum height
+	separator = " > ", -- change sep between mode, keybind, and name
+	close_with_action = false, -- do not close float on action
+}
+
+local mappings = {
+	i = {
+		["<C-Down>"] = require('telescope.actions').cycle_history_next,
+		["<C-Up>"] = require('telescope.actions').cycle_history_prev,
+		["<C-/>"] = which_key,
+		["<C-_>"] = which_key, -- what some terminals send for <C-/>
+	},
+	n = {
+		["?"] = which_key,
+	}
+}
+-- picker keys kept with the other telescope keymaps (loclist/qflist: <M-l> <M-L> <C-l> <M-q> <M-Q> <C-q>)
+local map_ok, map_telescope = pcall(require, 'genja.map-telescope')
+if map_ok and type(map_telescope) == 'table' then
+	mappings = vim.tbl_deep_extend('force', mappings, map_telescope.picker_mappings)
+end
+
 
 require('telescope').setup {
 
@@ -91,20 +115,7 @@ require('telescope').setup {
 		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 		generic_sorter = require("telescope.sorters").get_fzy_sorter,
 
-		mappings = {
-			i = {
-				["<C-Down>"] = require('telescope.actions').cycle_history_next,
-				["<C-Up>"] = require('telescope.actions').cycle_history_prev,
-			},
-			n = {
-				["?"] = action_generate.which_key {
-					name_width = 20, -- typically leads to smaller floats
-					max_height = 0.5, -- increase potential maximum height
-					separator = " > ", -- change sep between mode, keybind, and name
-					close_with_action = false, -- do not close float on action
-				},
-			}
-		},
+		mappings = mappings,
 
 		get_selection_window = function() return 0 end,
 
@@ -215,6 +226,43 @@ require('telescope').setup {
 		-- }}}
 	}
 }
+
+-- {{{ key hint in the prompt
+-- Telescope has no footer, so the hint is virtual text after the prompt prefix, shown while the
+-- prompt is empty (like a placeholder). The right edge holds telescope's result counter.
+local HINT = 'mark Tab · send <M-l/q> · appeng <M-L/Q> · keys <C-/>'
+local hint_ns = vim.api.nvim_create_namespace('genja_telescope_hint')
+
+---Show the hint on an empty prompt, clear it once something is typed.
+---@param buf integer prompt buffer
+local function update_hint(buf)
+	if not vim.api.nvim_buf_is_valid(buf) then
+		return
+	end
+	vim.api.nvim_buf_clear_namespace(buf, hint_ns, 0, -1)
+	local line = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] or ''
+	if line ~= vim.fn.prompt_getprompt(buf) then
+		return
+	end
+	vim.api.nvim_buf_set_extmark(buf, hint_ns, 0, 0, {
+		virt_text = { { HINT, 'Comment' } },
+		virt_text_pos = 'eol',
+	})
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = vim.api.nvim_create_augroup('genja_telescope_hint', { clear = true }),
+	pattern = 'TelescopePrompt',
+	callback = function(ev)
+		-- telescope sets the prompt text after the filetype
+		vim.schedule(function() update_hint(ev.buf) end)
+		vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
+			buffer = ev.buf,
+			callback = function() update_hint(ev.buf) end,
+		})
+	end,
+})
+-- }}}
 
 --[[
         Default: layout_config = {

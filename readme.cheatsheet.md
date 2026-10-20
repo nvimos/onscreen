@@ -29,3 +29,10 @@ Code actions by kind (map-lsp.lua; visual mode sends the selection)
     <leader>cr  rewrite: fill struct/switch, invert if, split/join lines
     <leader>cs  source: organize imports, doc, add test
     Go saves run organize imports + format; :let b:go_format_on_save = v:false
+
+Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal mode)
+
+    <Tab>  <S-Tab>  mark entries      <C-/> (insert)  ? (normal)  list the picker's keys
+    <M-l>  marked -> loclist    <M-q>  marked -> quickfix
+    <M-L>  append marked        <M-Q>  append marked
+    <C-l>  all -> loclist       <C-q>  all -> quickfix

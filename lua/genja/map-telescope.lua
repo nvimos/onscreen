@@ -94,6 +94,25 @@ km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 --km('n', '<C-p>', te.git_files, {})
 --km('n', '<leader>vh', te.help_tags, {})
 
+-- Keys inside pickers. telescope.setup() in after/plugin/telescope-after.lua merges these.
+-- <Tab> marks entries. Alt: send the marked ones, Alt+Shift: append them, Ctrl: send all results.
+-- l = location list, q = quickfix list (<C-q>/<M-q> are telescope defaults, listed here for the set).
+local actions = require('telescope.actions')
+local list_keys = {
+	['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
+	['<M-L>'] = actions.add_selected_to_loclist + actions.open_loclist,
+	['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
+	['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
+	['<M-Q>'] = actions.add_selected_to_qflist + actions.open_qflist,
+	['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+}
+
+local M = {}
+M.picker_mappings = {
+	i = list_keys,
+	n = list_keys,
+}
+
 -- builtin.lsp_references
 -- builtin.lsp_incoming_calls
 -- builtin.lsp_outcoing_calls
@@ -104,3 +123,4 @@ km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 -- builtin.lsp_workspace_symbols
 -- builtin.diagnostics
 
+return M
