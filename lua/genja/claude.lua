@@ -1,5 +1,8 @@
 -- Idea #19 A (and #16): Claude Code in a floaterm named 'claude', fed from the editor.
 --   :ClaudeFterm   toggle the terminal; started on first use, in :pwd (or resumed, see below)
+--   :ClaudeFterm [flags]   flags go to claude when it starts, e.g. --chrome, --model opus,
+--                  --effort high, --permission-mode plan, --add-dir <dir>; <Tab> completes.
+--                  Ignored (with a warning) while claude runs.
 --   <leader>pc     paste context: normal = @file mention, visual = path:lines + code.
 --                  Jumps into the terminal to type the question.
 --   <leader>pC     prompt popup (draft, history, brief mode). <CR> sends and submits;
@@ -509,16 +512,71 @@ end
 ---:ClaudeFterm: hide claude when shown, else show (start) it and jump in.
 ---@param term_opts? genja.claude.TermOpts kept for later starts, also by <leader>pc/pC;
 ---  only used when claude is (re)started
-function M.toggle(term_opts)
+---@param args? string extra claude flags from :ClaudeFterm, e.g. '--chrome'
+function M.toggle(term_opts, args)
 	if term_opts then
-		state.term_opts = term_opts
+		state.term_opts = vim.deepcopy(term_opts)
+		if args and args ~= '' then
+			state.term_opts.cmd = (term_opts.cmd or 'claude') .. ' ' .. args
+		end
 	end
 	local bufnr = term_bufnr()
+	if bufnr and args and args ~= '' then
+		-- flags only apply at start; a running claude keeps its own
+		vim.notify(src .. 'claude already runs; ' .. args .. ' ignored (:FloatermKill claude, then retry)', vim.log.levels.WARN)
+	end
 	if bufnr and term_win(bufnr) then
 		vim.cmd('FloatermHide ' .. TERM)
 		return
 	end
 	open(true)
+end
+
+-- Flags offered by :ClaudeFterm <Tab>. Session flags (--resume, --session-id, --continue)
+-- are left out: claude.lua sets those itself.
+local FLAGS = {
+	'--chrome',
+	'--no-chrome',
+	'--model',
+	'--effort',
+	'--permission-mode',
+	'--add-dir',
+	'--ide',
+	'--verbose',
+	'--fork-session',
+	'--dangerously-skip-permissions',
+}
+-- Values offered after a flag that takes one.
+local FLAG_VALUES = {
+	['--model'] = { 'fable', 'opus', 'sonnet', 'haiku' },
+	['--effort'] = { 'low', 'medium', 'high', 'xhigh', 'max' },
+	['--permission-mode'] = { 'acceptEdits', 'auto', 'bypassPermissions', 'manual', 'dontAsk', 'plan' },
+}
+
+---:ClaudeFterm completion: a value after --model/--effort/--permission-mode, else a flag.
+---@param arglead string word being completed
+---@param cmdline string command line up to the cursor
+---@return string[]
+function M.complete(arglead, cmdline)
+	local words = vim.split(vim.trim(cmdline), '%s+')
+	local prev = words[#words]
+	if arglead ~= '' then
+		prev = words[#words - 1]
+	end
+	local choices = FLAG_VALUES[prev]
+	if choices == nil then
+		choices = FLAGS
+	end
+	if prev == '--add-dir' then
+		return vim.fn.getcompletion(arglead, 'dir')
+	end
+	local matches = {}
+	for _, choice in ipairs(choices) do
+		if vim.startswith(choice, arglead) then
+			table.insert(matches, choice)
+		end
+	end
+	return matches
 end
 
 ---Kill the claude terminal, if one runs; used by `:s:` before :qa (a running job blocks :qa).
