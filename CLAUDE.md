@@ -20,6 +20,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - Terse replies. No anthropomorphising.
 - Follow-up questions stay on point; no offers to explore unrelated topics.
+- Don't ask jaro to rate or review how Claude is doing.
 
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
