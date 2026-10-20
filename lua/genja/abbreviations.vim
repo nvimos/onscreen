@@ -25,6 +25,7 @@ cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
 
 cnoreabbrev jj qa
+cnoreabbrev g q
 
 cnoreabbrev helf vert help
 cnoreabbrev helv vert help
@@ -41,5 +42,6 @@ inoreabbrev ...) (…)
 
 " <expr>: expand to today's date at the time of typing, not when sourced.
 " Not ..date: a lhs mixing '.' with letters is invalid (:h abbreviations).
-inoreabbrev <expr> date. strftime('%Y-%m-%d')
+inoreabbrev <expr> ymd! strftime('%Y-%m-%d')
+inoreabbrev <expr> ymdt! strftime('%Y-%m-%d %H:%M:%S')
 
