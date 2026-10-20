@@ -36,7 +36,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Don't commit unless asked. Group commits by feature; no Claude/Co-Authored-By attribution.
 - Exception: a background job (sub-session) commits its work in its worktree without asking.
 - The tree often has unrelated uncommitted changes; leave them alone.
-
+- `/prish` (in the job's worktree): rebase onto the original branch if it got new commits, rename the branch to `PR-<branch>`.
+- `/prish-merge` (normal session, main checkout): merge every `PR-*` branch from `.claude/worktrees/` into the current branch, then remove the worktrees.
 
 ## Files and formatting
 
