@@ -9,7 +9,7 @@ local O                = {}
 -- {{{ open the entry: in nvim, or outside it (explorer, shell, browser)
 O.select_custom        = { desc = "Oil: Select (custom)", callback = F.select_custom }
 O.open_explorer        = { desc = "Oil: Open dir in explorer", callback = F.open_in_explorer }
-O.open_external        = { desc = "Oil: Open (shell)", callback = F.open_via_shell }
+O.open_external_os_xdg = { desc = "Oil: Open (explorer / open / xdg-open)", callback = F.open_via_shell }
 O.vote_movielens       = { desc = "Oil: Rate on movielens", callback = F.rate_on_movielens }
 -- }}}
 

@@ -85,10 +85,14 @@ M.open_via_shell = function()
 		return
 	end
 	if G.IsDir(path) then
-		os.execute(G.Join(cmd, ' ')) -- jobstart explorer does not work for some reason.
+		-- jobstart explorer does not work for some reason. os.execute goes through
+		-- cmd.exe, which is 'shell' too, so shellescape quotes paths with spaces
+		os.execute(cmd[1] .. ' ' .. vim.fn.shellescape(path))
 	else
-		-- TODO use vim.ui.open once this is resolved
-		-- https://github.com/neovim/neovim/issues/24567
+		-- https://github.com/neovim/neovim/issues/24567 ("vim.system(xdg-open) fails
+		-- but jobstart succeeds"): closed as completed 2024-04-23. Linux/xdg-open
+		-- only; on Windows vim.ui.open now runs `cmd.exe /c start "" <path>`.
+		-- Oil's gx (actions.open_external) already uses vim.ui.open.
 		local jid = vim.fn.jobstart(cmd, { detach = false }) -- original is "true"
 		assert(jid > 0, "Failed to start job")
 	end

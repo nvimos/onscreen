@@ -17,14 +17,15 @@ M.keymaps = {
 	['<F11>'] = O.cycle_sort_opposite,
 
 	['ge'] = O.open_explorer,
-	['gX'] = O.open_external,
-	['<LocalLeader>x'] = O.open_external,
+	['gX'] = O.open_external_os_xdg,
+	['<LocalLeader>x'] = O.open_external_os_xdg,
+	['<C-Right>'] = 'actions.open_external', -- same as oil's default gx; overrides global <C-Right> (wincmd l)
 	['<LocalLeader>e'] = O.open_explorer,
 	['<LocalLeader>,'] = O.vote_movielens,
 	['<localleader>j'] = O.move_category,
 
 	['ze'] = O.open_explorer,
-	['za'] = O.open_external,
+	['za'] = O.open_external_os_xdg,
 	['zr'] = O.vote_movielens,
 	['zj'] = O.move_category,
 
@@ -35,7 +36,7 @@ M.keymaps = {
 	['{'] = { '3k', },
 
 	['se'] = O.open_explorer,
-	['sa'] = O.open_external,
+	['sa'] = O.open_external_os_xdg,
 	['sr'] = O.vote_movielens,
 	['ss'] = O.move_category,
 	['sj'] = O.move_category,
