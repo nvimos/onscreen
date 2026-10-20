@@ -22,6 +22,10 @@
 --   Cwd: glob ~/.claude/projects/*/<uuid>.jsonl and read its "cwd" field.
 --     The dir name can't be decoded (the '-' encoding is lossy). Fallback: the parent
 --     of the file whose encoded name is that dir.
+--
+-- Terminal buffer name: `claude-ft «<title>»`, title capped at TITLE_MAX chars with '…';
+--   no title yet: `claude-ft «<basename of cwd>»`. Shown in the tabline and winbar.
+--   b:claude_session_id holds the session id.
 
 local M = {}
 
@@ -51,6 +55,7 @@ local state = {
 local MARKER = 'claude%-session: (%x+%-%x+%-%x+%-%x+%-%x+)'
 local MARKER_SCAN = 5 -- lines at the top and at the bottom searched for the marker
 local POLL_MS = 2000
+local TITLE_MAX = 16 -- chars of the session title in the terminal buffer name, '…' included
 
 ---True while the terminal job in `bufnr` runs.
 ---@param bufnr integer
@@ -114,6 +119,62 @@ end
 local function transcript_path(id)
 	local found = vim.fn.glob(claude_dir() .. '/projects/*/' .. id .. '.jsonl', true, true)
 	return found[1]
+end
+
+---Last /rename title in a transcript, if any.
+---@param path string transcript
+---@return string|nil
+local function transcript_title(path)
+	local fd = io.open(path, 'r')
+	if not fd then
+		return nil
+	end
+	local title = nil
+	for line in fd:lines() do
+		if line:find('"type":"custom-title"', 1, true) then
+			local ok, entry = pcall(vim.json.decode, line)
+			if ok and type(entry) == 'table' and type(entry.customTitle) == 'string' then
+				title = entry.customTitle
+			end
+		end
+	end
+	fd:close()
+	return title
+end
+
+---Name the claude terminal buffer `claude-ft «title»`, or after claude's cwd without a title.
+---@param bufnr integer
+---@param title string|nil
+local function set_term_name(bufnr, title)
+	if not vim.api.nvim_buf_is_valid(bufnr) then
+		return
+	end
+	local label = nil
+	if title and vim.trim(title) ~= '' then
+		-- slashes would split the name for :t in the tabline
+		label = vim.trim(title):gsub('%s+', ' '):gsub('[/\\]', '-')
+		if vim.fn.strchars(label) > TITLE_MAX then
+			label = vim.fn.strcharpart(label, 0, TITLE_MAX - 1) .. '…'
+		end
+	else
+		label = vim.fs.basename(state.cwd or vim.fn.getcwd())
+	end
+	local name = 'claude-ft «' .. label .. '»'
+
+	local old = vim.api.nvim_buf_get_name(bufnr)
+	if vim.fn.fnamemodify(old, ':t') == name then
+		return
+	end
+	if not pcall(vim.api.nvim_buf_set_name, bufnr, name) then
+		-- E95: another buffer has that name
+		pcall(vim.api.nvim_buf_set_name, bufnr, name .. ' ' .. bufnr)
+	end
+	-- renaming leaves an unlisted buffer with the old name; a term:// one would start a shell
+	for _, b in ipairs(vim.api.nvim_list_bufs()) do
+		if b ~= bufnr and not vim.api.nvim_buf_is_loaded(b) and vim.api.nvim_buf_get_name(b) == old then
+			vim.api.nvim_buf_delete(b, { force = true })
+		end
+	end
 end
 
 ---Directory a session was started in: the first existing "cwd" in its transcript,
@@ -191,11 +252,11 @@ end
 ---@param id string
 ---@param bufnr integer claude terminal
 ---@param from_end boolean skip what the transcript holds now (resumed session)
-local function watch_session(id, bufnr, from_end)
+---@param title string|nil current title, from the transcript of a resumed session
+local function watch_session(id, bufnr, from_end, title)
 	stop_watch()
 	local path = nil
 	local offset = 0
-	local title = nil
 	if from_end then
 		path = transcript_path(id)
 		if path then
@@ -239,6 +300,7 @@ local function watch_session(id, bufnr, from_end)
 					and entry.customTitle ~= title then
 					title = entry.customTitle
 					write_marker(id, title)
+					set_term_name(bufnr, title)
 				end
 			end
 		end
@@ -250,6 +312,7 @@ end
 ---@field id string session id
 ---@field resumed boolean
 ---@field cwd string
+---@field title string|nil /rename title of a resumed session
 
 ---How to start claude from the current buffer: resume the session in its marker, else a new one.
 ---@return genja.claude.Start
@@ -264,14 +327,16 @@ local function session_start()
 		if id then
 			local path = transcript_path(id)
 			local cwd = nil
+			local title = nil
 			if path then
 				cwd = session_cwd(path, file)
+				title = transcript_title(path)
 			end
 			if cwd then
 				opts.cmd = cmd .. ' --resume ' .. id
 				-- floaterm splits its options on unescaped spaces
 				opts.cwd = vim.fs.normalize(cwd):gsub(' ', '\\ ')
-				return { term_opts = opts, id = id, resumed = true, cwd = cwd }
+				return { term_opts = opts, id = id, resumed = true, cwd = cwd, title = title }
 			end
 			vim.notify(src .. 'no transcript or cwd for session ' .. id .. '; starting a new one', vim.log.levels.WARN)
 		end
@@ -395,7 +460,9 @@ local function open(focus, cb)
 		bufnr = term_bufnr()
 		if bufnr then
 			set_term_keys(bufnr)
-			watch_session(start.id, bufnr, start.resumed)
+			vim.b[bufnr].claude_session_id = start.id
+			set_term_name(bufnr, start.title)
+			watch_session(start.id, bufnr, start.resumed, start.title)
 		end
 	elseif not term_win(bufnr) then
 		vim.cmd('FloatermShow ' .. TERM)
