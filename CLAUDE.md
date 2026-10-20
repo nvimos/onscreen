@@ -90,8 +90,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Everything lives in `plug-wip/genja-completion011.nvim`, loaded by `lua/lazyp/new/genja-comp011.lua`; see its CLAUDE.md.
 - Per-machine language switches go in `lua/genja/lsp/local.lua` (gitignored), not in the spec's `enabled` table.
 - Filetype specs live in the plugin's `lua/genja/ft/`; personal ones stay in the config's `lua/genja/ft/` (`yaml.lua`: `yml` -> `yaml.ansible`).
-- On this slow PC, lua_ls reports `undefined-global` for `vim`, `require` and other well-known Lua globals until it has loaded the workspace. It is startup lag, not a config bug, and does not reproduce on demand.
-- Hint: ignore `undefined-global` / `undefined-doc-name` bursts in new-diagnostics reminders for Lua files; don't blame the cwd or `.luarc.json`.
+- On this slow PC, nvim's lua_ls reports `undefined-global` for `vim`, `require` and other well-known Lua globals until it has loaded the workspace. It is startup lag, not a config bug, and does not reproduce on demand. nvim hides them until lua_ls is ready (`lang/lua.lua` in the completion plugin).
+- Hint: `undefined-global` / `undefined-doc-name` in Claude's new-diagnostics reminders come from Claude Code's `lua-lsp` plugin (`~/.claude/settings.json` `enabledPlugins`), a separate server without nvim's runtime library, not from nvim. Ignore them; don't blame the cwd or `.luarc.json`. (inferred)
 - Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`; `Makefile.lazy.mk` `update`/`sync` also update parsers headless.
 
 ## Keymaps
