@@ -19,26 +19,16 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Working style
 
 - Terse replies. No anthropomorphising.
+- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. jaro tests on this machine.
 - Follow-up questions stay on point; no offers to explore unrelated topics.
 - Don't ask jaro to rate or review how Claude is doing.
-
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
-- Before patching around a tool's bugs, check upstream issues, and check platform/os support before recommending a tool.
-- Prefer built-in vim/nvim functions over new dependencies.
-
-### No testing nvim
-
-- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. jaro tests on this machine.
-- Hint: say plainly when something was not run or tested. just "not tested" is enough.
-
-### Git workflow
-
 - Don't commit unless asked. Group commits by feature; no Claude/Co-Authored-By attribution.
-- Exception: a background job (sub-session) commits its work in its worktree without asking.
 - The tree often has unrelated uncommitted changes; leave them alone.
-- `/prish` (in the job's worktree): rebase onto the original branch if it got new commits, rename the branch to `PR-<branch>`.
-- `/prish-merge` (normal session, main checkout): merge every `PR-*` branch from `.claude/worktrees/` into the current branch, then remove the worktrees.
+- Before patching around a tool's bugs, check upstream issues and prior art, and check platform support before recommending a tool.
+- Prefer built-in vim/nvim functions over new dependencies.
+- Hint: say plainly when something was not run or tested.
 
 ## Files and formatting
 
