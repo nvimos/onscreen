@@ -16,6 +16,7 @@ require 'genja.fn'.win_chdir_home() -- cd ~ on windows
 
 C = vim.fn.stdpath('config')
 vim.cmd('source ' .. C .. '/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
+vim.cmd('source ' .. C .. '/lua/genja/abbreviations.vim') -- aliases, onliners, autocommads, abbreviations
 vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')     -- colors
 vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
