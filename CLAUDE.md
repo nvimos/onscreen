@@ -91,6 +91,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `map-zero.lua`: essential maps that must not fail. `map-lsp.lua`, `map-telescope.lua`, `map-convoluted.lua`, `map-jolemak.lua` hold the rest by topic.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
 - Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`).
+- `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `lua/genja/claude.lua`.
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
 - Keys and text objects worth remembering go in `readme.cheatsheet.md`.
 

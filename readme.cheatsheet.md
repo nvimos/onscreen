@@ -19,6 +19,8 @@ Breadcrumbs and outline (dropbar, aerial)
 Floaterm commands (lua/genja/auto-alias.vim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm
+    :ClaudeFterm --chrome   flags at start, <Tab> completes: --model --effort
+                            --permission-mode --add-dir --ide --verbose --no-chrome
 
 Code actions by kind (map-lsp.lua; visual mode sends the selection)
 
