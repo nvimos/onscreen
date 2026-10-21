@@ -176,6 +176,8 @@ require('genja.map-plugin.focus')(M)             -- lua/lazyp/ui/focus.lua
 require('genja.map-plugin.harpoon')(M)           -- lua/lazyp/new/harpoon.lua
 require('genja.map-plugin.mru')(M)               -- lua/lazyp/my/mru.lua
 require('genja.map-plugin.nvim-emmet')(M)        -- lua/lazyp/langs-comps/nvim-emmet.lua
+require('genja.map-plugin.php-laravel')(M)       -- lua/lazyp/langs/php-laravel.lua
+require('genja.map-plugin.php-neotest')(M)       -- lua/lazyp/langs/php-neotest.lua
 require('genja.map-plugin.toggleterm')(M)        -- lua/lazyp/term/toggleterm.lua
 require('genja.map-plugin.vim-easy-align')(M)    -- lua/lazyp/my/vim-easy-align.lua
 require('genja.map-plugin.zenmode')(M)           -- lua/lazyp/ui/zenmode.lua
