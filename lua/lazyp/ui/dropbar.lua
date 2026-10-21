@@ -2,6 +2,8 @@
 -- Shown inside genja-statusline's winbar: lua/lazyp/new/genja-statusline.lua.
 -- Usage and keys: doc-wip/readme.idea13-dropbar-aerial.outer-key.md
 
+local Maps = require('genja.map-plugin')
+
 local BIG_BYTES = 1024 * 1024 -- above this, no LSP symbols (whole tree per request)
 
 ---Crumb sources per buffer, chosen once when the bar of a window is created.
@@ -28,11 +30,7 @@ end
 return {
 	'Bekaboo/dropbar.nvim',
 	event = 'VeryLazy',
-	keys = {
-		{ '<leader>;', function() require('dropbar.api').pick() end, desc = 'Dropbar: pick a crumb' },
-		{ '[;', function() require('dropbar.api').goto_context_start() end, desc = 'Dropbar: start of context' },
-		{ '];', function() require('dropbar.api').select_next_context() end, desc = 'Dropbar: next context' },
-	},
+	keys = Maps:keys(),
 	---@type dropbar_configs_t
 	opts = {
 		bar = {

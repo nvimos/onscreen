@@ -1,3 +1,5 @@
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	"abdul-hamid-achik/keymaps.nvim",
@@ -112,7 +114,5 @@ return {
 		},
 
 	},
-	keys = {
-		{ "<leader>?", "<cmd>Keymaps<cr>", desc = "Show Keymaps" },
-	},
+	keys = Maps:keys(),
 }

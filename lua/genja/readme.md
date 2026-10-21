@@ -41,6 +41,7 @@ mappings and funcs for them
      map-jolemak.lua    - keymaps, custom layout quirks
      map-lsp.lua        - keymaps, code-actions, diagnostics navigation
      map-oil.lua        - keymaps, oil buffers: key -> oil-actions; which-key groups
+     map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-zero.lua       - keymaps, essential that must not fail
 

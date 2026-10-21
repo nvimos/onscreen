@@ -1,12 +1,12 @@
 --vim.keymap.set('', '<S-F1>', ':lua CheckAndRunMRU()<CR>', { noremap = true, silent = true })
 
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	{ 'vim-scripts/mru.vim',       -- most recently used (old school)
 	lazy = true,
-	keys = { 
-		{ '<S-F1>', '<cmd>lua CheckAndRunMRU()<cr>', silent = true, desc = 'MRU: toggle' },
-	},
+	keys = Maps:keys(),
 	cmd = { 'CheckAndRunMRU', 'MRU' },
 	init = function()
 		vim.g.MRU_Window_Height = 20

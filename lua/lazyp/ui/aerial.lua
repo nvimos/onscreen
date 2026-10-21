@@ -2,6 +2,8 @@
 -- Treesitter first (json, yaml and 70+ more), LSP as fallback.
 -- Usage and keys: doc-wip/readme.idea13-dropbar-aerial.outer-key.md
 
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	'stevearc/aerial.nvim',
@@ -10,20 +12,7 @@ return {
 		'nvim-tree/nvim-web-devicons',
 	},
 	cmd = { 'AerialToggle', 'AerialOpen', 'AerialNavToggle', 'AerialNavOpen', 'AerialNext', 'AerialPrev' },
-	keys = {
-		-- ! keeps the cursor in the code
-		{ '<c-s>', '<cmd>AerialToggle!<cr>', desc = 'UI: outline sidebar (aerial)' },
-		{ '<leader>mo', '<cmd>AerialToggle!<cr>', desc = 'UI: outline sidebar (aerial)' },
-		{ '<leader>mO', '<cmd>AerialNavToggle<cr>', desc = 'UI: outline nav float (aerial)' },
-		-- extension loaded here, so [o ]o don't pull in telescope
-		{ '<leader>ja', function()
-			require('telescope').load_extension('aerial')
-			vim.cmd('Telescope aerial')
-		end, desc = 'Telescope: aerial symbols' },
-		-- not { }: those stay paragraph motions; [a ]a are nvim's arglist maps
-		{ '[o', '<cmd>AerialPrev<cr>', desc = 'Outline: previous symbol' },
-		{ ']o', '<cmd>AerialNext<cr>', desc = 'Outline: next symbol' },
-	},
+	keys = Maps:keys(),
 	---@module 'aerial'
 	---@type aerial.SetupOpts
 	opts = {

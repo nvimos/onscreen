@@ -1,10 +1,12 @@
 -- distraction free editing
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	'folke/zen-mode.nvim',
 	cmd = 'ZenMode',
 	lazy = true,
-	keys = { { '<leader>mz', '<cmd>ZenMode<cr>', silent = true, desc = "UI: toggle zen mode" } },
+	keys = Maps:keys(),
 	---@type ZenOptions
 	opts = {},
 }
