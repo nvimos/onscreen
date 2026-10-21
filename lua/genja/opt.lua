@@ -29,7 +29,7 @@ vim.g.netrw_sort_direction = 'reverse'
 vim.g.netrw_sort_by        = 'name'
 vim.g.netrw_sort_direction = 'normal'
 
-vim.g.netrw_localmovecmd = (function() if vim.fn.has('Windows') then return 'move'; else return 'mv'; end end)()
+vim.g.netrw_localmovecmd = (function() if vim.fn.has('win32') == 1 then return 'move'; else return 'mv'; end end)()
 
 
 --[[ status bars , lines
@@ -160,7 +160,7 @@ vim.o.showbreak = '⬉      ' -- display after wrapped
 vim.o.showbreak = '`      ' -- display after wrapped
 
 -- {{{ tab replcement character
-if vim.fn.has('gui_running') then
+if vim.fn.has('gui_running') == 1 then
 	vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
 	vim.o.listchars = 'eol:󰭿,tab: '
 	vim.o.listchars = 'tab: '

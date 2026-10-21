@@ -155,7 +155,7 @@ end
 
 
 
-if vim.fn.has('windows') then
+if vim.fn.has('win32') == 1 then
 	-- with a custom keymap, pressing the keys with control does not generate
 	-- the expected key-symbol. so I force this. I want do use <C-d> because
 	-- thats what I remember. and I don't care where <C-d> ~  is on the

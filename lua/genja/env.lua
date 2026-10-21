@@ -1,7 +1,7 @@
 vim.env['HOME'] = (vim.env.HOME or vim.env.Userprofile or vim.uv.os_homedir())
 
 
-if vim.fn.has('windows') == 1 then
+if vim.fn.has('win32') == 1 then
 	vim.env.GIT_SSH_COMMAND = 'C:/Windows/System32/OpenSSH/ssh.exe'
 
 	if not string.find(vim.env.PATH, 'a:\\bin', 1, true) then

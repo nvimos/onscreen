@@ -158,7 +158,7 @@ end
 
 ---@return boolean
 function IsWindows()
-	return vim.fn.has("windows") == 1
+	return vim.fn.has("win32") == 1
 end
 
 ---@generic T
@@ -172,13 +172,13 @@ end
 function OsDependant(win, lin, mac, bsd, posix, other)
 	if vim.fn.has("mac") == 1 then
 		return mac
-	elseif vim.fn.has("windows") == 1 then
+	elseif vim.fn.has("win32") == 1 then
 		return win
 	elseif vim.fn.has("linux") == 1 then
 		return lin
 	elseif vim.fn.has("bsd") == 1 then
 		return bsd
-	elseif vim.fn.has("posix") == 1 then
+	elseif vim.fn.has("unix") == 1 then
 		return posix
 	else
 		return other
