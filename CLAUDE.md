@@ -89,6 +89,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - Leader is space, localleader `,`.
 - `map-zero.lua`: essential maps that must not fail. `map-lsp.lua`, `map-telescope.lua`, `map-convoluted.lua`, `map-jolemak.lua` hold the rest by topic.
+- Plugin keys and config keymaps go in `lua/genja/map-plugin/<spec file name>.lua`; specs use `keys = Maps:keys()` and call `Maps:mappings(opts)` in `config`.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
 - Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`).
 - `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `lua/genja/claude.lua`.

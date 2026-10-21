@@ -16,8 +16,8 @@
 --   Maps:keys('copilot'),
 --   Maps:mappings(opts, 'copilot').
 --
--- Definitions live in lua/genja/map-plugin/<spec name>.lua, required at the bottom
--- of this file. Each returns a function that takes the instance:
+-- Definitions live in lua/genja/map-plugin/<spec name>.lua; the bottom of this file
+-- finds and requires them. Each returns a function that takes the instance:
 --
 --   ---@param Maps genja.MapPlugin
 --   return function(Maps)
@@ -28,6 +28,8 @@
 --
 -- They don't require('genja.map-plugin') themselves: this file is still loading
 -- then, and require errors with "loop or previous error loading module".
+
+local SRC = 'lua/genja/map-plugin/init.lua'
 
 
 -- One (or more) keymap for lazy plugin spec keys option.
@@ -47,7 +49,6 @@ local MapPlugin = {}
 -- Missing keys on instances are looked up here: this is what makes the methods visible.
 MapPlugin.__index = MapPlugin
 
-local SRC = 'genja/map-plugin/init.lua'
 
 ---@return genja.MapPlugin
 function MapPlugin.new()
@@ -162,24 +163,31 @@ function MapPlugin:__tostring()
 		.. ', mappings: ' .. vim.inspect(vim.tbl_keys(self._mappings))
 end
 
--- Definitions: one line per file in lua/genja/map-plugin/, named after its lazy spec file.
+-- Definitions: every .lua file next to this one (not subdirectories), in name order.
+-- A file that returns a function is called with the instance; anything else is just required.
+-- One broken file is reported and skipped, so the other plugins keep their keys.
 local M = MapPlugin.new()
 
-require('genja.map-plugin.abdul-keymaps')(M)     -- lua/lazyp/new/abdul-keymaps.lua
-require('genja.map-plugin.aerial')(M)            -- lua/lazyp/ui/aerial.lua
-require('genja.map-plugin.celular-automaton')(M) -- lua/lazyp/phunnee/celular-automaton.lua
-require('genja.map-plugin.codecompanion')(M)     -- lua/lazyp/langs-comps/codecompanion.lua
-require('genja.map-plugin.copilot')(M)           -- lua/lazyp/langs-comps/copilot.lua
-require('genja.map-plugin.dap-php')(M)           -- lua/lazyp/debug/dap-php.lua
-require('genja.map-plugin.dropbar')(M)           -- lua/lazyp/ui/dropbar.lua
-require('genja.map-plugin.focus')(M)             -- lua/lazyp/ui/focus.lua
-require('genja.map-plugin.harpoon')(M)           -- lua/lazyp/new/harpoon.lua
-require('genja.map-plugin.mru')(M)               -- lua/lazyp/my/mru.lua
-require('genja.map-plugin.nvim-emmet')(M)        -- lua/lazyp/langs-comps/nvim-emmet.lua
-require('genja.map-plugin.php-laravel')(M)       -- lua/lazyp/langs/php-laravel.lua
-require('genja.map-plugin.php-neotest')(M)       -- lua/lazyp/langs/php-neotest.lua
-require('genja.map-plugin.toggleterm')(M)        -- lua/lazyp/term/toggleterm.lua
-require('genja.map-plugin.vim-easy-align')(M)    -- lua/lazyp/my/vim-easy-align.lua
-require('genja.map-plugin.zenmode')(M)           -- lua/lazyp/ui/zenmode.lua
+-- This file's directory, from its own chunk name ('@C:/.../map-plugin/init.lua').
+local dir = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
+
+-- vim.fs.dir's order depends on the OS; sort so the load order is stable.
+local modules = {}
+for file, kind in vim.fs.dir(dir) do
+	if kind == 'file' and file ~= 'init.lua' and vim.endswith(file, '.lua') then
+		table.insert(modules, file:sub(1, -5))
+	end
+end
+table.sort(modules)
+
+for _, module in ipairs(modules) do
+	local ok, result = pcall(require, 'genja.map-plugin.' .. module)
+	if ok and type(result) == 'function' then
+		ok, result = pcall(result, M)
+	end
+	if not ok then
+		vim.notify(SRC .. ': ' .. module .. '.lua: ' .. tostring(result), vim.log.levels.ERROR)
+	end
+end
 
 return M
