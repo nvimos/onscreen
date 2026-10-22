@@ -1,10 +1,59 @@
 
 new setup 2027
 
+- [ ] oil improvement preview
+    - preview should render markdown without the markup cruft
+    - the preview of markdown should wrap by default
+
+- [ ] consider plugin
+    - https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+    - pass args to rg, fuzzy refine, maybe worth stealing some features
+
+
 -[ ] make a safe fall-back version based on the solid-vimscript
+
 -[ ] bootstrap my own statusline
 	- and split out fn and api maybe
 - [ ] integrate local llm
 
 - auto-format and check ansible => too slow on silver
 	- scan / lint for errors.
+
+- [n] for split buffers that are out of focus (plug-wip/genja-splitpad.nvim; floating column variant: later)
+    - on the inside of the buffer, draw a black column next to the vertical slit pane marker
+    - this is supposed to emulte padding
+    - use "ghost text" feature of neovim
+    - this ghost text should disappear when the buffer gains back focus
+
+- [ ] almavimrc:
+    - incorporate / rewrite to lua
+        - set up a tracker readme
+        - maybe annotate / comment functions in vim9 and say where their nvim counterparts are
+        - consider dropping long-term support idea
+        - just copy what you need back to nvim, and leave it as is
+    - put submodules lua/genja/alma -> nvim/alma
+        - split in modules/parts and set up a concat script
+        - keep as a stable-fallback for nvim or vim9 setup
+            - try linking vim9 .vimrc to .config/neovim/init.vim
+    - or not
+
+
+- [ ] consider adopting blink over cmp or improve cmp behavior
+    - document cmp behavior and config with intent in mind
+        - describe why each source is there and what for
+    - behavior
+        - unstable suggestion box. it moves with the cursor and suggests every word (needs refinement for prose files)
+            - debounce on location set. reset every 20-30 seconds.
+                - should appear at start of sentences. or maybe at the top left corner. may be awkward if it precudes cursor.
+                - the list of suggestions should probably stay in one place and if it started to show above, it should stay above
+                - especially for text files. it's too annoying to see it skip up and down
+                - maybe it should only show up after i press tab and if there is at least one suggestion
+
+
+- [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
+    - nvim-lint is not installed yet; would also cover other non-LSP linters
+    - gitcommit currently has treesitter highlighting only
+	- autofill with copilot
+
+- [ ] consider adopting snacks
+    - https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md

@@ -96,7 +96,6 @@
 - [x] 3. nvim: remove charity nag. keep plain startup message
     - maybe look for a plugin that recreates the startup message
 
-- [ ] 11. redefine all standard fold commands with better descriptions «Fold: …»
 
 - [x] 5. lsp binds: scroll in hover window / buffer
 - [x] 4. lsp binds: close hover window with <esc>
@@ -110,38 +109,55 @@
 
 - [x] 6. oil: auto confirm creation of a single dir / file
 
-- [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
-    - nvim-lint is not installed yet; would also cover other non-LSP linters
-    - gitcommit currently has treesitter highlighting only
 
 - [x] 1. genja-finder.nvim: move live grep/find and their togglers into 
     - plug-wip/genja-finder.nvim
     - see plug-wip/genja-finder.nvim/move-plan.md
 
+- [x] telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
+      <C-l/q> all), <C-/> lists the keys, hint in the empty prompt (0b48222)
 
-- which keys
-    - sort by description alphabetically, columns first
+
+-[.] which keys
+    - [x] sort by description alphabetically, columns first
     - check if it's possible to search by description
-    - redefine all standard fold mapping keys with a description prefix «Fold: »
+        - check <leader>? (Keymaps)
+            - does not show the updated descriptions for the default keymaps
+                - maybe i need to redefine them after all.
+        - check telescope keymaps
+                - does not show oil maps
+                - does not updated descriptions for fold keys
+        - [ ] maybe extend telescope keymaps with refine-decorator
+            - [ ] or cook <m-r> mapping for it to toggle / rotate groups
+    - [x] redefine all standard fold mapping keys with a description prefix «Fold: »
+        - do this in map-zero in a separate fold for folds
+        - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
+
+- [ ] 11. redefine all standard fold commands with better descriptions «Fold: …»
 
 
-- find a plugin to rotate window / pane layouts
+- [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
+    - nvim-lint is not installed yet; would also cover other non-LSP linters
+    - gitcommit currently has treesitter highlighting only
+    - autofill with copilot
+
+- [ ] find a plugin to rotate window / pane layouts
     - one key to rotate
         - vsplit : 50 / 50 -> 30 / 70 -> 60 / 40
         - some simeple way to hold + / - to make the current window bigger by incremental steps, that are not 1 column at a time
         - probably find a plugin for this
 
-- [ ] almavimrc: incorporate / rewrite to lua
-    - put submodules lua/genja/alma
-    - [ ] the ~ behavior to toggle false and other switches
 
-- [x] telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
-      <C-l/q> all), <C-/> lists the keys, hint in the empty prompt (0b48222)
+
+- [ ] almavimrc. clone in lua the behaviors
+    - [ ] ~ to toggle false and other switches
+    - [ ] create fold from visual selection (add {{{,}}} markers)
 
 - [ ] telescope: mousability
     - select lines (actions in code actions from lsp, F1, F2, F3, scroll list)
 
 - [ ] nvim-init
+    - improve/add mouse functionality in nvim
     - for lazy mornings, or planning sessions
         - some mouseability
         - navigate notes, todo
@@ -151,21 +167,8 @@
 - [ ] bug in winbar or statusbar
     - resizing activates right-most tab
 
-- [ ] move gitea definition to w11s cut project
+- [ ] move gitea definition to w11s-cut project
 
-- [ ] consider adopting snacks
-    - https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
-
-- [ ] consider adopting blink over cmp or improve cmp behavior
-    - document cmp behavior and config with intent in mind
-        - describe why each source is there and what for
-    - behavior
-        - unstable suggestion box. it moves with the cursor and suggests every word (needs refinement for prose files)
-            - debounce on location set. reset every 20-30 seconds.
-                - should appear at start of sentences. or maybe at the top left corner. may be awkward if it precudes cursor.
-                - the list of suggestions should probably stay in one place and if it started to show above, it should stay above
-                - especially for text files. it's too annoying to see it skip up and down
-                - maybe it should only show up after i press tab and if there is at least one suggestion
 
 - [ ] telescope refine decorator in steps
     - see if someone has done it already
@@ -175,29 +178,15 @@
         - implement <m-f> refinement for it too. reuse code if possible
 
 - [ ] recent files
+    - make my own plugin with my rules for saving and ranking files
     - study in essense
         - telescope old files
         - old mru plugin
-    - make my own plugin with my rules for saving and ranking files
 
 - [ ] add keys in oil to auto-add a location (item) from the list to the startdirs
-    - startdirs should become a plugin in plug-wip/
-    - it should save new locations to NVIM/local/startdirs.json
     - it can take some usability / features from harpoon - ask if they seem relevant
+    - it should save new locations to NVIM/local/startdirs.json
+        - or some lua-native format. maybe a plain text file will do
+    - startdirs should become a plugin in plug-wip/
 
-
-- [ ] oil improvement preview
-    - preview should render markdown without the markup cruft
-    - the preview of markdown should wrap by default
-
-    
-- [ ] consider plugin
-    - https://github.com/nvim-telescope/telescope-live-grep-args.nvim
-    - pass args to rg, fuzzy refine, maybe worth stealing some features
-
-- [x] for split buffers that are out of focus (plug-wip/genja-splitpad.nvim; floating column variant: later)
-    - on the inside of the buffer, draw a black column next to the vertical slit pane marker
-    - this is supposed to emulte padding
-    - use "ghost text" feature of neovim
-    - this ghost text should disappear when the buffer gains back focus
 
