@@ -195,7 +195,7 @@
     - https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     - pass args to rg, fuzzy refine, maybe worth stealing some features
 
-- [ ] for split buffers that are out of focus
+- [x] for split buffers that are out of focus (plug-wip/genja-splitpad.nvim; floating column variant: later)
     - on the inside of the buffer, draw a black column next to the vertical slit pane marker
     - this is supposed to emulte padding
     - use "ghost text" feature of neovim

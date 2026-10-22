@@ -24,6 +24,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
 - @plug-wip/genja-finder.nvim/CLAUDE.md: live grep and live find pickers.
 - @plug-wip/genja-oily.nvim/CLAUDE.md: hide oil entries listed in the nearest `.oily` up the tree.
+- @plug-wip/genja-splitpad.nvim/CLAUDE.md: padding column next to the split separator in unfocused windows.
 - @plug-wip/genja-statusline.nvim/CLAUDE.md: statusline, tabline, winbar.
 
 ## Working style
