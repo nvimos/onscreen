@@ -67,6 +67,48 @@ return {
 				{ '<leader>y',        group = 'Yank: clipboard' },
 				{ '<leader>z',        group = 'Zen: and write' },
 
+			}, {
+				-- built-in fold keys: descriptions only
+				mode = { 'n' },
+
+				-- the popup sorts by description: the word after `Fold: ` is the group
+
+				{ 'zc', desc = 'Fold: x close' },
+				{ 'zM', desc = 'Fold: x close all' },
+				{ 'zC', desc = 'Fold: x close recursively' },
+
+				{ 'zf', desc = 'Fold: create (operator)' },
+				{ 'zf', desc = 'Fold: create from selection', mode = 'v' },
+				{ 'zF', desc = 'Fold: create for N lines' },
+
+				{ 'zd', desc = 'Fold: delete' },
+				{ 'zE', desc = 'Fold: delete all (eliminate)' },
+				{ 'zD', desc = 'Fold: delete recursively' },
+
+				{ 'zn', desc = 'Fold: fen off' },
+				{ 'zN', desc = 'Fold: fen on' },
+				{ 'zi', desc = 'Fold: fen toggle' },
+
+				{ ']z', desc = 'Fold: jump to open fold end' },
+				{ '[z', desc = 'Fold: jump to open fold start' },
+				{ 'zj', desc = 'Fold: jump to next start' },
+				{ 'zk', desc = 'Fold: jump to previous end' },
+
+				{ 'zr', desc = 'Fold: level less (foldlevel +1)' },
+				{ 'zm', desc = 'Fold: level more (foldlevel -1)' },
+
+				{ 'zo', desc = 'Fold: open' },
+				{ 'zR', desc = 'Fold: open all' },
+				{ 'zO', desc = 'Fold: open recursively' },
+
+				{ 'za', desc = 'Fold: toggle' },
+				{ 'zA', desc = 'Fold: toggle recursively' },
+
+				{ 'zX', desc = 'Fold: update' },
+				{ 'zx', desc = 'Fold: update, view cursor line' },
+
+				{ 'zv', desc = 'Fold: view cursor line' },
+
 			} },
 			sort = { 'local', 'buffer-local', 'desc', 'natural', 'mod' },
 		}
