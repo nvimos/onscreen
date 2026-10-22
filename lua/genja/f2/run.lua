@@ -23,17 +23,42 @@ end
 ---@param cmd string|string[]
 ---@param cwd string
 ---@param on_exit? fun(code: integer) called on the main loop
-function M.overseer(name, cmd, cwd, on_exit)
+---@param opts? { quiet?: boolean } quiet: notify and open the task list only on failure; drop the task on success
+function M.overseer(name, cmd, cwd, on_exit, opts)
 	local overseer = require('overseer')
-	local task = overseer.new_task({ name = name, cmd = cmd, cwd = cwd })
+	local quiet = opts and opts.quiet
+	local task_opts = { name = name, cmd = cmd, cwd = cwd }
+	if quiet then
+		-- overseer's 'default' components, with the notification limited to failures
+		task_opts.components = {
+			'on_exit_set_status',
+			{ 'on_complete_notify', statuses = { 'FAILURE' } },
+			{ 'on_complete_dispose', require_view = { 'SUCCESS', 'FAILURE' } },
+		}
+	end
+	local task = overseer.new_task(task_opts)
 	if on_exit then
 		task:subscribe('on_exit', function(_, code)
 			vim.schedule(function() on_exit(code) end)
 			return true -- unsubscribe
 		end)
 	end
+	if quiet then
+		task:subscribe('on_complete', function(done_task, status)
+			vim.schedule(function()
+				if status == 'SUCCESS' then
+					done_task:dispose()
+				elseif status == 'FAILURE' then
+					overseer.open({ enter = false })
+				end
+			end)
+			return true -- unsubscribe
+		end)
+	end
 	task:start()
-	overseer.open({ enter = false })
+	if not quiet then
+		overseer.open({ enter = false })
+	end
 end
 
 ---Run cmd in a new floaterm; the exit code comes from TermClose.

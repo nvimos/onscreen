@@ -1,10 +1,11 @@
 -- <F2> source, group `git`, oil buffers only. For the repo around oil's dir:
 --   add (N files)  sub-picker over the changed files (git status codes,
---                  repo-relative paths), diff preview, <Tab> marks, <CR> git add
-
-local run = require('genja.f2.run')
+--                  repo-relative paths), diff preview (hidden at start), <Tab> marks,
+--                  <CR> git add, <C-p> toggles the preview, <M-t> tabedit (picker stays), <M-e> edit
 
 local M = {}
+
+local src = 'lua/genja/f2/git.lua: '
 
 ---@class genja.f2.GitFile
 ---@field xy string porcelain status, e.g. ' M', '??'
@@ -40,11 +41,17 @@ end
 local function git_add(root, paths)
 	local cmd = { 'git', 'add', '--' }
 	vim.list_extend(cmd, paths)
-	local name = 'git add ' .. paths[1]
-	if #paths > 1 then
-		name = ('git add %s (+%d)'):format(paths[1], #paths - 1)
-	end
-	run.overseer(name, cmd, root)
+	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
+		if res.code ~= 0 then
+			vim.notify(src .. 'git add failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
+		elseif res.stderr and res.stderr ~= '' then
+			vim.notify(src .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
+		end
+		-- oil-git refreshed on picker close, before git add finished
+		if vim.bo.filetype == 'oil' then
+			require('genja.oil.git').refresh_oil_git()
+		end
+	end))
 end
 
 -- diff for tracked files, the file itself (first 500 lines) for untracked
@@ -83,7 +90,14 @@ local function pick_files(root, files)
 	local previewers = require('telescope.previewers')
 	-- ascending: the global config has the prompt on top but sorts descending,
 	-- so <Tab> (mark + next worse) moved up
-	require('telescope.pickers').new({ sorting_strategy = 'ascending' }, {
+	-- preview_cutoff 1: the vertical layout's default (40 lines) hid the diff in
+	-- short windows, and <C-p> can't override it. Strategy key wins over top level.
+	local picker_opts = {
+		sorting_strategy = 'ascending',
+		layout_config = { vertical = { preview_cutoff = 1 } },
+		preview = { hide_on_startup = true }, -- <C-p> shows it
+	}
+	require('telescope.pickers').new(picker_opts, {
 		prompt_title = 'git add: ' .. vim.fn.fnamemodify(root, ':~') .. '  (<Tab> marks)',
 		finder = require('telescope.finders').new_table({
 			results = files,
@@ -100,18 +114,57 @@ local function pick_files(root, files)
 				require('telescope.previewers.utils').highlighter(self.state.bufnr, ft)
 			end,
 		}),
-		attach_mappings = function(bufnr)
-			actions.select_default:replace(function()
+		attach_mappings = function(bufnr, map)
+			-- marked paths, else the one under the cursor
+			local function selected_paths()
 				local picker = action_state.get_current_picker(bufnr)
 				local selected = picker:get_multi_selection()
 				if #selected == 0 then
 					selected = { action_state.get_selected_entry() }
 				end
-				actions.close(bufnr)
 				local paths = {}
 				for _, entry in ipairs(selected) do
 					table.insert(paths, entry.value.path)
 				end
+				return paths
+			end
+			-- same, and closes the picker
+			local function take_paths()
+				local paths = selected_paths()
+				actions.close(bufnr)
+				return paths
+			end
+			local function edit_selected()
+				for _, path in ipairs(take_paths()) do
+					vim.cmd.edit(vim.fn.fnameescape(root .. '/' .. path))
+				end
+			end
+			-- Opens tabs behind the picker and returns to the prompt. Telescope
+			-- closes the picker on the prompt buffer's BufLeave, so ignore that.
+			local function tabedit_selected()
+				local tab = vim.api.nvim_get_current_tabpage()
+				local win = vim.api.nvim_get_current_win()
+				local saved_eventignore = vim.o.eventignore
+				vim.opt.eventignore:append('BufLeave')
+				local ok, err = pcall(function()
+					for _, path in ipairs(selected_paths()) do
+						vim.cmd.tabedit(vim.fn.fnameescape(root .. '/' .. path))
+					end
+				end)
+				vim.api.nvim_set_current_tabpage(tab)
+				vim.api.nvim_set_current_win(win)
+				vim.o.eventignore = saved_eventignore
+				if not ok then
+					vim.notify('lua/genja/f2/git.lua: tabedit failed: ' .. tostring(err), vim.log.levels.ERROR)
+				end
+			end
+			require('genja.fn.telemap').Telemap(map)
+			-- same key as oil's preview toggle
+			map({ 'i', 'n' }, '<C-p>', require('telescope.actions.layout').toggle_preview, { desc = 'f2 git: toggle preview' })
+			map({ 'i', 'n' }, '<M-t>', tabedit_selected, { desc = 'f2 git: open selected in tabs, keep the picker' })
+			map({ 'i', 'n' }, '<M-e>', edit_selected, { desc = 'f2 git: edit selected' })
+			actions.select_default:replace(function()
+				local paths = take_paths()
 				if #paths > 0 then
 					git_add(root, paths)
 				end

@@ -33,7 +33,7 @@
 
 local M = {}
 
-local src = 'nvim/lua/genja/claude.lua: '
+local SRC = 'genja/claude.lua: '
 local TERM = 'claude'
 local BRIEF = 'Answer briefly: at most 3 short sentences, plain text, no markdown.\n\n'
 local HISTORY_MAX = 50
@@ -217,13 +217,13 @@ end
 local function write_marker(id, title)
 	local buf = state.origin_buf
 	if not buf or not vim.api.nvim_buf_is_loaded(buf) or not vim.bo[buf].modifiable then
-		vim.notify(src .. 'session renamed, but the buffer claude was started from is gone', vim.log.levels.WARN)
+		vim.notify(SRC .. 'session renamed, but the buffer claude was started from is gone', vim.log.levels.WARN)
 		return
 	end
 	local cs = vim.bo[buf].commentstring
 	local at = cs:find('%s', 1, true)
 	if not at then
-		vim.notify(src .. "no 'commentstring' for this filetype; marker not written", vim.log.levels.WARN)
+		vim.notify(SRC .. "no 'commentstring' for this filetype; marker not written", vim.log.levels.WARN)
 		return
 	end
 	local text = 'claude-session: ' .. id .. ' ' .. title:gsub('%s+', ' ')
@@ -239,7 +239,7 @@ local function write_marker(id, title)
 		vim.api.nvim_buf_set_lines(buf, -1, -1, false, { line })
 	end
 	local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':~:.')
-	vim.notify(src .. 'session marker written to ' .. name .. ' (not saved)')
+	vim.notify(SRC .. 'session marker written to ' .. name .. ' (not saved)')
 end
 
 ---Stop polling the transcript.
@@ -342,7 +342,7 @@ local function session_start()
 				opts.cwd = vim.fs.normalize(cwd):gsub(' ', '\\ ')
 				return { term_opts = opts, id = id, resumed = true, cwd = cwd, title = title }
 			end
-			vim.notify(src .. 'no transcript or cwd for session ' .. id .. '; starting a new one', vim.log.levels.WARN)
+			vim.notify(SRC .. 'no transcript or cwd for session ' .. id .. '; starting a new one', vim.log.levels.WARN)
 		end
 	end
 
@@ -400,7 +400,7 @@ local function when_ready(bufnr, cb)
 			return
 		end
 		if waited >= 15000 then
-			vim.notify(src .. 'claude did not start within 15 s', vim.log.levels.WARN)
+			vim.notify(SRC .. 'claude did not start within 15 s', vim.log.levels.WARN)
 			return
 		end
 		waited = waited + 200
@@ -474,7 +474,7 @@ local function open(focus, cb)
 		vim.cmd('FloatermShow ' .. TERM)
 	end
 	if not bufnr then
-		vim.notify(src .. 'could not start claude', vim.log.levels.ERROR)
+		vim.notify(SRC .. 'could not start claude', vim.log.levels.ERROR)
 		return
 	end
 
@@ -526,7 +526,7 @@ function M.toggle(term_opts, args)
 	local bufnr = term_bufnr()
 	if bufnr and args and args ~= '' then
 		-- flags only apply at start; a running claude keeps its own
-		vim.notify(src .. 'claude already runs; ' .. args .. ' ignored (:FloatermKill claude, then retry)', vim.log.levels.WARN)
+		vim.notify(SRC .. 'claude already runs; ' .. args .. ' ignored (:FloatermKill claude, then retry)', vim.log.levels.WARN)
 	end
 	if bufnr and term_win(bufnr) then
 		vim.cmd('FloatermHide ' .. TERM)
@@ -663,7 +663,7 @@ function M.paste_context()
 		end
 	end
 	if not text then
-		vim.notify(src .. 'nothing to paste: this buffer has no file', vim.log.levels.WARN)
+		vim.notify(SRC .. 'nothing to paste: this buffer has no file', vim.log.levels.WARN)
 		return
 	end
 	open(true, function(bufnr) paste(bufnr, text, false) end)

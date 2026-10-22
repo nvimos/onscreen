@@ -8,6 +8,7 @@ local IsDir = require 'genja.fn'.IsDir
 -- {{{ aliases, alignment
 local km = vim.keymap.set
 local nv = { 'n', 'v' }
+local ic = {'i', 'c'}
 local nvo = { 'n', 'v', 'o' }
 local d = ''  -- default :map, modes n v o (normal, visual, operator pending)
 local n = { 'n' }
@@ -76,11 +77,11 @@ km('n', '', '<C-e>', { silent = true, noremap = true, desc = 'Scroll: extra lin
 
 -- Yank & Paste {{{
 -- Paste from clipboard ("+ register) in insert mode
-km('i', '<S-Insert>', '<c-r>+', nosi 'Paste (shift+insert)')
-km(nv, '<leader>y=', '"+yy', nosi 'Vim: yank into clipboard ("+yy)')
-km(nv, '<leader>y8', '"*yy', nosi 'Vim: yank into x11:primary  ("*yy)')
-km(v, '<leader>yy', '"+y', { desc = 'Vim: yank into clipboard visual ("+yy)' })
-km(n, '<leader>yf', '"%p', nosi 'Vim: yank filename')
+km(ic, '<S-Insert>', '<c-r>+', nosi 'Paste: clipboard (<c-r>+)')
+km(n,  '<leader>yf', '"%p',    nosi 'Paste: filename  ("%p)')
+km(nv, '<leader>y=', '"+yy',   nosi 'Yank: into clipboard   ("+yy)')
+km(nv, '<leader>y8', '"*yy',   nosi 'Yank: into x11:primary ("*yy)')
+km(v,  '<leader>yy', '"+y',    nosi 'Yank: into clipboard   ("+yy)' )
 
 -- km('x', '<leader>sv', require('genja.fn-keys').SubstituteVisualSelection, { desc = 'Edit Substitute visual selection' })
 

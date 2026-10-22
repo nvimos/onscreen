@@ -1,7 +1,9 @@
+-- vim: foldmethod=marker foldlevel=0
 -- focus.nvim ships no LuaLS types for its config; these mirror Focus.config in lua/focus/init.lua.
 
 local Maps = require('genja.map-plugin')
 
+-- {{{ docs
 ---@class FocusAutoresizeOpts
 ---@field enable? boolean resize splits on WinEnter
 ---@field width? integer force width of the focused window (0 = golden ratio)
@@ -40,6 +42,9 @@ local Maps = require('genja.map-plugin')
 ---@field split? FocusSplitOpts
 ---@field ui? FocusUiOpts
 
+-- }}}
+
+-- {{{ excluded buf and filetypes
 -- focus has no exclude option; it skips buffers with vim.b.focus_disable set.
 local excluded_buftypes = {
 	'terminal', -- floaterm, :terminal
@@ -51,6 +56,33 @@ local excluded_buftypes = {
 local excluded_filetypes = {
 	'oil',
 }
+-- }}}
+
+---Autocmd callback: mark the buffer so focus leaves its windows alone. {{{
+---@param ev vim.api.keyset.create_autocmd.callback_args
+local function disable_focus_for_excluded(ev)
+	if false
+		or vim.tbl_contains(excluded_buftypes, vim.bo[ev.buf].buftype)
+		or vim.tbl_contains(excluded_filetypes, vim.bo[ev.buf].filetype)
+	then
+		vim.b[ev.buf].focus_disable = true
+	end
+end
+-- }}}
+
+
+-- {{{ Wire excluded types
+local function wire_excluded_types_autocmd(_, o)
+	-- Created before setup() so it runs ahead of focus's own WinEnter resize.
+	vim.api.nvim_create_autocmd({ 'BufWinEnter', 'FileType', 'TermOpen', 'WinEnter' }, {
+		group = vim.api.nvim_create_augroup('PluginFocusLuaExclude', { clear = true }),
+		callback = disable_focus_for_excluded,
+		desc = 'focus.lua: disable focus for excluded buftypes and wintypes',
+	})
+	require('focus').setup(o)
+	vim.g.plugin_focus_lua_disable = true -- focus off, disabled by default
+end
+-- }}}
 
 ---@type FocusOpts
 local focus_opts = {
@@ -65,28 +97,6 @@ local focus_opts = {
 	},
 }
 
----Autocmd callback: mark the buffer so focus leaves its windows alone.
----@param ev vim.api.keyset.create_autocmd.callback_args
-local function disable_focus_for_excluded(ev)
-	if false
-		or vim.tbl_contains(excluded_buftypes, vim.bo[ev.buf].buftype)
-		or vim.tbl_contains(excluded_filetypes, vim.bo[ev.buf].filetype)
-	then
-		vim.b[ev.buf].focus_disable = true
-	end
-end
-
-
-local function wire_excluded_autocmd(_, o)
-	-- Created before setup() so it runs ahead of focus's own WinEnter resize.
-	vim.api.nvim_create_autocmd({ 'BufWinEnter', 'FileType', 'TermOpen', 'WinEnter' }, {
-		group = vim.api.nvim_create_augroup('PluginFocusLuaExclude', { clear = true }),
-		callback = disable_focus_for_excluded,
-		desc = 'focus.lua: disable focus for excluded buftypes and wintypes',
-	})
-	require('focus').setup(o)
-end
-
 ---@type LazySpec
 return {
 	'beauwilliams/focus.nvim',
@@ -94,7 +104,5 @@ return {
 	event = { "VimEnter", "WinNew", "WinEnter" },
 	keys = Maps:keys(),
 	opts = focus_opts,
-	config = wire_excluded_autocmd,
+	config = wire_excluded_types_autocmd,
 }
---
--- claude-session: a50d4f56-778e-4ce1-91f1-28551a19772e focus lua

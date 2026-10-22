@@ -29,7 +29,8 @@ function M.entries(entries, ctx, opts)
 			end,
 		}),
 		sorter = require('telescope.config').values.generic_sorter({}),
-		attach_mappings = function(bufnr)
+		attach_mappings = function(bufnr, map)
+			require('genja.fn.telemap').Telemap(map)
 			actions.select_default:replace(function()
 				local marked = action_state.get_current_picker(bufnr):get_multi_selection()
 				if #marked == 0 then

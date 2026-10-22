@@ -201,7 +201,3 @@
     - use "ghost text" feature of neovim
     - this ghost text should disappear when the buffer gains back focus
 
-
-## wip
-
-claude --resume 7b18fe92-00bb-4c60-a50f-7be457ed680d

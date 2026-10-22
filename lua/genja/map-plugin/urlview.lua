@@ -54,7 +54,7 @@ local function pick_urls_in_lines(line1, line2)
 		end
 	end
 	if #urls == 0 then
-		vim.notify('lua/genja/map-plugin/urlview.lua: no URLs found', vim.log.levels.INFO)
+		vim.notify('genja/map-plugin/urlview.lua: no URLs found', vim.log.levels.INFO)
 		return
 	end
 	pick_urls(urls)
@@ -79,7 +79,7 @@ return function(Maps)
 	local spec_name = Maps.current_file()
 
 	Maps:add_keys(spec_name, {
-		{ 'gx', open_selection_urls, mode = 'x', desc = 'Open URLs in selection (<Tab> marks several)' },
-		{ '<leader>gx', open_buffer_urls, desc = 'Open URLs in buffer (<Tab> marks several)' },
+		{ 'gx', open_selection_urls, mode = 'x', desc = 'Open URLs in selection'},
+		{ '<leader>gx', open_buffer_urls, desc = 'Open URLs in buffer' },
 	})
 end

@@ -4,6 +4,7 @@ local Maps = require('genja.map-plugin')
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-splitpad.nvim',
 	event = 'VeryLazy',
+	enabled = false,
 	keys = Maps:keys(),
 
 	---@type genja-splitpad.Opts

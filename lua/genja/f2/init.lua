@@ -129,4 +129,19 @@ end
 -- exposed for tests/f2
 M._sort = sort
 
+-- Drops the cached f2 modules; the next <F2> loads them fresh. Tasks added
+-- with f2.add_tasks() are lost with the registry.
+vim.api.nvim_create_user_command('F2Reload', function()
+	package.loaded['genja.f2'] = nil
+	package.loaded['genja.f2.adhoc'] = nil
+	package.loaded['genja.f2.builder'] = nil
+	package.loaded['genja.f2.git'] = nil
+	package.loaded['genja.f2.make'] = nil
+	package.loaded['genja.f2.picker'] = nil
+	package.loaded['genja.f2.registry'] = nil
+	package.loaded['genja.f2.run'] = nil
+	package.loaded['genja.fn.telemap'] = nil
+	vim.notify(src .. 'f2 modules unloaded, next <F2> reloads them')
+end, { desc = 'f2: unload the context picker modules' })
+
 return M
