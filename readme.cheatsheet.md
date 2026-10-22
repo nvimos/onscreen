@@ -22,7 +22,7 @@ Split padding (plug-wip/genja-splitpad.nvim)
 
 URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
 
-    gx (visual)  pick URLs in the selected lines, one by one; <Esc> stops
+    gx (visual)  pick URLs in the selected lines: <Tab> marks, <CR> opens marked (or current)
     gx (normal)  built-in: open URL under cursor
     <leader>gx   pick a URL in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy

@@ -1,20 +1,42 @@
 -- Keys for lua/lazyp/new/urlview.lua.
 
--- Open the picked URL, then show the picker again with the rest, until none
--- remain or the picker is cancelled.
+-- Telescope picker, not vim.ui.select: that returns one item only.
+-- <Tab> marks entries; <CR> opens the marked ones, or the current one if none are marked.
 ---@param urls string[]
-local function pick_loop(urls)
-	if #urls == 0 then
-		return
-	end
-	vim.ui.select(urls, { prompt = 'Open URL' }, function(url, idx)
-		if not url then
-			return
+local function pick_urls(urls)
+	local actions = require('telescope.actions')
+	local action_state = require('telescope.actions.state')
+
+	---@param bufnr integer prompt buffer
+	local function open_marked(bufnr)
+		local picker = action_state.get_current_picker(bufnr)
+		local entries = picker:get_multi_selection()
+		if #entries == 0 then
+			local current = action_state.get_selected_entry()
+			if current then
+				entries = { current }
+			end
 		end
-		vim.ui.open(url)
-		table.remove(urls, idx)
-		pick_loop(urls)
-	end)
+		actions.close(bufnr)
+		for _, entry in ipairs(entries) do
+			vim.ui.open(entry.value)
+		end
+	end
+
+	---@param bufnr integer prompt buffer
+	---@return boolean keep_defaults
+	local function attach_mappings(bufnr)
+		actions.select_default:replace(function() open_marked(bufnr) end)
+		return true
+	end
+
+	local theme = require('telescope.themes').get_dropdown()
+	require('telescope.pickers').new(theme, {
+		prompt_title = 'Open URLs (<Tab> mark, <CR> open)',
+		finder = require('telescope.finders').new_table({ results = urls }),
+		sorter = require('telescope.config').values.generic_sorter({}),
+		attach_mappings = attach_mappings,
+	}):find()
 end
 
 local function open_selection_urls()
@@ -39,7 +61,7 @@ local function open_selection_urls()
 		vim.notify('lua/genja/map-plugin/urlview.lua: no URLs in selection', vim.log.levels.INFO)
 		return
 	end
-	pick_loop(urls)
+	pick_urls(urls)
 end
 
 ---@param Maps genja.MapPlugin
@@ -47,7 +69,7 @@ return function(Maps)
 	local spec_name = Maps.current_file()
 
 	Maps:add_keys(spec_name, {
-		{ 'gx', open_selection_urls, mode = 'x', desc = 'Open URLs in selection one by one' },
+		{ 'gx', open_selection_urls, mode = 'x', desc = 'Open URLs in selection (<Tab> marks several)' },
 		{ '<leader>gx', '<cmd>UrlView buffer<cr>', desc = 'Pick URL in buffer' },
 	})
 end
