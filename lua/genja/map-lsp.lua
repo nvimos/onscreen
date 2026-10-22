@@ -117,6 +117,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		km(nv_, '<leader>ce', action_kind('refactor.extract'), o 'LSP: Code action: extract (select first)')
 		km(nv_, '<leader>cr', action_kind('refactor.rewrite'), o 'LSP: Code action: rewrite')
 		km(nv_, '<leader>cs', action_kind('source'),           o 'LSP: Code action: source (imports, docs, tests)')
+		-- the lens on the cursor line; servers show them only when enabled (lang/go.lua)
+		km(n__, '<leader>cl', vim.lsp.codelens.run,            o 'LSP: Code lens: run')
 		-- }}}
 
 		-- {{{ Man or Doc or Hover

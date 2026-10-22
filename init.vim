@@ -28,12 +28,12 @@ do
 		Safeload 'genja.map-telescope'   -- make telescope easier to use
 		Safeload 'genja.map-convoluted'  -- esoteric keymaps
 		Safeload 'genja.opt'             -- vim config options
-     -- load legacy one-file config for vim9 and earlier
-		vim.cmd('source '           .. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
+		vim.cmd('source '.. vim.fn.stdpath('config') .. '/lua/genja/vimrc.almalinux.vim')
 	end
 end
 EOF
 else
+    " legacy one-file config for vim9 and earlier
 	source <sfile>:h/lua/genja/vimrc.almalinux.vim
 endif
 

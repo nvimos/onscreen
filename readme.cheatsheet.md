@@ -21,6 +21,8 @@ Floaterm commands (lua/genja/auto-alias.vim)
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm
     :ClaudeFterm --chrome   flags at start, <Tab> completes: --model --effort
                             --permission-mode --add-dir --ide --verbose --no-chrome
+    in the claude terminal (lua/genja/claude.lua):
+    <C-Left>  window on the left    <C-Right>  next tab
 
 Code actions by kind (map-lsp.lua; visual mode sends the selection)
 
@@ -28,6 +30,7 @@ Code actions by kind (map-lsp.lua; visual mode sends the selection)
     <leader>ce  extract (select first: statements, or one expression)
     <leader>cr  rewrite: fill struct/switch, invert if, split/join lines
     <leader>cs  source: organize imports, doc, add test
+    <leader>cl  run the code lens on this line (Go: run test, go.mod tidy/upgrade)
     Go saves run organize imports + format; :let b:go_format_on_save = v:false
 
 Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal mode)

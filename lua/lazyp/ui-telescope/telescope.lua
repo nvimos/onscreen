@@ -1,6 +1,5 @@
--- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 
-vim.api.nvim_create_autocmd({'UIEnter'} , {
+vim.api.nvim_create_autocmd({ 'UIEnter' }, {
 	group = vim.api.nvim_create_augroup('Plugins', { clear = false }),
 	callback = function(_)
 		local ok, ts = pcall(require, 'telescope')
@@ -12,8 +11,9 @@ vim.api.nvim_create_autocmd({'UIEnter'} , {
 			ts.load_extension 'mylunsj'
 			ts.load_extension 'undersort'
 		end
-
-	end, })
+	end,
+	}
+)
 
 
 ---@type LazySpec
@@ -30,7 +30,7 @@ return {
 
 
 
-	{  'nvim-telescope/telescope-symbols.nvim', event = 'VeryLazy', lazy = true }, -- UIEnter
+	{ 'nvim-telescope/telescope-symbols.nvim', event = 'VeryLazy', lazy = true }, -- UIEnter
 	-- {  'barrett-ruth/telescope-http.nvim', event = 'VeryLazy', lazy = true,
 	-- 	cmd = 'Telescope http list',
 	-- 	config = function()

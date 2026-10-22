@@ -14,9 +14,9 @@ Safeload 'genja.fu'                 -- userfuncs
 
 require 'genja.fn'.win_chdir_home() -- cd ~ on windows
 
-C = vim.fn.stdpath('config')
+local C = vim.fn.stdpath('config')
 vim.cmd('source ' .. C .. '/lua/genja/auto-alias.vim') -- aliases, onliners, autocommads, abbreviations
-vim.cmd('source ' .. C .. '/lua/genja/abbreviations.vim') -- aliases, onliners, autocommads, abbreviations
+vim.cmd('source ' .. C .. '/lua/genja/abbreviations.vim') -- abbreviations
 vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')     -- colors
 vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
@@ -33,10 +33,9 @@ Safeload 'genja.map-convoluted'
 START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local sd = {}
 	local function Norm(p)
-		local s, _ = p:gsub('\\', '/'); return vim.fn.trim(s)
+		return vim.fn.trim((p:gsub('\\', '/'):gsub('oil://', '')) )
 	end
-	local function InsertDir(e) if IsDir(Norm(e)) then table.insert(sd, Norm(e)) end end
-	local function add_dir(e) InsertDir(e) end
+	local function add_dir(e) if IsDir(Norm(e)) then table.insert(sd, Norm(e)) end end
 	local homePath = function(p)
 		local h = vim.env.Userprofile or vim.env.HOME; return (h .. ('/' .. (p or '')));
 	end
@@ -45,16 +44,20 @@ START_DIRS = (function() -- Telescope_find_dirs() looks in predefined locations
 	local oni = true
 	local movies = false
 
-	add_dir [[ C:\_setup.new\setup-2026-cut                      ]]
-	add_dir [[ Q:\Dedupe\home-jaro.q4.26\Tilde27\__hj.2025\notes ]]
+	add_dir [[ oil://C:/Users/jazzo/es/finn-appartment           ]]
+	add_dir [[ C:/_setup.new/setup-2026-cut                      ]]
+	add_dir [[ Q:/Dedupe/home-jaro.q4.26/Tilde27/__hj.2025/notes ]]
 	add_dir [[ C:/_setup.bauss                                   ]]
 	add_dir(homePath())
+
 
 	if vim.fn.has('win32') == 1 then
 		add_dir('J:/notes')
 		add_dir('A:/workspace')
 		add_dir('A:/_setup/bootstrap')
 		add_dir('A:/bin')
+
+		add_dir [[ oil://A:/ws/ ]]
 		add_dir(homePath('Hj/notes'))
 		add_dir(homePath('Notez26'))
 		add_dir(homePath('Desktop/tmp'))

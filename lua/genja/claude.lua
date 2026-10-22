@@ -9,6 +9,7 @@
 --                  the cursor stays in the editor. In visual mode the selection is attached.
 --   <C-q>, <C-j>, <C-Space>   in the claude terminal: back to the previous window
 --   <C-Left>                  in the claude terminal: to the window on the left
+--   <C-Right>                 in the claude terminal: to the next tab
 -- Pasting into the running session avoids `claude -p` startup time and keeps context.
 --
 -- Session marker: :ClaudeFterm resumes the session named in the file.
@@ -421,6 +422,8 @@ local function set_term_keys(bufnr)
 	vim.keymap.set('t', '<C-Space>', back, { buffer = bufnr, desc = 'Claude: back to previous window' })
 	-- replaces claude's own <C-Left> word-left
 	vim.keymap.set('t', '<C-Left>', '<C-\\><C-n><C-w>h', { buffer = bufnr, desc = 'Claude: to the window on the left' })
+	-- replaces claude's own <C-Right> word-right
+	vim.keymap.set('t', '<C-Right>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
 end
 
 ---:FloatermNew arguments from `opts`: sorted `--option=value`, then the command.
