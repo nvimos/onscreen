@@ -13,6 +13,8 @@ local nvo = { 'n', 'v', 'o' }
 local d = ''  -- default :map, modes n v o (normal, visual, operator pending)
 local n = { 'n' }
 local v = { 'v' }
+local nx = { 'n', 'x' }
+local nxo = { 'n', 'x', 'o' }
 local n_ = n
 local n__ = n
 local n___ = n
@@ -55,34 +57,34 @@ km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle
 -- built-ins mapped to themselves, only to give which-key a description;
 -- noremap keeps counts and the zf operator working.
 -- which-key sorts by description: the word after `Fold: ` is the group.
-km(n, 'zc',      'zc', nosi 'Fold: x close')
-km(n, 'z<left>', 'zc', nosi 'Fold: x close (zc)')
+-- Modes follow :h fold-commands: x for {Visual} forms, x and o for the motions.
+km(nx, 'zc',     'zc', nosi 'Fold: x close')
+km(nx, 'z<left>', 'zc', nosi 'Fold: x close (zc)')
 km(n, 'zM',      'zM', nosi 'Fold: x close all')
-km(n, 'zC',      'zC', nosi 'Fold: x close recursively')
+km(nx, 'zC',     'zC', nosi 'Fold: x close recursively')
 
-km(n, 'zf',      'zf', nosi 'Fold: create (operator)')
-km(v, 'zf',      'zf', nosi 'Fold: create from selection')
+km(nx, 'zf',     'zf', nosi 'Fold: create (operator)')
 km(n, 'zF',      'zF', nosi 'Fold: create for N lines')
 
-km(n, 'zd',      'zd', nosi 'Fold: delete')
+km(nx, 'zd',     'zd', nosi 'Fold: delete')
 km(n, 'zE',      'zE', nosi 'Fold: delete all (eliminate)')
-km(n, 'zD',      'zD', nosi 'Fold: delete recursively')
+km(nx, 'zD',     'zD', nosi 'Fold: delete recursively')
 
 km(n, 'zn',      'zn', nosi 'Fold: fen off')
 km(n, 'zN',      'zN', nosi 'Fold: fen on')
 km(n, 'zi',      'zi', nosi 'Fold: fen toggle')
 
-km(n, ']z',      ']z', nosi 'Fold: jump to open fold end')
-km(n, '[z',      '[z', nosi 'Fold: jump to open fold start')
-km(n, 'zj',      'zj', nosi 'Fold: jump to next start')
-km(n, 'zk',      'zk', nosi 'Fold: jump to previous end')
+km(nxo, ']z',    ']z', nosi 'Fold: jump to open fold end')
+km(nxo, '[z',    '[z', nosi 'Fold: jump to open fold start')
+km(nxo, 'zj',    'zj', nosi 'Fold: jump to next start')
+km(nxo, 'zk',    'zk', nosi 'Fold: jump to previous end')
 
 km(n, 'zr',      'zr', nosi 'Fold: level less (foldlevel +1)')
 km(n, 'zm',      'zm', nosi 'Fold: level more (foldlevel -1)')
 
-km(n, 'zo',      'zo', nosi 'Fold: open')
+km(nx, 'zo',     'zo', nosi 'Fold: open')
 km(n, 'zR',      'zR', nosi 'Fold: open all')
-km(n, 'zO',      'zO', nosi 'Fold: open recursively')
+km(nx, 'zO',     'zO', nosi 'Fold: open recursively')
 
 km(n, 'za',      'za', nosi 'Fold: toggle')
 km(n, 'zA',      'zA', nosi 'Fold: toggle recursively')

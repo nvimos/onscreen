@@ -133,7 +133,7 @@
         - do this in map-zero in a separate fold for folds
         - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
 
-- [ ] 11. redefine all standard fold commands with better descriptions «Fold: …»
+- [x] 11. redefine all standard fold commands with better descriptions «Fold: …»
 
 
 - [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
