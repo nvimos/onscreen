@@ -1,11 +1,21 @@
 # Neovim config (genja)
 
-Neovim 0.11+ config on Windows, at `%LOCALAPPDATA%\nvim`; plugin data in
-`%LOCALAPPDATA%\nvim-data`. Plugin manager: lazy.nvim.
+Neovim 0.11+ config on Windows, at `%LOCALAPPDATA%\nvim`.
+Plugin data in `%LOCALAPPDATA%\nvim-data`.
+Plugin manager: lazy.nvim.
 
-How this file is kept: one `##` heading per feature, one bullet per decision.
-Unmarked bullets were stated by jaro. `(inferred)` marks Claude's reading of the
-code or history: confirm or delete. `Hint:` is a working note for Claude.
+How this file is kept:
+
+One `##` heading per feature, one bullet per decision.
+Unmarked bullets were stated by user.
+`Hint:` is a working note for Claude.
+`(inferred)` marks Claude's reading of the code or history: confirm or delete.
+
+## Ideas and backlog: 
+
+- todo-ideas.md (add new ideas here),
+- todo-2026-neovim011.txt
+- todo-2027.txt
 
 ## Plugins in this repo
 
@@ -19,25 +29,30 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Working style
 
 - Terse replies. No anthropomorphising.
-- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. jaro tests on this machine.
+- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. Testing is done manually to also learn the new features 
+  from the user's perspective.
 - Follow-up questions stay on point; no offers to explore unrelated topics.
-- Don't ask jaro to rate or review how Claude is doing.
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
 - Don't commit unless asked. Group commits by feature; no Claude/Co-Authored-By attribution.
 - The tree often has unrelated uncommitted changes; leave them alone.
-- Before patching around a tool's bugs, check upstream issues and prior art, and check platform support before recommending a tool.
+- Before patching around a tool's bugs, check upstream issues and check platform support before recommending a tool.
 - Prefer built-in vim/nvim functions over new dependencies.
-- Hint: say plainly when something was not run or tested.
+- Hint: say plainly when something was not run or tested that you wanted to run or test.
 
 ## Files and formatting
 
 - Unix newlines (LF) everywhere; only `desktop.ini` is CRLF (`.gitattributes`, `.editorconfig`). Don't mention line endings in replies.
-- Tabs, single quotes. (inferred)
+- Tabs, single quotes.
 - Readable Lua over clever Lua: plain assignments and `if` blocks, not `x and y or z` to build values.
 - Comments: short, explain why. For tricky code, at most one line per callback or function.
 - Annotate with LuaLS types: `---@type LazySpec` on specs, typed `opts`. `.luarc.json` disables `missing-fields`.
-- Notifications name their source: script path relative to the config's parent, e.g. `nvim/after/ftplugin/make.lua: ...`.
+
+## Logging and reporting logical or runtime issues to user
+
+- Notifications name their source: script path relative to the nvim stdpath config folder.
+    - e.g. after/ftplugin/make.lua: ...
+    - e.g. lua/genja/map-plugin/init.lua: ...
 
 ## Layout and loading
 
@@ -54,10 +69,9 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Options (opt.lua)
 
 - `vim.opt` values are strings, not tables; use several `:append()` / `+` lines when needed.
-- `timeoutlen` is 300, from `opt.lua`; which-key's override is commented out with an explanation.
-- Hint: when translating Vimscript, spaces before a `"` comment are not part of the value, and `\ ` is one space. Each `fillchars` item is one character.
-- Hint: `vim.fn.has()` returns 0/1 and 0 is truthy in Lua; compare `== 1`. `has('Windows')` is not a feature name (`opt.lua` netrw, `genja/init.lua` START_DIRS). (inferred: left as is, fix only when asked)
-- `opt.lua` sets `fillchars` `fold:` twice and the last (`·`) wins. (inferred: deliberate, ask before changing)
+    - Hint: when translating Vimscript, spaces before a `"` comment are not part of the value, and `\ ` is one space.
+    - Each `fillchars` item is one character.
+- `opt.lua` sets `fillchars` `fold:` twice and the last (`·`) wins. (deliberate, ask before changing)
 
 ## Alma vimrc split
 
@@ -65,15 +79,15 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Portable core on top, then `if has('nvim') | finish | endif`, then vim-only parts: vim-plug, curl downloads, fzf, plugin config, statusline, colors, options that conflict with genja, clashing keymaps.
 - Plugins installed via vim-plug are never installed when the file is sourced from nvim.
 - Don't duplicate alma settings into Lua.
-- Goal: source the file after the Lua profile. Today `init.vim` sources it only in the fallback branch. (inferred: current state)
+- Today `init.vim` sources it only in the fallback branch.
 - A later accidental alma import into `opt.lua`/`auto.lua` was reverted (9555e32); the fold block in `opt.lua` was added back on request.
 
-## Finder and live grep
+## Plugins, extensions
 
 - Live grep and live find live in `plug-wip/genja-finder.nvim`; see its CLAUDE.md.
-- Their mappings stay in `lua/genja/map-telescope.lua` (`<F1>`, `<S-F1>`, `<leader>jj`).
-- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) and `lua/genja/fn/telemap.lua` stay in the config.
-- `START_DIRS` in `lua/genja/init.lua` feeds the mydirs picker; plug-wip dirs are listed there.
+- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) and `lua/genja/fn/telemap.lua` stay in the config, 
+  unless otherwise instructed.
+- `START_DIRS` in `lua/genja/init.lua` feeds the mydirs picker.
 - Telescope `file_ignore_patterns` (in `after/plugin/telescope-after.lua`) are anchored, e.g. `"%.a$"`.
 
 ## LSP and completion
@@ -81,13 +95,10 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Everything lives in `plug-wip/genja-completion011.nvim`, loaded by `lua/lazyp/new/genja-comp011.lua`; see its CLAUDE.md.
 - Per-machine language switches go in `lua/genja/lsp/local.lua` (gitignored), not in the spec's `enabled` table.
 - Filetype specs live in the plugin's `lua/genja/ft/`; personal ones stay in the config's `lua/genja/ft/` (`yaml.lua`: `yml` -> `yaml.ansible`).
-- On this slow PC, nvim's lua_ls reports `undefined-global` for `vim`, `require` and other well-known Lua globals until it has loaded the workspace. It is startup lag, not a config bug, and does not reproduce on demand. nvim hides them until lua_ls is ready (`lang/lua.lua` in the completion plugin).
-- Hint: `undefined-global` / `undefined-doc-name` in Claude's new-diagnostics reminders come from Claude Code's `lua-lsp` plugin (`~/.claude/settings.json` `enabledPlugins`), a separate server without nvim's runtime library, not from nvim. Ignore them; don't blame the cwd or `.luarc.json`. (inferred)
-- Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`; `Makefile.lazy.mk` `update`/`sync` also update parsers headless.
+- Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`;
 
 ## Keymaps
 
-- Leader is space, localleader `,`.
 - `map-zero.lua`: essential maps that must not fail. `map-lsp.lua`, `map-telescope.lua`, `map-convoluted.lua`, `map-jolemak.lua` hold the rest by topic.
 - Plugin keys and config keymaps go in `lua/genja/map-plugin/<spec file name>.lua`; specs use `keys = Maps:keys()` and call `Maps:mappings(opts)` in `config`.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
@@ -106,5 +117,3 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Small features
 
 - Perplexity search: `plugin/perplexity-search.lua`, query encoded with `vim.uri_encode(q, 'rfc2396')`.
-- Cheatsheet generation: `plugin/cheatsheet-generate.lua`.
-- Ideas and backlog: `todo-ideas.md` (add new ideas here), `todo-2026-neovim011.txt`, `todo-2027.txt`.
