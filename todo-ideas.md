@@ -136,10 +136,25 @@
 - [x] 11. redefine all standard fold commands with better descriptions «Fold: …»
 
 
-- [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
-    - nvim-lint is not installed yet; would also cover other non-LSP linters
-    - gitcommit currently has treesitter highlighting only
-    - autofill with copilot
+- [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
+    - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
+    - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing
+    - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
+    - copilot ghost text in commit buffers, accept with <M-f>
+
+- [ ] 14e. nvim-lint: further linters (not covered by an LSP)
+    - yaml / ansible: ansible-lint, yamllint
+    - dockerfile: hadolint
+    - markdown: markdownlint-cli2, vale (prose)
+    - lua: selene or luacheck
+    - make: checkmake
+    - github workflows: actionlint
+    - any filetype: codespell or typos, gitleaks (secrets), editorconfig-checker
+    - python: ruff (pyright covers types only)
+    - php: phpcs (phpactor runs phpstan, maybe not phpcs)
+    - vim: vint (old)
+    - skip: shellcheck (bashls), eslint (LSP)
+    - check Windows support per tool; non-stdin linters run only after :w
 
 - [ ] find a plugin to rotate window / pane layouts
     - one key to rotate
