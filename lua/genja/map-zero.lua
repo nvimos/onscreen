@@ -52,7 +52,45 @@ km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle
 -- }}}
 
 -- Folds {{{
-km(n__, 'z<left>', 'zc', nosi 'Fold: close')
+-- built-ins mapped to themselves, only to give which-key a description;
+-- noremap keeps counts and the zf operator working.
+-- which-key sorts by description: the word after `Fold: ` is the group.
+km(n, 'zc',      'zc', nosi 'Fold: x close')
+km(n, 'z<left>', 'zc', nosi 'Fold: x close (zc)')
+km(n, 'zM',      'zM', nosi 'Fold: x close all')
+km(n, 'zC',      'zC', nosi 'Fold: x close recursively')
+
+km(n, 'zf',      'zf', nosi 'Fold: create (operator)')
+km(v, 'zf',      'zf', nosi 'Fold: create from selection')
+km(n, 'zF',      'zF', nosi 'Fold: create for N lines')
+
+km(n, 'zd',      'zd', nosi 'Fold: delete')
+km(n, 'zE',      'zE', nosi 'Fold: delete all (eliminate)')
+km(n, 'zD',      'zD', nosi 'Fold: delete recursively')
+
+km(n, 'zn',      'zn', nosi 'Fold: fen off')
+km(n, 'zN',      'zN', nosi 'Fold: fen on')
+km(n, 'zi',      'zi', nosi 'Fold: fen toggle')
+
+km(n, ']z',      ']z', nosi 'Fold: jump to open fold end')
+km(n, '[z',      '[z', nosi 'Fold: jump to open fold start')
+km(n, 'zj',      'zj', nosi 'Fold: jump to next start')
+km(n, 'zk',      'zk', nosi 'Fold: jump to previous end')
+
+km(n, 'zr',      'zr', nosi 'Fold: level less (foldlevel +1)')
+km(n, 'zm',      'zm', nosi 'Fold: level more (foldlevel -1)')
+
+km(n, 'zo',      'zo', nosi 'Fold: open')
+km(n, 'zR',      'zR', nosi 'Fold: open all')
+km(n, 'zO',      'zO', nosi 'Fold: open recursively')
+
+km(n, 'za',      'za', nosi 'Fold: toggle')
+km(n, 'zA',      'zA', nosi 'Fold: toggle recursively')
+
+km(n, 'zX',      'zX', nosi 'Fold: update')
+km(n, 'zx',      'zx', nosi 'Fold: update, view cursor line')
+
+km(n, 'zv',      'zv', nosi 'Fold: view cursor line')
 -- }}}
 
 -- Buffers {{{
