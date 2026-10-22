@@ -16,6 +16,17 @@ Breadcrumbs and outline (dropbar, aerial)
     <leader>mo  outline sidebar                  <leader>mO  outline nav float
     <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
 
+Split padding (plug-wip/genja-splitpad.nvim)
+
+    <leader>tp  toggle padding column in unfocused splits   :SplitPadToggle
+
+URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
+
+    gx (visual)  pick URLs in the selected lines, one by one; <Esc> stops
+    gx (normal)  built-in: open URL under cursor
+    <leader>gx   pick a URL in the buffer      [u  ]u   previous / next URL
+    :UrlView buffer | lazy
+
 Floaterm commands (lua/genja/auto-alias.vim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm
