@@ -111,6 +111,11 @@ return {
 
 			} },
 			sort = { 'local', 'buffer-local', 'desc', 'natural', 'mod' },
+			-- same keys as the pickers: <F2> down, <F3> up (default <c-d>, <c-u>)
+			keys = {
+				scroll_down = '<F2>',
+				scroll_up = '<F3>',
+			},
 		}
 	},
 
