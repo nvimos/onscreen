@@ -36,3 +36,12 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-l>  marked -> loclist    <M-q>  marked -> quickfix
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
+
+Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
+
+    starts disabled to save credits: <leader>at or :Copilot enable
+    insert:  <M-f>  accept           <M-w>  accept word     <M-j>  accept line
+             <M-]>  next             <M-[>  previous        <C-]>  dismiss
+             <M-\>  suggest now      (<Tab> stays with cmp)
+    normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
+    :Copilot setup | status | enable | disable | panel | signout
