@@ -3,29 +3,34 @@
 -- <Tab> stays with nvim-cmp
 --
 -- Keys and mappings are defined in lua/genja/map-plugin/copilot.lua.
+-- Off by default to conserve credits: only the filetypes below load and enable it;
+-- <leader>at turns it on for the rest ('*').
 
 local Maps = require('genja.map-plugin')
+
+local on_filetypes = { 'gitcommit' }
 
 ---@type LazySpec
 return {
 	'github/copilot.vim',
 	enabled = true,
-	event = 'InsertEnter',
+	ft = on_filetypes,
 	cmd = 'Copilot',
 	keys = Maps:keys(),
 	init = function()
 		vim.g.copilot_no_tab_map = true -- nvim-cmp owns <Tab>
-		vim.g.copilot_filetypes = {
-			['*'] = true,
-			gitcommit = true,
-			markdown = true,
+		local filetypes = {
+			['*'] = false,
 			help = false,
 			TelescopePrompt = false,
 			oil = false,
 		}
+		for _, ft in ipairs(on_filetypes) do
+			filetypes[ft] = true
+		end
+		vim.g.copilot_filetypes = filetypes
 	end,
 	config = function(_, opts)
 		Maps:mappings(opts)
-		vim.cmd('Copilot disable') -- copilot off, disabled by default to conserve credits
 	end,
 }

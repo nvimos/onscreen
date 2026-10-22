@@ -10,15 +10,17 @@ return function(Maps)
 		{
 			'<leader>at',
 			function()
-				-- :Copilot enable/disable act on all buffers.
-				if vim.fn['copilot#Enabled']() == 1 then
-					vim.cmd('Copilot disable')
-				else
-					vim.cmd('Copilot enable')
+				-- '*' covers the filetypes the spec doesn't list; gitcommit stays on
+				local filetypes = vim.g.copilot_filetypes
+				filetypes['*'] = not filetypes['*']
+				vim.g.copilot_filetypes = filetypes
+				local state = 'off'
+				if filetypes['*'] then
+					state = 'on'
 				end
-				vim.cmd('Copilot status')
+				vim.notify('lua/genja/map-plugin/copilot.lua: copilot ' .. state .. ' for all filetypes (gitcommit always on)')
 			end,
-			desc = 'Copilot: toggle on/off',
+			desc = 'Copilot: toggle on/off for all filetypes',
 			silent = true,
 		},
 	})
