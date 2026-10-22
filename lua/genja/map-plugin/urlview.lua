@@ -39,14 +39,10 @@ local function pick_urls(urls)
 	}):find()
 end
 
-local function open_selection_urls()
-	local line1 = vim.fn.line('v')
-	local line2 = vim.fn.line('.')
-	if line1 > line2 then
-		line1, line2 = line2, line1
-	end
-	vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'nx', false)
-
+-- Collect the URLs in lines line1..line2 of the current buffer and show the picker.
+---@param line1 integer
+---@param line2 integer
+local function pick_urls_in_lines(line1, line2)
 	local found = require('urlview.search').selection({ line1 = line1, line2 = line2 })
 	-- Drop duplicates, keep text order.
 	local urls = {}
@@ -58,10 +54,24 @@ local function open_selection_urls()
 		end
 	end
 	if #urls == 0 then
-		vim.notify('lua/genja/map-plugin/urlview.lua: no URLs in selection', vim.log.levels.INFO)
+		vim.notify('lua/genja/map-plugin/urlview.lua: no URLs found', vim.log.levels.INFO)
 		return
 	end
 	pick_urls(urls)
+end
+
+local function open_selection_urls()
+	local line1 = vim.fn.line('v')
+	local line2 = vim.fn.line('.')
+	if line1 > line2 then
+		line1, line2 = line2, line1
+	end
+	vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'nx', false)
+	pick_urls_in_lines(line1, line2)
+end
+
+local function open_buffer_urls()
+	pick_urls_in_lines(1, vim.fn.line('$'))
 end
 
 ---@param Maps genja.MapPlugin
@@ -70,6 +80,6 @@ return function(Maps)
 
 	Maps:add_keys(spec_name, {
 		{ 'gx', open_selection_urls, mode = 'x', desc = 'Open URLs in selection (<Tab> marks several)' },
-		{ '<leader>gx', '<cmd>UrlView buffer<cr>', desc = 'Pick URL in buffer' },
+		{ '<leader>gx', open_buffer_urls, desc = 'Open URLs in buffer (<Tab> marks several)' },
 	})
 end

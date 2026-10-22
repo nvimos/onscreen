@@ -24,7 +24,7 @@ URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
 
     gx (visual)  pick URLs in the selected lines: <Tab> marks, <CR> opens marked (or current)
     gx (normal)  built-in: open URL under cursor
-    <leader>gx   pick a URL in the buffer      [u  ]u   previous / next URL
+    <leader>gx   same picker, all URLs in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy
 
 Floaterm commands (lua/genja/auto-alias.vim)
