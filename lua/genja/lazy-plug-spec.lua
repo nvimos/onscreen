@@ -1,3 +1,25 @@
+local imports = {
+
+	-- { import = 'lazyp' }, -- CONFIG/lua/lazyp/*
+	{ import = 'lazyp.debug' },
+	{ import = 'lazyp.git' },
+	{ import = 'lazyp.langs' },
+	{ import = 'lazyp.explorer' },
+	{ import = 'lazyp.langs-comps' }, -- lsp, completion, llm
+	{ import = 'lazyp.maybe' },    -- seems ok to keep
+	{ import = 'lazyp.my' },       -- my configs
+	{ import = 'lazyp.new' },      -- undergoing evaluation
+
+	-- { import = 'lazyp.no' },   -- not loaded atm
+	{ import = 'lazyp.others' },   -- configs taken from other people
+	{ import = 'lazyp.phunnee' },  -- fun, cool stuff
+	{ import = 'lazyp.term' },     -- terminal integrations, floaters
+	{ import = 'lazyp.ui' },       -- adjustments for nvim, qt, neovide
+	{ import = 'lazyp.ui-telescope' },       -- adjustments for nvim, qt, neovide
+	{ import = 'lazyp.util-qol' },  -- make it better (quality of life and utilities)
+}
+
+
 ---@type LazySpec[]
 PluginSpec = {}
 for _, e in pairs({
@@ -28,23 +50,7 @@ end
 	VIM/lua/lazy-others
 	VIM/lua/lazy-{topic}
 --]]
-for _, value in ipairs({
-	-- { import = 'lazyp' }, -- CONFIG/lua/lazyp/*
-	{ import = 'lazyp.debug' },
-	{ import = 'lazyp.git' },
-	{ import = 'lazyp.langs' },
-	{ import = 'lazyp.explorer' },
-	{ import = 'lazyp.langs-comps' }, -- lsp, completion, llm
-	{ import = 'lazyp.maybe' },    -- seems ok to keep
-	{ import = 'lazyp.my' },       -- my configs
-	{ import = 'lazyp.new' },      -- undergoing evaluation
-	-- { import = 'lazyp.no' },   -- not loaded atm
-	{ import = 'lazyp.others' },   -- configs taken from other people
-	{ import = 'lazyp.phunnee' },  -- fun, cool stuff
-	{ import = 'lazyp.term' },     -- terminal integrations, floaters
-	{ import = 'lazyp.ui' },       -- adjustments for nvim, qt, neovide
-	{ import = 'lazyp.util-qol' },  -- make it better (quality of life and utilities)
-}) do
+for _, value in ipairs(imports) do
 	table.insert(PluginSpec, value)
 end
 
