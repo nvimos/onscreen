@@ -41,6 +41,7 @@ return {
 				'path',
 				'gitignore',
 				'sshconfig',
+				'gitcommit',
 				'dictionary',
 				'buffer',
 				'lazydev',
