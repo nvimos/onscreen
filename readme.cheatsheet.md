@@ -56,6 +56,14 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
+Mouse (lua/genja/popup-menu.lua, lua/genja/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
+
+    right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
+                  LSP buffers: code action, rename, references     everywhere: Morning
+    statusline    click file name -> oil   branch -> Neogit   E/W counts -> location list
+    :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
+                  q closes, R rebuilds
+
 Recent files (plug-wip/genja-recent.nvim, picker lua/genja/recent.lua, key in map-telescope.lua)
 
     <C-F1>   recent files of this project (git root, else :pwd), frecency order
