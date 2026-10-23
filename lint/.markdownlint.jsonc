@@ -1,0 +1,7 @@
+// Shared markdownlint rules for lua/genja/lint.lua (markdownlint-cli2 --config).
+// Rules: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+{
+	"default": true,
+	// line length: notes and readmes wrap freely
+	"MD013": false
+}

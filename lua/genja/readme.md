@@ -45,6 +45,7 @@ mappings and funcs for them
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
+     lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows)
      telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation
      map-zero.lua       - keymaps, essential that must not fail
 

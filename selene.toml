@@ -1,0 +1,2 @@
+# selene (lua linter) for this config, run by lua/genja/lint.lua; std in vim.yml
+std = "vim"

@@ -63,7 +63,7 @@
     - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
 
-- [ ] 14e. nvim-lint: further linters (not covered by an LSP)
+- [~] 14e. nvim-lint: further linters (not covered by an LSP)
     - yaml / ansible: ansible-lint, yamllint
     - dockerfile: hadolint
     - markdown: markdownlint-cli2, vale (prose)
@@ -76,9 +76,11 @@
     - vim: vint (old)
     - skip: shellcheck (bashls), eslint (LSP)
     - check Windows support per tool; non-stdin linters run only after :w
-    - first wave (decided 2026-10-23): markdownlint-cli2, typos (markdown, gitcommit), yamllint,
+    - [x] first wave (decided 2026-10-23): markdownlint-cli2, typos (markdown, gitcommit), yamllint,
       ansible-lint (WSL, like phpactor), selene, checkmake, phpcs, actionlint
         - install: mason-tool-installer (all but ansible-lint)
+        - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md
+    - later: hadolint, vale, ruff, gitleaks, editorconfig-checker, vint
 
 - [ ] 30. telescope: mousability
     - click selects, double-click runs: built into telescope (found 2026-10-23, see #17)
