@@ -8,8 +8,7 @@
 --                  Ignored (with a warning) while claude runs.
 --   <leader>pc     paste context into this project's claude: normal = @file mention,
 --                  visual = path:lines + code. Jumps into the terminal to type the question.
---   <leader>pC     prompt popup (draft, history, brief mode). <CR> sends and submits to this
---                  project's claude; the cursor stays in the editor. Visual: selection attached.
+--   <leader>pC, <M-?>   ask popup (lua/genja/ask.lua); its floaterm target uses M.send().
 --   <C-q>, <C-j>, <C-Space>   in the claude terminal: back to the previous window
 --   <C-Left>                  in the claude terminal: to the window on the left
 --   <C-Right>                 in the claude terminal: to the next tab
@@ -38,8 +37,6 @@ local M = {}
 
 local SRC = 'lua/genja/claude.lua: '
 local TERM_PREFIX = 'claude-'
-local BRIEF = 'Answer briefly: at most 3 short sentences, plain text, no markdown.\n\n'
-local HISTORY_MAX = 50
 ---:FloatermNew options as { option = value }, plus `cmd` for the command to run.
 ---Given by the caller (:ClaudeFterm in auto-alias.vim); --name is set here.
 ---@alias genja.claude.TermOpts table<string, string|number>
@@ -52,9 +49,6 @@ local HISTORY_MAX = 50
 ---@field watch_timer uv.uv_timer_t|nil polls the transcript for /rename
 
 local state = {
-	draft = nil,     -- popup text kept between popups, cleared on send
-	history = {},    -- sent prompts, oldest first (this session only)
-	brief = false,   -- <C-b> in the popup: ask for a short plain-text answer
 	---@type genja.claude.TermOpts last given to toggle(); floaterm defaults until then
 	term_opts = { cmd = 'claude' },
 	---@type table<string, genja.claude.Term> by floaterm name
@@ -822,184 +816,23 @@ function M.paste_context()
 end
 -- }}}
 
--- {{{ prompt popup
+-- {{{ send (the prompt popup moved to lua/genja/ask.lua, idea 16)
 
----Keep `prompt` in the history (no repeats in a row, at most HISTORY_MAX).
----@param prompt string
-local function remember(prompt)
-	if state.history[#state.history] ~= prompt then
-		table.insert(state.history, prompt)
-	end
-	if #state.history > HISTORY_MAX then
-		table.remove(state.history, 1)
-	end
+---Type `text` into this project's claude and submit it; claude starts when needed.
+---The cursor stays in the editor. Used by the ask popup's floaterm backend.
+---@param text string
+function M.send(text)
+	open(false, function(bufnr) paste(bufnr, text, true) end)
 end
 
----Popup title: what gets sent along, and whether brief mode is on.
----@param label string|nil attached selection
----@return string
-local function popup_title(label)
-	local title = ' Claude'
-	if label then
-		title = title .. ' + ' .. label
-	end
-	if state.brief then
-		title = title .. ' [brief]'
-	end
-	return title .. ' '
-end
-
----<leader>pC: popup for a prompt sent to the running claude; selection attached in visual mode.
+---<leader>pC used to open a popup here; it is lua/genja/ask.lua now.
 function M.prompt()
-	local context, label = nil, nil
-	-- the project of the buffer the popup was opened from
-	local t = target()
-	if vim.fn.mode():match('^[vV\22]') then
-		local first, last = visual_range()
-		exit_visual()
-		context, label = selection_context(first, last, t.root)
-	end
-
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.bo[buf].bufhidden = 'wipe'
-	vim.bo[buf].filetype = 'markdown'
-	if state.draft then
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, state.draft)
-	end
-
-	-- todo: add signcolumn and foldcolumn to this calculation
-	local width = math.min(90, vim.o.columns - 4)
-	local height = math.min(8, vim.o.lines - vim.o.cmdheight - 4)
-	local win = vim.api.nvim_open_win(buf, true, {
-		relative = 'editor',
-		width = width,
-		height = math.max(height, 1),
-		row = math.floor((vim.o.lines - height) / 2)  -3, -- -3 anchor towards top-left
-		col = math.floor((vim.o.columns - width) / 2) -8, -- -8 anchor towards top-left
-		style = 'minimal',
-		border = 'rounded',
-		title = popup_title(label),
-		title_pos = 'center',
-		footer = ' <C-CR> send · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief · <Esc><Esc> close ',
-		footer_pos = 'center',
-	})
-	vim.wo[win].wrap = true
-	local ok_cmp, cmp = pcall(require, 'cmp')
-	if ok_cmp then
-		cmp.setup.buffer({ enabled = false }) -- a completion menu would take <CR>
-	end
-
-	local closed = false
-	local history_index = nil -- nil: editing the draft; else position in state.history
-	local scratch = nil       -- the draft while browsing history
-
-	---Close the popup, keeping its text as the draft.
-	local function close()
-		if closed then
-			return
-		end
-		closed = true
-		if vim.api.nvim_buf_is_valid(buf) then
-			local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-			state.draft = lines
-			if vim.trim(table.concat(lines, '\n')) == '' then
-				state.draft = nil
-			end
-		end
-		if vim.api.nvim_get_current_win() == win then
-			vim.cmd.stopinsert()
-		end
-		if vim.api.nvim_win_is_valid(win) then
-			vim.api.nvim_win_close(win, true)
-		end
-	end
-
-	---Send the prompt (plus selection, plus brief note) and submit it; empty does nothing.
-	local function send_prompt()
-		local prompt = vim.trim(table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n'))
-		close()
-		if prompt == '' then
-			return
-		end
-		state.draft = nil
-		remember(prompt)
-		local text = (context or '') .. prompt
-		if state.brief then
-			text = BRIEF .. text
-		end
-		open(false, function(bufnr) paste(bufnr, text, true) end, t)
-	end
-
-	---Show history entry `index` (nil: back to the draft) in the popup.
-	---@param index integer|nil
-	local function show_history(index)
-		history_index = index
-		local text = scratch or {}
-		if index then
-			text = vim.split(state.history[index], '\n', { plain = true })
-		end
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, text)
-		local last = vim.api.nvim_buf_line_count(buf)
-		vim.api.nvim_win_set_cursor(win, { last, #vim.api.nvim_buf_get_lines(buf, last - 1, last, false)[1] })
-	end
-
-	---<C-p>: one prompt back in history.
-	local function history_prev()
-		if #state.history == 0 then
-			return
-		end
-		if history_index == nil then
-			scratch = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-			show_history(#state.history)
-		elseif history_index > 1 then
-			show_history(history_index - 1)
-		end
-	end
-
-	---<C-n>: one prompt forward; past the newest, back to the draft.
-	local function history_next()
-		if history_index == nil then
-			return
-		end
-		if history_index < #state.history then
-			show_history(history_index + 1)
-		else
-			show_history(nil)
-		end
-	end
-
-	---<C-b>: toggle brief mode (remembered), shown in the title.
-	local function toggle_brief()
-		state.brief = not state.brief
-		vim.api.nvim_win_set_config(win, { title = popup_title(label), title_pos = 'center' })
-	end
-
-	local function o(desc) return { buffer = buf, desc = desc, noremap = true } end
-
-	-- only <C-CR> sends; plain <CR> adds a newline. todo: :wq should send too
-	vim.keymap.set({ 'i', 'n' },   '<C-CR>', send_prompt, o 'Prompt: send prompt')
-	vim.keymap.set({ 'i'      },   '<S-CR>', '<CR>',       o 'Prompt: newline' ) -- noremap: plain newline
-	vim.keymap.set({ 'i', 'n' },    '<C-p>', history_prev, o 'Prompt: previous prompt')
-	vim.keymap.set({ 'i', 'n' },    '<C-n>', history_next, o 'Prompt: next prompt')
-	vim.keymap.set({ 'i', 'n' },    '<C-b>', toggle_brief, o 'Prompt: toggle brief answer')
-
-	-- like snacks.input: <Esc> in insert only leaves insert mode, so the text can be edited
-	vim.keymap.set('n', '<Esc>', close, o 'Prompt: close (keep draft)')
-	vim.keymap.set('n', 'q',     close, o 'Prompt: close (keep draft)')
-
-	-- leaving the popup closes it too; scheduled: no window closing inside WinLeave
-	vim.api.nvim_create_autocmd('WinLeave', {
-		buffer = buf,
-		once = true,
-		callback = function() vim.schedule(close) end,
-	})
-	vim.api.nvim_win_set_cursor(win, { 1, 0 })
-	vim.cmd.startinsert({ bang = true })
+	require('genja.ask').open()
 end
 -- }}}
 
 -- Drops the cached module; the next require (e.g. :ClaudeFterm) loads it fresh.
--- `state` (terminals, history, draft, term opts) is lost with it; running terminals stay
+-- `state` (terminals, term opts) is lost with it; running terminals stay
 -- but are no longer listed by :ClaudeFterm!.
 vim.api.nvim_create_user_command('DevReloadClaude', function()
 	package.loaded['genja.claude'] = nil

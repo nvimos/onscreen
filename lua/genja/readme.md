@@ -45,6 +45,7 @@ mappings and funcs for them
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
+     ask.lua - <M-?> / <leader>pC ask popup: claude -p, claude floaterm, gemini, copilot, aichat (ask/backends/)
      morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
      popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
      recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
