@@ -475,7 +475,7 @@ local function open(focus, cb)
 			set_term_name(bufnr, start.title)
 			watch_session(start.id, bufnr, start.resumed, start.title)
 		end
-	elseif not term_win(bufnr) then
+	elseif not term_win((bufnr or -1)) then
 		vim.cmd('FloatermShow ' .. TERM)
 	end
 	if not bufnr then
@@ -718,19 +718,20 @@ function M.prompt()
 		vim.api.nvim_buf_set_lines(buf, 0, -1, false, state.draft)
 	end
 
-	local width = math.min(80, vim.o.columns - 4)
-	local height = math.min(6, vim.o.lines - vim.o.cmdheight - 4)
+	-- todo: add signcolumn and foldcolumn to this calculation
+	local width = math.min(90, vim.o.columns - 4)
+	local height = math.min(8, vim.o.lines - vim.o.cmdheight - 4)
 	local win = vim.api.nvim_open_win(buf, true, {
 		relative = 'editor',
 		width = width,
 		height = math.max(height, 1),
-		row = math.floor((vim.o.lines - height) / 2),
-		col = math.floor((vim.o.columns - width) / 2),
+		row = math.floor((vim.o.lines - height) / 2)  -3, -- -3 anchor towards top-left
+		col = math.floor((vim.o.columns - width) / 2) -8, -- -8 anchor towards top-left
 		style = 'minimal',
 		border = 'rounded',
 		title = popup_title(label),
 		title_pos = 'center',
-		footer = ' <CR> send · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief · <Esc><Esc> close ',
+		footer = ' <C-CR> send · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief · <Esc><Esc> close ',
 		footer_pos = 'center',
 	})
 	vim.wo[win].wrap = true
@@ -765,7 +766,7 @@ function M.prompt()
 	end
 
 	---Send the prompt (plus selection, plus brief note) and submit it; empty does nothing.
-	local function send()
+	local function send_prompt()
 		local prompt = vim.trim(table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n'))
 		close()
 		if prompt == '' then
@@ -824,15 +825,19 @@ function M.prompt()
 		vim.api.nvim_win_set_config(win, { title = popup_title(label), title_pos = 'center' })
 	end
 
-	local function o(desc) return { buffer = buf, desc = desc } end
-	vim.keymap.set({ 'i', 'n' }, '<CR>', send, o 'Claude: send prompt')
-	vim.keymap.set('i', '<S-CR>', '<CR>', { buffer = buf, desc = 'Claude: newline' }) -- noremap: plain newline
-	vim.keymap.set({ 'i', 'n' }, '<C-p>', history_prev, o 'Claude: previous prompt')
-	vim.keymap.set({ 'i', 'n' }, '<C-n>', history_next, o 'Claude: next prompt')
-	vim.keymap.set({ 'i', 'n' }, '<C-b>', toggle_brief, o 'Claude: toggle brief answer')
+	local function o(desc) return { buffer = buf, desc = desc, noremap = true } end
+
+	-- todo: not sure what this does. only <C-CR> should send. otherwise :wq should send
+	vim.keymap.set({ 'i', 'n' },     '<CR>',  send_prompt, o 'Prompt: send prompt')
+	vim.keymap.set({ 'i'      },   '<S-CR>', '<CR>',       o 'Prompt: newline' ) -- noremap: plain newline
+	vim.keymap.set({ 'i', 'n' },    '<C-p>', history_prev, o 'Prompt: previous prompt')
+	vim.keymap.set({ 'i', 'n' },    '<C-n>', history_next, o 'Prompt: next prompt')
+	vim.keymap.set({ 'i', 'n' },    '<C-b>', toggle_brief, o 'Prompt: toggle brief answer')
+
 	-- like snacks.input: <Esc> in insert only leaves insert mode, so the text can be edited
-	vim.keymap.set('n', '<Esc>', close, o 'Claude: close (keeps draft)')
-	vim.keymap.set('n', 'q', close, o 'Claude: close (keeps draft)')
+	vim.keymap.set('n', '<Esc>', close, o 'Prompt: close (keep draft)')
+	vim.keymap.set('n', 'q',     close, o 'Prompt: close (keep draft)')
+
 	-- leaving the popup closes it too; scheduled: no window closing inside WinLeave
 	vim.api.nvim_create_autocmd('WinLeave', {
 		buffer = buf,
