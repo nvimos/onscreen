@@ -7,4 +7,5 @@ lua/lazyp/maybe/*
 /lua/genja/lsp/local.lua
 /lua/genja/local/startdirs.txt
 /.claude
-/doc-wip/*
+
+# /doc-wip/*
