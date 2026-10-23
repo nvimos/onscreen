@@ -39,7 +39,8 @@ vim.keymap.set(nv, '<leader>wT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. c
 
 
 -- Magical and convoluted macros
-vim.keymap.set(nv, '<leader>sp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
+-- <leader>s… is start dirs now (lua/genja/map-plugin/genja-startdirs.lua)
+-- vim.keymap.set(nv, '<leader>sp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
 vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'Edit: remove empty lines in visual block')
 vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'Edit: remove trailing space (or :Ss)')
 vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'Edit: replace " with \' on current line')
@@ -55,7 +56,7 @@ km('n', '<leader>cS', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<left><left><left>aaa]],
 -- vim.keymap.set('', '<leader>jD', vim.cmd.Dashboard, { desc = 'Dashboard' } )
 km('', '<leader>jm',  cmd 'MRU',  nosi 'MRU')
 
-km('n', '<leader>sf', cmd 'set guifont=*', nosi 'Vim: set guifont')
+-- km('n', '<leader>sf', cmd 'set guifont=*', nosi 'Vim: set guifont') -- <F7> below
 km('n', '<F7>',       cmd 'set guifont=*', nosi 'Vim: set guifont')
 
 

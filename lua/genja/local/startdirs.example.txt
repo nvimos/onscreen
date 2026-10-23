@@ -1,0 +1,12 @@
+# Copy to startdirs.txt (gitignored) next to this file.
+# One dir per line. CONFIG/ DATA/ HOME/ expand at the start of a line; oil:// is stripped.
+# [group] headers are switched in lua/lazyp/new/genja-startdirs.lua (opts.groups); missing groups are on.
+
+HOME/notes
+
+[nvim]
+CONFIG/plug-wip
+DATA/lazy
+
+[games]
+C:/Games

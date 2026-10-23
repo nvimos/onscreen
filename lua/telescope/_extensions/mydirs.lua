@@ -13,7 +13,7 @@ local conf = require("telescope.config").values
 
 local function dirlist(o)
 	local cat_dirs = {}
-	vim.list_extend(cat_dirs, START_DIRS)
+	vim.list_extend(cat_dirs, require('genja-startdirs').ranked()) -- most used first
 	return cat_dirs
 end
 
@@ -42,8 +42,7 @@ local ask_where_to_go = function(opts)
 
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
-				vim.cmd.chdir(ts_state.get_selected_entry()[1])
-				vim.cmd.edit('.')
+				require('genja-startdirs').go(ts_state.get_selected_entry()[1]) -- cd, open, count a use
 				vim.cmd.pwd()
 			end)
 			return true

@@ -11,7 +11,8 @@ maybe separate plugin
 init / boot
 
      boot - init lazy vim
-     init.lua    - Safeload the rest, mapleader, colorscheme, font(?), START_DIRS(?)
+     init.lua    - Safeload the rest, mapleader, colorscheme, font(?)
+     local/      - per-machine files, gitignored: startdirs.txt (plug-wip/genja-startdirs.nvim); example next to it
      lazy-spec.lua - pluginspec imports and array
 
 config

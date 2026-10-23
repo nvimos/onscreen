@@ -24,6 +24,27 @@ O.move_category_delete = { desc = "Oil: Move to _delete", callback = F.move_to_c
 O.oily_hide            = { desc = "Oil: hide entry via .oily (nearest up the tree; g. shows all)", callback = function() require("genja-oily").hide() end }
 -- }}}
 
+-- {{{ start dirs (plug-wip/genja-startdirs.nvim): the dir under the cursor, else oil's dir
+---@return string?
+local function entry_dir()
+	local oil = require('oil')
+	local dir = oil.get_current_dir()
+	local entry = oil.get_cursor_entry()
+	if dir and entry and entry.type == 'directory' then
+		return dir .. entry.name
+	end
+	return dir
+end
+O.startdirs_add        = { desc = "Oil: add dir to start dirs [oil] (dir under cursor, else this one)", callback = function()
+	local dir = entry_dir()
+	if dir then require('genja-startdirs').add(dir, 'oil') end
+end }
+O.startdirs_remove     = { desc = "Oil: remove dir from start dirs (dir under cursor, else this one)", callback = function()
+	local dir = entry_dir()
+	if dir then require('genja-startdirs').remove(dir) end
+end }
+-- }}}
+
 -- {{{ git: stage, unstage, commit the entries
 O.git_add              = { desc = "Oil: git add (entry or visual lines)", callback = F.git_add }
 O.git_unstage          = { desc = "Oil: git unstage, keeps changes (entry or visual lines)", callback = F.git_unstage }

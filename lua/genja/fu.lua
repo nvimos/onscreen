@@ -50,7 +50,7 @@ UserComm('HiTest', function() vim.cmd [[:so $VIMRUNTIME/syntax/hitest.vim]] end,
 --[[ roll your own ]]
 local _cdp = 1
 function CycleDirs(dirlist)
-	dirlist = dirlist or START_DIRS
+	dirlist = dirlist or require('genja-startdirs').dirs()
 	local z, ok = pcall(function()
 		-- handle error?
 		Cd(dirlist[_cdp]);

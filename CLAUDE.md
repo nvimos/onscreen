@@ -26,6 +26,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
 - @plug-wip/genja-finder.nvim/CLAUDE.md: live grep and live find pickers.
 - @plug-wip/genja-oily.nvim/CLAUDE.md: hide oil entries listed in the nearest `.oily` up the tree.
+- @plug-wip/genja-startdirs.nvim/CLAUDE.md: start dirs list (text file + spec), oil add/remove, jumps, ranking.
 - @plug-wip/genja-splitpad.nvim/CLAUDE.md: padding column next to the split separator in unfocused windows.
 - @plug-wip/genja-statusline.nvim/CLAUDE.md: statusline, tabline, winbar.
 
@@ -96,7 +97,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
   unless otherwise instructed.
 - `Telemap` and the refine decorator live in genja-finder: `require('genja-finder.telemap').Telemap(map)`,
   `require('genja-finder').attach_shared_keys(map)` / `.enhance(picker)`; see its CLAUDE.md.
-- `START_DIRS` in `lua/genja/init.lua` feeds the mydirs picker.
+- Start dirs come from `plug-wip/genja-startdirs.nvim` (`require('genja-startdirs').dirs()` / `.ranked()`); the list is `lua/genja/local/startdirs.txt` (gitignored). The `START_DIRS` global is gone.
 - Telescope `file_ignore_patterns` (in `after/plugin/telescope-after.lua`) are anchored, e.g. `"%.a$"`.
 
 ## LSP and completion

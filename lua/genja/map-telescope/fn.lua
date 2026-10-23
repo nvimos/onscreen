@@ -19,7 +19,7 @@ end
 function M.find_in_startdirs()
 	require('telescope.builtin').find_files({
 		hidden = false,
-		search_dirs = START_DIRS,
+		search_dirs = require('genja-startdirs').dirs(),
 	})
 end
 

@@ -49,6 +49,8 @@ M.keymaps = {
 	['<LocalLeader>c'] = O.git_commit,
 	['<C-S-p>'] = O.diff_preview,
 	['<LocalLeader>M'] = O.oily_hide,
+	['<LocalLeader>s'] = O.startdirs_add,
+	['<LocalLeader>S'] = O.startdirs_remove,
 	['<CR>'] = O.select_custom,
 	['<cr>'] = O.select_custom,
 }
