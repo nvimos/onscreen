@@ -89,8 +89,10 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Plugins, extensions
 
 - Live grep and live find live in `plug-wip/genja-finder.nvim`; see its CLAUDE.md.
-- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) and `lua/genja/fn/telemap.lua` stay in the config, 
+- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) stay in the config,
   unless otherwise instructed.
+- `Telemap` and the refine decorator live in genja-finder: `require('genja-finder.telemap').Telemap(map)`,
+  `require('genja-finder').attach(map)` / `.enhance(picker)`; see its CLAUDE.md.
 - `START_DIRS` in `lua/genja/init.lua` feeds the mydirs picker.
 - Telescope `file_ignore_patterns` (in `after/plugin/telescope-after.lua`) are anchored, e.g. `"%.a$"`.
 

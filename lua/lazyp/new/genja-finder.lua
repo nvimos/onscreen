@@ -9,7 +9,7 @@ return {
 	opts = {
 		exclude = { 'node_modules', 'vendor', 'dist', 'go/pkg/mod' },
 		exclude_files = { '*.min.js', '*.min.css' },
-		attach = function(map) require('genja.fn.telemap').Telemap(map) end,
+		attach = function(map) require('genja-finder.telemap').Telemap(map) end,
 		hidden = false,
 	},
 

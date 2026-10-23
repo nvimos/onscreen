@@ -127,6 +127,10 @@
 
 - [ ] 25. telescope refine decorator in steps
     - reusable decorator that enhances any picker; separate file in lua/genja/ for now
+        - [x] moved into genja-finder instead: refine.lua (<M-f> filter, decorate), telemap.lua (Telemap moved there),
+              require('genja-finder').attach(map) / .enhance(picker) use both; untested
+        - [ ] decorate a first picker (old files?)
+        - [ ] <M-x> exclude
     - see if someone has done it already
     - <m-f> refine
     - <m-x> exclude

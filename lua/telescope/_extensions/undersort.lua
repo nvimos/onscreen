@@ -72,7 +72,7 @@ local ask_where_to_move = function(opts)
 		finder = finders.new_table({ results = discover_cats(opts) }),
 		sorter = conf.generic_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			require('genja.fn.telemap').Telemap(map)
+			require('genja-finder.telemap').Telemap(map)
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				os_move(opts)

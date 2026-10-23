@@ -1,9 +1,9 @@
----The `map` that telescope passes to attach_mappings(prompt_bufnr, map).
----action: an action name, a telescope action (callable table) or fun(prompt_bufnr).
----@alias genja.TelescopeMap fun(mode: 'i'|'n'|('i'|'n')[], lhs: string, action: string|table|fun(prompt_bufnr: integer), opts?: vim.keymap.set.Opts)
+-- genja-finder.telemap: shared picker keys for any telescope picker (moved here from the config's
+-- lua/genja/fn/telemap.lua). Use from attach_mappings: require('genja-finder.telemap').Telemap(map).
+-- require('genja-finder').attach(map) maps these plus the refine keys (genja-finder.refine).
 
 ---Shared picker keys: <esc> closes, <F2>/<F3> move the selection.
----@param map genja.TelescopeMap
+---@param map genja-finder.TelescopeMap
 local function Telemap(map)
 	map({ 'i', 'n' }, '<esc>',  require'telescope.actions'.close,                   { desc = 'Telescope: close' })
 	map({ 'i', 'n' }, '<F3>',   require'telescope.actions'.move_selection_previous, { desc = 'Telescope: prev' })

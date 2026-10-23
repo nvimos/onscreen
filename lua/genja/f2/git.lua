@@ -158,7 +158,7 @@ local function pick_files(root, files)
 					vim.notify('lua/genja/f2/git.lua: tabedit failed: ' .. tostring(err), vim.log.levels.ERROR)
 				end
 			end
-			require('genja.fn.telemap').Telemap(map)
+			require('genja-finder.telemap').Telemap(map)
 			-- same key as oil's preview toggle
 			map({ 'i', 'n' }, '<C-p>', require('telescope.actions.layout').toggle_preview, { desc = 'f2 git: toggle preview' })
 			map({ 'i', 'n' }, '<M-t>', tabedit_selected, { desc = 'f2 git: open selected in tabs, keep the picker' })

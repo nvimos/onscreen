@@ -140,7 +140,7 @@ vim.api.nvim_create_user_command('DevReloadF2', function()
 	package.loaded['genja.f2.picker'] = nil
 	package.loaded['genja.f2.registry'] = nil
 	package.loaded['genja.f2.run'] = nil
-	package.loaded['genja.fn.telemap'] = nil
+	package.loaded['genja-finder.telemap'] = nil
 	vim.notify(src .. 'f2 modules unloaded, next <F2> reloads them')
 end, { desc = 'f2: unload the context picker modules' })
 
