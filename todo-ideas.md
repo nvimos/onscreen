@@ -39,14 +39,8 @@
     - check out via chrome
     - claude.exe voice input works well enough
 
-- [x] 2. quickfix list close with x
 
 - [ ] 9. git:    gitsigns.nvim (Neovim): stage or reset hunks from the buffer. 
-- [x] 15. oil:    hide a set of predefined folders based on PWD/.oily.
-    - nvim custom plugin or an existing one, or just config?
-    - also add keybind to hide current item from the oil ui
-- [x] 7. oil:    normal gga -> git add
-- [x] 8. <S-F1>: search from oil plugin current dir.
 - [~] 16. <c-?>:  popup with ai chat to ask some random question. output should be mega brief and text-only (no markdown) (wip)
     - need to work out a spec.
     - so far: <leader>pC prompt popup in lua/genja/claude.lua, sends to the claude floaterm (#19)
@@ -68,10 +62,6 @@
         - [x] git add picker: preview hidden at start, <C-p> toggles it, <M-t> tabs (picker stays), <M-e> edit; :F2Reload (6fdd7e3)
     - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); not run yet
 
-- [x] 10. cmp: delay popup by 500 ms if it starts with :w
-    - the popup flashes annoyingly when auto-saving
-    - done instead: no delay; normal-mode :w<CR> mapped to <Cmd>write<CR> (map-zero.lua), so no cmdline and no popup
-    - which-key filter keeps ':' mappings out, so ':' still opens the cmdline; nothing typed :w automatically
 
 - [x] 17. treesitter: add a gui-trigger key that lists further actions (maybe g.)
     -[x] go to implementation, definition, rename.
@@ -92,44 +82,6 @@
         - https://github.com/stevearc/aerial.nvim
         - https://github.com/oskarrrrrrr/symbols.nvim
     - aerial outline sidebar also on <C-s> (5bc3fb8)
-
-
-- [x] 3. nvim: remove charity nag. keep plain startup message
-    - maybe look for a plugin that recreates the startup message
-
-
-- [x] 5. lsp binds: scroll in hover window / buffer
-- [x] 4. lsp binds: close hover window with <esc>
-
-- [x] 12. code actions - view in telescope
-    - done instead: vim.ui.select overridden with a telescope dropdown (lua/genja/ui-select.lua)
-    - covers code actions and every other vim.ui.select caller (:OverseerRun etc.)
-    - code actions by kind: <leader>cq quickfix, ce extract, cr rewrite, cs source (d8e497b);
-      search and replace moved to <leader>cS (9013eb0)
-
-- [x] 21. Go: gopls local import groups from go.work/go.mod, code lenses, <leader>cl runs the lens (e3c61d5, 4a917a0)
-
-
-- [x] 6. oil: auto confirm creation of a single dir / file
-
-
-- [x] 1. genja-finder.nvim: move live grep/find and their togglers into 
-    - plug-wip/genja-finder.nvim
-    - see plug-wip/genja-finder.nvim/move-plan.md
-
-- [x] 22. telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
-      <C-l/q> all), <C-/> lists the keys, hint in the empty prompt (0b48222)
-
-- [x] 23. urlview.nvim: visual gx and <leader>gx pick URLs, <Tab> marks, <CR> opens all marked (a9ef21d, 4a3aed3, 082fd2d)
-
-- [x] 24. genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
-
-- [x] 37. git: Neogit + gitsigns + diffview + mini.git, fugitive disabled (9126c56, dcbb29d)
-    - specs in lua/lazyp/git/, keys in lua/genja/map-plugin/<spec>.lua; untested
-    - diffview from the fork dlyongemallo/diffview.nvim (sindrets: no updates since 2024-06)
-    - <leader>mg Neogit, <leader>mGl log, <leader>mGc genja-commit popup (032d91e)
-    - <leader>md/mh/mH diffview; <leader>h… hunks, buffer-local via on_attach; <leader>hc mini.git
-    - cheatsheet Git section, which-key groups, key rules in CLAUDE.md (f52654d)
 
 
 - [ ] 25. telescope refine decorator in steps
@@ -177,9 +129,6 @@
             - [x] telescope keymaps (superseded by abdul-keymaps)
             - [x] Keymaps user func / custom popup
 
-- [x] 11. redefine all standard fold commands with better descriptions «Fold: …»
-    - map-zero maps the built-in fold keys to themselves with «Fold: …» descriptions (bea7b97, 1d0d2db)
-
 
 - [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
     - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
@@ -189,7 +138,6 @@
     - opt-in Conventional Commits mode; cmp offers types, scopes, footers
     - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
-- [x] 27. copilot.vim: ghost text, keys in the cheatsheet (7d3d537, 53744b7); loads only for gitcommit, <leader>at toggles the other filetypes (e02ab60)
 
 - [ ] 14e. nvim-lint: further linters (not covered by an LSP)
     - yaml / ansible: ansible-lint, yamllint
@@ -210,7 +158,6 @@
         - vsplit : 50 / 50 -> 30 / 70 -> 60 / 40
         - some simeple way to hold + / - to make the current window bigger by incremental steps, that are not 1 column at a time
         - probably find a plugin for this
-
 
 
 - [ ] 29. almavimrc. clone in lua the behaviors
@@ -235,7 +182,6 @@
 
 - [ ] 34. f2 context: markdown
     - turn selection into checklist
-
 
 
 - [ ] 35. recent files

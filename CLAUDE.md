@@ -16,6 +16,7 @@ Unmarked bullets were stated by user.
 - todo-ideas.md (add new ideas here),
 - todo-2026-neovim011.txt
 - todo-2027.txt
+- todo-done/: finished top-level items from the files above, one item per file, named `ideas-<nn>-<topic>.md` or `<year>-<topic>.txt`.
 
 ## Plugins in this repo
 
