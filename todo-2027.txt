@@ -59,10 +59,6 @@ new setup 2027
                 - maybe it should only show up after i press tab and if there is at least one suggestion
 
 
-- [ ] 14. gitcommit: lint commit messages with nvim-lint (mfussenegger/nvim-lint) + gitlint (Mason: gitlint, needs Python)
-    - nvim-lint is not installed yet; would also cover other non-LSP linters
-    - gitcommit currently has treesitter highlighting only
-	- autofill with copilot
 
 - [ ] consider adopting snacks
     - https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
