@@ -27,9 +27,49 @@ return {
 		-- self-maps; works only with include_builtins = false. Option of the local clone.
 		include_builtins_with_desc = true,
 
-		-- Lua patterns (against lhs) that mark a key as builtin; a list here replaces
+		-- Lua patterns (against lhs) that mark a key as builtin; this list replaces
 		-- the default list in plug-wip/abdul-keymaps.nvim/lua/keymaps/config.lua
-		-- builtin_patterns = { '^[hjkl]$', '^z[zoOcCaAmMrRfF]$' },
+		-- (copied from there, so it is complete)
+		builtin_patterns = {
+			'^[hjkl]$',
+			'^[wWeEbB]$',
+			'^[0%$%^]$',
+			'^[gG]$',
+			'^[iIaAoO]$',
+			'^[dDcCyYpP]$',
+			'^[uU]$',
+			'^<C%-r>$',
+			'^<Esc>$',
+			'^<CR>$',
+			'^<BS>$',
+			'^<Tab>$',
+			'^<Space>$',
+			'^:$',
+			'^/$',
+			'^%?$',
+			'^n$',
+			'^N$',
+			'^%*$',
+			'^#$',
+			'^%%$',
+			'^f.$',
+			'^F.$',
+			'^t.$',
+			'^T.$',
+			'^;$',
+			'^,$',
+			'^r.$',
+			'^~$',
+			'^%.$',
+			'^@.$',
+			'^q.$',
+			'^m.$',
+			"^'.$",
+			'^`.$',
+			'^".$',
+			'^z[zoOcCaAmMrRfF]$',
+			'^<C%-[a-zA-Z]>$',
+		},
 
 		-- Include buffer-local keymaps (from netrw, help, etc.)
 		-- Set to false to hide noisy internal keymaps
