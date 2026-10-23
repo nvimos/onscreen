@@ -8,6 +8,10 @@
 
 ## ideas october
 
+- [ ] codecompanion «idea 19a companion» (lua/lazyp/langs-comps/codecompanion.lua)
+    - floaterm works ok
+        - [~] fix hourglass cursor: claude's title updates off while it starts (4e79669)
+
 - [~] 19. claude: from nvim (wip)
     - [x] prettier winbar names: `claude-ft «<session title>»`, else the cwd basename (bfd6eef)
     - [x] :ClaudeFterm [flags]: --chrome, --model, --effort, ... at start, <Tab> completes (55240fa)
@@ -17,32 +21,38 @@
     - need to work out a spec
         - [x] resume sessions based on commentstring
             - [ ] also if started from an oil buffer?
+                - no. no need for now
         - one claude float term per project?
             - [ ] or use the <- session manager inside claude?
-    - so far (untested): claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
-      codecompanion «idea 19 companion» (lua/lazyp/langs-comps/codecompanion.lua)
+    - [x] claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
         - the pasting is WIP, need to work out / test out a spec
-        - floaterm works ok
-            - [~] fix hourglass cursor: claude's title updates off while it starts (4e79669)
     - session marker: /rename in claude writes `claude-session: <uuid> <title>`
       into the buffer claude was started from; :ClaudeFterm from that file resumes the session
         - not sure if this is a fantastic idea
             - can accumulate context
             - convenient for restarting nvim
-            - maybe the commentstring can have enabled:false which can be toggled manually
+            - the commentstring can have enabled:false which can be toggled manually
+            - for txt files, just put the markers at the bottom with !! as prefix
         - works for files
-        - resume does not work if opened from oil,
-          because there are no commentstrings to put the session marker
+        - resume does not work if opened from oil
+            - because there are no commentstrings to put the session marker
+            - this is ok
 
 - [ ] 20. voice input in nvim
     - check out windows input possibilities
     - check out via chrome
     - claude.exe voice input works well enough
+        - good enough for now, for claude
+    - [ ] voice input for typing readme and other files too
+        - [ ] test Windows voice typing (Win+H) in insert mode: free
 
 
 - [ ] 9. git:    gitsigns.nvim (Neovim): stage or reset hunks from the buffer. 
-- [~] 16. <c-?>:  popup with ai chat to ask some random question. output should be mega brief and text-only (no markdown) (wip)
-    - need to work out a spec.
+
+- [~] 16. <m-?>:  popup with ai chat to ask some random question.
+    - output should be mega brief and text-only (no markdown)
+    - need to work out a spec
+        - see what other people are doing for ideas
     - so far: <leader>pC prompt popup in lua/genja/claude.lua, sends to the claude floaterm (#19)
     - decouple the popup from the claude floaterm
     - send to multiple backends: a multi-agent simple prompt plugin
@@ -64,6 +74,8 @@
 
 
 - [x] 17. treesitter: add a gui-trigger key that lists further actions (maybe g.)
+    -[ ] make an entry in the right-click context menu for it
+        - explore if it's possible to click items in telescope
     -[x] go to implementation, definition, rename.
     -[ ] add actions
         -[ ] source current file
