@@ -126,6 +126,7 @@
 
 
 - [ ] 25. telescope refine decorator in steps
+    - reusable decorator that enhances any picker; separate file in lua/genja/ for now
     - see if someone has done it already
     - <m-f> refine
     - <m-x> exclude
@@ -146,11 +147,12 @@
             - [x] float popup: mode letters (aac76e3), t cycles n/i/v/x/…/all, T all (36b4cf4, d3af9d5, b401e29)
             - [x] float popup: one-line header, h toggles the hints (8b4daf3); empty search resets (0890585)
             - [x] cache_timeout 20s (1b41f8d)
-            - [ ] section order on screen still by name (ui.lua), not category_order
-            - [ ] keep the fork: drop its .git and commit it, or gitignore it
-        - [ ] check Telescope keymaps (<leader>jM): desc is in the search text already; untested
-                - does not show oil maps: oil maps are buffer-local, open the picker from an oil buffer
-                - does not show updated descriptions for fold keys: likely fixed by the remap
+            - section order on screen is still by name (ui.lua); category_order only picks the category
+            - [x] keep the fork as its own repo, commits go there; ignored via .git/info/exclude; PR upstream later
+        - [-] check Telescope keymaps (<leader>jM): superseded by abdul-keymaps for now (custom picker: todo-2027.txt)
+                - [x] does not show oil maps: oil maps are buffer-local, they show when opened from an oil buffer
+                - [x] does not show updated descriptions for fold keys
+                    - needed the manual remap of the fold keys in map-zero (bea7b97, 1d0d2db)
                 - modes default to n,i,c,x (no o); pass modes = {...}
         - [ ] maybe extend telescope keymaps with refine-decorator (see 25)
             - [ ] or cook <m-r> mapping for it to toggle / rotate groups
@@ -159,7 +161,7 @@
         - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
         - the whick-key popup does sort correctly
         - [.] want to make them searchable in
-            - [ ] telescope keymaps (untested)
+            - [x] telescope keymaps (superseded by abdul-keymaps)
             - [x] Keymaps user func / custom popup
 
 - [x] 11. redefine all standard fold commands with better descriptions «Fold: …»

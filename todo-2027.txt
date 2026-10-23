@@ -5,6 +5,15 @@ new setup 2027
     - preview should render markdown without the markup cruft
     - the preview of markdown should wrap by default
 
+- [ ] custom telescope keymaps picker (telescope-keys), modelled on abdul-keymaps
+    - plug-wip/abdul-keymaps.nvim (fork), spec lua/lazyp/new/abdul-keymaps.lua
+    - reproduce its behavior
+        - filters: builtin_patterns, include_builtins_with_desc, exclude_patterns
+        - categories: category_patterns + category_order
+        - keys: t cycles the mode filter (n, i, v, x, then the rest, then all), T all modes,
+          / search (empty resets), r refresh, h key hints
+    - search key, desc and category; mode letters instead of icons
+
 - [ ] consider plugin
     - https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     - pass args to rg, fuzzy refine, maybe worth stealing some features

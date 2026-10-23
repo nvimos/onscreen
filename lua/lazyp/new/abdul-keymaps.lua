@@ -62,7 +62,7 @@ return {
 			'^~$',
 			'^%.$',
 			'^@.$',
-			'^q.$',
+			-- '^q.$',
 			'^m.$',
 			"^'.$",
 			'^`.$',
@@ -89,6 +89,7 @@ return {
 		cache_timeout = 20,
 
 		-- Checked first, in this order; the first category with a matching pattern wins.
+		-- Only decides which category a key lands in; the popup still sorts sections by name.
 		-- The rest (incl. the plugin's defaults: Editing, Folds, ...) follow sorted by name.
 		-- Option of the local clone.
 		category_order = { 'Fold', 'LSP', 'Editing', },
