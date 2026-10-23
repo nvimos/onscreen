@@ -22,7 +22,6 @@ end
 
 -- Nvim's lines, minus the last separator and the two charity lines after it
 local function intro_lines()
-	local v = vim.version()
 	return {
 		'│ ╲ ││',
 		'││╲╲││',
@@ -38,7 +37,7 @@ local function intro_lines()
 		'type  :q<Enter>             to exit         ',
 		'type  :help<Enter>          for help        ',
 		SEPARATOR,
-		string.format('type  :help news<Enter>     for v%d.%d notes ', v.major, v.minor),
+		string.format('type  :help news<Enter>     for v%d.%d notes ', vim.version().major, vim.version().minor),
 	}
 end
 
@@ -102,6 +101,11 @@ local function render(buf, win)
 	if row < 2 or width < 50 then
 		return
 	end
+	--
+	-- shift up by 10% of the height, but keep at least 2 rows
+	-- row = math.max(row - math.floor(height * 0.10), 2)
+	-- local shift_left = math.floor(width * 0.10)
+	local shift_left = 0
 
 	local virt = {}
 	-- buffer line 1 takes screen row 0, virtual lines start at row 1
@@ -109,7 +113,8 @@ local function render(buf, win)
 		table.insert(virt, { { ' ', 'Normal' } })
 	end
 	for i, line in ipairs(lines) do
-		local pad = math.max(math.floor((width - vim.fn.strdisplaywidth(line)) / 2), 0)
+		local pad = math.floor((width - vim.fn.strdisplaywidth(line)) / 2) - shift_left
+		pad = math.max(pad, 0)
 		local chunks = { { string.rep(' ', pad), 'Normal' } }
 		vim.list_extend(chunks, line_chunks(i, line))
 		table.insert(virt, chunks)
