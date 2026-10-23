@@ -827,8 +827,8 @@ function M.prompt()
 
 	local function o(desc) return { buffer = buf, desc = desc, noremap = true } end
 
-	-- todo: not sure what this does. only <C-CR> should send. otherwise :wq should send
-	vim.keymap.set({ 'i', 'n' },     '<CR>',  send_prompt, o 'Prompt: send prompt')
+	-- only <C-CR> sends; plain <CR> adds a newline. todo: :wq should send too
+	vim.keymap.set({ 'i', 'n' },   '<C-CR>', send_prompt, o 'Prompt: send prompt')
 	vim.keymap.set({ 'i'      },   '<S-CR>', '<CR>',       o 'Prompt: newline' ) -- noremap: plain newline
 	vim.keymap.set({ 'i', 'n' },    '<C-p>', history_prev, o 'Prompt: previous prompt')
 	vim.keymap.set({ 'i', 'n' },    '<C-n>', history_next, o 'Prompt: next prompt')
