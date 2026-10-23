@@ -11,7 +11,7 @@
 - [~] 19. claude: from nvim (wip)
     - [x] prettier winbar names: `claude-ft «<session title>»`, else the cwd basename (bfd6eef)
     - [x] :ClaudeFterm [flags]: --chrome, --model, --effort, ... at start, <Tab> completes (55240fa)
-    - [x] terminal keys: <C-Left> window on the left (4e79669), <C-Right> next tab (uncommitted)
+    - [x] terminal keys: <C-Left> window on the left (4e79669), <C-Right> next tab (4a917a0)
     - [x] talk to claude desktop or claude from nvim
         -[x] claude in float term for now. using claude.exe
     - need to work out a spec
@@ -65,6 +65,7 @@
         - [x] f2.add_tasks(tasks, { buffer? }) / f2.add_task(group, label):…:add() builder / f2.remove_tasks({ group, label?, buffer? }), f2.group_order
             - task: label, group, action (keys|function) or cmd (+ runner overseer|floaterm, cwd), order, cond, autoremove
             - [ ] first caller
+        - [x] git add picker: preview hidden at start, <C-p> toggles it, <M-t> tabs (picker stays), <M-e> edit; :F2Reload (6fdd7e3)
     - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); not run yet
 
 - [x] 10. cmp: delay popup by 500 ms if it starts with :w
@@ -106,6 +107,8 @@
     - code actions by kind: <leader>cq quickfix, ce extract, cr rewrite, cs source (d8e497b);
       search and replace moved to <leader>cS (9013eb0)
 
+- [x] Go: gopls local import groups from go.work/go.mod, code lenses, <leader>cl runs the lens (e3c61d5, 4a917a0)
+
 
 - [x] 6. oil: auto confirm creation of a single dir / file
 
@@ -117,23 +120,35 @@
 - [x] telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
       <C-l/q> all), <C-/> lists the keys, hint in the empty prompt (0b48222)
 
+- [x] urlview.nvim: visual gx and <leader>gx pick URLs, <Tab> marks, <CR> opens all marked (a9ef21d, 4a3aed3, 082fd2d)
+
+- [x] genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
+
 
 -[.] which keys
     - [x] sort by description alphabetically, columns first
+    - [x] <F2>/<F3> scroll the popup (e6ffb52)
     - check if it's possible to search by description
+        - use <c-/> in telescope
         - check <leader>? (Keymaps)
             - does not show the updated descriptions for the default keymaps
                 - maybe i need to redefine them after all.
-        - check telescope keymaps
+                - maybe i need to enable them in the config
+        - check Telescope keymaps
                 - does not show oil maps
-                - does not updated descriptions for fold keys
+                - does not show updated descriptions for fold keys
         - [ ] maybe extend telescope keymaps with refine-decorator
             - [ ] or cook <m-r> mapping for it to toggle / rotate groups
     - [x] redefine all standard fold mapping keys with a description prefix «Fold: »
         - do this in map-zero in a separate fold for folds
         - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
+        - the whick-key popup does sort correctly
+        - [ ] want to make them searchable in
+            - telescope keymaps
+            - Keymaps user func / custom popup
 
 - [x] 11. redefine all standard fold commands with better descriptions «Fold: …»
+    - map-zero maps the built-in fold keys to themselves with «Fold: …» descriptions (bea7b97, 1d0d2db)
 
 
 - [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
@@ -141,6 +156,10 @@
     - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing
     - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
     - copilot ghost text in commit buffers, accept with <M-f>
+    - opt-in Conventional Commits mode; cmp offers types, scopes, footers
+    - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
+
+- [x] copilot.vim: ghost text, keys in the cheatsheet (7d3d537, 53744b7); loads only for gitcommit, <leader>at toggles the other filetypes (e02ab60)
 
 - [ ] 14e. nvim-lint: further linters (not covered by an LSP)
     - yaml / ansible: ansible-lint, yamllint
@@ -183,6 +202,9 @@
     - resizing activates right-most tab
 
 - [ ] move gitea definition to w11s-cut project
+
+- [ ] f2 context: markdown
+    - turn selection into checklist
 
 
 - [ ] telescope refine decorator in steps

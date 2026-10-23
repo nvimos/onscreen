@@ -1,0 +1,27 @@
+- sms from termux in nvim
+	- connection
+		- configure optional ConnectTimeout (35 sec default)
+		- connect via ssh config
+			- a22
+			- a22f
+		- several ip based on wifi connection
+			- on or off
+			- pick ip or ssh-config host
+			- if not ssh-config host
+				- login
+				- port
+		- should be possible to just use one
+			- login
+			- port
+			- domain/ip
+	- list of threads sorted by most recent first
+		- short summary (preview)
+		- open full message
+			- reply from full message view
+			- yank message
+		- reply from list view
+	- maybe set up dyn-dns on the phone
+	- do i really want it in nvim?
+		- think so
+	- termux list sms
+	- termux reply thread
