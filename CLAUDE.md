@@ -36,7 +36,9 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Follow-up questions stay on point; no offers to explore unrelated topics.
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
-- Don't commit unless asked. Group commits by feature; no Claude/Co-Authored-By attribution.
+- In the main checkout, don't commit unless asked.
+- In a Claude worktree (`.claude/worktrees/<name>`) or a background session, commit finished work without asking; don't merge or push to master.
+- Group commits by feature; no Claude/Co-Authored-By attribution.
 - The tree often has unrelated uncommitted changes; leave them alone.
 - Before patching around a tool's bugs, check upstream issues and check platform support before recommending a tool.
 - Prefer built-in vim/nvim functions over new dependencies.
