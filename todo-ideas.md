@@ -157,8 +157,12 @@
         - better context support
         - check out what other people are doing
 
-- [ ] 32. bug in winbar or statusbar
+- [~] 32. bug in winbar or statusbar
     - resizing activates right-most tab
+    - cause (likely): frameless nvim-qt (ginit.vim) sends top-edge resize drags as clicks on the tabline;
+      nvim goes to the next tab on a click outside the labels (:h tabpage, "Click where there is no label")
+    - [x] fix: no-op click region over the tabline's left edge and fill (genja-statusline autoload/genja_statusline.vim); untested
+    - [ ] confirm: resize nvim-qt from the top edge, tab stays; optional repro with GuiWindowFrameless(0)
 
 - [ ] 33. move gitea definition to w11s-cut project
 
