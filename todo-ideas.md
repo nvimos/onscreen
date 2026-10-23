@@ -124,12 +124,15 @@
 
 - [x] 24. genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
 
+- [ ] setup Neogit + gitsigns + diffview.
+    - also mini.git
+
 
 - [ ] 25. telescope refine decorator in steps
     - reusable decorator that enhances any picker; separate file in lua/genja/ for now
         - [x] moved into genja-finder instead: refine.lua (<M-f> filter, decorate), telemap.lua (Telemap moved there),
               require('genja-finder').attach_shared_keys(map) / .enhance(picker) use both; untested
-        - [ ] decorate a first picker (old files?)
+        - [x] decorate a first picker: <C-F1> oldfiles via enhance() (lua/genja/map-telescope.lua); untested
         - [ ] <M-x> exclude
     - see if someone has done it already
     - <m-f> refine

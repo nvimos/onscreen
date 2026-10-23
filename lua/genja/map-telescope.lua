@@ -40,7 +40,9 @@ km('n', '<F1>',   genja_finder_grep, { desc = 'Telescope: grep files (genja-find
 km('n', '<S-F1>', genja_finder_find, { desc = 'Telescope: find files (genja-finder)'}) -- was: cmd 'Telescope finn'
 
 
-km('n', '<C-F1>',      tsbuiltin.oldfiles, { desc = 'Telescope: oldfiles'})
+-- oldfiles with genja-finder's shared keys (<M-f> filter, <F2>/<F3>); a function, so genja-finder loads on use
+local function oldfiles() require('genja-finder').enhance(tsbuiltin.oldfiles)() end
+km('n', '<C-F1>',      oldfiles, { desc = 'Telescope: oldfiles (<M-f> filter)'})
 km('n', '<F2>', function() require('genja.f2').open() end, { desc = 'Telescope: context picker (adhoc, git, make, added tasks)'})
 local function action_menu() require('genja.actions').open() end
 km('n', 'g.',             action_menu, { desc = 'Telescope: actions here (cur: = item under cursor)'})
