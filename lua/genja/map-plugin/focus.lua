@@ -1,17 +1,19 @@
 -- Keys for lua/lazyp/ui/focus.lua.
 
+local SRC = 'lua/genja/map-plugin/focus.lua: '
+
 ---<leader>tPf: focus on/off for all windows.
 ---Not focus's own toggle: it counts an excluded buffer as "off" and turns focus on instead.
 local function toggle_focus()
 	local focus = require('focus')
-	if vim.g.plugin_focus_lua_disable then
-		vim.g.plugin_focus_lua_disable = false
+	if vim.g.focus_disable then
+		vim.g.focus_disable = false
 		focus.resize('autoresize')
-		vim.notify('focus.lua on')
+		vim.notify(SRC .. 'focus on')
 	else
-		vim.g.plugin_focus_lua_disable = true
+		vim.g.focus_disable = true
 		vim.cmd('wincmd =')
-		vim.notify('focus.lua off')
+		vim.notify(SRC .. 'focus off')
 	end
 end
 

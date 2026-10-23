@@ -80,7 +80,8 @@ local function wire_excluded_types_autocmd(_, o)
 		desc = 'focus.lua: disable focus for excluded buftypes and wintypes',
 	})
 	require('focus').setup(o)
-	vim.g.plugin_focus_lua_disable = true -- focus off, disabled by default
+	-- After setup(): set before, setup() skips its WinEnter autocmd and focus can never turn on.
+	vim.g.focus_disable = true -- off by default; focus reads this on every resize
 end
 -- }}}
 
