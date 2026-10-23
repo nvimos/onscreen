@@ -38,7 +38,7 @@ M.init = function()
 	M.just_run('split | enew | Quickmath', 'Quickmath')
 
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)
-	M.add_item('Fugitive', function() vim.cmd('Git') end)
+	M.add_item('Neogit', function() vim.cmd('Neogit') end)
 	M.add_item('andy.bat', M.run_andy)
 
 
