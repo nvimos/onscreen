@@ -29,7 +29,7 @@ migration from 0.9 to 0.11 (the file that started it all)
         -[x] claude in float term for now. using claude.exe
     - need to work out a spec
         - [x] resume sessions based on commentstring
-            - [ ] also if started from an oil buffer?
+            - [-] also if started from an oil buffer?
                 - no. no need for now
         - [x] one claude float term per project?
             - [-] or use the <- session manager inside claude?
@@ -38,6 +38,9 @@ migration from 0.9 to 0.11 (the file that started it all)
               (<CR> show, <M-d> kill); untested, doc-wip/readme.2026-10-23.claude-per-project.md (80f96ba)
     - [x] claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
         - the pasting is WIP, need to work out / test out a spec
+        - [x] <L>pC opens a modal but the ability to paste to claudefterm is gone. map it to <m-p> for now
+            - <M-p> in the ask popup sends to the claude floaterm, whatever the target (2026-10-24)
+        - [x] otherwise mark as untested: <leader>pc, doc-wip/untested.2026-10-24.md
     - session marker: /rename in claude writes `claude-session: <uuid> <title>`
       into the buffer claude was started from; :ClaudeFterm from that file resumes the session
         - not sure if this is a fantastic idea

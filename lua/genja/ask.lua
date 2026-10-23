@@ -1,6 +1,6 @@
 -- Ask popup (idea 16): one quick question, a short plain-text answer in the same float.
 --   <M-?> (normal, insert, visual: selection attached), <leader>pC: open (plugin/ask.lua)
---   compose:  <C-CR> send · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief
+--   compose:  <C-CR> send · <M-p> send to the claude floaterm · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief
 --             <M-t> target · <M-m> model · <M-e> effort · <M-s> save session · <M-r> resume saved
 --             <Esc>/q (normal) close, the draft is kept
 --   waiting:  <C-c> cancel
@@ -250,7 +250,7 @@ function M.open()
 		if session.resume or #transcript > 0 then
 			title = title .. ' [follow-up]'
 		end
-		local footer = ' <C-CR> send · <M-t> target · <M-m> model · <M-e> effort · <M-s> save · <M-r> resume · <C-b> brief '
+		local footer = ' <C-CR> send · <M-p> to floaterm · <M-t> target · <M-m> model · <M-e> effort · <M-s> save · <M-r> resume · <C-b> brief '
 		if mode == 'wait' then
 			footer = ' <C-c> cancel '
 		elseif mode == 'answer' then
@@ -300,7 +300,8 @@ function M.open()
 		vim.cmd.startinsert()
 	end
 
-	local function send()
+	---@param target? genja.ask.Backend overrides the picked target for this send (<M-p>)
+	local function send(target)
 		local prompt = vim.trim(table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n'))
 		if prompt == '' then
 			return
@@ -314,6 +315,9 @@ function M.open()
 		end
 
 		local b = backend()
+		if target then
+			b = target
+		end
 		local full = prompt
 		if context then
 			full = context .. full
@@ -484,7 +488,11 @@ function M.open()
 			end
 		end
 	end
-	vim.keymap.set({ 'i', 'n' }, '<C-CR>', in_compose(send), o 'Ask: send')
+	vim.keymap.set({ 'i', 'n' }, '<C-CR>', in_compose(function() send() end), o 'Ask: send')
+	local function send_floaterm()
+		send(require('genja.ask.backends.floaterm'))
+	end
+	vim.keymap.set({ 'i', 'n' }, '<M-p>', in_compose(send_floaterm), o 'Ask: send to the claude floaterm')
 	vim.keymap.set('i', '<S-CR>', '<CR>', o 'Ask: newline')
 	vim.keymap.set('i', '<C-j>', '<CR>', o 'Ask: newline')
 	vim.keymap.set({ 'i', 'n' }, '<C-p>', history_prev, o 'Ask: previous prompt')

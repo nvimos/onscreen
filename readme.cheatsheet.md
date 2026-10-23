@@ -40,7 +40,7 @@ Floaterm commands (lua/genja/auto-alias.vim)
 
 Ask popup (lua/genja/ask.lua; <M-?> in plugin/ask.lua, n/i/x; visual sends the selection)
 
-    <C-CR> send   <S-CR>/<C-j> newline   <C-p>/<C-n> history   <C-b> brief
+    <C-CR> send   <M-p> send to the claude floaterm (any target)   <S-CR>/<C-j> newline   <C-p>/<C-n> history   <C-b> brief
     <M-t> target: claude-p, floaterm, gemini, copilot, aichat   <M-m> model   <M-e> effort
     <M-s> save session (nvim yyyy.ww.d-ddd.hhmm)   <M-r> resume a saved one   <C-c> cancel
     answer: <CR> follow-up   y yank   q/<Esc> close     log: ~/.claude/p-logs/nvim.log
