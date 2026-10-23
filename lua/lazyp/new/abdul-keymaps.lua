@@ -48,6 +48,11 @@ return {
 		-- Cache timeout in seconds (0 = no cache)
 		cache_timeout = 300,
 
+		-- Checked first, in this order; the first category with a matching pattern wins.
+		-- The rest (incl. the plugin's defaults: Editing, Folds, ...) follow sorted by name.
+		-- Option of the local clone.
+		category_order = { 'Fold', 'a LSP' },
+
 		-- Category patterns for auto-categorization
 		-- Keys are matched against these patterns to determine category
 		category_patterns = {
@@ -68,6 +73,11 @@ return {
 				"^<leader>b",
 				"buffer", "window", "split",
 			},
+
+			-- map-zero.lua's fold keys, desc 'Fold: …'; matched lowercased in lhs/rhs/desc.
+			-- First in category_order, so 'Fold: delete' is not claimed by Editing ('delete').
+			["Fold"] = { "Fold: " },
+
 			["Harpoon"] = { "harpoon", "^<leader>a" },
 			["Telescope"] = { "telescope", "^<leader>f", "^<leader>s" },
 			["File Explorer"] = { "^<leader>e", "nvim%-tree", "neo%-tree", "oil" },
@@ -76,9 +86,6 @@ return {
 			["Debugging"] = { "dap", "debug", "breakpoint" },
 			["Testing"] = { "^<leader>t", "neotest", "test" },
 			["Terminal"] = { "terminal", "toggleterm" },
-			-- map-zero.lua's fold keys, desc 'Fold: …'; matched lowercased anywhere in lhs/rhs/desc.
-			-- 'a ' sorts it before 'Editing' (the fork checks categories in name order).
-			["a Fold"] = { "fold: " },
 			-- Add your own!
 			["Custom"] = { "my_pattern" },
 
