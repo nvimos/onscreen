@@ -51,12 +51,12 @@ return {
 		-- Checked first, in this order; the first category with a matching pattern wins.
 		-- The rest (incl. the plugin's defaults: Editing, Folds, ...) follow sorted by name.
 		-- Option of the local clone.
-		category_order = { 'Fold', 'a LSP' },
+		category_order = { 'Fold', 'LSP', 'Editing', },
 
 		-- Category patterns for auto-categorization
 		-- Keys are matched against these patterns to determine category
 		category_patterns = {
-			["a LSP"] = {
+			["LSP"] = {
 				"^g[dDrRiItT]",
 				"^<leader>l",
 				"^<leader>c[aAdDfFrRsS]",
@@ -121,15 +121,16 @@ return {
 		},
 
 		-- Icons for modes
+		-- mode letters instead of nerd font glyphs
 		mode_icons = {
-			n = "󰰓", -- Normal
-			i = "󰰄", -- Insert
-			v = "󰰫", -- Visual
-			x = "󰰵", -- Visual Block
-			s = "󰰢", -- Select
-			o = "󰰑", -- Operator
-			c = "󰯲", -- Command
-			t = "󰰥", -- Terminal
+			n = "n", -- Normal
+			i = "i", -- Insert
+			v = "v", -- Visual
+			x = "x", -- Visual only (v: Visual + Select)
+			s = "s", -- Select
+			o = "o", -- Operator
+			c = "c", -- Command
+			t = "t", -- Terminal
 		},
 
 	},
