@@ -90,3 +90,8 @@ Fold markers with a title (lua/genja/wrapfold.lua, keys in lua/genja/map-zero.lu
     zf (visual)        ask a title, wrap selection in  -- {{{ title  /  -- }}}   empty title: built-in zf
     <leader>wwf        same for the paragraph under the cursor (visual: the selection)
     :[range]WrapFold [title]   same as a command; no title asks
+
+Action menu on right-click (lua/genja/fn.vim, menu from lua/genja/actions.lua)
+
+    right-click > Actions (g.)   same menu as g. / <LocalLeader>/
+    in telescope: click selects an entry, double-click runs it (mouse=a)

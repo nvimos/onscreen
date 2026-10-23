@@ -121,6 +121,11 @@ local function general_actions(list, bufnr)
 		add(list, 'syntax tree (:InspectTree)', function() vim.cmd.InspectTree() end)
 	end
 	add(list, 'task list (overseer)', function() vim.cmd('OverseerToggle') end)
+	local ft = vim.bo.filetype
+	if ft == 'lua' or ft == 'vim' then
+		add(list, 'source this file', function() vim.cmd('source %') end)
+	end
+	add(list, 'claude (floaterm)', function() vim.cmd('ClaudeFterm') end)
 end
 -- }}}
 
