@@ -68,22 +68,8 @@
             - task: label, group, action (keys|function) or cmd (+ runner overseer|floaterm, cwd), order, cond, autoremove
             - [x] first caller: md-checklist (#34)
         - [x] git add picker: preview hidden at start, <C-p> toggles it, <M-t> tabs (picker stays), <M-e> edit; :F2Reload (6fdd7e3)
-    - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); not run yet
+    - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); ran 2026-10-23: 50 cases, 0 fails
 
-
-- [x] 17. treesitter: add a gui-trigger key that lists further actions (maybe g.)
-    -[x] make an entry in the right-click context menu for it: Actions (g.) (lua/genja/fn.vim); untested
-        - [x] explore if it's possible to click items in telescope
-            - built in: click selects, double-click runs (mouse=a)
-    -[x] go to implementation, definition, rename.
-    -[x] add actions; untested
-        -[x] source current file (lua, vim)
-        -[x] start ClaudeFterm
-    - as if it's a catch-all-action right-click
-        - consider adding that to the popup menu
-        - can telescope be used with a mouse?
-    - done instead: telescope action menu on g. and <LocalLeader>/ (lua/genja/actions.lua), built per call
-    - cur: items for the cursor (LSP, line diagnostics, word, oil entry), unprefixed ones for buffer/editor
 
 -[.] 26. which keys
     - [x] sort by description alphabetically, columns first
@@ -140,13 +126,8 @@
     - skip: shellcheck (bashls), eslint (LSP)
     - check Windows support per tool; non-stdin linters run only after :w
 
-- [ ] 29. almavimrc. clone in lua the behaviors
-    - [x] ~ to toggle false and other switches: lua/genja/tilde.lua, <M-~> plain; untested
-        - [x] dial.nvim on <C-a>/<C-x>, groups per filetype (lua/lazyp/new/dial.lua); untested
-    - [x] create fold from visual selection (add {{{,}}} markers)
-        - visual zf asks a title, <leader>wwf paragraph, :WrapFold (lua/genja/wrapfold.lua) (9bae096); untested
-
 - [ ] 30. telescope: mousability
+    - click selects, double-click runs: built into telescope (found 2026-10-23, see #17)
     - select lines (actions in code actions from lsp, F1, F2, F3, scroll list)
 
 - [ ] 31. nvim-init
@@ -165,10 +146,6 @@
     - [ ] confirm: resize nvim-qt from the top edge, tab stays; optional repro with GuiWindowFrameless(0)
 
 - [ ] 33. move gitea definition to w11s-cut project
-
-- [x] 34. f2 context: markdown
-    - [x] turn selection into checklist: lua/genja/md-checklist.lua, visual <F2>; untested
-
 
 - [ ] 35. recent files
     - make my own plugin with my rules for saving and ranking files
