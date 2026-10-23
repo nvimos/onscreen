@@ -34,6 +34,9 @@ Floaterm commands (lua/genja/auto-alias.vim)
                             --permission-mode --add-dir --ide --verbose --no-chrome
     in the claude terminal (lua/genja/claude.lua):
     <C-Left>  window on the left    <C-Right>  next tab
+    one claude per project root (marker cwd, git root, else :pwd), named claude-<root>
+    :ClaudeFterm!  <leader>pt   running claude terminals: <CR> show, <M-d> kill
+    <leader>pc  paste @file / selection     <leader>pC  prompt popup (plugin/claude-fterm.lua)
     <M-[>     previous tab          <M-]>      next tab
     <M-{>     previous window, like <C-q> (typed as Alt+Shift+[)
 

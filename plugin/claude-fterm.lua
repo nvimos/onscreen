@@ -4,7 +4,9 @@ local map = vim.keymap.set
 
 local function paste_context() require('genja.claude').paste_context() end
 local function prompt() require('genja.claude').prompt() end
+local function list() require('genja.claude').list() end
 
 map('n', '<leader>pc', paste_context, { desc = 'Claude: paste @file into claude' })
 map('x', '<leader>pc', paste_context, { desc = 'Claude: paste selection into claude' })
 map({ 'n', 'x' }, '<leader>pC', prompt, { desc = 'Claude: prompt popup (visual: with selection)' })
+map('n', '<leader>pt', list, { desc = 'Claude: terminals (running, one per project)' })

@@ -1,12 +1,15 @@
--- Idea #19 A (and #16): Claude Code in a floaterm named 'claude', fed from the editor.
---   :ClaudeFterm   toggle the terminal; started on first use, in :pwd (or resumed, see below)
+-- Idea #19 A (and #16): Claude Code in floaterms, one per project, fed from the editor.
+--   Project root of the current buffer: the cwd of its session marker (see below), else the
+--   git root of its file (oil: its dir), else :pwd. Terminal name: `claude-<root basename>`.
+--   :ClaudeFterm   toggle this project's terminal; started on first use in the root (or resumed)
+--   :ClaudeFterm!  <leader>pt   pick a running claude terminal: <CR> shows it, <M-d> kills it
 --   :ClaudeFterm [flags]   flags go to claude when it starts, e.g. --chrome, --model opus,
 --                  --effort high, --permission-mode plan, --add-dir <dir>; <Tab> completes.
 --                  Ignored (with a warning) while claude runs.
---   <leader>pc     paste context: normal = @file mention, visual = path:lines + code.
---                  Jumps into the terminal to type the question.
---   <leader>pC     prompt popup (draft, history, brief mode). <CR> sends and submits;
---                  the cursor stays in the editor. In visual mode the selection is attached.
+--   <leader>pc     paste context into this project's claude: normal = @file mention,
+--                  visual = path:lines + code. Jumps into the terminal to type the question.
+--   <leader>pC     prompt popup (draft, history, brief mode). <CR> sends and submits to this
+--                  project's claude; the cursor stays in the editor. Visual: selection attached.
 --   <C-q>, <C-j>, <C-Space>   in the claude terminal: back to the previous window
 --   <C-Left>                  in the claude terminal: to the window on the left
 --   <C-Right>                 in the claude terminal: to the next tab
@@ -19,7 +22,7 @@
 --     ~/.claude/projects/<cwd, non-alnum -> '-'>/<uuid>.jsonl
 --   Write: /rename in claude appends {"type":"custom-title","customTitle":...} to that
 --     transcript. A timer reads what was appended; on a new title the marker goes into
---     the buffer claude was started from (state.origin_buf), replacing an older marker.
+--     the buffer claude was started from (term.origin_buf), replacing an older marker.
 --     The buffer is changed but not saved.
 --   Read: when claude starts, the first and last MARKER_SCAN lines of the current buffer
 --     are searched. Found: `--resume <uuid>` in the session's cwd.
@@ -29,29 +32,33 @@
 --
 -- Terminal buffer name: `claude-ft «<title>»`, title capped at TITLE_MAX chars with '…';
 --   no title yet: `claude-ft «<basename of cwd>»`. Shown in the tabline and winbar.
---   b:claude_session_id holds the session id.
+--   b:claude_session_id holds the session id, b:claude_term the floaterm name.
 
 local M = {}
 
 local SRC = 'lua/genja/claude.lua: '
-local TERM = 'claude'
+local TERM_PREFIX = 'claude-'
 local BRIEF = 'Answer briefly: at most 3 short sentences, plain text, no markdown.\n\n'
 local HISTORY_MAX = 50
 ---:FloatermNew options as { option = value }, plus `cmd` for the command to run.
 ---Given by the caller (:ClaudeFterm in auto-alias.vim); --name is set here.
 ---@alias genja.claude.TermOpts table<string, string|number>
 
+---One claude floaterm, per project root.
+---@class genja.claude.Term
+---@field name string floaterm name, `claude-<root basename>`
+---@field root string project root, also claude's cwd; paths are made relative to it
+---@field origin_buf integer|nil buffer claude was started from; gets the session marker
+---@field watch_timer uv.uv_timer_t|nil polls the transcript for /rename
+
 local state = {
-	cwd = nil,       -- :pwd claude was started in; paths are made relative to it
 	draft = nil,     -- popup text kept between popups, cleared on send
 	history = {},    -- sent prompts, oldest first (this session only)
 	brief = false,   -- <C-b> in the popup: ask for a short plain-text answer
 	---@type genja.claude.TermOpts last given to toggle(); floaterm defaults until then
 	term_opts = { cmd = 'claude' },
-	---@type integer|nil buffer claude was started from; gets the session marker
-	origin_buf = nil,
-	---@type uv.uv_timer_t|nil polls the transcript for /rename
-	watch_timer = nil,
+	---@type table<string, genja.claude.Term> by floaterm name
+	terms = {},
 }
 
 -- {{{ session marker
@@ -149,7 +156,8 @@ end
 ---Name the claude terminal buffer `claude-ft «title»`, or after claude's cwd without a title.
 ---@param bufnr integer
 ---@param title string|nil
-local function set_term_name(bufnr, title)
+---@param cwd string claude's cwd
+local function set_term_name(bufnr, title, cwd)
 	if not vim.api.nvim_buf_is_valid(bufnr) then
 		return
 	end
@@ -161,7 +169,7 @@ local function set_term_name(bufnr, title)
 			label = vim.fn.strcharpart(label, 0, TITLE_MAX - 1) .. '…'
 		end
 	else
-		label = vim.fs.basename(state.cwd or vim.fn.getcwd())
+		label = vim.fs.basename(cwd)
 	end
 	local name = 'claude-ft «' .. label .. '»'
 
@@ -211,11 +219,12 @@ local function session_cwd(path, file)
 	return nil
 end
 
----Put the marker for session `id` into the origin buffer, replacing an older marker.
+---Put the marker for session `id` into the term's origin buffer, replacing an older marker.
+---@param term genja.claude.Term
 ---@param id string
 ---@param title string
-local function write_marker(id, title)
-	local buf = state.origin_buf
+local function write_marker(term, id, title)
+	local buf = term.origin_buf
 	if not buf or not vim.api.nvim_buf_is_loaded(buf) or not vim.bo[buf].modifiable then
 		vim.notify(SRC .. 'session renamed, but the buffer claude was started from is gone', vim.log.levels.WARN)
 		return
@@ -242,23 +251,25 @@ local function write_marker(id, title)
 	vim.notify(SRC .. 'session marker written to ' .. name .. ' (not saved)')
 end
 
----Stop polling the transcript.
-local function stop_watch()
-	if state.watch_timer then
-		state.watch_timer:stop()
-		state.watch_timer:close()
-		state.watch_timer = nil
+---Stop polling the term's transcript.
+---@param term genja.claude.Term
+local function stop_watch(term)
+	if term.watch_timer then
+		term.watch_timer:stop()
+		term.watch_timer:close()
+		term.watch_timer = nil
 	end
 end
 
 ---Poll session `id`'s transcript for /rename (custom-title lines) while claude runs.
 ---Polled, not watched: a new session's transcript appears only once claude writes it.
+---@param term genja.claude.Term
 ---@param id string
 ---@param bufnr integer claude terminal
 ---@param from_end boolean skip what the transcript holds now (resumed session)
 ---@param title string|nil current title, from the transcript of a resumed session
-local function watch_session(id, bufnr, from_end, title)
-	stop_watch()
+local function watch_session(term, id, bufnr, from_end, title)
+	stop_watch(term)
 	local path = nil
 	local offset = 0
 	if from_end then
@@ -269,13 +280,13 @@ local function watch_session(id, bufnr, from_end, title)
 	end
 
 	local timer = assert(vim.uv.new_timer())
-	state.watch_timer = timer
+	term.watch_timer = timer
 	timer:start(POLL_MS, POLL_MS, vim.schedule_wrap(function()
-		if state.watch_timer ~= timer then
+		if term.watch_timer ~= timer then
 			return
 		end
 		if not job_running(bufnr) then
-			stop_watch()
+			stop_watch(term)
 			return
 		end
 		if not path then
@@ -303,29 +314,64 @@ local function watch_session(id, bufnr, from_end, title)
 				if ok and type(entry) == 'table' and type(entry.customTitle) == 'string'
 					and entry.customTitle ~= title then
 					title = entry.customTitle
-					write_marker(id, title)
-					set_term_name(bufnr, title)
+					write_marker(term, id, title)
+					set_term_name(bufnr, title, term.root)
 				end
 			end
 		end
 	end))
 end
 
----@class genja.claude.Start
----@field term_opts genja.claude.TermOpts with the session flag added to `cmd`
----@field id string session id
----@field resumed boolean
----@field cwd string
----@field title string|nil /rename title of a resumed session
+---Which claude terminal the current buffer belongs to.
+---@class genja.claude.Target
+---@field root string project root, claude's cwd
+---@field name string floaterm name
+---@field resume_id string|nil session id from the buffer's marker
+---@field title string|nil /rename title of that session
 
----How to start claude from the current buffer: resume the session in its marker, else a new one.
----@return genja.claude.Start
-local function session_start()
-	local opts = vim.deepcopy(state.term_opts)
-	local cmd = opts.cmd or 'claude'
+---Directory of the current buffer: its file's dir, oil's dir, else :pwd.
+---@return string
+local function buffer_dir()
+	if vim.bo.filetype == 'oil' then
+		local ok, oil = pcall(require, 'oil')
+		if ok then
+			local dir = oil.get_current_dir()
+			if dir then
+				return dir
+			end
+		end
+	end
+	local file = vim.api.nvim_buf_get_name(0)
+	if file ~= '' and vim.bo.buftype == '' then
+		return vim.fs.dirname(file)
+	end
+	return vim.fn.getcwd()
+end
+
+---Floaterm name for `root`: `claude-<basename>`; a short hash is added when another root has it.
+---@param root string
+---@return string
+local function term_name(root)
+	local base = vim.fs.basename(root):gsub('[^%w%-_.]', '-')
+	local name = TERM_PREFIX .. base
+	local term = state.terms[name]
+	if term and term.root:lower() ~= root:lower() then
+		name = name .. '-' .. vim.fn.sha256(root:lower()):sub(1, 6)
+	end
+	return name
+end
+
+---Target of the current buffer: a claude terminal itself, the session in its marker,
+---else the git root of its dir, else :pwd.
+---@return genja.claude.Target
+local function target()
 	local buf = vim.api.nvim_get_current_buf()
-	local file = vim.api.nvim_buf_get_name(buf)
+	local own = vim.b[buf].claude_term
+	if own and state.terms[own] then
+		return { root = state.terms[own].root, name = own }
+	end
 
+	local file = vim.api.nvim_buf_get_name(buf)
 	if vim.bo[buf].buftype == '' and file ~= '' then
 		local id = find_marker(buf)
 		if id then
@@ -337,18 +383,37 @@ local function session_start()
 				title = transcript_title(path)
 			end
 			if cwd then
-				opts.cmd = cmd .. ' --resume ' .. id
-				-- floaterm splits its options on unescaped spaces
-				opts.cwd = vim.fs.normalize(cwd):gsub(' ', '\\ ')
-				return { term_opts = opts, id = id, resumed = true, cwd = cwd, title = title }
+				local root = vim.fs.normalize(cwd)
+				return { root = root, name = term_name(root), resume_id = id, title = title }
 			end
 			vim.notify(SRC .. 'no transcript or cwd for session ' .. id .. '; starting a new one', vim.log.levels.WARN)
 		end
 	end
 
-	local id = new_uuid()
-	opts.cmd = cmd .. ' --session-id ' .. id
-	return { term_opts = opts, id = id, resumed = false, cwd = vim.fn.getcwd() }
+	local root = vim.fs.root(buffer_dir(), '.git')
+	if not root then
+		root = vim.fn.getcwd()
+	end
+	root = vim.fs.normalize(root)
+	return { root = root, name = term_name(root) }
+end
+
+---Floaterm options to start claude for `t`: resume its session, else a new one with a known id.
+---@param t genja.claude.Target
+---@return genja.claude.TermOpts opts, string id
+local function start_opts(t)
+	local opts = vim.deepcopy(state.term_opts)
+	local cmd = opts.cmd or 'claude'
+	local id = t.resume_id
+	if id then
+		opts.cmd = cmd .. ' --resume ' .. id
+	else
+		id = new_uuid()
+		opts.cmd = cmd .. ' --session-id ' .. id
+	end
+	-- floaterm splits its options on unescaped spaces
+	opts.cwd = (t.root:gsub(' ', '\\ '))
+	return opts, id
 end
 -- }}}
 
@@ -359,16 +424,28 @@ local function load_floaterm()
 	require('lazy').load({ plugins = { 'vim-floaterm' } })
 end
 
----Buffer of the running 'claude' floaterm; a dead job is killed and counts as none.
+---Forget the term `name` (its job is gone).
+---@param name string
+local function forget(name)
+	local term = state.terms[name]
+	if term then
+		stop_watch(term)
+		state.terms[name] = nil
+	end
+end
+
+---Buffer of the running floaterm `name`; a dead job is killed and counts as none.
+---@param name string
 ---@return integer|nil bufnr
-local function term_bufnr()
+local function term_bufnr(name)
 	load_floaterm()
-	local bufnr = vim.fn['floaterm#terminal#get_bufnr'](TERM)
+	local bufnr = vim.fn['floaterm#terminal#get_bufnr'](name)
 	if bufnr == -1 or not vim.api.nvim_buf_is_valid(bufnr) then
 		return nil
 	end
 	if not job_running(bufnr) then
-		vim.cmd('FloatermKill ' .. TERM)
+		vim.cmd('FloatermKill ' .. name)
+		forget(name)
 		return nil
 	end
 	return bufnr
@@ -432,12 +509,13 @@ local function set_term_keys(bufnr)
 end
 
 ---:FloatermNew arguments from `opts`: sorted `--option=value`, then the command.
+---@param name string floaterm name
 ---@param opts genja.claude.TermOpts
 ---@return string
-local function fterm_args(opts)
+local function fterm_args(name, opts)
 	local keys = vim.tbl_keys(opts)
 	table.sort(keys)
-	local args = { '--name=' .. TERM }
+	local args = { '--name=' .. name }
 	for _, key in ipairs(keys) do
 		if key ~= 'cmd' and key ~= 'name' then
 			table.insert(args, '--' .. key .. '=' .. tostring(opts[key]))
@@ -447,38 +525,45 @@ local function fterm_args(opts)
 	return table.concat(args, ' ')
 end
 
----Start claude or show it, then call `cb(bufnr)` once it can take input.
+---Start claude for `t` or show it, then call `cb(bufnr)` once it can take input.
 ---@param focus boolean true: stay in the terminal (terminal mode); false: back to the editor
 ---@param cb? fun(bufnr: integer)
-local function open(focus, cb)
+---@param t? genja.claude.Target default: the current buffer's
+local function open(focus, cb, t)
+	if not t then
+		t = target()
+	end
 	local origin = vim.api.nvim_get_current_win()
-	local bufnr = term_bufnr()
+	local bufnr = term_bufnr(t.name)
 	local is_new = bufnr == nil
 	if is_new then
-		local start = session_start()
-		state.cwd = start.cwd
-		state.origin_buf = nil
+		---@type genja.claude.Term
+		local term = { name = t.name, root = t.root }
 		if vim.bo.buftype == '' and vim.api.nvim_buf_get_name(0) ~= '' then
-			state.origin_buf = vim.api.nvim_get_current_buf()
+			term.origin_buf = vim.api.nvim_get_current_buf()
 		end
+		state.terms[t.name] = term
+		local opts, id = start_opts(t)
 		-- claude's title updates make the mouse cursor flicker between normal and hourglass;
 		-- related: "terminalProgressBarEnabled": false in claude's settings.json.
 		-- Set only while the job starts, so other terminals keep their titles.
 		local old_title_env = vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE
 		vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE = '1'
-		vim.cmd('FloatermNew ' .. fterm_args(start.term_opts))
+		vim.cmd('FloatermNew ' .. fterm_args(t.name, opts))
 		vim.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE = old_title_env
-		bufnr = term_bufnr()
+		bufnr = term_bufnr(t.name)
 		if bufnr then
 			set_term_keys(bufnr)
-			vim.b[bufnr].claude_session_id = start.id
-			set_term_name(bufnr, start.title)
-			watch_session(start.id, bufnr, start.resumed, start.title)
+			vim.b[bufnr].claude_session_id = id
+			vim.b[bufnr].claude_term = t.name
+			set_term_name(bufnr, t.title, t.root)
+			watch_session(term, id, bufnr, t.resume_id ~= nil, t.title)
 		end
-	elseif not term_win((bufnr or -1)) then
-		vim.cmd('FloatermShow ' .. TERM)
+	elseif bufnr and not term_win(bufnr) then
+		vim.cmd('FloatermShow ' .. t.name)
 	end
 	if not bufnr then
+		forget(t.name)
 		vim.notify(SRC .. 'could not start claude', vim.log.levels.ERROR)
 		return
 	end
@@ -517,27 +602,87 @@ local function paste(bufnr, text, submit)
 	end
 end
 
----:ClaudeFterm: hide claude when shown, else show (start) it and jump in.
+---:ClaudeFterm: hide this project's claude when shown, else show (start) it and jump in.
+---:ClaudeFterm!: pick a running claude terminal (M.list).
 ---@param term_opts? genja.claude.TermOpts kept for later starts, also by <leader>pc/pC;
 ---  only used when claude is (re)started
 ---@param args? string extra claude flags from :ClaudeFterm, e.g. '--chrome'
-function M.toggle(term_opts, args)
+---@param bang? integer 1 for :ClaudeFterm!
+function M.toggle(term_opts, args, bang)
 	if term_opts then
 		state.term_opts = vim.deepcopy(term_opts)
 		if args and args ~= '' then
 			state.term_opts.cmd = (term_opts.cmd or 'claude') .. ' ' .. args
 		end
 	end
-	local bufnr = term_bufnr()
-	if bufnr and args and args ~= '' then
-		-- flags only apply at start; a running claude keeps its own
-		vim.notify(SRC .. 'claude already runs; ' .. args .. ' ignored (:FloatermKill claude, then retry)', vim.log.levels.WARN)
-	end
-	if bufnr and term_win(bufnr) then
-		vim.cmd('FloatermHide ' .. TERM)
+	if bang == 1 then
+		M.list()
 		return
 	end
-	open(true)
+	local t = target()
+	local bufnr = term_bufnr(t.name)
+	if bufnr and args and args ~= '' then
+		-- flags only apply at start; a running claude keeps its own
+		vim.notify(SRC .. 'claude already runs; ' .. args .. ' ignored (:FloatermKill ' .. t.name .. ', then retry)', vim.log.levels.WARN)
+	end
+	if bufnr and term_win(bufnr) then
+		vim.cmd('FloatermHide ' .. t.name)
+		return
+	end
+	open(true, nil, t)
+end
+
+---:ClaudeFterm!, <leader>pt: running claude terminals in a dropdown; <CR> shows one, <M-d> kills it.
+function M.list()
+	local items = {}
+	for name, term in pairs(state.terms) do
+		local bufnr = term_bufnr(name)
+		if bufnr then
+			local label = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
+			table.insert(items, { name = name, root = term.root, label = label })
+		end
+	end
+	if #items == 0 then
+		vim.notify(SRC .. 'no claude terminal runs; :ClaudeFterm starts one for this project')
+		return
+	end
+	table.sort(items, function(a, b) return a.name < b.name end)
+
+	local actions = require('telescope.actions')
+	local action_state = require('telescope.actions.state')
+	require('telescope.pickers').new(require('telescope.themes').get_dropdown({}), {
+		prompt_title = 'Claude terminals  <CR> show  <M-d> kill',
+		finder = require('telescope.finders').new_table({
+			results = items,
+			entry_maker = function(item)
+				return {
+					value = item,
+					display = item.name .. '  ' .. item.label .. '  ' .. item.root,
+					ordinal = item.name .. ' ' .. item.label .. ' ' .. item.root,
+				}
+			end,
+		}),
+		sorter = require('telescope.config').values.generic_sorter({}),
+		attach_mappings = function(prompt_bufnr, map)
+			actions.select_default:replace(function()
+				local entry = action_state.get_selected_entry()
+				actions.close(prompt_bufnr)
+				if entry then
+					open(true, nil, { root = entry.value.root, name = entry.value.name })
+				end
+			end)
+			map({ 'i', 'n' }, '<M-d>', function()
+				local entry = action_state.get_selected_entry()
+				actions.close(prompt_bufnr)
+				if entry then
+					vim.cmd('FloatermKill ' .. entry.value.name)
+					forget(entry.value.name)
+					vim.schedule(M.list)
+				end
+			end, { desc = 'Claude: kill this terminal' })
+			return true
+		end,
+	}):find()
 end
 
 -- Flags offered by :ClaudeFterm <Tab>. Session flags (--resume, --session-id, --continue)
@@ -587,26 +732,26 @@ function M.complete(arglead, cmdline)
 	return matches
 end
 
----Kill the claude terminal, if one runs; used by `:s:` before :qa (a running job blocks :qa).
+---Kill every claude terminal; used by `:s:` before :qa (a running job blocks :qa).
 ---Doesn't load floaterm just for this.
 function M.kill()
-	stop_watch()
-	if vim.g.loaded_floaterm == nil then
-		return
+	for name, term in pairs(state.terms) do
+		stop_watch(term)
+		if vim.g.loaded_floaterm ~= nil and vim.fn['floaterm#terminal#get_bufnr'](name) ~= -1 then
+			vim.cmd('FloatermKill ' .. name)
+		end
 	end
-	if vim.fn['floaterm#terminal#get_bufnr'](TERM) ~= -1 then
-		vim.cmd('FloatermKill ' .. TERM)
-	end
+	state.terms = {}
 end
 -- }}}
 
 -- {{{ context
 
----`file` relative to claude's start dir (or :pwd), forward slashes; absolute when outside.
+---`file` relative to claude's start dir (the project root), forward slashes; absolute when outside.
 ---@param file string
+---@param base string project root
 ---@return string
-local function rel_path(file)
-	local base = state.cwd or vim.fn.getcwd()
+local function rel_path(file, base)
 	local rel = vim.fs.relpath(base, file)
 	if rel then
 		return rel
@@ -628,14 +773,15 @@ end
 ---Selection as `path:first-last` plus a fenced code block; nil for a buffer without a file.
 ---@param first integer
 ---@param last integer
+---@param base string project root, paths are relative to it
 ---@return string|nil text, string|nil label e.g. 'lua/genja/f2.lua:10-20'
-local function selection_context(first, last)
+local function selection_context(first, last, base)
 	local file = vim.api.nvim_buf_get_name(0)
 	-- oil://, term:// etc. have no usable path
 	if file == '' or vim.bo.buftype ~= '' then
 		return nil, nil
 	end
-	local label = rel_path(file) .. ':' .. first .. '-' .. last
+	local label = rel_path(file, base) .. ':' .. first .. '-' .. last
 	local code = table.concat(vim.api.nvim_buf_get_lines(0, first - 1, last, false), '\n')
 	-- fence longer than any backtick run in the code, so it can't close early
 	local ticks = '```'
@@ -656,22 +802,23 @@ end
 ---<leader>pc: paste the file (@mention) or the selection into claude, then jump in to ask.
 function M.paste_context()
 	local is_visual = vim.fn.mode():match('^[vV\22]') ~= nil
+	local t = target()
 	local text = nil
 	if is_visual then
 		local first, last = visual_range()
 		exit_visual()
-		text = selection_context(first, last)
+		text = selection_context(first, last, t.root)
 	else
 		local file = vim.api.nvim_buf_get_name(0)
 		if file ~= '' and vim.bo.buftype == '' then
-			text = '@' .. rel_path(file) .. ' '
+			text = '@' .. rel_path(file, t.root) .. ' '
 		end
 	end
 	if not text then
 		vim.notify(SRC .. 'nothing to paste: this buffer has no file', vim.log.levels.WARN)
 		return
 	end
-	open(true, function(bufnr) paste(bufnr, text, false) end)
+	open(true, function(bufnr) paste(bufnr, text, false) end, t)
 end
 -- }}}
 
@@ -705,10 +852,12 @@ end
 ---<leader>pC: popup for a prompt sent to the running claude; selection attached in visual mode.
 function M.prompt()
 	local context, label = nil, nil
+	-- the project of the buffer the popup was opened from
+	local t = target()
 	if vim.fn.mode():match('^[vV\22]') then
 		local first, last = visual_range()
 		exit_visual()
-		context, label = selection_context(first, last)
+		context, label = selection_context(first, last, t.root)
 	end
 
 	local buf = vim.api.nvim_create_buf(false, true)
@@ -778,7 +927,7 @@ function M.prompt()
 		if state.brief then
 			text = BRIEF .. text
 		end
-		open(false, function(bufnr) paste(bufnr, text, true) end)
+		open(false, function(bufnr) paste(bufnr, text, true) end, t)
 	end
 
 	---Show history entry `index` (nil: back to the draft) in the popup.
@@ -850,7 +999,8 @@ end
 -- }}}
 
 -- Drops the cached module; the next require (e.g. :ClaudeFterm) loads it fresh.
--- `state` (cwd, history, draft, term opts) is lost with it.
+-- `state` (terminals, history, draft, term opts) is lost with it; running terminals stay
+-- but are no longer listed by :ClaudeFterm!.
 vim.api.nvim_create_user_command('DevReloadClaude', function()
 	package.loaded['genja.claude'] = nil
 	vim.notify(SRC .. 'module unloaded, next require reloads it')

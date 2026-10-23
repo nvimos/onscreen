@@ -18,10 +18,11 @@
         - [x] resume sessions based on commentstring
             - [ ] also if started from an oil buffer?
                 - no. no need for now
-        - one claude float term per project?
-            - [ ] or use the <- session manager inside claude?
+        - [x] one claude float term per project?
+            - [-] or use the <- session manager inside claude?
             - decided 2026-10-23: one floaterm per project root (marker cwd, git root, cwd),
-              plus a picker of running ones: <leader>pl, :ClaudeFterm! (<CR> show, <M-d> kill)
+              plus a picker of running ones: <leader>pt (<leader>pl is Perplexity), :ClaudeFterm!
+              (<CR> show, <M-d> kill); untested, doc-wip/readme.2026-10-23.claude-per-project.md
     - [x] claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
         - the pasting is WIP, need to work out / test out a spec
     - session marker: /rename in claude writes `claude-session: <uuid> <title>`
