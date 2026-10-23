@@ -107,7 +107,7 @@
     - code actions by kind: <leader>cq quickfix, ce extract, cr rewrite, cs source (d8e497b);
       search and replace moved to <leader>cS (9013eb0)
 
-- [x] Go: gopls local import groups from go.work/go.mod, code lenses, <leader>cl runs the lens (e3c61d5, 4a917a0)
+- [x] 21. Go: gopls local import groups from go.work/go.mod, code lenses, <leader>cl runs the lens (e3c61d5, 4a917a0)
 
 
 - [x] 6. oil: auto confirm creation of a single dir / file
@@ -117,35 +117,50 @@
     - plug-wip/genja-finder.nvim
     - see plug-wip/genja-finder.nvim/move-plan.md
 
-- [x] telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
+- [x] 22. telescope: picker keys to the location/quickfix list (<M-l/q> marked, <M-L/Q> append,
       <C-l/q> all), <C-/> lists the keys, hint in the empty prompt (0b48222)
 
-- [x] urlview.nvim: visual gx and <leader>gx pick URLs, <Tab> marks, <CR> opens all marked (a9ef21d, 4a3aed3, 082fd2d)
+- [x] 23. urlview.nvim: visual gx and <leader>gx pick URLs, <Tab> marks, <CR> opens all marked (a9ef21d, 4a3aed3, 082fd2d)
 
-- [x] genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
+- [x] 24. genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
 
 
--[.] which keys
+- [ ] 25. telescope refine decorator in steps
+    - see if someone has done it already
+    - <m-f> refine
+    - <m-x> exclude
+    - telescope old files
+        - implement <m-f> refinement for it too. reuse code if possible
+
+-[.] 26. which keys
     - [x] sort by description alphabetically, columns first
     - [x] <F2>/<F3> scroll the popup (e6ffb52)
-    - check if it's possible to search by description
+    - [.] check if it's possible to search by description
         - use <c-/> in telescope
-        - check <leader>? (Keymaps)
-            - does not show the updated descriptions for the default keymaps
-                - maybe i need to redefine them after all.
-                - maybe i need to enable them in the config
-        - check Telescope keymaps
-                - does not show oil maps
-                - does not show updated descriptions for fold keys
-        - [ ] maybe extend telescope keymaps with refine-decorator
+        - [x] check <leader>? (Keymaps): `/` searches key, desc and category
+            - [x] fold keys missing: keymaps.nvim hid `^z[zoOcCaAmMrRfF]$` as builtins
+                - fork in plug-wip/abdul-keymaps.nvim (branch genja-desc-builtins), spec loads it (08400fd)
+                - [x] include_builtins_with_desc: show builtin keys remapped with a desc (9130d41, 8231836)
+                - [x] builtin_patterns as an option, full list declared in the spec (9130d41, 30713ca)
+            - [x] category_order: Fold and LSP checked first, so 'Fold: delete' is not Editing (79f46dd, ae8e8e5)
+            - [x] float popup: mode letters (aac76e3), t cycles n/i/v/x/…/all, T all (36b4cf4, d3af9d5, b401e29)
+            - [x] float popup: one-line header, h toggles the hints (8b4daf3); empty search resets (0890585)
+            - [x] cache_timeout 20s (1b41f8d)
+            - [ ] section order on screen still by name (ui.lua), not category_order
+            - [ ] keep the fork: drop its .git and commit it, or gitignore it
+        - [ ] check Telescope keymaps (<leader>jM): desc is in the search text already; untested
+                - does not show oil maps: oil maps are buffer-local, open the picker from an oil buffer
+                - does not show updated descriptions for fold keys: likely fixed by the remap
+                - modes default to n,i,c,x (no o); pass modes = {...}
+        - [ ] maybe extend telescope keymaps with refine-decorator (see 25)
             - [ ] or cook <m-r> mapping for it to toggle / rotate groups
     - [x] redefine all standard fold mapping keys with a description prefix «Fold: »
         - do this in map-zero in a separate fold for folds
         - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
         - the whick-key popup does sort correctly
-        - [ ] want to make them searchable in
-            - telescope keymaps
-            - Keymaps user func / custom popup
+        - [.] want to make them searchable in
+            - [ ] telescope keymaps (untested)
+            - [x] Keymaps user func / custom popup
 
 - [x] 11. redefine all standard fold commands with better descriptions «Fold: …»
     - map-zero maps the built-in fold keys to themselves with «Fold: …» descriptions (bea7b97, 1d0d2db)
@@ -159,7 +174,7 @@
     - opt-in Conventional Commits mode; cmp offers types, scopes, footers
     - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
-- [x] copilot.vim: ghost text, keys in the cheatsheet (7d3d537, 53744b7); loads only for gitcommit, <leader>at toggles the other filetypes (e02ab60)
+- [x] 27. copilot.vim: ghost text, keys in the cheatsheet (7d3d537, 53744b7); loads only for gitcommit, <leader>at toggles the other filetypes (e02ab60)
 
 - [ ] 14e. nvim-lint: further linters (not covered by an LSP)
     - yaml / ansible: ansible-lint, yamllint
@@ -175,7 +190,7 @@
     - skip: shellcheck (bashls), eslint (LSP)
     - check Windows support per tool; non-stdin linters run only after :w
 
-- [ ] find a plugin to rotate window / pane layouts
+- [ ] 28. find a plugin to rotate window / pane layouts
     - one key to rotate
         - vsplit : 50 / 50 -> 30 / 70 -> 60 / 40
         - some simeple way to hold + / - to make the current window bigger by incremental steps, that are not 1 column at a time
@@ -183,14 +198,14 @@
 
 
 
-- [ ] almavimrc. clone in lua the behaviors
+- [ ] 29. almavimrc. clone in lua the behaviors
     - [ ] ~ to toggle false and other switches
     - [ ] create fold from visual selection (add {{{,}}} markers)
 
-- [ ] telescope: mousability
+- [ ] 30. telescope: mousability
     - select lines (actions in code actions from lsp, F1, F2, F3, scroll list)
 
-- [ ] nvim-init
+- [ ] 31. nvim-init
     - improve/add mouse functionality in nvim
     - for lazy mornings, or planning sessions
         - some mouseability
@@ -198,29 +213,23 @@
         - better context support
         - check out what other people are doing
 
-- [ ] bug in winbar or statusbar
+- [ ] 32. bug in winbar or statusbar
     - resizing activates right-most tab
 
-- [ ] move gitea definition to w11s-cut project
+- [ ] 33. move gitea definition to w11s-cut project
 
-- [ ] f2 context: markdown
+- [ ] 34. f2 context: markdown
     - turn selection into checklist
 
 
-- [ ] telescope refine decorator in steps
-    - see if someone has done it already
-    - <m-f> refine
-    - <m-x> exclude
-    - telescope old files
-        - implement <m-f> refinement for it too. reuse code if possible
 
-- [ ] recent files
+- [ ] 35. recent files
     - make my own plugin with my rules for saving and ranking files
     - study in essense
         - telescope old files
         - old mru plugin
 
-- [ ] add keys in oil to auto-add a location (item) from the list to the startdirs
+- [ ] 36. add keys in oil to auto-add a location (item) from the list to the startdirs
     - it can take some usability / features from harpoon - ask if they seem relevant
     - it should save new locations to NVIM/local/startdirs.json
         - or some lua-native format. maybe a plain text file will do
