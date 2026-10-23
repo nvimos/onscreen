@@ -56,6 +56,11 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
+Recent files (plug-wip/genja-recent.nvim, picker lua/genja/recent.lua, key in map-telescope.lua)
+
+    <C-F1>   recent files of this project (git root, else :pwd), frecency order
+    <M-a>    in the picker: this project / all files     <leader>jo  telescope oldfiles
+
 Telescope keymaps (lua/genja/telescope-keymaps.lua, keys in map-telescope.lua)
 
     <leader>jM  <leader>jbk  <leader>jb?   open it

@@ -35,6 +35,9 @@ function M.oldfiles()
 	require('genja-finder').enhance(require('telescope.builtin').oldfiles)()
 end
 
+-- recent files (genja-recent, frecency), this project first
+function M.recent() require('genja.recent').open() end
+
 -- keymaps with the refine keys and <M-r>/<M-R> desc group rotation
 function M.keymaps() require('genja.telescope-keymaps').open() end
 

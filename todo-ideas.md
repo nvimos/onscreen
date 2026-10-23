@@ -107,14 +107,3 @@
     - [x] fix: no-op click region over the tabline's left edge and fill (genja-statusline autoload/genja_statusline.vim); untested
     - [ ] confirm: resize nvim-qt from the top edge, tab stays; optional repro with GuiWindowFrameless(0)
 
-- [ ] 35. recent files
-    - make my own plugin with my rules for saving and ranking files
-    - study in essense
-        - telescope old files
-        - old mru plugin
-    - spec 2026-10-23 (details: doc-wip/squash-ideas-oct-17.details.md #35)
-        - plug-wip/genja-recent.nvim, ranking shared with genja-startdirs
-        - record on BufWinEnter and BufWritePost; views and edits counted apart
-        - skip: non-file buftypes, .git/, %TEMP%, nvim-data (option)
-        - frecency, edits x2; picker on the current project, <M-a> all
-        - data: nvim-data/genja-recent.txt; <C-F1> opens it, oldfiles moves to a free <leader>j key
