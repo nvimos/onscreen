@@ -4,20 +4,34 @@
 
 -[ ] extract Mylunsj into a separate plugin
 
--[ ] integrate online, free tier
+
+-[ ] ai, llm, code generation
+	-[ ] integrate at leas one from online, free tier
+	-[ ] integrate ollama
+		- (maybe) via cli
+		- (maybe) via http api
+		- (maybe) via local sock
 	-[ ] integrate at least one
 		- maybe hack some round-robin, auto retry util
+		- maybe delegate to cli tools
 	-[ ] auto-code-completion suggestions
+		- copilot
+		- gemini
 	-[ ] chatbot
+		- ask random questions
+		- ask about current file
 
--[ ] integrate everything search index
+-[ ] indexed file search: integrate everything search index
 	- maybe use it per default if it's installed, fallback to fzf or whatever
 
 -[ ] look for an alternative shortcut-hint plugin
+	- or maybe improve sorting and grouping of which-key
 	- which binds follow space, g, ` (leader, localleader)
 		- which-key feels clunky
 
 -[ ] maybe: cook up a way to or look into disabling languages automatically
+	- or only enable them when needed
+	- or only enable them when configured through a local settings file
 
 -[x] migrate lsp, cmp config to neovim 0.11+ api
 	- [x] ask claude to rewrite based on existing files
@@ -50,25 +64,32 @@
 	-[x] move bootstrap to lua/lazy-boot.vim
 
 -[x] look into generating a cheat-sheet from existing keys
+	- ideally some logical patterns and rearrangement ideas should emerge
+		- which key groups help with that
+			- the ui is easier to read too
+	-[x] should be a reference at a glance
 	-[x] sudormrfbin/cheatsheet.nvim
-	-[ ] move the :CheatsheetGenerate snippet to lazy setup
-	-[ ] make the telescope ui first column wider
-	-[ ] adjust the script for more granular groups (first column)
-	-[ ] look into generating several cheatsheets
-		-[ ] one for lsp
-		-[ ] one for map-convoluted
-		-[ ] one for map-*
-		-[ ] add them to Mylunsj
-	- consider
-		- exclude or include defaults toggle
+		- no. the ui / interface sucked. abandon effort
+		- abdul keymaps is much better. works as a modal with search
 		- maybe save as custom help files -> cheatsheet.txt
-		- should be a reference at a glance
-		- ideally some logical patterns and rearrangement ideas should emerge
+		-[n] move the :CheatsheetGenerate snippet to lazy setup
+		-[n] make the telescope ui first column wider
+		-[n] adjust the script for more granular groups (first column)
+		-[n] look into generating several cheatsheets
+			-[ ] one for lsp
+			-[ ] one for map-convoluted
+			-[ ] one for map-*
+			-[ ] add them to Mylunsj
+	- consider
+		- exclude or include defaults
+			- [ ] done for folds
+			- toggle builtin keymaps?
+			  (in the cheatsheet, or the search ui)
+				- must be manually redeclared. prob not worth it for all
 
 -[x] open a browser and paste a query to perplexity
 	-[ ] tidy plugin and move somewhere
 	-[ ] same for gemini
-
 
 ## prep / clean
 

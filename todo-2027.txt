@@ -76,3 +76,50 @@ new setup 2027
 
 - [ ] consider adopting snacks
     - https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
+
+
+### f2 git config
+
+- [ ] f2 git config (new f2 action)
+    - spec
+        - no global handling
+            - just go to homedir and run it there to set global
+        - look for .gitconfig and .git/config
+            - these trigger adding this action to f2
+    - idea: consider generating an explorer
+        - it's a sub-picker
+            - displayed as path in the telescope pickers, value also seen
+            - loads known values / parameters from git.exe or docs
+            - custom map to add to your file e.g. <m-a>
+        - ui behavior; show
+            - unset config values in gray
+            - problematic values in red
+            - custom values in magenta
+            - defaults in green
+    - sub-item: select from config values
+        - items:
+            - upstream origin / branch
+    - sub-item: append settings
+        - items:
+            - add this dir as trusted
+            - new remote
+    - sub-item: set needed options for git
+        - items
+            - email
+            - name
+    - sub-item: toggle-cycle options 
+        - selecting item selects next and keeps ui open
+          (currently active is indicated)
+        - items
+            - main branch name
+                - cycle: master -> main -> trunk
+                - input: a custom name
+            - item: switch line endings
+                - cycle: crlf -> lf -> auto
+
+### git add improvement
+
+- [ ] improve: f2 git add
+    - detect errors and deal with them
+      lua/genja/popup-menu.lua: git add Makefile 
+      lua/genja/f2/git.lua: warning: in the working copy of 'bootstrap.ps1', LF will be replaced by CRLF the next time Git touches it

@@ -1,10 +1,20 @@
 # list of improvements to nvim
 
+
 ## related files
+
+squash ideas details and estimations
 
     ./doc-wip/squash-ideas-oct-17.md
     ./doc-wip/squash-ideas-oct-17.details.md
 
+future work (need to limit the neovim-2026 project)
+
+    ./todo-2027.txt
+
+migration from 0.9 to 0.11 (the file that started it all)
+
+    ./todo-2026-neovim011.txt
 
 ## ideas october
 
@@ -12,6 +22,9 @@
     - [x] prettier winbar names: `claude-ft «<session title>»`, else the cwd basename (bfd6eef)
     - [x] :ClaudeFterm [flags]: --chrome, --model, --effort, ... at start, <Tab> completes (55240fa)
     - [x] terminal keys: <C-Left> window on the left (4e79669), <C-Right> next tab (4a917a0)
+        - [x] <M-]>/<M-[> next/previous tab (af9c7a4), <M-{> previous window (6a4c414)
+    - [x] :DevReloadClaude drops the cached claude modules; :F2Reload renamed :DevReloadF2 (bab761a)
+    - [x] prompt popup: bigger, placed up-left (55140b2); <C-CR> sends, <CR> adds a newline (96562ed)
     - [x] talk to claude desktop or claude from nvim
         -[x] claude in float term for now. using claude.exe
     - need to work out a spec
@@ -22,7 +35,7 @@
             - [-] or use the <- session manager inside claude?
             - decided 2026-10-23: one floaterm per project root (marker cwd, git root, cwd),
               plus a picker of running ones: <leader>pt (<leader>pl is Perplexity), :ClaudeFterm!
-              (<CR> show, <M-d> kill); untested, doc-wip/readme.2026-10-23.claude-per-project.md
+              (<CR> show, <M-d> kill); untested, doc-wip/readme.2026-10-23.claude-per-project.md (80f96ba)
     - [x] claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
         - the pasting is WIP, need to work out / test out a spec
     - session marker: /rename in claude writes `claude-session: <uuid> <title>`
@@ -62,6 +75,31 @@
     - [x] first wave (decided 2026-10-23): markdownlint-cli2, typos (markdown, gitcommit), yamllint,
       ansible-lint (WSL, like phpactor), selene, checkmake, phpcs, actionlint
         - install: mason-tool-installer (all but ansible-lint)
-        - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md
+        - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md (b5383bd)
     - later: hadolint, vale, ruff, gitleaks, editorconfig-checker, vint
+
+- [x] extras outside the idea list (2026-10-23)
+    - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)
+    - [x] map-telescope: helpers in fn.lua; <leader>jj1/jj2 quickfix/loclist, genja grep/find on jjJ/jjj,
+          builtins under <leader>jb (6aa5a7b); which-key groups <leader>j. and <leader>j/ (73c4c3b)
+    - [x] focus.nvim: vim.g.focus_disable, so <C-w>= sticks; <leader>tPf can turn it on (28c80c0)
+    - [x] every vim.notify names its file through a SRC prefix (2aadf61)
+    - [x] mylunsj lists Telescope mydirs first (1151dfb)
+    - [x] cmdline completion: <Tab>/<S-Tab> next/previous, <Up>/<Down> pick while the menu is open (b5173ad)
+
+
+
+- [ ] improve: key maps map-plug
+    - idea: calls from spec-files; log missing and detect with healthcheck
+    - the error message about no maps for "plugin" should indicate which plugin
+    - probably via reflection also
+    - this should be logged as a notice, only once per nvim-session. not notify, log
+    - there should be a healthcheck for this
+        - ok to grep / parse?
+        - maybe use treesitter to reverse-lookup references?
+        - who calls Maps:mappings()? who comes up empty handed?
+        - i guess we can not record this, because the healthcheck should be stateless.
+            - but then again, maybe call an api in the plugin to record a missing lookup when it happens?
+            - should not be that bad. we already have the caller and his file then
+
 
