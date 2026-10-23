@@ -95,3 +95,12 @@ Action menu on right-click (lua/genja/fn.vim, menu from lua/genja/actions.lua)
 
     right-click > Actions (g.)   same menu as g. / <LocalLeader>/
     in telescope: click selects an entry, double-click runs it (mouse=a)
+
+Toggle and increment (lua/genja/tilde.lua in map-zero.lua; dial: lua/genja/map-plugin/dial.lua)
+
+    ~          swap word under cursor: true/false on/off yes/no enable(d)/disable(d) and/or 0/1
+               left/right up/down min/max first/last; chars + -  < >; case kept; else plain ~
+    <M-~>      plain ~ (case)
+    <C-a> <C-x>      dial: numbers, hex, dates, times, semver, weekdays, months, &&/||, bool
+                     lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
+    g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats

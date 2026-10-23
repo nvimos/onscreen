@@ -461,6 +461,7 @@ function! s:removeTrailingSpaces()
 endfunction " }}}
 
 " {{{ vim operator ~ extended tilde - toggle true/false under cursor
+" duplicated in lua/genja/tilde.lua (~, <M-~> plain)
 function! TildeToggleUnderCursor()
 	let save_pos = getpos(".")
 	let line = getline('.')
