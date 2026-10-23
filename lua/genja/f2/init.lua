@@ -131,7 +131,7 @@ M._sort = sort
 
 -- Drops the cached f2 modules; the next <F2> loads them fresh. Tasks added
 -- with f2.add_tasks() are lost with the registry.
-vim.api.nvim_create_user_command('F2Reload', function()
+vim.api.nvim_create_user_command('DevReloadF2', function()
 	package.loaded['genja.f2'] = nil
 	package.loaded['genja.f2.adhoc'] = nil
 	package.loaded['genja.f2.builder'] = nil

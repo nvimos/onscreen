@@ -844,4 +844,11 @@ function M.prompt()
 end
 -- }}}
 
+-- Drops the cached module; the next require (e.g. :ClaudeFterm) loads it fresh.
+-- `state` (cwd, history, draft, term opts) is lost with it.
+vim.api.nvim_create_user_command('DevReloadClaude', function()
+	package.loaded['genja.claude'] = nil
+	vim.notify(SRC .. 'module unloaded, next require reloads it')
+end, { desc = 'claude: unload genja.claude' })
+
 return M
