@@ -109,3 +109,10 @@ F2 in markdown (lua/genja/md-checklist.lua, from after/ftplugin/markdown.lua; vi
 
     <F2> > markdown: checklist   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
+
+Window sizes (lua/genja/winsize.lua, keys in lua/genja/map-zero.lua)
+
+    <M-=> <M-->   grow / shrink the window along its split (10% of the screen; <leader>Ws: 8 cols / 4 lines)
+    <M-0>         cycle the split share: 50/50 30/70 70/30 60/40 (left/top window; 3+ windows: current)
+    <leader>wr    resize mode (which-key loop): h j k l  narrower lower taller wider, = equal, 0 share, s step, <Esc> leaves
+    smart-splits.nvim (disabled spec lua/lazyp/new/smart-splits.lua): <M-h/j/k/l>, <leader>wR

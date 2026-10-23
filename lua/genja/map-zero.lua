@@ -36,6 +36,19 @@ km(n, '<C-right>',      cmd [[wincmd l]],   nosi 'Window: right')
 km(n, '<C-w>1',         cmd [[only]]..'zz', nosi 'Window: only') -- center on line
 km(n, '<c-w><s-right>', '<c-w>L',           nosi 'Window: move left')
 km(n, '<c-w><s-left>',  '<c-w>R',           nosi 'Window: move left')
+-- sizes in big steps, share cycle, resize mode (lua/genja/winsize.lua)
+local function ws() return require('genja.winsize') end
+km(n, '<M-=>',      function() ws().resize(1) end,  nosi 'Window: grow (big step)')
+km(n, '<M-->',      function() ws().resize(-1) end, nosi 'Window: shrink (big step)')
+km(n, '<M-0>',      function() ws().cycle() end,    nosi 'Window: split share 50/30/70/60')
+km(n, '<leader>wr', function() ws().mode() end,     nosi 'Window: resize mode (h j k l = 0, <Esc>)')
+km(n, '<leader>Wh', function() ws().resize(-1, 'width') end,  nosi 'Resize: narrower')
+km(n, '<leader>Wl', function() ws().resize(1, 'width') end,   nosi 'Resize: wider')
+km(n, '<leader>Wj', function() ws().resize(-1, 'height') end, nosi 'Resize: lower')
+km(n, '<leader>Wk', function() ws().resize(1, 'height') end,  nosi 'Resize: taller')
+km(n, '<leader>W=', '<C-w>=',                                  nosi 'Resize: equal')
+km(n, '<leader>W0', function() ws().cycle() end,              nosi 'Resize: split share cycle')
+km(n, '<leader>Ws', function() ws().toggle_step() end,        nosi 'Resize: step percent/cells')
 -- }}}
 
 -- Tabs {{{

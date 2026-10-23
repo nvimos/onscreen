@@ -140,13 +140,6 @@
     - skip: shellcheck (bashls), eslint (LSP)
     - check Windows support per tool; non-stdin linters run only after :w
 
-- [ ] 28. find a plugin to rotate window / pane layouts
-    - one key to rotate
-        - vsplit : 50 / 50 -> 30 / 70 -> 60 / 40
-        - some simeple way to hold + / - to make the current window bigger by incremental steps, that are not 1 column at a time
-        - probably find a plugin for this
-
-
 - [ ] 29. almavimrc. clone in lua the behaviors
     - [x] ~ to toggle false and other switches: lua/genja/tilde.lua, <M-~> plain; untested
         - [x] dial.nvim on <C-a>/<C-x>, groups per filetype (lua/lazyp/new/dial.lua); untested
