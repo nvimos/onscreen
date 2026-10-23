@@ -9,7 +9,7 @@ local M = {}
 
 -- restart the gopls clients on Go buffers in or below dir, so they leave
 -- single-file mode; re-firing FileType lets vim.lsp.enable attach again
--- (same trick as lang/Php.lua)
+-- (same trick as lang/php.lua)
 ---@param dir string
 local function restart_gopls(dir)
 	local bufs = {}
