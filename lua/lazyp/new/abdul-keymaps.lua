@@ -23,6 +23,14 @@ return {
 		-- Include vim builtin keymaps
 		include_builtins = true,
 
+		-- With include_builtins = false, still show builtin keys remapped with a desc
+		-- (map-zero.lua's 'Fold: …' self-maps); option added in the local clone
+		include_builtins_with_desc = true,
+
+		-- Lua patterns (against lhs) that mark a key as builtin; a list here replaces
+		-- the default list in plug-wip/abdul-keymaps.nvim/lua/keymaps/config.lua
+		-- builtin_patterns = { '^[hjkl]$', '^z[zoOcCaAmMrRfF]$' },
+
 		-- Include buffer-local keymaps (from netrw, help, etc.)
 		-- Set to false to hide noisy internal keymaps
 		include_buffer_local = true,
