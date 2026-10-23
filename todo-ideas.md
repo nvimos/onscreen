@@ -47,8 +47,6 @@
         - [ ] test Windows voice typing (Win+H) in insert mode: free
 
 
-- [ ] 9. git:    gitsigns.nvim (Neovim): stage or reset hunks from the buffer. 
-
 - [~] 16. <m-?>:  popup with ai chat to ask some random question.
     - output should be mega brief and text-only (no markdown)
     - need to work out a spec
@@ -85,16 +83,6 @@
         - can telescope be used with a mouse?
     - done instead: telescope action menu on g. and <LocalLeader>/ (lua/genja/actions.lua), built per call
     - cur: items for the cursor (LSP, line diagnostics, word, oil entry), unprefixed ones for buffer/editor
-
-- [ ] 13. json/yaml: display the outer key, or even path somewhere in the statusbar or tabbar
-    - navigatable  https://github.com/Bekaboo/dropbar.nvim
-    - simpler      https://github.com/SmiteshP/nvim-navic
-    - Full sidebar 
-        - https://github.com/hedyhli/outline.nvim
-        - https://github.com/stevearc/aerial.nvim
-        - https://github.com/oskarrrrrrr/symbols.nvim
-    - aerial outline sidebar also on <C-s> (5bc3fb8)
-
 
 - [ ] 25. telescope refine decorator in steps
     - reusable decorator that enhances any picker; separate file in lua/genja/ for now
