@@ -28,8 +28,13 @@
 --
 -- They don't require('genja.map-plugin') themselves: this file is still loading
 -- then, and require errors with "loop or previous error loading module".
+--
+-- A lookup that finds nothing is not a notify: it is recorded once per name and session,
+-- appended to stdpath('log')/genja-map-plugin.log, and listed by
+-- :checkhealth genja.map-plugin (health.lua, from this session's records only).
 
 local SRC = 'lua/genja/map-plugin/init.lua: '
+local LOG = vim.fs.joinpath(vim.fn.stdpath('log'), 'genja-map-plugin.log')
 
 
 -- One (or more) keymap for lazy plugin spec keys option.
@@ -41,9 +46,17 @@ local SRC = 'lua/genja/map-plugin/init.lua: '
 -- opts is the spec's merged `opts` ({} when none were passed).
 ---@alias genja.MapPlugin.Mappings fun(opts: table)
 
+-- A keys() or mappings() call that found nothing.
+---@class genja.MapPlugin.Miss
+---@field kind 'keys'|'mappings'
+---@field name string spec name, or '?' when it could not be resolved
+---@field file string calling file, relative to the config dir when inside it
+
 ---@class genja.MapPlugin
 ---@field private _keys table<string, genja.MapPlugin.Keys>         spec name -> lazy keys
 ---@field private _mappings table<string, genja.MapPlugin.Mappings> spec name -> keymap function
+---@field private _asked table<string, boolean>                     'keys:name' / 'mappings:name' -> found
+---@field private _missed genja.MapPlugin.Miss[]                    this session, each kind+name once
 local MapPlugin = {}
 
 -- Missing keys on instances are looked up here: this is what makes the methods visible.
@@ -52,39 +65,72 @@ MapPlugin.__index = MapPlugin
 
 ---@return genja.MapPlugin
 function MapPlugin.new()
-	local obj = { _keys = {}, _mappings = {}, }
+	local obj = { _keys = {}, _mappings = {}, _asked = {}, _missed = {}, }
 	return setmetatable(obj, MapPlugin)
 end
 
 -- Name of the file that defined the function at `level` on the stack:
 -- '@C:/.../lua/lazyp/langs-comps/copilot.lua' -> 'copilot'.
 -- Windows paths can use either slash, hence [/\\].
+-- Second value: the file's path, relative to the config dir when inside it.
 ---@param level integer stack level, counted from this function (1 = caller_name itself)
----@return string|nil
+---@return string|nil name
+---@return string path
 local function caller_name(level)
 	local info = debug.getinfo(level, 'S')
 	if info == nil then
-		return nil
+		return nil, '?'
 	end
 	-- '@' marks a file; other sources are strings from load()/loadstring().
 	if info.source:sub(1, 1) ~= '@' then
-		return nil
+		return nil, info.short_src
+	end
+	local path = vim.fs.normalize(info.source:sub(2))
+	local config = vim.fs.normalize(vim.fn.stdpath('config')) .. '/'
+	-- Windows: drive letter and folder case can differ between the two
+	if path:lower():sub(1, #config) == config:lower() then
+		path = path:sub(#config + 1)
 	end
 	local file_name = info.source:match('([^/\\]+)%.lua$')
-	return file_name
+	return file_name, path
 end
 
 -- Resolves the spec name: explicit argument, else the file that called the public method.
 -- Stack seen from caller_name: 1 caller_name, 2 resolve_name, 3 the method (keys/mappings),
 -- 4 the spec file. Hence 4, and why no call on this path may be a tail call.
+-- Second value: the caller's file, for the miss log.
 ---@param spec_name string|nil
----@return string|nil
+---@return string|nil name
+---@return string path
 local function resolve_name(spec_name)
+	local found, path = caller_name(4)
 	if spec_name ~= nil then
-		return spec_name
+		return spec_name, path
 	end
-	local found = caller_name(4)
-	return found
+	return found, path
+end
+
+-- Records a lookup; a miss is logged once per kind and name in this session.
+---@param self genja.MapPlugin
+---@param kind 'keys'|'mappings'
+---@param name string|nil
+---@param path string
+---@param found boolean
+local function record(self, kind, name, path, found)
+	local shown = name or '?'
+	local id = kind .. ':' .. shown
+	local before = self._asked[id]
+	self._asked[id] = found or before == true
+	if found or before ~= nil then
+		return
+	end
+	table.insert(self._missed, { kind = kind, name = shown, file = path })
+	local line = os.date('%Y-%m-%d %H:%M:%S') .. ' no ' .. kind .. " for '" .. shown .. "' (" .. path .. ')'
+	local f = io.open(LOG, 'a')
+	if f then
+		f:write(line, '\n')
+		f:close()
+	end
 end
 
 -- Registering (used in the definition files)
@@ -131,9 +177,10 @@ end
 ---@param spec_name? string defaults to the caller's file name
 ---@return genja.MapPlugin.Keys|nil
 function MapPlugin:keys(spec_name)
-	local resolved = resolve_name(spec_name)
-	if resolved == nil or self._keys[resolved] == nil then
-		vim.notify(SRC .. 'no keys for ' .. tostring(resolved), vim.log.levels.WARN)
+	local resolved, path = resolve_name(spec_name)
+	local found = resolved ~= nil and self._keys[resolved] ~= nil
+	record(self, 'keys', resolved, path, found)
+	if not found then
 		return nil
 	end
 	return self._keys[resolved]
@@ -145,15 +192,37 @@ end
 ---@param opts? table the spec's merged opts, handed to the keymap function
 ---@param spec_name? string defaults to the caller's file name
 function MapPlugin:mappings(opts, spec_name)
-	local resolved = resolve_name(spec_name)
-	if resolved == nil or self._mappings[resolved] == nil then
-		vim.notify(SRC .. 'no mappings for ' .. tostring(resolved), vim.log.levels.WARN)
+	local resolved, path = resolve_name(spec_name)
+	local found = resolved ~= nil and self._mappings[resolved] ~= nil
+	record(self, 'mappings', resolved, path, found)
+	if not found then
 		return
 	end
 	if opts == nil then
 		opts = {}
 	end
 	self._mappings[resolved](opts)
+end
+
+-- For health.lua: misses, and registered names not asked for yet in this session
+-- (mappings run only when their plugin loads, so these are "not used yet", not errors).
+---@return { missed: genja.MapPlugin.Miss[], keys_unasked: string[], mappings_unasked: string[], log: string }
+function MapPlugin:status()
+	local keys_unasked = {}
+	for name in pairs(self._keys) do
+		if self._asked['keys:' .. name] == nil then
+			table.insert(keys_unasked, name)
+		end
+	end
+	local mappings_unasked = {}
+	for name in pairs(self._mappings) do
+		if self._asked['mappings:' .. name] == nil then
+			table.insert(mappings_unasked, name)
+		end
+	end
+	table.sort(keys_unasked)
+	table.sort(mappings_unasked)
+	return { missed = self._missed, keys_unasked = keys_unasked, mappings_unasked = mappings_unasked, log = LOG }
 end
 
 -- print(require('genja.map-plugin')) shows what is registered.
@@ -163,7 +232,7 @@ function MapPlugin:__tostring()
 		.. ', mappings: ' .. vim.inspect(vim.tbl_keys(self._mappings))
 end
 
--- Definitions: every .lua file next to this one (not subdirectories), in name order.
+-- Definitions: every .lua file next to this one (not subdirectories, not health.lua), in name order.
 -- A file that returns a function is called with the instance; anything else is just required.
 -- One broken file is reported and skipped, so the other plugins keep their keys.
 local M = MapPlugin.new()
@@ -174,7 +243,7 @@ local dir = vim.fs.dirname(debug.getinfo(1, 'S').source:sub(2))
 -- vim.fs.dir's order depends on the OS; sort so the load order is stable.
 local modules = {}
 for file, kind in vim.fs.dir(dir) do
-	if kind == 'file' and file ~= 'init.lua' and vim.endswith(file, '.lua') then
+	if kind == 'file' and file ~= 'init.lua' and file ~= 'health.lua' and vim.endswith(file, '.lua') then
 		table.insert(modules, file:sub(1, -5))
 	end
 end

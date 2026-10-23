@@ -108,5 +108,9 @@ migration from 0.9 to 0.11 (the file that started it all)
         - i guess we can not record this, because the healthcheck should be stateless.
             - but then again, maybe call an api in the plugin to record a missing lookup when it happens?
             - should not be that bad. we already have the caller and his file then
+    - [x] done 2026-10-24: misses go to stdpath('log')/genja-map-plugin.log, once per name and session,
+      with the caller's file; no notify. :checkhealth genja.map-plugin lists this session's misses,
+      keys nobody asked for, mappings not used yet (runtime only, no grep, doesn't read the log)
+        - untested, doc-wip/readme.2026-10-24.map-plugin-health.md
 
 

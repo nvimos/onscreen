@@ -42,7 +42,7 @@ mappings and funcs for them
      map-jolemak.lua    - keymaps, custom layout quirks
      map-lsp.lua        - keymaps, code-actions, diagnostics navigation
      map-oil.lua        - keymaps, oil buffers: key -> oil-actions; which-key groups
-     map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions)
+     map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions), health.lua (:checkhealth genja.map-plugin)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
      ask.lua - <M-?> / <leader>pC ask popup: claude -p, claude floaterm, gemini, copilot, aichat (ask/backends/)
