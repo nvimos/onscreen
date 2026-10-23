@@ -35,7 +35,22 @@ function M.oldfiles()
 	require('genja-finder').enhance(require('telescope.builtin').oldfiles)()
 end
 
-function M.context_picker() require('genja.f2').open() end
+function M.context_picker()
+	vim.b.f2_range = nil -- a range only comes from visual <F2>
+	require('genja.f2').open()
+end
+
+-- visual <F2>: tasks read the selected lines from vim.b.f2_range (e.g. md-checklist)
+function M.context_picker_visual()
+	local first = vim.fn.line('v')
+	local last = vim.fn.line('.')
+	if first > last then
+		first, last = last, first
+	end
+	vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'nx', false)
+	vim.b.f2_range = { first, last }
+	require('genja.f2').open()
+end
 function M.action_menu() require('genja.actions').open() end
 
 return M

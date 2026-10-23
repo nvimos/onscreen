@@ -66,7 +66,7 @@
         - [x] git source (oil only): `git: add (N files)` sub-picker with status codes, diff preview, <Tab> marks
         - [x] f2.add_tasks(tasks, { buffer? }) / f2.add_task(group, label):…:add() builder / f2.remove_tasks({ group, label?, buffer? }), f2.group_order
             - task: label, group, action (keys|function) or cmd (+ runner overseer|floaterm, cwd), order, cond, autoremove
-            - [ ] first caller
+            - [x] first caller: md-checklist (#34)
         - [x] git add picker: preview hidden at start, <C-p> toggles it, <M-t> tabs (picker stays), <M-e> edit; :F2Reload (6fdd7e3)
     - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); not run yet
 
@@ -183,8 +183,8 @@
 
 - [ ] 33. move gitea definition to w11s-cut project
 
-- [ ] 34. f2 context: markdown
-    - turn selection into checklist
+- [x] 34. f2 context: markdown
+    - [x] turn selection into checklist: lua/genja/md-checklist.lua, visual <F2>; untested
 
 
 - [ ] 35. recent files

@@ -19,6 +19,7 @@ km('n', '<S-F1>', F.genja_finder_find, nosi 'Telescope: find files (genja-finder
 
 km('n', '<C-F1>', F.oldfiles,       nosi 'Telescope: oldfiles (<M-f> filter)') -- Nb! hhkb2: fn-ctrl-1 is not the same as ctrl-fn-1
 km('n', '<F2>',   F.context_picker, nosi 'Telescope: context picker (adhoc, git, make, added tasks)')
+km('x', '<F2>',   F.context_picker_visual, nosi 'Telescope: context picker for the selection')
 
 km('n', 'g.',             F.action_menu, nosi 'Telescope: actions here (cur: = item under cursor)')
 km('n', '<LocalLeader>/', F.action_menu, nosi 'Telescope: actions here (cur: = item under cursor)')

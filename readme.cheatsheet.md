@@ -104,3 +104,8 @@ Toggle and increment (lua/genja/tilde.lua in map-zero.lua; dial: lua/genja/map-p
     <C-a> <C-x>      dial: numbers, hex, dates, times, semver, weekdays, months, &&/||, bool
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats
+
+F2 in markdown (lua/genja/md-checklist.lua, from after/ftplugin/markdown.lua; visual <F2> in map-telescope.lua)
+
+    <F2> > markdown: checklist   add `[ ]` to the cursor line; visual <F2>: to the selected lines
+                                 all lines boxed already: removes the boxes
