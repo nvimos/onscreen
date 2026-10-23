@@ -114,3 +114,4 @@ migration from 0.9 to 0.11 (the file that started it all)
         - untested, doc-wip/readme.2026-10-24.map-plugin-health.md
 
 
+<!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->
