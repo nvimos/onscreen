@@ -1,4 +1,6 @@
 
+local SRC = 'lua/telescope/_extensions/mycolors/picker.lua: '
+
 local actions = require 'telescope.actions'
 local finders = require 'telescope.finders'
 local pickers = require 'telescope.pickers'
@@ -11,7 +13,7 @@ local myres = finders.new_table {
 }
 
 local handleSelection = function (selection)
-	vim.notify("selected {index=".. selection.index.."}: " .. selection[1])
+	vim.notify(SRC .. "selected {index=".. selection.index.."}: " .. selection[1])
 end
 
 local replaceDefault = function(prompt_bufnr, _)
@@ -23,8 +25,8 @@ local replaceDefault = function(prompt_bufnr, _)
 end
 
 local function picker(o, mycolors_opts)
-	vim.notify("A-".. vim.inspect(o))
-	vim.notify("B-".. vim.inspect(mycolors_opts))
+	vim.notify(SRC .. "A-".. vim.inspect(o))
+	vim.notify(SRC .. "B-".. vim.inspect(mycolors_opts))
 	local P = pickers.new(o, {
 		prompt_title = 'Some colors',
 		finder = myres ,

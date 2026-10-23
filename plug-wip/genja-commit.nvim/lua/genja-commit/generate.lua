@@ -8,7 +8,7 @@ local popup = require('genja-commit.popup')
 
 local M = {}
 
-local src = 'plug-wip/genja-commit.nvim/lua/genja-commit/generate.lua: '
+local SRC = 'genja-commit/generate.lua: '
 
 ---@type table<integer, { job: any, cancelled: boolean }> running jobs (vim.system objects) by buffer
 local running = {}
@@ -57,7 +57,7 @@ local function command_for(name)
 			end
 		end
 	else
-		vim.notify(src .. 'unknown generator ' .. name, vim.log.levels.WARN)
+		vim.notify(SRC .. 'unknown generator ' .. name, vim.log.levels.WARN)
 		return nil
 	end
 	return cmd
@@ -167,24 +167,24 @@ end
 ---@param buf integer
 function M.run(buf)
 	if running[buf] then
-		vim.notify(src .. 'already generating', vim.log.levels.WARN)
+		vim.notify(SRC .. 'already generating', vim.log.levels.WARN)
 		return
 	end
 	local opts = config.get()
 	local dir = git.buf_dir(buf)
 	local input, err = build_input(dir, vim.b[buf].genja_commit_conventional == true)
 	if not input then
-		vim.notify(src .. (err or 'no input'), vim.log.levels.WARN)
+		vim.notify(SRC .. (err or 'no input'), vim.log.levels.WARN)
 		return
 	end
 	local name, cmd = pick_backend()
 	if not name or not cmd then
-		vim.notify(src .. 'none on PATH: ' .. table.concat(opts.generate.order, ', '), vim.log.levels.WARN)
+		vim.notify(SRC .. 'none on PATH: ' .. table.concat(opts.generate.order, ', '), vim.log.levels.WARN)
 		return
 	end
 
 	local status = ('generating (%s) · %s cancels'):format(name, opts.keys.cancel)
-	vim.notify(src .. status)
+	vim.notify(SRC .. status)
 	popup.set_status(buf, status)
 
 	local entry = { cancelled = false }
@@ -196,21 +196,21 @@ function M.run(buf)
 	}, vim.schedule_wrap(function(res)
 		finish(buf)
 		if entry.cancelled then
-			vim.notify(src .. name .. ' cancelled')
+			vim.notify(SRC .. name .. ' cancelled')
 			return
 		end
 		if res.code == 124 then -- vim.system's timeout code
-			vim.notify(src .. ('%s timed out after %d s'):format(name, opts.generate.timeout), vim.log.levels.WARN)
+			vim.notify(SRC .. ('%s timed out after %d s'):format(name, opts.generate.timeout), vim.log.levels.WARN)
 			return
 		end
 		if res.code ~= 0 then
 			local out = vim.trim((res.stderr or '') .. '\n' .. (res.stdout or ''))
-			vim.notify(src .. name .. ' failed: ' .. out, vim.log.levels.ERROR)
+			vim.notify(SRC .. name .. ' failed: ' .. out, vim.log.levels.ERROR)
 			return
 		end
 		local text = clean(res.stdout or '')
 		if text == '' then
-			vim.notify(src .. name .. ' returned nothing', vim.log.levels.WARN)
+			vim.notify(SRC .. name .. ' returned nothing', vim.log.levels.WARN)
 			return
 		end
 		if vim.api.nvim_buf_is_valid(buf) then

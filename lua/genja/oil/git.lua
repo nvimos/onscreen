@@ -5,7 +5,7 @@ local utils = require('genja.oil.utils')
 
 local M = {}
 
-local src = 'nvim/lua/genja/oil/git.lua: '
+local SRC = 'lua/genja/oil/git.lua: '
 
 -- names of the entries under the cursor or on the visual lines;
 -- raw oil entries: unsaved lines and '../' have no stat, so not entry_from_oil()
@@ -152,7 +152,7 @@ local function git_on_entries(args, label, opts)
 		local untracked
 		names, untracked = split_tracked(dir, names)
 		if #untracked > 0 then
-			vim.notify(src .. label .. ': not in git, skipped: ' .. table.concat(untracked, ' '))
+			vim.notify(SRC .. label .. ': not in git, skipped: ' .. table.concat(untracked, ' '))
 		end
 		if #names == 0 then
 			after_git_change(opts.on_success, buf, dir, last)
@@ -166,10 +166,10 @@ local function git_on_entries(args, label, opts)
 
 	vim.system(cmd, { cwd = dir, text = true }, vim.schedule_wrap(function(res)
 		if res.code == 0 then
-			vim.notify(src .. label .. ' ' .. table.concat(names, ' '))
+			vim.notify(SRC .. label .. ' ' .. table.concat(names, ' '))
 			after_git_change(opts.on_success, buf, dir, last)
 		else
-			vim.notify(src .. label .. ' failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
+			vim.notify(SRC .. label .. ' failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
 		end
 	end))
 end

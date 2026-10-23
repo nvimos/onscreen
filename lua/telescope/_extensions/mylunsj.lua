@@ -10,6 +10,7 @@ function M.add_item(n, fn, d)   table.insert(M.items, { name = n, callback = fn,
 function M.just_run(cmd, d)     M.add_item(cmd, function() vim.cmd(cmd) end, d) end
 function M.just_command(cmd, d) M.add_item(cmd, function() vim.api.nvim_command(cmd) end, d) end
 
+local SRC = 'lua/telescope/_extensions/mylunsj.lua: '
 
 -- First andy.bat found wins.
 function M.run_andy()
@@ -19,7 +20,7 @@ function M.run_andy()
 			return
 		end
 	end
-	vim.notify('nvim/lua/telescope/_extensions/mylunsj.lua: andy.bat not found in a:/bin or c:/bin', vim.log.levels.WARN)
+	vim.notify(SRC .. 'andy.bat not found in a:/bin or c:/bin', vim.log.levels.WARN)
 end
 
 M.init = function()

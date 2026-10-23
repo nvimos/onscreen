@@ -1,5 +1,7 @@
 -- Keys and mappings for lua/lazyp/langs-comps/copilot.lua.
 
+local SRC = 'lua/genja/map-plugin/copilot.lua: '
+
 ---@param Maps genja.MapPlugin
 return function(Maps)
 	local spec_name = Maps.current_file()
@@ -18,7 +20,7 @@ return function(Maps)
 				if filetypes['*'] then
 					state = 'on'
 				end
-				vim.notify('lua/genja/map-plugin/copilot.lua: copilot ' .. state .. ' for all filetypes (gitcommit always on)')
+				vim.notify(SRC .. 'copilot ' .. state .. ' for all filetypes (gitcommit always on)')
 			end,
 			desc = 'Copilot: toggle on/off for all filetypes',
 			silent = true,

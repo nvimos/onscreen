@@ -1,3 +1,5 @@
+local SRC = 'lua/telescope/_extensions/finn.lua: '
+
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
@@ -39,10 +41,10 @@ local find_files = function(opts)
 		-- 	level = "ERROR",
 		-- 	once = true,
 		-- })
-		vim.notify('you need to install either find, fd or rg', vim.log.levels.ERROR)
+		vim.notify(SRC .. 'you need to install either find, fd or rg', vim.log.levels.ERROR)
 		return
 	else
-		vim.notify_once('finn command: ' .. table.concat(find_command, ' '), vim.log.levels.INFO)
+		vim.notify_once(SRC .. 'finn command: ' .. table.concat(find_command, ' '), vim.log.levels.INFO)
 	end
 
 	local command = find_command[1]

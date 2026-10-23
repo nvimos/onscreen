@@ -8,7 +8,7 @@ local git = require('genja-commit.git')
 
 local M = {}
 
-local src = 'plug-wip/genja-commit.nvim/lua/genja-commit/popup.lua: '
+local SRC = 'genja-commit/popup.lua: '
 
 ---@class genja-commit.Draft
 ---@field lines string[]
@@ -81,14 +81,14 @@ local function run_commit(dir, message, key, path)
 		if res.code ~= 0 then
 			-- the draft stays for the next try
 			local out = vim.trim((res.stderr or '') .. '\n' .. (res.stdout or ''))
-			vim.notify(src .. 'git commit failed: ' .. out, vim.log.levels.ERROR)
+			vim.notify(SRC .. 'git commit failed: ' .. out, vim.log.levels.ERROR)
 			return
 		end
 		drafts[key] = nil
 		if path then
 			vim.fn.writefile({}, path) -- git wrote this message there; don't refill it
 		end
-		vim.notify(src .. vim.split(res.stdout, '\n')[1]) -- '[branch abc1234] summary'
+		vim.notify(SRC .. vim.split(res.stdout, '\n')[1]) -- '[branch abc1234] summary'
 		local on_commit = config.get().on_commit
 		if on_commit then
 			on_commit(dir)
@@ -125,11 +125,11 @@ function M.open(dir)
 	end
 	local files, err = git.staged_files(dir)
 	if not files then
-		vim.notify(src .. 'git: ' .. (err or ''), vim.log.levels.ERROR)
+		vim.notify(SRC .. 'git: ' .. (err or ''), vim.log.levels.ERROR)
 		return
 	end
 	if #files == 0 then
-		vim.notify(src .. 'nothing staged', vim.log.levels.WARN)
+		vim.notify(SRC .. 'nothing staged', vim.log.levels.WARN)
 		return
 	end
 
@@ -147,7 +147,7 @@ function M.open(dir)
 		if ok then
 			vim.bo[buf].buftype = 'acwrite'
 		else
-			vim.notify(src .. 'COMMIT_EDITMSG is open elsewhere; :w is off in this popup', vim.log.levels.WARN)
+			vim.notify(SRC .. 'COMMIT_EDITMSG is open elsewhere; :w is off in this popup', vim.log.levels.WARN)
 			path = nil
 		end
 	end
@@ -248,7 +248,7 @@ function M.open(dir)
 			callback = function()
 				local content = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
 				if vim.fn.writefile(content, path) ~= 0 then
-					vim.notify(src .. 'cannot write ' .. path, vim.log.levels.ERROR)
+					vim.notify(SRC .. 'cannot write ' .. path, vim.log.levels.ERROR)
 					return
 				end
 				vim.bo[buf].modified = false

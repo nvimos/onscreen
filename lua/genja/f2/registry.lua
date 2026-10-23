@@ -3,7 +3,7 @@
 
 local M = {}
 
-local src = 'nvim/lua/genja/f2/registry.lua: '
+local SRC = 'lua/genja/f2/registry.lua: '
 
 ---@type table<string, genja.f2.Task>
 local global = {}
@@ -57,7 +57,7 @@ function M.add(tasks, opts)
 	for _, task in ipairs(tasks) do
 		local problem = invalid(task)
 		if problem then
-			vim.notify(src .. 'skipped task ' .. vim.inspect(task.label) .. ': ' .. problem, vim.log.levels.WARN)
+			vim.notify(SRC .. 'skipped task ' .. vim.inspect(task.label) .. ': ' .. problem, vim.log.levels.WARN)
 		else
 			store[key(task)] = task
 		end
@@ -94,7 +94,7 @@ function M.list(ctx)
 			if task.cond then
 				local ok, result = pcall(task.cond, ctx)
 				if not ok then
-					vim.notify(src .. task.group .. ': ' .. task.label .. ': cond failed: ' .. tostring(result), vim.log.levels.WARN)
+					vim.notify(SRC .. task.group .. ': ' .. task.label .. ': cond failed: ' .. tostring(result), vim.log.levels.WARN)
 				end
 				show = ok and result == true
 			end

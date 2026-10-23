@@ -5,7 +5,7 @@
 
 local M = {}
 
-local src = 'lua/genja/f2/git.lua: '
+local SRC = 'lua/genja/f2/git.lua: '
 
 ---@class genja.f2.GitFile
 ---@field xy string porcelain status, e.g. ' M', '??'
@@ -43,9 +43,9 @@ local function git_add(root, paths)
 	vim.list_extend(cmd, paths)
 	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
 		if res.code ~= 0 then
-			vim.notify(src .. 'git add failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
+			vim.notify(SRC .. 'git add failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
 		elseif res.stderr and res.stderr ~= '' then
-			vim.notify(src .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
+			vim.notify(SRC .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
 		end
 		-- oil-git refreshed on picker close, before git add finished
 		if vim.bo.filetype == 'oil' then
@@ -155,7 +155,7 @@ local function pick_files(root, files)
 				vim.api.nvim_set_current_win(win)
 				vim.o.eventignore = saved_eventignore
 				if not ok then
-					vim.notify('lua/genja/f2/git.lua: tabedit failed: ' .. tostring(err), vim.log.levels.ERROR)
+					vim.notify(SRC .. 'tabedit failed: ' .. tostring(err), vim.log.levels.ERROR)
 				end
 			end
 			require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter

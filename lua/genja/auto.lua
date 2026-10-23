@@ -1,5 +1,7 @@
 -- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:
 -- {{{ aliases
+local SRC = 'lua/genja/auto.lua: '
+
 local aucmd, augrp     = vim.api.nvim_create_autocmd,
 	vim.api.nvim_create_augroup ---@diagnostic disable-line: unused-local
 local err, notify      = require('genja.fn').Mess, vim.notify ---@diagnostic disable-line: unused-local
@@ -19,7 +21,7 @@ vim.api.nvim_create_autocmd({ 'UIEnter' }, {
 			ts.load_extension 'mylunsj'
 			ts.load_extension 'undersort'
 		else
-			vim.notify('cannot load telescope module', vim.log.levels.WARN)
+			vim.notify(SRC .. 'cannot load telescope module', vim.log.levels.WARN)
 		end
 	end,
 })

@@ -2,6 +2,8 @@
 -- :CheatsheetGenerate (or :lua CheatsheetGenerate()) dumps the current global
 -- keymaps to <config>/cheatsheet.txt, one "description | key" line per mapping.
 
+local SRC = 'lua/genja/zexp-cheatsheet-generate.lua: '
+
 local modes = {
   { "n", "Normal" },
   { "i", "Insert" },
@@ -39,11 +41,11 @@ function CheatsheetGenerate()
 
   local f, err = io.open(path, "w")
   if not f then
-    return vim.notify("Cheatsheet: " .. err, vim.log.levels.ERROR)
+    return vim.notify(SRC .. "" .. err, vim.log.levels.ERROR)
   end
   f:write(table.concat(lines, "\n"))
   f:close()
-  vim.notify("Wrote cheatsheet to: " .. path)
+  vim.notify(SRC .. "wrote cheatsheet to: " .. path)
 end
 
 vim.api.nvim_create_user_command(

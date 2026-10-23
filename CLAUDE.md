@@ -57,6 +57,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Notifications name their source: script path relative to the nvim stdpath config folder.
     - e.g. after/ftplugin/make.lua: ...
     - e.g. lua/genja/map-plugin/init.lua: ...
+- Each file declares the prefix once, near the top: `local SRC = 'lua/genja/auto.lua: '` (path, colon, space), and calls `vim.notify(SRC .. 'message')`. Always `SRC`, never `src` or an inline path.
+    - plug-wip files only use the dirname/basename.ext like: SRC = 'genja-commit/popup.lua: '
 
 ## Layout and loading
 

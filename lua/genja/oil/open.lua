@@ -2,6 +2,8 @@
 
 -- open oil entries outside nvim: explorer, shell, browser, vlc, rar
 
+local SRC = 'lua/genja/oil/open.lua: '
+
 local G = require('genja.oil.globals')
 local entry = require('genja.oil.entry')
 local utils = require('genja.oil.utils')
@@ -81,7 +83,7 @@ M.open_via_shell = function()
 	end
 	local cmd, err = get_open_cmd(path)
 	if not cmd then
-		vim.notify(string.format("Could not open %s: %s", path, err), vim.log.levels.ERROR)
+		vim.notify(string.format(SRC .. "could not open %s: %s", path, err), vim.log.levels.ERROR)
 		return
 	end
 	if G.IsDir(path) then
@@ -173,12 +175,11 @@ end
 -- skip_confirm_for_simple_edits, so deletes etc. still show the popup.
 -- The entry is found again by name: saving re-sorts the listing.
 local function save_then_select(typed_name)
-	local src = 'nvim/lua/genja/oil/open.lua: '
 	local dir = require('oil').get_current_dir()
 	require('oil').save(nil, function(err)
 		if err then
 			if err ~= 'Canceled' then
-				vim.notify(src .. err, vim.log.levels.ERROR)
+				vim.notify(SRC .. err, vim.log.levels.ERROR)
 			end
 			return
 		end
@@ -201,7 +202,7 @@ local function save_then_select(typed_name)
 			end
 			vim.cmd.edit(vim.fn.fnameescape(path))
 		else
-			vim.notify(src .. 'saved, but cannot find ' .. typed_name, vim.log.levels.WARN)
+			vim.notify(SRC .. 'saved, but cannot find ' .. typed_name, vim.log.levels.WARN)
 		end
 	end)
 end

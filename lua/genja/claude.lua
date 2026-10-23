@@ -33,7 +33,7 @@
 
 local M = {}
 
-local SRC = 'genja/claude.lua: '
+local SRC = 'lua/genja/claude.lua: '
 local TERM = 'claude'
 local BRIEF = 'Answer briefly: at most 3 short sentences, plain text, no markdown.\n\n'
 local HISTORY_MAX = 50

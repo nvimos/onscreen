@@ -29,7 +29,7 @@
 -- They don't require('genja.map-plugin') themselves: this file is still loading
 -- then, and require errors with "loop or previous error loading module".
 
-local SRC = 'lua/genja/map-plugin/init.lua'
+local SRC = 'lua/genja/map-plugin/init.lua: '
 
 
 -- One (or more) keymap for lazy plugin spec keys option.
@@ -97,7 +97,7 @@ end
 function MapPlugin.current_file()
 	local spec_name = caller_name(3)
 	if spec_name == nil then
-		error(SRC .. ': current_file() needs to be called from a .lua file')
+		error(SRC .. 'current_file() needs to be called from a .lua file')
 	end
 	return spec_name
 end
@@ -133,7 +133,7 @@ end
 function MapPlugin:keys(spec_name)
 	local resolved = resolve_name(spec_name)
 	if resolved == nil or self._keys[resolved] == nil then
-		vim.notify(SRC .. ': no keys for ' .. tostring(resolved), vim.log.levels.WARN)
+		vim.notify(SRC .. 'no keys for ' .. tostring(resolved), vim.log.levels.WARN)
 		return nil
 	end
 	return self._keys[resolved]
@@ -147,7 +147,7 @@ end
 function MapPlugin:mappings(opts, spec_name)
 	local resolved = resolve_name(spec_name)
 	if resolved == nil or self._mappings[resolved] == nil then
-		vim.notify(SRC .. ': no mappings for ' .. tostring(resolved), vim.log.levels.WARN)
+		vim.notify(SRC .. 'no mappings for ' .. tostring(resolved), vim.log.levels.WARN)
 		return
 	end
 	if opts == nil then
@@ -186,7 +186,7 @@ for _, module in ipairs(modules) do
 		ok, result = pcall(result, M)
 	end
 	if not ok then
-		vim.notify(SRC .. ': ' .. module .. '.lua: ' .. tostring(result), vim.log.levels.ERROR)
+		vim.notify(SRC .. module .. '.lua: ' .. tostring(result), vim.log.levels.ERROR)
 	end
 end
 

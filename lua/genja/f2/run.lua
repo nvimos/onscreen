@@ -3,7 +3,7 @@
 
 local M = {}
 
-local src = 'nvim/lua/genja/f2/run.lua: '
+local SRC = 'lua/genja/f2/run.lua: '
 
 ---@param cmd string|string[]
 ---@return string
@@ -90,7 +90,7 @@ function M.task(task, ctx, remove)
 	if type(action) == 'function' then
 		local ok, result = pcall(action, ctx)
 		if not ok then
-			vim.notify(src .. task.group .. ': ' .. task.label .. ': ' .. tostring(result), vim.log.levels.ERROR)
+			vim.notify(SRC .. task.group .. ': ' .. task.label .. ': ' .. tostring(result), vim.log.levels.ERROR)
 		elseif task.autoremove and result == true then
 			remove()
 		end

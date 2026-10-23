@@ -1,6 +1,8 @@
+local SRC = 'lua/genja/map-telescope.lua: '
+
 local ok, tsbuiltin = pcall(require, 'telescope.builtin')
 if not ok then
-	vim.notify('there is no module: telescope.builtin')
+	vim.notify(SRC .. 'there is no module: telescope.builtin')
 	return
 end
 

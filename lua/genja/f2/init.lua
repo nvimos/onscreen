@@ -31,7 +31,7 @@ local picker = require('genja.f2.picker')
 
 local M = {}
 
-local src = 'nvim/lua/genja/f2/init.lua: '
+local SRC = 'lua/genja/f2/init.lua: '
 
 ---Group order in the picker; callers may replace it.
 M.group_order = { 'adhoc', 'git', 'make', 'oil' }
@@ -111,7 +111,7 @@ function M.open()
 				end
 			end
 			if #entries == 0 then
-				vim.notify(src .. 'no context here (' .. ctx.dir .. ')', vim.log.levels.WARN)
+				vim.notify(SRC .. 'no context here (' .. ctx.dir .. ')', vim.log.levels.WARN)
 				return
 			end
 			sort(entries)
@@ -120,7 +120,7 @@ function M.open()
 		-- a failing source counts as empty, so the others still show
 		local ok, err = pcall(source.collect, ctx, done)
 		if not ok then
-			vim.notify(src .. 'source ' .. i .. ' failed: ' .. tostring(err), vim.log.levels.ERROR)
+			vim.notify(SRC .. 'source ' .. i .. ' failed: ' .. tostring(err), vim.log.levels.ERROR)
 			done({})
 		end
 	end
@@ -141,7 +141,7 @@ vim.api.nvim_create_user_command('DevReloadF2', function()
 	package.loaded['genja.f2.registry'] = nil
 	package.loaded['genja.f2.run'] = nil
 	package.loaded['genja-finder.telemap'] = nil
-	vim.notify(src .. 'f2 modules unloaded, next <F2> reloads them')
+	vim.notify(SRC .. 'f2 modules unloaded, next <F2> reloads them')
 end, { desc = 'f2: unload the context picker modules' })
 
 return M

@@ -7,7 +7,7 @@ local convention = require('genja-commit.convention')
 
 local M = {}
 
-local src = 'plug-wip/genja-commit.nvim/lua/genja-commit/lint.lua: '
+local SRC = 'genja-commit/lint.lua: '
 local ns = vim.api.nvim_create_namespace('genja_commit_lint')
 local LINTER = 'genja_gitlint'
 local LINTER_CC = 'genja_gitlint_cc' -- with the Conventional Commits rule (CT1)
@@ -45,7 +45,7 @@ local function install_gitlint()
 	registry.refresh(vim.schedule_wrap(function()
 		local ok_pkg, pkg = pcall(registry.get_package, 'gitlint')
 		if ok_pkg and not pkg:is_installed() and not pkg:is_installing() then
-			vim.notify(src .. 'installing gitlint (Mason)')
+			vim.notify(SRC .. 'installing gitlint (Mason)')
 			pkg:install()
 		end
 	end))

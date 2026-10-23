@@ -2,6 +2,8 @@
 
 -- Telescope picker, not vim.ui.select: that returns one item only.
 -- <Tab> marks entries; <CR> opens the marked ones, or the current one if none are marked.
+local SRC = 'lua/genja/map-plugin/urlview.lua: '
+
 ---@param urls string[]
 local function pick_urls(urls)
 	local actions = require('telescope.actions')
@@ -54,7 +56,7 @@ local function pick_urls_in_lines(line1, line2)
 		end
 	end
 	if #urls == 0 then
-		vim.notify('genja/map-plugin/urlview.lua: no URLs found', vim.log.levels.INFO)
+		vim.notify(SRC .. 'no URLs found', vim.log.levels.INFO)
 		return
 	end
 	pick_urls(urls)

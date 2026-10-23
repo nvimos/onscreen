@@ -6,7 +6,7 @@ local picker = require('genja.f2.picker')
 
 local M = {}
 
-local src = 'nvim/lua/genja/f2/make.lua: '
+local SRC = 'lua/genja/f2/make.lua: '
 
 local function find_makefile(dir)
 	local names = { 'GNUmakefile', 'makefile', 'Makefile' }
@@ -111,7 +111,7 @@ function M.collect(ctx, done)
 		return
 	end
 	if vim.fn.executable('make') == 0 then
-		vim.notify(src .. 'found ' .. makefile .. ', but no make in nvim\'s PATH', vim.log.levels.WARN)
+		vim.notify(SRC .. 'found ' .. makefile .. ', but no make in nvim\'s PATH', vim.log.levels.WARN)
 		done({})
 		return
 	end
@@ -119,13 +119,13 @@ function M.collect(ctx, done)
 	vim.system({ 'make', '-rRpq' }, { cwd = dir, text = true, env = { LANG = 'C' } }, vim.schedule_wrap(function(res)
 		-- -q: exit 1 just means "something is out of date"
 		if res.code ~= 0 and res.code ~= 1 then
-			vim.notify(src .. 'make -rRpq failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
+			vim.notify(SRC .. 'make -rRpq failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
 			done({})
 			return
 		end
 		local targets, makefiles = parse_targets(res.stdout or '')
 		if #targets == 0 then
-			vim.notify(src .. 'no targets in ' .. makefile, vim.log.levels.WARN)
+			vim.notify(SRC .. 'no targets in ' .. makefile, vim.log.levels.WARN)
 			done({})
 			return
 		end
