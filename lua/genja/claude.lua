@@ -427,6 +427,8 @@ local function set_term_keys(bufnr)
 	-- same keys as the tab maps in map-zero.lua, which don't cover terminal mode
 	vim.keymap.set('t', '<M-]>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
 	vim.keymap.set('t', '<M-[>', '<Cmd>tabprev<CR>', { buffer = bufnr, desc = 'Claude: to the previous tab' })
+	-- <M-S-[> arrives as <M-{>
+	vim.keymap.set('t', '<M-{>', back, { buffer = bufnr, desc = 'Claude: back to previous window' })
 end
 
 ---:FloatermNew arguments from `opts`: sorted `--option=value`, then the command.

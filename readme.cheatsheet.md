@@ -35,6 +35,7 @@ Floaterm commands (lua/genja/auto-alias.vim)
     in the claude terminal (lua/genja/claude.lua):
     <C-Left>  window on the left    <C-Right>  next tab
     <M-[>     previous tab          <M-]>      next tab
+    <M-{>     previous window, like <C-q> (typed as Alt+Shift+[)
 
 Code actions by kind (map-lsp.lua; visual mode sends the selection)
 
