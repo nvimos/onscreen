@@ -7,80 +7,49 @@ end
 local km = vim.keymap.set
 local nosi = function(d) return { silent = true, noremap = true, desc = d } end
 
-
-local function find_in_startdirs()
-	require('telescope.builtin').find_files({
-		hidden = false,
-		search_dirs = START_DIRS
-	})
-end
-
--- in oil: scan oil's directory instead of :pwd (an oil buffer has no file for 'bufdir')
-local function oil_dir_opts()
-	if vim.bo.filetype ~= 'oil' then
-		return nil
-	end
-	local dir = require('oil').get_current_dir()
-	if not dir then
-		return nil
-	end
-	return { cwd = dir }
-end
-
-local function genja_finder_grep() require('genja-finder').live_grep(oil_dir_opts()) end
-local function genja_finder_find() require('genja-finder').live_find(oil_dir_opts()) end
-
-local function grep_string()
-	require('telescope.builtin').grep_string({
-		search = vim.fn.input("Grep: ") }) end
+local F = require('genja.map-telescope.fn')
 
 -- Telescope:
 -- frequently used
-km('n', '<F1>',   genja_finder_grep, { desc = 'Telescope: grep files (genja-finder)'})
-km('n', '<S-F1>', genja_finder_find, { desc = 'Telescope: find files (genja-finder)'}) -- was: cmd 'Telescope finn'
+km('n', '<F1>',   F.genja_finder_grep, nosi 'Telescope: grep files (genja-finder)')
+km('n', '<S-F1>', F.genja_finder_find, nosi 'Telescope: find files (genja-finder)')
 
 
--- oldfiles with genja-finder's shared keys (<M-f> filter, <F2>/<F3>); a function, so genja-finder loads on use
-local function oldfiles() require('genja-finder').enhance(tsbuiltin.oldfiles)() end
-km('n', '<C-F1>',      oldfiles, { desc = 'Telescope: oldfiles (<M-f> filter)'})
-km('n', '<F2>', function() require('genja.f2').open() end, { desc = 'Telescope: context picker (adhoc, git, make, added tasks)'})
-local function action_menu() require('genja.actions').open() end
-km('n', 'g.',             action_menu, { desc = 'Telescope: actions here (cur: = item under cursor)'})
-km('n', '<LocalLeader>/', action_menu, { desc = 'Telescope: actions here (cur: = item under cursor)'})
-km('n', '<leader>j//', find_in_startdirs,  { desc = 'Telescope: find in START_DIRS'})
+km('n', '<C-F1>', F.oldfiles,       nosi 'Telescope: oldfiles (<M-f> filter)') -- Nb! hhkb2: fn-ctrl-1 is not the same as ctrl-fn-1
+km('n', '<F2>',   F.context_picker, nosi 'Telescope: context picker (adhoc, git, make, added tasks)')
 
--- telescope introspection
-km('n', '<leader>j?', tsbuiltin.builtin,       { desc = 'Telescope: builtin'})
+km('n', 'g.',             F.action_menu, nosi 'Telescope: actions here (cur: = item under cursor)')
+km('n', '<LocalLeader>/', F.action_menu, nosi 'Telescope: actions here (cur: = item under cursor)')
+
 
 -- browse / find
-km('n', '<leader>j/.', tsbuiltin.find_files,     { desc = 'Telescope: find_files'})
-km('n', '<leader>jo',  tsbuiltin.oldfiles,       { desc = 'Telescope: oldfiles'})
-km('n', '<leader>jd',  find_in_startdirs, { desc = 'Telescope: find in START_DIRS'})
+km('n', '<leader>j?',  tsbuiltin.builtin,    nosi 'Telescope: builtin') -- browse telescopes' pickers
+km('n', '<leader>j/.', tsbuiltin.find_files, nosi 'Telescope: find_files')
+km('n', '<leader>j//', F.find_in_startdirs,  nosi 'Telescope: find in START_DIRS')
+km('n', '<leader>jd',  F.find_in_startdirs,  nosi 'Telescope: find in START_DIRS')
+km('n', '<leader>jo',  F.oldfiles,           nosi 'Telescope: oldfiles')
+km('n', '<leader>js',  F.grep_string,        nosi 'Telescope: grep string')
 
 -- vim help, inspect state
-km('n', '<leader>1',  tsbuiltin.help_tags,             nosi 'Telescope: Vim help') -- dup-help-tags
+km('n', '<leader>1',  tsbuiltin.help_tags,     nosi 'Telescope: Vim help') -- dup-help-tags
+km('n', '<leader>4',  tsbuiltin.buffers,       nosi 'Telescope: buffers')
 
-km('n', '<leader>4',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})
-km('n', '<leader>T',  tsbuiltin.buffers,       { desc = 'Telescope: buffers'})
-
-km('n', '<leader>jv', tsbuiltin.vim_options,   { desc = 'Telescope: vim_options'})
-km('n', '<leader>jC', tsbuiltin.colorscheme,   { desc = 'Telescope: colorscheme'})
-km('n', '<leader>jM', tsbuiltin.keymaps,       { desc = 'Telescope: keymaps'})
-km('n', '<leader>jA', tsbuiltin.autocommands,  { desc = 'Telescope: autocommands'})
-
--- unused
--- km('n', '<leader>jb', te.buffers,       { desc = 'Telescope: buffers'})
--- km('n', '<leader>jh', te.help_tags,     { desc = 'Telescope: help_tags'})
--- km('n', '<leader>jg',  te.git_files,      { desc = 'Telescope: git_files'})
--- km('n', '<leader>jr', te.registers,     { desc = 'Telescope: registers'})
--- km('n', '<leader>jm', te.marks,         { desc = 'Telescope: marks'})
--- km('n', '<leader>jq', te.quickfix,      { desc = 'Telescope: quickfix'})
--- km('n', '<leader>jl', te.loclist,       { desc = 'Telescope: loclist'})
+km('n', '<leader>jbo',  tsbuiltin.vim_options,  nosi 'Telescope: vim_options')
+km('n', '<leader>jbc',  tsbuiltin.colorscheme,  nosi 'Telescope: colorscheme')
+km('n', '<leader>jbk',  tsbuiltin.keymaps,      nosi 'Telescope: keymaps')
+km('n', '<leader>jb?',  tsbuiltin.keymaps,      nosi 'Telescope: keymaps')
+km('n', '<leader>jba',  tsbuiltin.autocommands, nosi 'Telescope: autocommands')
+km('n', '<leader>jbb',  tsbuiltin.buffers,      nosi 'Telescope: buffers')
+km('n', '<leader>jbh',  tsbuiltin.help_tags,    nosi 'Telescope: help_tags')
+km('n', '<leader>jbg',  tsbuiltin.git_files,    nosi 'Telescope: git_files')
+km('n', '<leader>jbr',  tsbuiltin.registers,    nosi 'Telescope: registers')
+km('n', '<leader>jb\'', tsbuiltin.marks,        nosi 'Telescope: marks')
+km('n', '<leader>jj1',  tsbuiltin.quickfix,     nosi 'Telescope: quickfix')
+km('n', '<leader>jj2',  tsbuiltin.loclist,      nosi 'Telescope: loclist')
 
 -- grep
-km('n', '<leader>jj', genja_finder_grep,  { desc = 'Telescope: genja grep'})
-km('n', '<leader>jf', genja_finder_find,  { desc = 'Telescope: genja find'})
-km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
+km('n', '<leader>jjJ', F.genja_finder_grep,  nosi 'Telescope: genja grep')
+km('n', '<leader>jjj', F.genja_finder_find,  nosi 'Telescope: genja find')
 
 
 
@@ -88,10 +57,10 @@ km('n', '<leader>js', grep_string,   { desc = 'Telescope: grep string'})
 --- vim.keymap.set('', '<S-F1>', ':edit ~/AppData/Local/nvim/lua/plugins.lua<CR>')
 --- vim.keymap.set('',   '<F1>', ':edit ~/AppData/Local/nvim/init.lua<CR>')
 
--- km('n', '<leader>ff', te.find_files, { desc = 'Telescope find_files'})
--- km('n', '<leader>fg', te.live_grep, { desc = 'Telescope live_grep'})
--- km('n', '<leader>fb', te.buffers, { desc = 'Telescobe buffers' })
--- km('n', '<leader>fh', te.help_tags, { desc = 'Telescope help_tags'})
+-- km('n', '<leader>ff', te.find_files, nosi 'Telescope find_files')
+-- km('n', '<leader>fg', te.live_grep, nosi 'Telescope live_grep')
+-- km('n', '<leader>fb', te.buffers, nosi 'Telescobe buffers')
+-- km('n', '<leader>fh', te.help_tags, nosi 'Telescope help_tags')
 --km('n', '<leader>pf', te.find_files, {})
 --km('n', '<C-p>', te.git_files, {})
 --km('n', '<leader>vh', te.help_tags, {})

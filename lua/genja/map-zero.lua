@@ -151,8 +151,7 @@ vim.keymap.set('n', '<S-F3>',    cmd 'Telescope mydirs',    nosi 'Telescope: myd
 vim.keymap.set("n", "<leader>mu", cmd [[UndotreeToggle]], nosi 'UI: UndooTree') -- }}}
 -- ui claude in a float term {{{
 vim.keymap.set("n", "<leader>mc", cmd [[ClaudeFterm]], nosi 'UI: ClaudeFterm') -- }}}
--- ui fugitive {{{
-vim.keymap.set("n", "<leader>mg", cmd [[Git]], nosi 'UI: Fugitive') -- }}}
+-- <leader>mg (Neogit) and the other git keys: lua/genja/map-plugin/neogit.lua, diffview.lua, gitsigns.lua
 -- }}}
 
 -- Mouse opens links in a browser {{{
