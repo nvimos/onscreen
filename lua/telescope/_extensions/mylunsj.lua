@@ -27,13 +27,13 @@ M.init = function()
 	M.items = {}
 
 	-- M.add_item('edit $MYVIMRC', function() vim.cmd('e $MYVIMRC') end)
+	M.just_run 'Telescope mydirs'
 	M.just_run 'Lazy sync'
 	M.just_run 'Mason'
 	M.just_run 'Luapad'
 	M.just_run 'MRU'
 	M.just_run 'OverseerRun'
 	M.just_run 'OverseerToggle'
-	M.just_run 'Telescope mydirs'
 	M.just_run 'checkhealth'
 	M.just_run 'messages clear'
 	M.just_run('split | enew | Quickmath', 'Quickmath')
