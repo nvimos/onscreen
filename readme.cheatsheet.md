@@ -53,6 +53,12 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
+Telescope keymaps (lua/genja/telescope-keymaps.lua, keys in map-telescope.lua)
+
+    <leader>jM  <leader>jbk  <leader>jb?   open it
+    <M-r>  <M-R>   next / previous desc group (Git:, LSP:, Fold: ...), then all again
+    <M-f> filter   <M-x> exclude   <M-n> fuzzy/exact   <BS> on empty prompt: undo
+
 Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; : / ?)
 
     <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)

@@ -35,6 +35,9 @@ function M.oldfiles()
 	require('genja-finder').enhance(require('telescope.builtin').oldfiles)()
 end
 
+-- keymaps with the refine keys and <M-r>/<M-R> desc group rotation
+function M.keymaps() require('genja.telescope-keymaps').open() end
+
 function M.context_picker()
 	vim.b.f2_range = nil -- a range only comes from visual <F2>
 	require('genja.f2').open()

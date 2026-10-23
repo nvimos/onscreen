@@ -1,0 +1,35 @@
+from: todo-ideas.md
+
+- [x] 26. which keys (closed 2026-10-23)
+    - [x] sort by description alphabetically, columns first
+    - [x] <F2>/<F3> scroll the popup (e6ffb52)
+    - [.] check if it's possible to search by description
+        - use <c-/> in telescope
+        - [x] check <leader>? (Keymaps): `/` searches key, desc and category
+            - [x] fold keys missing: keymaps.nvim hid `^z[zoOcCaAmMrRfF]$` as builtins
+                - fork in plug-wip/abdul-keymaps.nvim (branch genja-desc-builtins), spec loads it (08400fd)
+                - [x] include_builtins_with_desc: show builtin keys remapped with a desc (9130d41, 8231836)
+                - [x] builtin_patterns as an option, full list declared in the spec (9130d41, 30713ca)
+            - [x] category_order: Fold and LSP checked first, so 'Fold: delete' is not Editing (79f46dd, ae8e8e5)
+            - [x] float popup: mode letters (aac76e3), t cycles n/i/v/x/…/all, T all (36b4cf4, d3af9d5, b401e29)
+            - [x] float popup: one-line header, h toggles the hints (8b4daf3); empty search resets (0890585)
+            - [x] cache_timeout 20s (1b41f8d)
+            - section order on screen is still by name (ui.lua); category_order only picks the category
+                - [x] stays by name (decided 2026-10-23)
+            - [x] keep the fork as its own repo, commits go there; ignored via .git/info/exclude; PR upstream later
+        - [-] check Telescope keymaps (<leader>jM): superseded by abdul-keymaps for now (custom picker: todo-2027.txt)
+                - [x] does not show oil maps: oil maps are buffer-local, they show when opened from an oil buffer
+                - [x] does not show updated descriptions for fold keys
+                    - needed the manual remap of the fold keys in map-zero (bea7b97, 1d0d2db)
+                - modes default to n,i,c,x (no o); pass modes = {...}
+        - [x] maybe extend telescope keymaps with refine-decorator (see 25)
+            - [x] or cook <m-r> mapping for it to toggle / rotate groups
+            - both: lua/genja/telescope-keymaps.lua, <leader>jM / <leader>jbk / <leader>jb?; untested
+              (guide: doc-wip/readme.2026-10-23.telescope-keymaps.md)
+    - [x] redefine all standard fold mapping keys with a description prefix «Fold: »
+        - do this in map-zero in a separate fold for folds
+        - tried as descriptions only in lua/lazyp/my/which-key.lua (no remapping)
+        - the whick-key popup does sort correctly
+        - [.] want to make them searchable in
+            - [x] telescope keymaps (superseded by abdul-keymaps)
+            - [x] Keymaps user func / custom popup
