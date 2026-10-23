@@ -15,6 +15,29 @@ local function dropbar_part(buf, win)
 	return _G.dropbar()
 end
 
+-- idea 30/31: statusline clicks (left button only; others fall through to nothing)
+---@type genja-statusline.Clicks
+local clicks = {
+	-- file name: oil at the file's dir
+	file = function(button)
+		if button == 'l' then
+			vim.cmd('Oil ' .. vim.fn.fnameescape(vim.fn.expand('%:p:h')))
+		end
+	end,
+	-- git branch: Neogit
+	branch = function(button)
+		if button == 'l' then
+			vim.cmd('Neogit')
+		end
+	end,
+	-- E/W counts: this buffer's diagnostics in the location list
+	diagnostics = function(button)
+		if button == 'l' then
+			vim.diagnostic.setloclist({ open = true })
+		end
+	end,
+}
+
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-statusline.nvim',
@@ -25,6 +48,7 @@ return {
 		tabline = true,
 		winbar = true,
 		winbar_extra = { dropbar_part },
+		clicks = clicks,
 		-- json/yaml key path without dropbar: see plug-wip/genja-statusline.nvim/lua/genja-statusline/keypath.lua
 	},
 	lazy = false,
