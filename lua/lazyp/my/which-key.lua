@@ -37,6 +37,8 @@ return {
 
 				mode = { 'n', 'v' },
 
+				{ '<leader>j.',       group = 'Cd…' },
+				{ '<leader>j/',       group = 'Find' },
 				{ '<leader>A',        group = 'Edit: alignment' },
 				{ '<leader>a',        group = 'AI: companion' },
 				{ '<leader>b',        group = 'Buffer: alternate' },
@@ -45,7 +47,7 @@ return {
 				{ '<leader>cW',       group = 'Code: workspace' },
 				{ '<leader>cc',       group = 'Diag: float' },
 				{ '<leader>cd',       group = 'Diag: list' },
-				{ '<leader>d',        group = 'Debug:' },
+				{ '<leader>d',        group = 'Debug' },
 				{ '<leader>e',        group = 'Edit: dirs, files' },
 				{ '<leader>f',        group = 'Find: telescope' },
 				{ '<leader>fm',       group = 'Fun: automaton' },
