@@ -80,6 +80,10 @@ migration from 0.9 to 0.11 (the file that started it all)
         - install: mason-tool-installer (all but ansible-lint)
         - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md (b5383bd)
     - later: hadolint, vale, ruff, gitleaks, editorconfig-checker, vint
+    - [x] second wave (decided 2026-10-24): hadolint, ruff (only without the ruff LSP),
+      editorconfig-checker (any filetype, below a .editorconfig), vint
+        - untested, doc-wip/readme.2026-10-24.lint-second-wave.md
+    - still later: vale, gitleaks
 
 - [x] extras outside the idea list (2026-10-23)
     - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)

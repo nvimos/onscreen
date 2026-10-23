@@ -20,17 +20,28 @@ M.by_ft = {
 	lua = { 'selene' },
 	make = { 'checkmake' },
 	php = { 'phpcs' },
+	dockerfile = { 'hadolint' },
+	python = { 'ruff' },
+	vim = { 'vint' },
 }
+
+---Linters for every filetype (after the by_ft ones).
+---@type string[]
+M.any = { 'editorconfig-checker' }
 
 ---Mason packages for the linters above; ansible-lint runs inside WSL instead.
 ---@type string[]
-M.mason = { 'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'checkmake', 'phpcs' }
+M.mason = {
+	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'checkmake', 'phpcs',
+	'hadolint', 'ruff', 'editorconfig-checker', 'vint',
+}
 
 ---Config files that switch a linter on; the linter runs in the dir that has one.
 ---@type table<string, string[]>
 local ROOT_MARKERS = {
 	selene = { 'selene.toml' },
 	phpcs = { 'phpcs.xml', '.phpcs.xml', 'phpcs.xml.dist', '.phpcs.xml.dist' },
+	['editorconfig-checker'] = { '.editorconfig' },
 }
 
 ---Shared markdownlint rules (line length off), used when the project has none of its own.
@@ -50,6 +61,8 @@ local COND = {
 	actionlint = is_workflow,
 	-- workflows are .yml too, and .yml is yaml.ansible here (lua/genja/ft/yaml.lua)
 	ansible_lint_wsl = function(buf) return not is_workflow(buf) end,
+	-- the ruff language server (genja-completion011, lang python) lints already
+	ruff = function(buf) return #vim.lsp.get_clients({ bufnr = buf, name = 'ruff' }) == 0 end,
 }
 
 -- {{{ ansible-lint in WSL
@@ -124,7 +137,7 @@ local function ansible_lint_wsl()
 end
 -- }}}
 
----Linter names for `buf`'s filetype, from M.by_ft, each name once.
+---Linter names for `buf`'s filetype, from M.by_ft and M.any, each name once.
 ---@param buf integer
 ---@return string[]
 local function names_for(buf)
@@ -136,6 +149,12 @@ local function names_for(buf)
 				seen[name] = true
 				table.insert(names, name)
 			end
+		end
+	end
+	for _, name in ipairs(M.any) do
+		if not seen[name] then
+			seen[name] = true
+			table.insert(names, name)
 		end
 	end
 	return names
