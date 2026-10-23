@@ -145,7 +145,7 @@ local find_files = function(opts)
 		previewer = conf.file_previewer(opts),
 		sorter = conf.file_sorter(opts),
 		attach_mappings = function(prompt_bufnr, map)
-			require('genja-finder.telemap').Telemap(map)
+			require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter
 
 			-- map({ 'i', 'n' }, '<F1>',  function()
 				-- vim.cmd 'cd ..'
