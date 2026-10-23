@@ -162,7 +162,8 @@
 
 - [ ] 29. almavimrc. clone in lua the behaviors
     - [ ] ~ to toggle false and other switches
-    - [ ] create fold from visual selection (add {{{,}}} markers)
+    - [x] create fold from visual selection (add {{{,}}} markers)
+        - visual zf asks a title, <leader>wwf paragraph, :WrapFold (lua/genja/wrapfold.lua) (9bae096); untested
 
 - [ ] 30. telescope: mousability
     - select lines (actions in code actions from lsp, F1, F2, F3, scroll list)
