@@ -30,7 +30,7 @@ function M.entries(entries, ctx, opts)
 		}),
 		sorter = require('telescope.config').values.generic_sorter({}),
 		attach_mappings = function(bufnr, map)
-			require('genja-finder.telemap').Telemap(map)
+			require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter
 			actions.select_default:replace(function()
 				local marked = action_state.get_current_picker(bufnr):get_multi_selection()
 				if #marked == 0 then

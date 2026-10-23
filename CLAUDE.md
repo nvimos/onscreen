@@ -92,7 +92,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) stay in the config,
   unless otherwise instructed.
 - `Telemap` and the refine decorator live in genja-finder: `require('genja-finder.telemap').Telemap(map)`,
-  `require('genja-finder').attach(map)` / `.enhance(picker)`; see its CLAUDE.md.
+  `require('genja-finder').attach_shared_keys(map)` / `.enhance(picker)`; see its CLAUDE.md.
 - `START_DIRS` in `lua/genja/init.lua` feeds the mydirs picker.
 - Telescope `file_ignore_patterns` (in `after/plugin/telescope-after.lua`) are anchored, e.g. `"%.a$"`.
 

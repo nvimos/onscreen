@@ -51,8 +51,10 @@ local function select(items, opts, on_choice)
 
 	---Wire <CR> and close to the handlers above.
 	---@param bufnr integer prompt buffer
+	---@param map genja-finder.TelescopeMap
 	---@return boolean keep_defaults true: keep telescope's other default mappings
-	local function attach_mappings(bufnr)
+	local function attach_mappings(bufnr, map)
+		require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter
 		actions.select_default:replace(function() pick_selected(bufnr) end)
 		actions.close:enhance({ post = cancel_if_unchosen })
 		return true
