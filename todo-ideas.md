@@ -124,15 +124,21 @@
 
 - [x] 24. genja-splitpad.nvim: padding column next to the separator in unfocused splits (4956074, 0bb1d95); spec disabled in lua/lazyp/no/ (6fdd7e3)
 
-- [ ] setup Neogit + gitsigns + diffview.
-    - also mini.git
+- [x] 37. git: Neogit + gitsigns + diffview + mini.git, fugitive disabled (9126c56, dcbb29d)
+    - specs in lua/lazyp/git/, keys in lua/genja/map-plugin/<spec>.lua; untested
+    - diffview from the fork dlyongemallo/diffview.nvim (sindrets: no updates since 2024-06)
+    - <leader>mg Neogit, <leader>mGl log, <leader>mGc genja-commit popup (032d91e)
+    - <leader>md/mh/mH diffview; <leader>h… hunks, buffer-local via on_attach; <leader>hc mini.git
+    - cheatsheet Git section, which-key groups, key rules in CLAUDE.md (f52654d)
 
 
 - [ ] 25. telescope refine decorator in steps
     - reusable decorator that enhances any picker; separate file in lua/genja/ for now
         - [x] moved into genja-finder instead: refine.lua (<M-f> filter, decorate), telemap.lua (Telemap moved there),
               require('genja-finder').attach_shared_keys(map) / .enhance(picker) use both; untested
-        - [x] decorate a first picker: <C-F1> oldfiles via enhance() (lua/genja/map-telescope.lua); untested
+        - [x] decorate a first picker: <C-F1> oldfiles via enhance() (lua/genja/map-telescope.lua) (f8eacab); untested
+        - [x] <BS> on an empty prompt undoes the last <M-f> filter (88e7355)
+        - [x] <M-n> switches refine between fuzzy and exact match (9a92404)
         - [ ] <M-x> exclude
     - see if someone has done it already
     - <m-f> refine
