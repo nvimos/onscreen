@@ -93,9 +93,11 @@ augroup _alpha
 	autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
 augroup end
 
-augroup _auto_resize
+" even out the splits of every tab when nvim is resized; tabdo ends on the last tab,
+" so go back to the tab that was current (idea 32: resizing jumped to the last tab)
+augroup _resize_equalize_tabs
 	autocmd!
-	autocmd VimResized * tabdo wincmd =
+	autocmd VimResized * let s:tab = tabpagenr() | tabdo wincmd = | execute s:tab .. 'tabnext'
 augroup end
 
 augroup _markdown

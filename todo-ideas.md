@@ -65,10 +65,3 @@
         - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md
     - later: hadolint, vale, ruff, gitleaks, editorconfig-checker, vint
 
-- [~] 32. bug in winbar or statusbar
-    - resizing activates right-most tab
-    - cause (likely): frameless nvim-qt (ginit.vim) sends top-edge resize drags as clicks on the tabline;
-      nvim goes to the next tab on a click outside the labels (:h tabpage, "Click where there is no label")
-    - [x] fix: no-op click region over the tabline's left edge and fill (genja-statusline autoload/genja_statusline.vim); untested
-    - [ ] confirm: resize nvim-qt from the top edge, tab stays; optional repro with GuiWindowFrameless(0)
-
