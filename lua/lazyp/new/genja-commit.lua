@@ -1,11 +1,14 @@
 -- Commit message popup (oil), gitcommit linting, <M-g> message generation.
 -- Details: plug-wip/genja-commit.nvim/CLAUDE.md.
 
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-commit.nvim',
 	-- also loads on require('genja-commit') from lua/genja/oil/git-commit.lua
 	ft = 'gitcommit',
+	keys = Maps:keys(),
 
 	---@type genja-commit.Opts
 	opts = {
