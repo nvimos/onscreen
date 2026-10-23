@@ -53,6 +53,12 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
+Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; : / ?)
+
+    <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)
+    <Down>  next item                     <Up>     previous item
+            (menu closed: <Up>/<Down> recall history)
+
 Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
 
     starts disabled to save credits: <leader>at or :Copilot enable
