@@ -46,7 +46,7 @@ return {
 		auto_refresh = true,
 
 		-- Cache timeout in seconds (0 = no cache)
-		cache_timeout = 300,
+		cache_timeout = 20,
 
 		-- Checked first, in this order; the first category with a matching pattern wins.
 		-- The rest (incl. the plugin's defaults: Editing, Folds, ...) follow sorted by name.
