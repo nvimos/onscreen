@@ -129,11 +129,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- }}}
 
 		-- {{{ Jumps or navigation
-		km(n__, 'gi',  vlb.implementation,        o 'LSP: implementation')
+		-- nvim 0.11 defaults, remapped only to give them descriptions; gi stays built-in (insert at last insert)
+		km(n__, 'grn', vlb.rename,                o 'LSP: rename')
+		km(nv_, 'gra', vlb.code_action,           o 'LSP: code action')
+		km(n__, 'grr', vlb.references,            o 'LSP: references')
+		km(n__, 'gri', vlb.implementation,        o 'LSP: implementation')
+
 		km(n__, 'g<up>',  vlb.implementation,        o 'LSP: implementation') --  new
 		km(n__, 'gs',  vlb.signature_help,        o 'LSP: signature help')
 		km(n__, 'g?',  vlb.signature_help,        o 'LSP: signature help') -- new
-		km(n__, 'gr',  vlb.references,            o 'LSP: reference')
+		-- was gr, which made nvim wait on the gr* defaults
+		-- gR was the built-in virtual replace mode
+		km(n__, 'gR',  vlb.references,            o 'LSP: references')
 
 		km(n__, 'gDd', vlb.declaration,           o 'LSP: declaration')
 		km(n__, 'gDt', vlb.type_definition,       o 'LSP: type definition')
@@ -144,10 +151,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- }}}
 
 		-- {{{ Diagnostics
-		km(n__, '[d',          goto_next,                        o 'Diagnostic: prev') -- rename bind
-		km(n__, ']d',          goto_prev,                        o 'Diagnostic: next')  -- rename bind
-		km(n__, '<f4>',        goto_next,                        o 'Diagnostic: prev')
-		km(n__, '<s-f4>',      goto_prev,                        o 'Diagnostic: next')
+		km(n__, '[d',          goto_prev,                        o 'Diagnostic: prev') -- rename bind
+		km(n__, ']d',          goto_next,                        o 'Diagnostic: next')  -- rename bind
+		km(n__, '<f4>',        goto_next,                        o 'Diagnostic: next')
+		km(n__, '<s-f4>',      goto_prev,                        o 'Diagnostic: prev')
 		km(n__, '<leader>cdd', vim.diagnostic.setloclist,        o 'Diagnostic: loc list')
 		km(n__, '<leader>cdt', '<cmd>Telescope diagnostics<cr>', o 'Diagnostic: in telescope ')
 		km(n__, '<leader>cc?',  vim.diagnostic.open_float,        o 'Diagnostic: open float')
