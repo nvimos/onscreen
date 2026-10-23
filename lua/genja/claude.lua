@@ -424,6 +424,9 @@ local function set_term_keys(bufnr)
 	vim.keymap.set('t', '<C-Left>', '<C-\\><C-n><C-w>h', { buffer = bufnr, desc = 'Claude: to the window on the left' })
 	-- replaces claude's own <C-Right> word-right
 	vim.keymap.set('t', '<C-Right>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
+	-- same keys as the tab maps in map-zero.lua, which don't cover terminal mode
+	vim.keymap.set('t', '<M-]>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
+	vim.keymap.set('t', '<M-[>', '<Cmd>tabprev<CR>', { buffer = bufnr, desc = 'Claude: to the previous tab' })
 end
 
 ---:FloatermNew arguments from `opts`: sorted `--option=value`, then the command.

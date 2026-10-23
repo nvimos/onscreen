@@ -34,6 +34,7 @@ Floaterm commands (lua/genja/auto-alias.vim)
                             --permission-mode --add-dir --ide --verbose --no-chrome
     in the claude terminal (lua/genja/claude.lua):
     <C-Left>  window on the left    <C-Right>  next tab
+    <M-[>     previous tab          <M-]>      next tab
 
 Code actions by kind (map-lsp.lua; visual mode sends the selection)
 
