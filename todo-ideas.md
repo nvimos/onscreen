@@ -8,10 +8,6 @@
 
 ## ideas october
 
-- [ ] codecompanion «idea 19a companion» (lua/lazyp/langs-comps/codecompanion.lua)
-    - floaterm works ok
-        - [~] fix hourglass cursor: claude's title updates off while it starts (4e79669)
-
 - [~] 19. claude: from nvim (wip)
     - [x] prettier winbar names: `claude-ft «<session title>»`, else the cwd basename (bfd6eef)
     - [x] :ClaudeFterm [flags]: --chrome, --model, --effort, ... at start, <Tab> completes (55240fa)
@@ -24,6 +20,8 @@
                 - no. no need for now
         - one claude float term per project?
             - [ ] or use the <- session manager inside claude?
+            - decided 2026-10-23: one floaterm per project root (marker cwd, git root, cwd),
+              plus a picker of running ones: <leader>pl, :ClaudeFterm! (<CR> show, <M-d> kill)
     - [x] claude in a floaterm, :ClaudeFterm, <leader>pc paste context (lua/genja/claude.lua);
         - the pasting is WIP, need to work out / test out a spec
     - session marker: /rename in claude writes `claude-session: <uuid> <title>`
@@ -38,15 +36,6 @@
             - because there are no commentstrings to put the session marker
             - this is ok
 
-- [ ] 20. voice input in nvim
-    - check out windows input possibilities
-    - check out via chrome
-    - claude.exe voice input works well enough
-        - good enough for now, for claude
-    - [ ] voice input for typing readme and other files too
-        - [ ] test Windows voice typing (Win+H) in insert mode: free
-
-
 - [~] 16. <m-?>:  popup with ai chat to ask some random question.
     - output should be mega brief and text-only (no markdown)
     - need to work out a spec
@@ -56,19 +45,12 @@
     - send to multiple backends: a multi-agent simple prompt plugin
     - first backend: the claude -p pwsh function; reconsider it, rewrite it in lua as the first cli backend
     - <M-…> keys in the popup to pick: where to send the prompt, model, effort (each with a default)
-
-- [.] 18. context-sensitive telescope dropdown on <F2> (partly: make done, oil open)
-    -make: list targets to execute
-    -oil: git worktree: files to add with preview
-    - sources (2026-10-19): lua/genja/f2/ (adhoc, git, make); items prefixed `group: `
-    - notes and user guide: doc-wip/readme.idea18-f2-context.md
-        - adhoc: `go mod init <dirname>` when no go.mod/go.work, then gopls restarts
-        - [x] git source (oil only): `git: add (N files)` sub-picker with status codes, diff preview, <Tab> marks
-        - [x] f2.add_tasks(tasks, { buffer? }) / f2.add_task(group, label):…:add() builder / f2.remove_tasks({ group, label?, buffer? }), f2.group_order
-            - task: label, group, action (keys|function) or cmd (+ runner overseer|floaterm, cwd), order, cond, autoremove
-            - [x] first caller: md-checklist (#34)
-        - [x] git add picker: preview hidden at start, <C-p> toggles it, <M-t> tabs (picker stays), <M-e> edit; :F2Reload (6fdd7e3)
-    - unit tests: tests/f2/ (mini.test), `make test` in lua/genja/f2/ (96c9375); ran 2026-10-23: 50 cases, 0 fails
+    - spec 2026-10-23 (details: doc-wip/squash-ideas-oct-17.details.md #16)
+        - code in lua/genja/ask.lua + lua/genja/ask/backends/ (move to plug-wip later)
+        - <M-?> opens it (n, i, v: selection goes along), <leader>pC alias
+        - in the popup: <M-t> target, <M-m> model, <M-e> effort, <M-s> save session
+        - backends: claude -p, the claude floaterm, gemini / copilot / aichat
+        - answer in the same float: q/<Esc> close, y yank, <CR> follow-up; log to ~/.claude/p-logs/nvim.log
 
 
 -[.] 26. which keys
@@ -86,6 +68,7 @@
             - [x] float popup: one-line header, h toggles the hints (8b4daf3); empty search resets (0890585)
             - [x] cache_timeout 20s (1b41f8d)
             - section order on screen is still by name (ui.lua); category_order only picks the category
+                - [x] stays by name (decided 2026-10-23)
             - [x] keep the fork as its own repo, commits go there; ignored via .git/info/exclude; PR upstream later
         - [-] check Telescope keymaps (<leader>jM): superseded by abdul-keymaps for now (custom picker: todo-2027.txt)
                 - [x] does not show oil maps: oil maps are buffer-local, they show when opened from an oil buffer
@@ -125,6 +108,9 @@
     - vim: vint (old)
     - skip: shellcheck (bashls), eslint (LSP)
     - check Windows support per tool; non-stdin linters run only after :w
+    - first wave (decided 2026-10-23): markdownlint-cli2, typos (markdown, gitcommit), yamllint,
+      ansible-lint (WSL, like phpactor), selene, checkmake, phpcs, actionlint
+        - install: mason-tool-installer (all but ansible-lint)
 
 - [ ] 30. telescope: mousability
     - click selects, double-click runs: built into telescope (found 2026-10-23, see #17)
@@ -137,6 +123,12 @@
         - navigate notes, todo
         - better context support
         - check out what other people are doing
+    - spec 2026-10-23 (#30/31, details: doc-wip/squash-ideas-oct-17.details.md)
+        - right-click PopUp entries per filetype (markdown, oil, code)
+        - clickable winbar/statusline: branch -> Neogit, diagnostics -> list, filename -> oil
+        - :Morning buffer (command only, not on start), `Morning` in the right-click menu
+        - mini.starter spec in lua/lazyp/ui/, disabled
+        - scroll wheel in telescope: default, the selection doesn't move
 
 - [~] 32. bug in winbar or statusbar
     - resizing activates right-most tab
@@ -145,10 +137,14 @@
     - [x] fix: no-op click region over the tabline's left edge and fill (genja-statusline autoload/genja_statusline.vim); untested
     - [ ] confirm: resize nvim-qt from the top edge, tab stays; optional repro with GuiWindowFrameless(0)
 
-- [ ] 33. move gitea definition to w11s-cut project
-
 - [ ] 35. recent files
     - make my own plugin with my rules for saving and ranking files
     - study in essense
         - telescope old files
         - old mru plugin
+    - spec 2026-10-23 (details: doc-wip/squash-ideas-oct-17.details.md #35)
+        - plug-wip/genja-recent.nvim, ranking shared with genja-startdirs
+        - record on BufWinEnter and BufWritePost; views and edits counted apart
+        - skip: non-file buftypes, .git/, %TEMP%, nvim-data (option)
+        - frecency, edits x2; picker on the current project, <M-a> all
+        - data: nvim-data/genja-recent.txt; <C-F1> opens it, oldfiles moves to a free <leader>j key
