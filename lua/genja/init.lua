@@ -27,6 +27,7 @@ Safeload 'genja.map-lsp'
 Safeload 'genja.map-telescope'
 Safeload 'genja.ui-select'          -- vim.ui.select in telescope (code actions etc.)
 Safeload 'genja.map-convoluted'
+Safeload('genja.wrapfold', function(m) m.setup_command() end) -- :WrapFold
 
 
 

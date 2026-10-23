@@ -63,7 +63,11 @@ km(nx, 'z<left>', 'zc', nosi 'Fold: x close (zc)')
 km(n, 'zM',      'zM', nosi 'Fold: x close all')
 km(nx, 'zC',     'zC', nosi 'Fold: x close recursively')
 
-km(nx, 'zf',     'zf', nosi 'Fold: create (operator)')
+km(n, 'zf',      'zf', nosi 'Fold: create (operator)')
+-- visual zf asks for a title and writes {{{ title / }}} markers; empty title: built-in
+km('x', 'zf', function() require('genja.wrapfold').visual() end, nosi 'Fold: create with title markers')
+km(n, '<leader>wwf', function() require('genja.wrapfold').paragraph() end, nosi 'Fold: wrap paragraph in title markers')
+km('x', '<leader>wwf', function() require('genja.wrapfold').visual() end, nosi 'Fold: wrap selection in title markers')
 km(n, 'zF',      'zF', nosi 'Fold: create for N lines')
 
 km(nx, 'zd',     'zd', nosi 'Fold: delete')

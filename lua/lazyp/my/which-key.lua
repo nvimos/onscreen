@@ -68,6 +68,7 @@ return {
 				{ '<leader>tt',       group = 'Toggle: diag, hints' },
 				{ '<leader>w',        group = 'Text: wrap, trim' },
 				{ '<leader>ws',       group = 'Text: strip' },
+				{ '<leader>ww',       group = 'Fold: wrap in markers' },
 				{ '<leader>y',        group = 'Yank: clipboard' },
 				{ '<leader>z',        group = 'Zen: and write' },
 
