@@ -61,3 +61,20 @@ Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
              <M-\>  suggest now      (<Tab> stays with cmp)
     normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
     :Copilot setup | status | enable | disable | panel | signout
+
+Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-git.lua)
+
+    <leader>mg  Neogit status       <leader>mGl Neogit log
+    <leader>md  diffview: changes   <leader>mh  file history   <leader>mH  repo history
+    <leader>mxd close diffview
+    <leader>mGc commit popup (genja-commit; in oil also ggc, <LocalLeader>c)
+    hunks, only in buffers gitsigns tracks:
+    ]c  [c      next / previous hunk (in diff mode: nvim's change jumps)
+    <leader>hs  stage/unstage hunk (visual: lines)   <leader>hS  stage buffer
+    <leader>hr  reset hunk (visual: lines)           <leader>hR  reset buffer
+    <leader>hp  preview float    <leader>hi  preview inline   ih  hunk text object
+    <leader>hb  blame line       <leader>hB  toggle line blame   <leader>hw  word diff
+    <leader>hd  diff vs index    <leader>hD  diff vs last commit
+    <leader>hq  buffer hunks -> quickfix   <leader>hQ  repo hunks -> quickfix
+    <leader>hc  commit at cursor, visual: log of the lines (mini.git)
+    :Git <args>  mini.git, output in a split (fugitive is off)

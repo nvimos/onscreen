@@ -43,6 +43,7 @@ mappings and funcs for them
      map-oil.lua        - keymaps, oil buffers: key -> oil-actions; which-key groups
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
+     map-telescope/fn.lua - functions bound in map-telescope.lua
      map-zero.lua       - keymaps, essential that must not fail
 
 meta, random

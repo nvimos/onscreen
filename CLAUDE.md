@@ -111,7 +111,17 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`).
 - `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `lua/genja/claude.lua`.
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
-- Keys and text objects worth remembering go in `readme.cheatsheet.md`.
+- When adding keys:
+    - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.
+    - write `desc` so it sorts well: which-key sorts by `desc` (`lua/lazyp/my/which-key.lua`), so start with the area and then the object, e.g. `Git: hunk stage`, `Git: hunk reset`, `UI: git status (Neogit)`.
+    - add a which-key group (`{ '<leader>x', group = 'Area: topics' }`) in `lua/lazyp/my/which-key.lua` for each new prefix, and widen an existing group's label when new keys land under it.
+
+## Git
+
+- Neogit (UI), gitsigns (hunks), diffview (diffs, history), mini.git (`:Git`); specs in `lua/lazyp/git/`, keys in `lua/genja/map-plugin/<spec>.lua`.
+- Fugitive is disabled.
+- diffview comes from the maintained fork `dlyongemallo/diffview.nvim`; sindrets/diffview.nvim had no updates since 2024-06. (inferred)
+- Keys: `<leader>mg` Neogit, `<leader>mGl` Neogit log, `<leader>mGc` commit popup, `<leader>md`/`mh`/`mH` diffview, `<leader>h…` gitsigns hunks, `<leader>hc` mini.git commit at cursor, `]c` `[c` hunks outside diff mode; gitsigns keys are buffer-local (on_attach).
 
 ## Windows environment
 
