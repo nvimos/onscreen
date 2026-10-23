@@ -2,7 +2,8 @@ local Maps = require('genja.map-plugin')
 
 ---@type LazySpec
 return {
-	"abdul-hamid-achik/keymaps.nvim",
+	-- "abdul-hamid-achik/keymaps.nvim",
+	dir = vim.fn.stdpath('config') .. '/plug-wip/abdul-keymaps.nvim',
 	dependencies = {
 		"nvim-telescope/telescope.nvim", -- optional, for fuzzy finding
 	},
@@ -20,7 +21,7 @@ return {
 		icons = true,
 
 		-- Include vim builtin keymaps
-		include_builtins = false,
+		include_builtins = true,
 
 		-- Include buffer-local keymaps (from netrw, help, etc.)
 		-- Set to false to hide noisy internal keymaps
@@ -67,6 +68,9 @@ return {
 			["Debugging"] = { "dap", "debug", "breakpoint" },
 			["Testing"] = { "^<leader>t", "neotest", "test" },
 			["Terminal"] = { "terminal", "toggleterm" },
+			-- map-zero.lua's fold keys, desc 'Fold: …'; matched lowercased anywhere in lhs/rhs/desc.
+			-- 'a ' sorts it before 'Editing' (the fork checks categories in name order).
+			["a Fold"] = { "fold: " },
 			-- Add your own!
 			["Custom"] = { "my_pattern" },
 
