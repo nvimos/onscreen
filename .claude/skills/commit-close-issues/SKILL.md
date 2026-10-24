@@ -1,5 +1,5 @@
 ---
-name: close-issues
+name: commit-close-issues
 description: Close issues solved in this session; write one todo-issue/….md per issue as a markdown checklist saying briefly what was done, then commit the issue file with the relevant changes; one commit per issue. Use when the user types /close-issues or asks to close, or commit the issues or clean up after issues.
 ---
 
