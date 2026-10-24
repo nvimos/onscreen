@@ -1,0 +1,7 @@
+- [x] markdown: autocorrect mistakes (2026-10-24)
+    - [x] `<leader>mfx` and fix on save: typos --write-changes, markdownlint-cli2 --fix (`lua/genja/md-fix.lua`)
+    - [x] abbreviations from `lua/genja/md-abbrev.txt` (`lua/genja/md-abbrev.lua`)
+    - [x] ft settings: suggestions in doc-wip/readme.2026-10-24.md-fix.md
+    - [x] `tests/md/` 7/7; committed in 5e620ae
+    - [ ] test: `teh ` in a .md; `:w` fixes `#Heading`
+    - [ ] decide the ft setting suggestions (linebreak, spell, list continuation)
