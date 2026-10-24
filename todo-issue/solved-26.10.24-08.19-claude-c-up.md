@@ -1,4 +1,4 @@
 - [x] claude: <C-Up> in the claude terminal goes to normal mode (2026-10-24)
     - [x] terminal map `<C-Up>` -> `<C-\><C-n>` in set_term_keys, lua/genja/claude.lua
     - [x] listed in the header comment and readme.cheatsheet.md
-    - [ ] test: :ClaudeFterm, press <C-Up>, check normal mode
+    - [x] test: :ClaudeFterm, press <C-Up>, check normal mode

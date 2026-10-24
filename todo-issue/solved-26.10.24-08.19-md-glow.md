@@ -4,6 +4,6 @@
     - [x] win32 branch only; other systems get a warning (untested stub)
     - [x] registered per buffer in after/ftplugin/markdown.lua
     - [x] readme.cheatsheet.md, lua/genja/readme.md
-    - [ ] test: open a .md file, <F2> > markdown: preview, any key closes the window
+    - [x] test: open a .md file, <F2> > markdown: preview, any key closes the window
     - [ ] test: path with spaces or a `'` in it
     - [ ] linux: pick a terminal ($TERMINAL, x-terminal-emulator)
