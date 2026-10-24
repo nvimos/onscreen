@@ -24,3 +24,4 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 - [ ] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
 - [ ] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
 - [ ] telescope key footer (prototype): <leader>jM, <F1>, <C-F1>; :TelescopeFooter (lua/genja/telescope-footer.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
+- [ ] comps011 tests: make dir D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md

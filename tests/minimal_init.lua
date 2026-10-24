@@ -9,5 +9,7 @@ local root = vim.fs.dirname(vim.fs.dirname(vim.fs.normalize(debug.getinfo(1, 'S'
 -- children start with --clean, so the config is not on the rtp by default
 vim.opt.rtp:prepend(root)
 vim.opt.rtp:prepend(vim.fn.stdpath('data') .. '/lazy/mini.test')
+-- require('helpers.timing') etc. from tests/helpers/
+package.path = root .. '/tests/?.lua;' .. package.path
 
 require('mini.test').setup()

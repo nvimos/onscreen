@@ -37,6 +37,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 45  | markdown: <leader>mfx, fix on save, abbreviations | S | auto-todo-20261024-2315 | untested |
 | 46  | :Messages -dump/-quick/-loc, F2 messages, capture (off) | M | auto-todo-20261024-2315 | untested |
 | -   | telescope: key footer prototype + spec | S | auto-todo-20261024-2315 | untested |
+| 47  | comps011 tests: lsp/cmp/lint, fast/slow/gather groups | M | auto-todo-20261024-2315 | ran: lint 10/10, lsp 2 pass 3 fail (setup) |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).

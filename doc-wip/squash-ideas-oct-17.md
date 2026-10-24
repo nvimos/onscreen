@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | comps011 tests: lsp/cmp/lint, fast/slow/gather groups      | 0   | ~45k   |
 | -   | telescope: answer the 6 spec questions (telescope-explore.md) | 6   | ~15k   |
 | 39  | claude session marker: enabled:false toggle, `!!` in txt   | 1   | ~4k    |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |

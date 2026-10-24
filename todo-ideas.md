@@ -86,12 +86,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 
 
-- [ ] comps011
-		- generate integration tests with headless nvim
-			- test the configured lsp servers
-			- test the configured linters
-			- generate sameple files in the test dir for the comp011 plugin
-
 - [~] telescope
 		- exploration in order to improve usability
 		- try removing all the predefined keys except my own through the decorator
