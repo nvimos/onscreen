@@ -1,0 +1,4 @@
+- [x] lint: checkmake never reported on Windows (2026-10-24)
+    - [x] nvim-lint's `--format='…\n'` reached checkmake with the quotes; own args and parser on win32 (`lua/genja/lint.lua`)
+    - [x] found by tests/comps011; committed in 8dd25c3
+    - [ ] report upstream (mfussenegger/nvim-lint; no issue found)
