@@ -1,0 +1,3 @@
+- [x] gui: test Makefile pointed at the old mylunsj path (2026-10-24)
+    - [x] lua/genja/ui/gui-func-state/Makefile: DIR = lua/genja/ui/gui-func-state
+    - [ ] test: make -C lua/genja/ui/gui-func-state test

@@ -5,7 +5,7 @@ ROOT := ../../../../..
 NVIM_TEST := nvim --headless --noplugin -u tests/minimal_init.lua
 # nvim-qt forwards the args after -- to nvim; the report stays open in the window
 NVIM_QT_TEST := nvim-qt -- --noplugin -u tests/minimal_init.lua
-DIR := lua/telescope/_extensions/mylunsj/gui-funcs
+DIR := lua/genja/ui/gui-func-state
 
 .DEFAULT_GOAL := test
 .PHONY: test test-gui
