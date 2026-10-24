@@ -92,17 +92,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     - need to monitor all notifications?
     - explore options. other people must have done something similar before
 
-- [ ] test out zen mode toggles (lua/genja/map-plugin/zenmode.lua, moved from map-convoluted.lua)
-    - <leader>mz :ZenMode with spec defaults
-    - <leader>z1 width 120, no numbers, frameless GUI window
-    - <leader>z2 width 80, relnum, colorcolumn 4,8,80, frameless + maximized
-    - <leader>z0 closes and unsets frameless (decided: stays closed)
-        - remember the width from before z1/z2 (the commented-out `width` code)?
-    - switching z1 <-> z2 while zen is open: zen_mode.open() on an open zen window
-    - GuiWindowMaximized: on for z2 only, commented out in z0/z1; decide
-    - [x] keys moved into lua/genja/map-plugin/zenmode.lua (2f5fdaa)
-    - [x] <leader>z0 closes zen and unsets frameless; z1 then z0 tested in nvim-qt (209380a)
-
 - [ ] markdown lang
 		- find a way to autocorrect mistakes
 		- make sure ft settings are correct for markdown

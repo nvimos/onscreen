@@ -111,8 +111,8 @@ function M.refresh()
 	end
 end
 
----Set the global limit (0: show all) and redraw.
----@param n integer
+---Set the global limit (0: show all, nil: the default) and redraw.
+---@param n integer|nil
 function M.set(n)
 	vim.g.diag_limit = n
 	M.refresh()

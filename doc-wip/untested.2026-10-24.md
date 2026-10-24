@@ -20,3 +20,4 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 - [ ] f2 item names: <F2> in markdown, with a claude running, in nvim-qt (lua/genja/f2/picker.lua) -> doc-wip/readme.2026-10-24.f2-item-names.md
 - [ ] lint: gitleaks on any file, vale on markdown after :ValeSync (lua/genja/lint.lua) -> doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
 - [ ] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
+- [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md
