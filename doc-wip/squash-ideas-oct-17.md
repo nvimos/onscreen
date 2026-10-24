@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | close map-plugin health (done, tested)                     | 0   | ~1k    |
 | 19  | close; new item: session marker toggle, `!!` txt markers   | 0   | ~2k    |
 | -   | aerial: `<leader>oo` / `<leader>oO`, `<Esc>` closes nav    | 0   | ~3k    |
 | -   | gitsigns: skip filetypes (markdown), `<leader>mGs` toggle  | 0   | ~5k    |

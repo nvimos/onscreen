@@ -26,6 +26,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | -   | startdirs ranking by frecency                 | XS     | 26ed71f | yes (2026-10-24) |
 | 14e | nvim-lint second wave (hadolint, ruff, ec, vint) | S   | 608ad0f | yes (2026-10-24) |
 | -   | map-plugin miss log, `:checkhealth genja.map-plugin` | S | 89e227d | yes (2026-10-24) |
+| -   | map-plugin item closed (todo-done/ideas-38)    | -      | af13aed | yes (2026-10-24) |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).
