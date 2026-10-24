@@ -1,0 +1,4 @@
+- [x] lint: gitleaks and vale (14e still later) (2026-10-24)
+    - [x] gitleaks in `M.any`; vale on markdown, project .vale.ini or shared `lint/.vale.ini`, `:ValeSync` (`lua/genja/lint.lua`)
+    - [x] committed in 9853946; guide doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
+    - [ ] test: `:MasonToolsInstall`, `:ValeSync`, then the guide's samples
