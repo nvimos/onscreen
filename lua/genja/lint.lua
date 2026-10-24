@@ -22,7 +22,7 @@ M.by_ft = {
 	php = { 'phpcs' },
 	dockerfile = { 'hadolint' },
 	python = { 'ruff' },
-	vim = { 'vint' },
+	-- vim = { 'vint' }, -- disabled: crashes on Windows (Vimjas/vint#378, #394); todo-ideas.md 14e
 }
 
 ---Linters for every filetype (after the by_ft ones).
@@ -33,7 +33,8 @@ M.any = { 'editorconfig-checker' }
 ---@type string[]
 M.mason = {
 	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'checkmake', 'phpcs',
-	'hadolint', 'ruff', 'editorconfig-checker', 'vint',
+	'hadolint', 'ruff', 'editorconfig-checker',
+	-- 'vint', -- disabled, see by_ft.vim
 }
 
 ---Config files that switch a linter on; the linter runs in the dir that has one.
