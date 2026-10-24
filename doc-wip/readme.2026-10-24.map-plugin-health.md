@@ -26,4 +26,4 @@
    "no keys for 'zenmode', called from lua/lazyp/ui/zenmode.lua". No popup at startup.
    `:e ~/AppData/Local/nvim-data/logs/genja-map-plugin.log` has the same line. Rename it back.
 
-Headless-tested: status() and health.check() with a fake miss; :checkhealth's buffer itself not captured.
+Unit tests: `make test` in `lua/genja/map-plugin/` (`tests/map-plugin/test_health.lua`): clean load gives no notification and no miss; only genja-splitpad has keys without an active spec; keys/mappings leave the "unasked" lists once used; zenmode spec without its entry gets nil keys, one miss naming `lua/lazyp/ui/zenmode.lua`, a health warn, one log line (also when asked twice), no notification. The `:checkhealth` buffer itself is not captured (vim.health is stubbed).
