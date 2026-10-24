@@ -92,7 +92,7 @@ migration from 0.9 to 0.11 (the file that started it all)
 			- test the configured linters
 			- generate sameple files in the test dir for the comp011 plugin
 
-- [ ] telescope
+- [~] telescope
 		- exploration in order to improve usability
 		- try removing all the predefined keys except my own through the decorator
 		- or maybe unset them via global config
@@ -100,5 +100,7 @@ migration from 0.9 to 0.11 (the file that started it all)
 		- maybe i need to think about and experiment with a more elaborate layout
 			- a footer for relvant keymaps with descriptions thats always on
 			- a custom preview-like component with hand-picked keys and leave <c-/> as is
+		- [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
+		  doc-wip/readme.2026-10-24.telescope-explore.md; untested
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

@@ -36,6 +36,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 44  | zen: z1<->z2 reopen, z0 restores size, z1 limit 2 | S | auto-todo-20261024-2315 | untested |
 | 45  | markdown: <leader>mfx, fix on save, abbreviations | S | auto-todo-20261024-2315 | untested |
 | 46  | :Messages -dump/-quick/-loc, F2 messages, capture (off) | M | auto-todo-20261024-2315 | untested |
+| -   | telescope: key footer prototype + spec | S | auto-todo-20261024-2315 | untested |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).

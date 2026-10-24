@@ -71,6 +71,7 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-l>  marked -> loclist    <M-q>  marked -> quickfix
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
+    footer on the results border: this picker's own keys (prototype, :TelescopeFooter toggles; lua/genja/telescope-footer.lua)
 
 Mouse (lua/genja/popup-menu.lua, lua/genja/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
 
