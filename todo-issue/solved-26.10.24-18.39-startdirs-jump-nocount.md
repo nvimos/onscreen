@@ -1,0 +1,6 @@
+- [x] startdirs: `<M-n>` jumps should not count as a use (2026-10-24)
+    - [x] local `open_dir()`; `jump()` calls it without `touch()`, `go()` (picker) still counts
+    - [x] counting would reorder the slots the keys point at
+    - [x] README, help, CLAUDE.md updated
+    - [x] committed in 1132d6b
+    - [ ] test: counts in `nvim-data/startdirs.usage` stay the same after a few `<M-1>`
