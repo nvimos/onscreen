@@ -1,0 +1,6 @@
+- [x] startdirs: `:Mydirs` opens the picker, `:Mydirs reset` deletes the usage file (2026-10-24)
+    - [x] `reset_usage()` in `genja-startdirs/init.lua`
+    - [x] `:Mydirs` defined in `lua/lazyp/new/genja-startdirs.lua` `config` (the picker is the config's), added to `cmd`
+    - [x] README, help, CLAUDE.md, `readme.cheatsheet.md`
+    - [x] committed in 1132d6b
+    - [ ] test: `:Mydirs reset`, then `:Mydirs` lists the dirs in file order
