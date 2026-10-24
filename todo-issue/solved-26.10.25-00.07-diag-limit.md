@@ -1,0 +1,5 @@
+- [x] diagnostics: only the first 3 per severity are drawn (2026-10-24)
+    - [x] `lua/genja/diag-limit.lua` wraps virtual_text, signs, underline; `<leader>tt3` in `plugin/diag-limit.lua`
+    - [x] F2 `diagnostics: show all (N hidden)` (`lua/genja/f2/diag.lua`)
+    - [x] `tests/diag-limit/` 8/8; committed in 395c004
+    - [ ] test: a Lua file with 5 errors: 3 drawn, `]d` visits all, `<F2>` show all
