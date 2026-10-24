@@ -1,0 +1,3 @@
+- [x] map-plugin: unit tests for the miss log and :checkhealth (2026-10-24)
+    - [x] `tests/map-plugin/test_health.lua` (10 cases), `make test` in lua/genja/map-plugin/
+    - [x] committed in af13aed
