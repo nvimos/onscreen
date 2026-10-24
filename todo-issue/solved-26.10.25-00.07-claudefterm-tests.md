@@ -1,0 +1,4 @@
+- [x] genja-claudefterm: unit tests for one claude per project (2026-10-24)
+    - [x] `tests/claudefterm/` (15 cases): real vim-floaterm, fake claude script, stubbed `nvim_chan_send`
+    - [x] committed in 63800da
+    - [ ] several FloatermKills in a row sometimes crash the headless test nvim on Windows; check `:s:`/quit with 2+ claudes
