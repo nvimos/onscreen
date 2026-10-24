@@ -94,11 +94,6 @@ migration from 0.9 to 0.11 (the file that started it all)
         - <leader>mGs
 
 
-- [ ] <leader>oO opens the same ui as <leader>mO
-    - that ui needs an <esc> bind to disappear
-    - i think its aerial
-    - <leader>oo opens the sidebar outline
-
 - [ ] test out zen mode toggles (lua/genja/map-plugin/zenmode.lua, moved from map-convoluted.lua)
     - <leader>mz :ZenMode with spec defaults
     - <leader>z1 width 120, no numbers, frameless GUI window

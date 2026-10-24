@@ -24,6 +24,10 @@ return {
 		-- close on buffers it can't outline (oil, terminal); help is supported (vimdoc query)
 		close_automatic_events = { 'unsupported' },
 		show_guides = true,
+		-- the nav float closes on <C-c> only by default; the listed keys are merged into aerial's
+		nav = {
+			keymaps = { ['<Esc>'] = 'actions.close' },
+		},
 		highlight_on_hover = true,
 		-- defaults kept: off above 10000 lines or 2 MB; json shows object keys
 		-- (Class), yaml mappings, lists and `name:` items (Class, Enum, Module)

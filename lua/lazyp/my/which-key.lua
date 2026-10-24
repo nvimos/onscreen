@@ -61,6 +61,7 @@ return {
 				{ '<leader>mG',       group = 'UI: git log, commit' },
 				{ '<leader>mQ',       group = 'GUI: nvim-qt toggles' },
 				{ '<leader>mx',       group = 'UI: Close' },
+				{ '<leader>o',        group = 'Outline: sidebar, nav' },
 				{ '<leader>p',        group = 'AI: claude, pplx' },
 				{ '<leader>r',        group = 'Code: format' },
 				{ '<leader>s',        group = 'Dirs: start dirs' },

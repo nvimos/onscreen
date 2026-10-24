@@ -13,7 +13,8 @@ Indent text objects (vim-indent-object, loads on VeryLazy)
 Breadcrumbs and outline (dropbar, aerial)
 
     <leader>;   pick a crumb, open its menu     [;  ];   context start / next context
-    <leader>mo  outline sidebar                  <leader>mO  outline nav float
+    <leader>mo  outline sidebar                  <leader>mO  outline nav float (<Esc> closes)
+    <leader>oo  outline sidebar                  <leader>oO  outline nav float (same as mo / mO)
     <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
 
 Zen mode (zen-mode.nvim, lua/genja/map-plugin/zenmode.lua)

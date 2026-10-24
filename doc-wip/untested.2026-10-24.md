@@ -12,3 +12,7 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
     - hadolint, ruff, editorconfig-checker ok (2026-10-24); vint disabled: crashes on Windows (#394, #378), todo-ideas.md 14e
 - [x] map-plugin health: :checkhealth genja.map-plugin, then hide map-plugin/zenmode.lua and restart (lua/genja/map-plugin/health.lua) -> doc-wip/readme.2026-10-24.map-plugin-health.md
     - steps 1-2 by hand (2026-10-24); step 3 and the rest: `make test` in lua/genja/map-plugin/ (tests/map-plugin/test_health.lua, 10 cases)
+
+## Session auto-todo-20261024-2315
+
+- [ ] outline keys: <leader>oo / <leader>oO, <Esc> closes the nav float (lua/genja/map-plugin/aerial.lua) -> doc-wip/readme.2026-10-24.aerial-outline-keys.md

@@ -10,6 +10,9 @@ return function(Maps)
 		{ '<c-s>',      '<cmd>AerialToggle!<cr>',   desc = 'UI: outline sidebar (aerial)' },
 		{ '<leader>mo', '<cmd>AerialToggle!<cr>',   desc = 'UI: outline sidebar (aerial)' },
 		{ '<leader>mO', '<cmd>AerialNavToggle<cr>', desc = 'UI: outline nav float (aerial)' },
+		-- same two under their own prefix
+		{ '<leader>oo', '<cmd>AerialToggle!<cr>',   desc = 'Outline: sidebar (aerial)' },
+		{ '<leader>oO', '<cmd>AerialNavToggle<cr>', desc = 'Outline: nav float (aerial)' },
 		-- extension loaded here, so [o ]o don't pull in telescope
 		{ '<leader>ja', function()
 			require('telescope').load_extension('aerial')
