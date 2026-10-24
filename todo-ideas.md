@@ -25,6 +25,14 @@ migration from 0.9 to 0.11 (the file that started it all)
         - [x] <M-]>/<M-[> next/previous tab (af9c7a4), <M-{> previous window (6a4c414)
     - [x] :DevReloadClaude drops the cached claude modules; :F2Reload renamed :DevReloadF2 (bab761a)
     - [x] prompt popup: bigger, placed up-left (55140b2); <C-CR> sends, <CR> adds a newline (96562ed)
+    - [x] claude's exit closes the window itself, not floaterm's autoclose (E444 on the last window) (14cd1f8)
+    - [x] <C-Up> in the claude terminal: normal mode (45c94fe)
+    - [x] moved into plug-wip/genja-ask.nvim and plug-wip/genja-claudefterm.nvim; floaterm options
+      from setup(), so every start opens the vsplit (6ebff35)
+    - [x] keys: <leader>pc ask popup, <leader>pC paste context, <leader>mC running terminals (7452969)
+    - [x] <F2> claude source: one item per running claude terminal (4f57a26)
+    - [x] :ClaudeFterm -1 / -one: claude replaces the current buffer, :ClaudeFterm or /exit
+      brings it back; tested (1d15d43)
     - [x] talk to claude desktop or claude from nvim
         -[x] claude in float term for now. using claude.exe
     - need to work out a spec
@@ -94,6 +102,19 @@ migration from 0.9 to 0.11 (the file that started it all)
     - [x] mylunsj lists Telescope mydirs first (1151dfb)
     - [x] cmdline completion: <Tab>/<S-Tab> next/previous, <Up>/<Down> pick while the menu is open (b5173ad)
 
+- [x] extras outside the idea list (2026-10-24)
+    - [x] cmdline: <C-j>/<C-k> pick items, <Up>/<Down> back to history (0de4d52)
+    - [x] map-lsp: descs for nvim 0.11 gr* defaults, references on gR, [d ]d go the way their descs say (5e788aa)
+    - [x] markdown: <F2> glow preview in a new pwsh window, Windows only (21cfe96)
+    - [x] intro: eob ~ drawn in column 0 like vanilla (81a4659)
+    - [x] gui: nvim-qt toggles on <leader>mQ…, GuiFuncs picker (<F3>, <F2> gui), right-click frameless,
+          one shared state per Gui* function; neovim-gui-shim on again; tested (3580a06, ad94a79)
+    - [x] edit: visual <leader>w, wraps lines as "line",; title case on <leader>wsT, sort paragraph <leader>wsp (8f25155)
+    - [x] f2 git: <M-a> git adds the file, picker stays open (e6c04ac)
+    - [x] hilite: darker Search/IncSearch/CurSearch background (a1b0857)
+    - [x] startdirs: <M-1>…<M-4> jump by rank and don't count a use; :Mydirs picker,
+          :Mydirs reset deletes the usage file; tested (1132d6b)
+
 
 
 - [ ] improve: key maps map-plug
@@ -139,6 +160,8 @@ migration from 0.9 to 0.11 (the file that started it all)
         - remember the width from before z1/z2 (the commented-out `width` code)?
     - switching z1 <-> z2 while zen is open: zen_mode.open() on an open zen window
     - GuiWindowMaximized: on for z2 only, commented out in z0/z1; decide
+    - [x] keys moved into lua/genja/map-plugin/zenmode.lua (2f5fdaa)
+    - [x] <leader>z0 closes zen and unsets frameless; z1 then z0 tested in nvim-qt (209380a)
 
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

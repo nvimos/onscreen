@@ -58,6 +58,7 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 ## 19. Claude from nvim
 - So far (wip, untested): `claude` in a floaterm (`lua/genja/claude.lua`): `:ClaudeFterm`, `<leader>pc` context paste, `<leader>pC` prompt popup; codecompanion spec as an alternative.
 - Session marker: `/rename` in claude writes `claude-session: <uuid> <title>` as a comment into the buffer claude was started from; `:ClaudeFterm` from a file with a marker resumes that session in its cwd.
+- Later (2026-10-24): close on exit (14cd1f8), `<C-Up>` normal mode (45c94fe); moved into genja-ask.nvim / genja-claudefterm.nvim (6ebff35); keys `<leader>pc` ask, `<leader>pC` paste, `<leader>mC` terminals (7452969); `<F2>` claude source (4f57a26); `:ClaudeFterm -one` in the current window, tested (1d15d43).
 - Later: one floaterm per project root, picker `<leader>pt` / `:ClaudeFterm!` (80f96ba); terminal `<M-]>`/`<M-[>` tabs, `<M-{>` previous window (af9c7a4, 6a4c414); `:DevReloadClaude` (bab761a); prompt popup `<C-CR>` sends (55140b2, 96562ed).
 
 ## Extras done along the way
@@ -69,4 +70,14 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 - mylunsj: Telescope mydirs first (1151dfb).
 - Cmdline completion: `<Tab>`/`<S-Tab>`, `<Up>`/`<Down>` pick items (b5173ad).
 - `:F2Reload` renamed `:DevReloadF2` (bab761a).
+- Cmdline: `<C-j>`/`<C-k>` pick items, `<Up>`/`<Down>` history (0de4d52).
+- map-lsp: gr* descs, references on `gR`, `[d`/`]d` fixed (5e788aa).
+- Markdown `<F2>` glow preview, Windows (21cfe96).
+- Intro: eob `~` in column 0 (81a4659).
+- GUI: nvim-qt toggles `<leader>mQ…`, GuiFuncs picker, right-click frameless; tested (3580a06, ad94a79).
+- Zen: keys in `map-plugin/zenmode.lua`, `<leader>z0` stays closed; tested (2f5fdaa, 209380a).
+- Edit: visual `<leader>w,` wraps lines as `"line",`; `<leader>wsT`, `<leader>wsp` (8f25155).
+- f2 git: `<M-a>` git add, picker stays (e6c04ac).
+- Hilite: darker search background (a1b0857).
+- Startdirs: `<M-n>` by rank, not counted; `:Mydirs`, `:Mydirs reset`; tested (1132d6b).
 

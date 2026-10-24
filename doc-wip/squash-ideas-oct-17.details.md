@@ -108,6 +108,8 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   usage ranking in `stdpath('data')/startdirs.usage`,
   `<leader>s…` and `<leader>jA`/`je`/`jD`.
 - Outcome (fe676f6): as planned; `add()` writes `CONFIG/`/`DATA/`/`HOME/` back; groups `windows` (function), oni, fonv, openmw, movies. Guide: `readme.2026-10-23.startdirs.md`.
+- Later (1132d6b): `<M-1>`…`<M-4>` jump to the most used dirs (`ranked()`) and don't count a use;
+  `:Mydirs` opens the picker, `:Mydirs reset` deletes the usage file. Tested.
 
 # Open
 
@@ -187,6 +189,16 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
     - one floaterm per project root as specced below; `<leader>pt` (not
       `<leader>pl`, that is Perplexity) and `:ClaudeFterm!` pick running
       ones (80f96ba). Untested.
+    - claude's exit closes or swaps the window itself; floaterm gets
+      `--autoclose=never` (E444 on the last window) (14cd1f8)
+    - `<C-Up>` in the claude terminal: normal mode (45c94fe)
+    - moved into `plug-wip/genja-ask.nvim` and `plug-wip/genja-claudefterm.nvim`;
+      floaterm options from `setup()`, so every start opens the vsplit (6ebff35)
+    - keys: `<leader>pc` ask popup, `<leader>pC` paste context, `<leader>mC`
+      running terminals (7452969)
+    - `<F2>` claude source, one item per running terminal (4f57a26)
+    - `:ClaudeFterm -1` / `-one`: claude replaces the current buffer;
+      `:ClaudeFterm` or `/exit` puts it back. Tested (1d15d43)
 - Spec (2026-10-23, auto-todo): one floaterm per project root. Root: the
   session marker's cwd, else the git root, else cwd. Name
   `claude-<root basename>`. `:ClaudeFterm` shows the current project's
@@ -247,10 +259,24 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - Cmdline completion (b5173ad): `<Tab>`/`<S-Tab>` next/previous item,
   `<Up>`/`<Down>` pick while the menu is open, else history.
 - f2 (bab761a): `:F2Reload` renamed `:DevReloadF2`.
+- Cmdline (0de4d52): `<C-j>`/`<C-k>` pick items, `<Up>`/`<Down>` history.
+- map-lsp (5e788aa): descs for the nvim 0.11 `gr*` defaults, references on
+  `gR`, `[d`/`]d` and `<F4>`/`<S-F4>` go the way their descs say.
+- Markdown (21cfe96): `<F2>` glow preview in a new pwsh window, Windows only.
+- Intro (81a4659): eob `~` in column 0 like vanilla.
+- GUI (3580a06, ad94a79): nvim-qt toggles on `<leader>mQ…`, GuiFuncs
+  picker (`<F3>`, `<F2>` gui), right-click frameless, one shared state per
+  Gui* function; neovim-gui-shim on again. Tested.
+- Zen (2f5fdaa, 209380a): `<leader>z0/z1/z2` in `map-plugin/zenmode.lua`;
+  `<leader>z0` closes zen and unsets frameless. z1/z0 tested.
+- Edit (8f25155): visual `<leader>w,` wraps lines as `"line",`; title case
+  on `<leader>wsT`, sort paragraph on `<leader>wsp`.
+- f2 git (e6c04ac): `<M-a>` git adds the file, picker stays open.
+- Hilite (a1b0857): darker Search/IncSearch/CurSearch background.
 
 ## Last scanned commit
 
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    8f2a667930af2c2cf38056577dcf8b4e4a7063db  resize: stay on the current tab after VimResized's tabdo wincmd =; augroup _resize_equalize_tabs (idea 32)
+    81a2844263d3d6515189ae0a44a50cfe69e6ed0e  issue: close claudefterm -one back-keys follow-up
