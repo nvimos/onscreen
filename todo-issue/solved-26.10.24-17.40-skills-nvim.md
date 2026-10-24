@@ -1,0 +1,5 @@
+- [x] skills: project skills in nvim-* folders (2026-10-24)
+    - [x] .claude/skills/nvim-commit-close-issues (was commit-close-issues)
+    - [x] .claude/skills/nvim-auto-todo, nvim-update-todo-oct added to git
+    - [x] CLAUDE.md: todo-issue/ names, /commit-close-issues path
+    - [ ] nvim-auto-todo step 8 still writes ~/.claude/skills/auto-todo/runs.md
