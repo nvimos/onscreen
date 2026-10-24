@@ -3,4 +3,4 @@
     - [x] `:Mydirs` defined in `lua/lazyp/new/genja-startdirs.lua` `config` (the picker is the config's), added to `cmd`
     - [x] README, help, CLAUDE.md, `readme.cheatsheet.md`
     - [x] committed in 1132d6b
-    - [ ] test: `:Mydirs reset`, then `:Mydirs` lists the dirs in file order
+    - [x] test: `:Mydirs reset`, then `:Mydirs` lists the dirs in file order

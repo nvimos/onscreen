@@ -3,4 +3,4 @@
     - [x] counting would reorder the slots the keys point at
     - [x] README, help, CLAUDE.md updated
     - [x] committed in 1132d6b
-    - [ ] test: counts in `nvim-data/startdirs.usage` stay the same after a few `<M-1>`
+    - [x] test: counts in `nvim-data/startdirs.usage` stay the same after a few `<M-1>`
