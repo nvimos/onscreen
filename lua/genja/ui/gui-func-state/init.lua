@@ -88,15 +88,19 @@ function GuiFunc:read_gui()
 	self.value = v == 1
 end
 
----@param value boolean|string|number
+---@param value boolean|string|number window and option kinds: true/false or 1/0
 function GuiFunc:set(value)
+	if self.kind == 'window' or self.kind == 'option' then
+		-- advance() passes booleans, the zen keys 1/0; Lua counts 0 as true
+		value = value == true or value == 1
+	end
 	self.value = value
 	if self.kind == 'window' then
 		self.gui_seen = vim.g[self.var]
 		local n = 0
-		if value and value == 1 then n = 1 end
-		if value and value == 0 then n = 0 end
-
+		if value then
+			n = 1
+		end
 		vim.call(self.name, n)
 	elseif self.kind == 'option' then
 		local n = 0
