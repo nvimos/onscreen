@@ -90,6 +90,17 @@ local function line_chunks(index, line)
 	return command_chunks(line)
 end
 
+-- the window's end-of-buffer char ('fillchars' eob:, default '~'); virtual
+-- lines cover those rows, so each one draws it in column 0 itself
+local function eob_char(win)
+	local fillchars = vim.api.nvim_get_option_value('fillchars', { win = win })
+	local char = fillchars:match('eob:([^,]+)')
+	if char == nil then
+		char = '~'
+	end
+	return char
+end
+
 local function render(buf, win)
 	vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 	local lines = intro_lines()
@@ -107,15 +118,18 @@ local function render(buf, win)
 	-- local shift_left = math.floor(width * 0.10)
 	local shift_left = 0
 
+	local eob = eob_char(win)
+	local eob_width = vim.fn.strdisplaywidth(eob)
 	local virt = {}
 	-- buffer line 1 takes screen row 0, virtual lines start at row 1
 	for _ = 2, row do
-		table.insert(virt, { { ' ', 'Normal' } })
+		table.insert(virt, { { eob, 'EndOfBuffer' } })
 	end
 	for i, line in ipairs(lines) do
-		local pad = math.floor((width - vim.fn.strdisplaywidth(line)) / 2) - shift_left
+		-- centred on the whole width like Nvim's; the eob char takes part of the pad
+		local pad = math.floor((width - vim.fn.strdisplaywidth(line)) / 2) - shift_left - eob_width
 		pad = math.max(pad, 0)
-		local chunks = { { string.rep(' ', pad), 'Normal' } }
+		local chunks = { { eob, 'EndOfBuffer' }, { string.rep(' ', pad), 'Normal' } }
 		vim.list_extend(chunks, line_chunks(i, line))
 		table.insert(virt, chunks)
 	end
