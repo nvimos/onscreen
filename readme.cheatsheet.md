@@ -33,7 +33,7 @@ Floaterm commands (lua/genja/auto-alias.vim)
     :ClaudeFterm --chrome   flags at start, <Tab> completes: --model --effort
                             --permission-mode --add-dir --ide --verbose --no-chrome
     in the claude terminal (lua/genja/claude.lua):
-    <C-Left>  window on the left    <C-Right>  next tab
+    <C-Left>  window on the left    <C-Right>  next tab    <C-Up>  normal mode
     one claude per project root (marker cwd, git root, else :pwd), named claude-<root>
     :ClaudeFterm!  <leader>pt   running claude terminals: <CR> show, <M-d> kill
     <leader>pc  paste @file / selection     <leader>pC  ask popup, same as <M-?> (plugin/claude-fterm.lua)

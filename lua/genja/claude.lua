@@ -12,6 +12,7 @@
 --   <C-q>, <C-j>, <C-Space>   in the claude terminal: back to the previous window
 --   <C-Left>                  in the claude terminal: to the window on the left
 --   <C-Right>                 in the claude terminal: to the next tab
+--   <C-Up>                    in the claude terminal: to normal mode
 -- Pasting into the running session avoids `claude -p` startup time and keeps context.
 --
 -- Session marker: :ClaudeFterm resumes the session named in the file.
@@ -544,6 +545,8 @@ local function set_term_keys(bufnr)
 	vim.keymap.set('t', '<C-Left>', '<C-\\><C-n><C-w>h', { buffer = bufnr, desc = 'Claude: to the window on the left' })
 	-- replaces claude's own <C-Right> word-right
 	vim.keymap.set('t', '<C-Right>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
+	-- replaces claude's own <C-Up>, if any
+	vim.keymap.set('t', '<C-Up>', '<C-\\><C-n>', { buffer = bufnr, desc = 'Claude: to normal mode' })
 	-- same keys as the tab maps in map-zero.lua, which don't cover terminal mode
 	vim.keymap.set('t', '<M-]>', '<Cmd>tabnext<CR>', { buffer = bufnr, desc = 'Claude: to the next tab' })
 	vim.keymap.set('t', '<M-[>', '<Cmd>tabprev<CR>', { buffer = bufnr, desc = 'Claude: to the previous tab' })
