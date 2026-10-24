@@ -41,9 +41,9 @@ return function(Maps)
 		{ '<leader>jA', add, desc = 'Dirs: add current dir to start dirs' },
 		{ '<leader>je', edit, desc = 'Dirs: edit start dirs file' },
 		{ '<leader>jD', picker, desc = 'Dirs: start dirs picker (most used first)' },
-		{ '<M-1>', jump(1), desc = 'Dirs: start dir 1' },
-		{ '<M-2>', jump(2), desc = 'Dirs: start dir 2' },
-		{ '<M-3>', jump(3), desc = 'Dirs: start dir 3' },
-		{ '<M-4>', jump(4), desc = 'Dirs: start dir 4' },
+		{ '<M-1>', jump(1), desc = 'Dirs: start dir 1 (most used)' },
+		{ '<M-2>', jump(2), desc = 'Dirs: start dir 2 (by use)' },
+		{ '<M-3>', jump(3), desc = 'Dirs: start dir 3 (by use)' },
+		{ '<M-4>', jump(4), desc = 'Dirs: start dir 4 (by use)' },
 	})
 end
