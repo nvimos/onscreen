@@ -5,6 +5,6 @@
     - [x] GuiFuncs picker moved to mylunsj/gui-funcs.lua, mylunsj item, <F2> group gui
     - [x] right-click `frameless` in popup-menu.lua
     - [x] ginit.vim: every Gui* start value, via execute (commands lack -bar)
-    - [ ] test: nvim-qt, <leader>mQw, <leader>mQt, right-click frameless
-    - [ ] test: <F2> > Gui, <F3> > GuiFuncs, <CR> cycles GuiAdaptiveStyle
-    - [ ] gui-func-state/Makefile DIR still points at mylunsj/gui-funcs
+    - [x] test: nvim-qt, <leader>mQw, <leader>mQt, right-click frameless
+    - [x] test: <F2> > Gui, <F3> > GuiFuncs, <CR> cycles GuiAdaptiveStyle
+    - [x] gui-func-state/Makefile DIR fixed (solved-26.10.24-17.40-gui-test-path.md)
