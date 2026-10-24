@@ -110,6 +110,7 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>md  diffview: changes   <leader>mh  file history   <leader>mH  repo history
     <leader>mxd close diffview
     <leader>mGc commit popup (genja-commit; in oil also ggc, <LocalLeader>c)
+    <leader>mGs git signs on/off in this buffer (markdown starts off: vim.g.gitsigns_skip_ft)
     hunks, only in buffers gitsigns tracks:
     ]c  [c      next / previous hunk (in diff mode: nvim's change jumps)
     <leader>hs  stage/unstage hunk (visual: lines)   <leader>hS  stage buffer

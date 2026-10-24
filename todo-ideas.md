@@ -89,11 +89,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     - need to monitor all notifications?
     - explore options. other people must have done something similar before
 
-- [ ] disable gitsigns indicators in markdown files by default
-    - add a toggle keybind
-        - <leader>mGs
-
-
 - [ ] test out zen mode toggles (lua/genja/map-plugin/zenmode.lua, moved from map-convoluted.lua)
     - <leader>mz :ZenMode with spec defaults
     - <leader>z1 width 120, no numbers, frameless GUI window

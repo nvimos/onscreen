@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | gitsigns: skip filetypes (markdown), `<leader>mGs` toggle  | 0   | ~5k    |
 | -   | f2 item names: display filter, labels rewritten            | 0   | ~10k   |
 | 14e | gitleaks (any ft), vale (markdown, shared .vale.ini)       | 0   | ~12k   |
 | -   | diagnostics: 3 per severity, `<leader>tt3`, F2 show all    | 0   | ~14k   |

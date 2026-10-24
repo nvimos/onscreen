@@ -1,5 +1,30 @@
 -- Keys for lua/lazyp/git/gitsigns.lua. Buffer-local: set in on_attach, so they
 -- exist only in buffers gitsigns tracks; elsewhere ]c [c stay nvim's.
+-- Filetypes in vim.g.gitsigns_skip_ft (default markdown) aren't attached; <leader>mGs toggles per buffer.
+
+---Filetypes gitsigns doesn't attach to: vim.g.gitsigns_skip_ft, default { 'markdown' }.
+---@return string[]
+local function skip_ft()
+	local list = vim.g.gitsigns_skip_ft
+	if type(list) ~= 'table' then
+		list = { 'markdown' }
+	end
+	return list
+end
+
+---Attach gitsigns to the current buffer, or detach it; b:gitsigns_force keeps the choice
+---for later attach attempts (true: attach despite skip_ft, false: stay off).
+local function toggle_attach()
+	local gs = require('gitsigns')
+	local bufnr = vim.api.nvim_get_current_buf()
+	if vim.b[bufnr].gitsigns_status_dict then
+		vim.b[bufnr].gitsigns_force = false
+		gs.detach(bufnr)
+	else
+		vim.b[bufnr].gitsigns_force = true
+		gs.attach(bufnr)
+	end
+end
 
 ---@param Maps genja.MapPlugin
 return function(Maps)
@@ -7,7 +32,18 @@ return function(Maps)
 
 	-- runs before setup(opts): hands gitsigns the on_attach that sets the keys
 	Maps:add_mappings(spec_name, function(opts)
+		-- global: also attaches buffers that gitsigns skipped
+		vim.keymap.set('n', '<leader>mGs', toggle_attach, { desc = 'UI: git signs in this buffer (gitsigns)' })
+
 		opts.on_attach = function(bufnr)
+			-- skipped filetypes stay detached until <leader>mGs; returning false stops the attach
+			local forced = vim.b[bufnr].gitsigns_force
+			if forced == false then
+				return false
+			end
+			if forced == nil and vim.tbl_contains(skip_ft(), vim.bo[bufnr].filetype) then
+				return false
+			end
 			local gs = require('gitsigns')
 			local function o(desc)
 				return { buffer = bufnr, desc = 'Git: ' .. desc }

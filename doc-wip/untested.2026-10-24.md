@@ -16,3 +16,4 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 ## Session auto-todo-20261024-2315
 
 - [ ] outline keys: <leader>oo / <leader>oO, <Esc> closes the nav float (lua/genja/map-plugin/aerial.lua) -> doc-wip/readme.2026-10-24.aerial-outline-keys.md
+- [ ] gitsigns off in markdown, <leader>mGs toggles per buffer (lua/genja/map-plugin/gitsigns.lua) -> doc-wip/readme.2026-10-24.gitsigns-skip-ft.md
