@@ -2,7 +2,7 @@
 -- Prompt on stdin (npm .cmd shims cap the command line). Sessions: the first question gets
 -- `--session-id <id>`, follow-ups `--resume <id>`; `-n <name>` names a saved one.
 
----@type genja.ask.Backend
+---@type genja-ask.Backend
 return {
 	name = 'claude-p',
 	models = { 'haiku', 'sonnet', 'opus' },

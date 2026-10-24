@@ -27,7 +27,6 @@ custom funcs
 
      actions.lua - g. / <LocalLeader>/ action menu (telescope), cur: = item under cursor
      api.lua     - source from other config lua scripts
-     claude.lua  - idea #19 A: claude in a floaterm, <leader>pc paste, <leader>pC prompt popup
      oil/        - functions for nvim-oil, by topic; oil/init.lua lists the files, oil/plug/ holds the self-contained ones
      oil-actions.lua - oil actions (desc + callback), used by map-oil.lua
      f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), sources adhoc.lua, git.lua (oil only), make.lua; registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); Makefile + readme.testing.md: tests in tests/f2/
@@ -46,7 +45,6 @@ mappings and funcs for them
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions), health.lua (:checkhealth genja.map-plugin)
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
-     ask.lua - <M-?> / <leader>pC ask popup: claude -p, claude floaterm, gemini, copilot, aichat (ask/backends/)
      morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
      popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
      recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all

@@ -28,12 +28,7 @@ command! PythonFterm  :FloatermNew                            --wintype=vsplit -
 
 command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=smart bash <cr>
 command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=smart ranger --cmd="cd ~"
-" :ClaudeFterm [flags], e.g. :ClaudeFterm --chrome; flags apply when claude starts
-" one claude per project root; :ClaudeFterm! picks a running one
-function! ClaudeFtermComplete(arglead, cmdline, cursorpos) abort
-	return luaeval("require('genja.claude').complete(_A[1], _A[2])", [a:arglead, a:cmdline[: a:cursorpos - 1]])
-endfunction
-command! -bang -nargs=* -complete=customlist,ClaudeFtermComplete ClaudeFterm  lua require('genja.claude').toggle({ title = 'claude', wintype = 'vsplit', position = 'botright', width = 0.45, autoclose = 'smart', cmd = 'claude' }, <q-args>, <bang>0)
+" :ClaudeFterm comes from plug-wip/genja-claudefterm.nvim (spec: lua/lazyp/new/genja-claudefterm.lua)
 
 command! QQQ tabdo write | qa
 command! JJJ tabdo write | qa

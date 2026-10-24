@@ -6,7 +6,7 @@
 ---@param name string
 ---@param models string[]
 ---@param flags fun(model: string|nil): string[]
----@return genja.ask.Backend
+---@return genja-ask.Backend
 local function cli(name, models, flags)
 	return {
 		name = name,

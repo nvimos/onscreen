@@ -56,7 +56,7 @@ vim.opt.shortmess:append("F")
 
 
 -- a restored terminal reruns its command (e.g. claude --session-id, which then clashes);
--- claude comes back through the session marker instead (genja/claude.lua)
+-- claude comes back through the session marker instead (plug-wip/genja-claudefterm.nvim)
 vim.opt.sessionoptions:remove('terminal')
 
 vim.o.laststatus = 3 -- only one status line even with several windows

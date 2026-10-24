@@ -27,21 +27,21 @@ URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
     <leader>gx   same picker, all URLs in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy
 
-Floaterm commands (lua/genja/auto-alias.vim)
+Floaterm commands (lua/genja/auto-alias.vim; :ClaudeFterm from plug-wip/genja-claudefterm.nvim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm
     :ClaudeFterm --chrome   flags at start, <Tab> completes: --model --effort
                             --permission-mode --add-dir --ide --verbose --no-chrome
-    in the claude terminal (lua/genja/claude.lua):
+    in the claude terminal (plug-wip/genja-claudefterm.nvim):
     <C-Left>  window on the left    <C-Right>  next tab    <C-Up>  normal mode
     one claude per project root (marker cwd, git root, else :pwd), named claude-<root>
     :ClaudeFterm!  <leader>pt   running claude terminals: <CR> show, <M-d> kill
     <leader>pc  paste @file / selection     <leader>pC  ask popup, same as <M-?> (plugin/claude-fterm.lua)
 
-Ask popup (lua/genja/ask.lua; <M-?> in plugin/ask.lua, n/i/x; visual sends the selection)
+Ask popup (plug-wip/genja-ask.nvim; <M-?> in plugin/ask.lua, n/i/x; visual sends the selection)
 
-    <C-CR> send   <M-p> send to the claude floaterm (any target)   <S-CR>/<C-j> newline   <C-p>/<C-n> history   <C-b> brief
-    <M-t> target: claude-p, floaterm, gemini, copilot, aichat   <M-m> model   <M-e> effort
+    <C-CR> send   <M-p> send to the claudefterm (any target)   <S-CR>/<C-j> newline   <C-p>/<C-n> history   <C-b> brief
+    <M-t> target: claude-p, claudefterm, gemini, copilot, aichat   <M-m> model   <M-e> effort
     <M-s> save session (nvim yyyy.ww.d-ddd.hhmm)   <M-r> resume a saved one   <C-c> cancel
     answer: <CR> follow-up   y yank   q/<Esc> close     log: ~/.claude/p-logs/nvim.log
     <M-[>     previous tab          <M-]>      next tab

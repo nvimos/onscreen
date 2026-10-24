@@ -23,6 +23,8 @@ Unmarked bullets were stated by user.
 
 Each has its own CLAUDE.md; read it before changing that plugin.
 
+- @plug-wip/genja-ask.nvim/CLAUDE.md: ask popup (`<M-?>`, `<leader>pC`), backends claude -p, claudefterm, gemini, copilot, aichat.
+- @plug-wip/genja-claudefterm.nvim/CLAUDE.md: claude in a floaterm, one per project: `:ClaudeFterm`, session markers, paste context, `send()`.
 - @plug-wip/genja-commit.nvim/CLAUDE.md: commit popup (oil), gitcommit lint, message generation.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
 - @plug-wip/genja-finder.nvim/CLAUDE.md: live grep and live find pickers.
@@ -114,8 +116,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `map-zero.lua`: essential maps that must not fail. `map-lsp.lua`, `map-telescope.lua`, `map-convoluted.lua`, `map-jolemak.lua` hold the rest by topic.
 - Plugin keys and config keymaps go in `lua/genja/map-plugin/<spec file name>.lua`; specs use `keys = Maps:keys()` and call `Maps:mappings(opts)` in `config`.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
-- Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`).
-- `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `lua/genja/claude.lua`.
+- Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`; `:ClaudeFterm` comes from `plug-wip/genja-claudefterm.nvim`).
+- `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `plug-wip/genja-claudefterm.nvim`.
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
 - When adding keys:
     - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.
@@ -143,4 +145,4 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Quirks
 
 - vim-floaterm `--autoclose` (and `g:floaterm_autoclose`) takes only `always`, `never`, `smart`; numbers like `0` give an argument error.
-- `lua/genja/claude.lua` starts claude with `--autoclose=never` and closes the window itself on exit (`on_exit`): floaterm's own close hits E444 when the claude split is the last window. floaterm's `BufHidden,BufWipeout` autocmd (group `floaterm_enter_insertmode`) also closes the window, so `on_exit` clears it before `nvim_win_set_buf`.
+- `genja-claudefterm` starts claude with `--autoclose=never` and closes the window itself on exit (`on_exit`): floaterm's own close hits E444 when the claude split is the last window. floaterm's `BufHidden,BufWipeout` autocmd (group `floaterm_enter_insertmode`) also closes the window, so `on_exit` clears it before `nvim_win_set_buf`.

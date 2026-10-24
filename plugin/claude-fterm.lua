@@ -1,10 +1,9 @@
--- Idea #19 A: keys for Claude Code in a floaterm (code: lua/genja/claude.lua).
--- :ClaudeFterm is in lua/genja/auto-alias.vim with the other Fterm commands.
+-- Idea #19 A: keys for Claude Code in a floaterm (plug-wip/genja-claudefterm.nvim, which also has :ClaudeFterm).
 local map = vim.keymap.set
 
-local function paste_context() require('genja.claude').paste_context() end
-local function prompt() require('genja.ask').open() end
-local function list() require('genja.claude').list() end
+local function prompt() require('genja-ask').open() end
+local function paste_context() require('genja-claudefterm').paste_context() end
+local function list() require('genja-claudefterm').list() end
 
 map('n', '<leader>pc', paste_context, { desc = 'Claude: paste @file into claude' })
 map('x', '<leader>pc', paste_context, { desc = 'Claude: paste selection into claude' })

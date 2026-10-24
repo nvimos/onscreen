@@ -1,23 +1,24 @@
 -- Ask popup (idea 16): one quick question, a short plain-text answer in the same float.
---   <M-?> (normal, insert, visual: selection attached), <leader>pC: open (plugin/ask.lua)
---   compose:  <C-CR> send · <M-p> send to the claude floaterm · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief
+--   <M-?> (normal, insert, visual: selection attached), <leader>pC: open (plugin/ask.lua, plugin/claude-fterm.lua in the config)
+--   compose:  <C-CR> send · <M-p> send to the claudefterm · <S-CR>/<C-j> newline · <C-p>/<C-n> history · <C-b> brief
 --             <M-t> target · <M-m> model · <M-e> effort · <M-s> save session · <M-r> resume saved
 --             <Esc>/q (normal) close, the draft is kept
 --   waiting:  <C-c> cancel
 --   answer:   <CR> follow-up (same session) · y yank the answer · q/<Esc> close
--- Targets (lua/genja/ask/backends/): claude-p (claude --print, sessions), floaterm (the
+-- Targets (backends/): claude-p (claude --print, sessions), claudefterm (the
 -- project's claude terminal), gemini, copilot, aichat. Every Q&A goes to ~/.claude/p-logs/nvim.log.
 -- Saved claude-p sessions are named `nvim yyyy.ww.d-ddd.hhmm` (the pwsh claude-p uses `pwsh ...`).
 
-local SRC = 'lua/genja/ask.lua: '
+local SRC = 'genja-ask/init.lua: '
 
+---@class genja-ask
 local M = {}
 
 local BRIEF = 'Answer briefly: at most 3 short sentences.\n\n'
 local HISTORY_MAX = 50
 local LOG = vim.fs.normalize('~/.claude/p-logs/nvim.log')
 
----@class genja.ask.RunOpts
+---@class genja-ask.RunOpts
 ---@field model string|nil
 ---@field effort string|nil
 ---@field session_id string
@@ -25,22 +26,35 @@ local LOG = vim.fs.normalize('~/.claude/p-logs/nvim.log')
 ---@field save_name string|nil name the session (claude -n)
 ---@field cwd string
 
----@class genja.ask.Backend
+---@class genja-ask.Backend
 ---@field name string
 ---@field models string[] first one is the default; empty: the CLI's default
 ---@field efforts string[]
 ---@field sessions boolean keeps context itself; else earlier Q&A is sent along
 ---@field sync? boolean answers at once (no job)
 ---@field system? string
----@field run fun(self: genja.ask.Backend, prompt: string, opts: genja.ask.RunOpts, on_done: fun(err: string|nil, text?: string)): vim.SystemObj|nil
+---@field run fun(self: genja-ask.Backend, prompt: string, opts: genja-ask.RunOpts, on_done: fun(err: string|nil, text?: string)): vim.SystemObj|nil
+
+---@class genja-ask.Opts
+---Sends to the claudefterm target. `run` carries the popup's choices (model, effort, cwd, ...);
+---the caller maps them to whatever its terminal takes.
+---@field send? fun(prompt: string, run: genja-ask.RunOpts)
+
+---@type genja-ask.Opts
+M.options = {}
+
+---@param opts? genja-ask.Opts
+function M.setup(opts)
+	M.options = vim.tbl_extend('force', M.options, opts or {})
+end
 
 ---Targets in <M-t> order, the first is the default. Listed explicitly.
----@return genja.ask.Backend[]
+---@return genja-ask.Backend[]
 local function backends()
-	local cli = require('genja.ask.backends.cli')
+	local cli = require('genja-ask.backends.cli')
 	return {
-		require('genja.ask.backends.claude_p'),
-		require('genja.ask.backends.floaterm'),
+		require('genja-ask.backends.claude_p'),
+		require('genja-ask.backends.claudefterm'),
 		cli.gemini,
 		cli.copilot,
 		cli.aichat,
@@ -250,7 +264,7 @@ function M.open()
 		if session.resume or #transcript > 0 then
 			title = title .. ' [follow-up]'
 		end
-		local footer = ' <C-CR> send · <M-p> to floaterm · <M-t> target · <M-m> model · <M-e> effort · <M-s> save · <M-r> resume · <C-b> brief '
+		local footer = ' <C-CR> send · <M-p> to claudefterm · <M-t> target · <M-m> model · <M-e> effort · <M-s> save · <M-r> resume · <C-b> brief '
 		if mode == 'wait' then
 			footer = ' <C-c> cancel '
 		elseif mode == 'answer' then
@@ -300,7 +314,7 @@ function M.open()
 		vim.cmd.startinsert()
 	end
 
-	---@param target? genja.ask.Backend overrides the picked target for this send (<M-p>)
+	---@param target? genja-ask.Backend overrides the picked target for this send (<M-p>)
 	local function send(target)
 		local prompt = vim.trim(table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n'))
 		if prompt == '' then
@@ -337,7 +351,7 @@ function M.open()
 
 		local q_lines = vim.split('Q: ' .. prompt, '\n', { plain = true })
 		if b.sync then
-			-- the floaterm takes the focus anyway; the answer shows there
+			-- the answer shows in the claudefterm
 			mode = 'wait'
 			close()
 		end
@@ -489,10 +503,10 @@ function M.open()
 		end
 	end
 	vim.keymap.set({ 'i', 'n' }, '<C-CR>', in_compose(function() send() end), o 'Ask: send')
-	local function send_floaterm()
-		send(require('genja.ask.backends.floaterm'))
+	local function send_claudefterm()
+		send(require('genja-ask.backends.claudefterm'))
 	end
-	vim.keymap.set({ 'i', 'n' }, '<M-p>', in_compose(send_floaterm), o 'Ask: send to the claude floaterm')
+	vim.keymap.set({ 'i', 'n' }, '<M-p>', in_compose(send_claudefterm), o 'Ask: send to the claudefterm')
 	vim.keymap.set('i', '<S-CR>', '<CR>', o 'Ask: newline')
 	vim.keymap.set('i', '<C-j>', '<CR>', o 'Ask: newline')
 	vim.keymap.set({ 'i', 'n' }, '<C-p>', history_prev, o 'Ask: previous prompt')

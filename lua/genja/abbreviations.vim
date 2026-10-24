@@ -7,7 +7,7 @@
 function! s:SessionSweepOperations() abort
 	call mkdir(expand('~/tmp'), 'p', 493) " 493 = 0755; 'p': no error when it exists
 	pclose " previews
-	lua require('genja.claude').kill()
+	lua if package.loaded['genja-claudefterm'] then require('genja-claudefterm').kill() end
 endfunction
 " }}}
 
