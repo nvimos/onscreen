@@ -1,0 +1,5 @@
+- [x] doc-wip: test guides named the old ask / paste keys (2026-10-24)
+    - [x] `<leader>pc` ask popup, `<leader>pC` paste (since 7452969) in readme.2026-10-23.ask-popup.md, readme.2026-10-24.ask-floaterm-send.md, the untested lists
+    - [x] startdirs frecency guide: `<M-1>`…`<M-4>` jumps are not counted (1132d6b)
+    - [x] committed in 1d8ef61
+    - [ ] readme.2026-10-23.ask-popup.md still names lua/genja/ask.lua (now plug-wip/genja-ask.nvim)
