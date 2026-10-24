@@ -138,3 +138,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Small features
 
 - Perplexity search: `plugin/perplexity-search.lua`, query encoded with `vim.uri_encode(q, 'rfc2396')`.
+
+## Quirks
+
+- vim-floaterm `--autoclose` (and `g:floaterm_autoclose`) takes only `always`, `never`, `smart`; numbers like `0` give an argument error.
+- `lua/genja/claude.lua` starts claude with `--autoclose=never` and closes the window itself on exit (`on_exit`): floaterm's own close hits E444 when the claude split is the last window. floaterm's `BufHidden,BufWipeout` autocmd (group `floaterm_enter_insertmode`) also closes the window, so `on_exit` clears it before `nvim_win_set_buf`.
