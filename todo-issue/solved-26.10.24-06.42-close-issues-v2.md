@@ -1,0 +1,6 @@
+- [x] skills: /close-issues covers all uncommitted changes, timestamped file names (2026-10-24)
+    - [x] `.claude/skills/close-issues/SKILL.md`: issues come from all modified and new files, not only the session's
+    - [x] files named `todo-issue/solved-<yy.mm.dd>-<HH.MM>-<topic>.md`; issue-file-only commits use `issue: <topic>`
+    - [x] staged changes that belong to an issue go into its commit
+    - [ ] test: run `/close-issues` with changes from several features, some of them staged
+    - [ ] background sessions can't write the issue files in the main checkout (edit guard); see `todo-issue/01-close-issues-skill.md`
