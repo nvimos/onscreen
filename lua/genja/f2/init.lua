@@ -5,6 +5,7 @@
 --   git    oil only: `add (N files)`, a sub-picker of changed files to add
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   claude one item per running claude terminal (genja-claudefterm): show it
+--   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx
@@ -35,7 +36,7 @@ local M = {}
 local SRC = 'lua/genja/f2/init.lua: '
 
 ---Group order in the picker; callers may replace it.
-M.group_order = { 'adhoc', 'git', 'make', 'oil', 'claude' }
+M.group_order = { 'adhoc', 'git', 'make', 'oil', 'claude', 'gui' }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.
@@ -54,6 +55,7 @@ local sources = {
 	require('genja.f2.git'),
 	require('genja.f2.make'),
 	require('genja.f2.claude'),
+	require('genja.f2.gui'),
 }
 
 -- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path
@@ -138,6 +140,7 @@ vim.api.nvim_create_user_command('DevReloadF2', function()
 	package.loaded['genja.f2.adhoc'] = nil
 	package.loaded['genja.f2.builder'] = nil
 	package.loaded['genja.f2.git'] = nil
+	package.loaded['genja.f2.gui'] = nil
 	package.loaded['genja.f2.make'] = nil
 	package.loaded['genja.f2.picker'] = nil
 	package.loaded['genja.f2.registry'] = nil

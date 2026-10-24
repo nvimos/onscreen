@@ -1,0 +1,10 @@
+- [x] gui: nvim-qt toggles from keys, picker, right-click, F2 (2026-10-24)
+    - [x] lua/genja/ui/gui-func-state/: one singleton per Gui* function (:advance, :set, :text), mini.test tests
+    - [x] neovim-gui-shim enabled, lua/lazyp/ui-gui/ (qt-shim.lua in unused-lib removed)
+    - [x] <leader>mQ keys: lua/genja/map-plugin/neovim-gui-shim.lua, which-key group
+    - [x] GuiFuncs picker moved to mylunsj/gui-funcs.lua, mylunsj item, <F2> group gui
+    - [x] right-click `frameless` in popup-menu.lua
+    - [x] ginit.vim: every Gui* start value, via execute (commands lack -bar)
+    - [ ] test: nvim-qt, <leader>mQw, <leader>mQt, right-click frameless
+    - [ ] test: <F2> > Gui, <F3> > GuiFuncs, <CR> cycles GuiAdaptiveStyle
+    - [ ] gui-func-state/Makefile DIR still points at mylunsj/gui-funcs

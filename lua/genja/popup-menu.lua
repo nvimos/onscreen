@@ -1,5 +1,6 @@
 -- Right-click menu entries per filetype (idea 30/31), rebuilt on MenuPopup.
 --   everywhere: Morning
+--   GUI:        frameless (nvim-qt window frame on/off)
 --   markdown:   toggle checkbox, open link, F2 menu
 --   oil:        git add (entry under the cursor), open in tab
 --   LSP buffer: code action, rename, references
@@ -77,6 +78,9 @@ local function entries()
 		table.insert(list, { label = 'LSP: references', run = function() vim.lsp.buf.references() end })
 	end
 	table.insert(list, { label = 'Morning', run = function() require('genja.morning').open() end })
+	if vim.fn.has('gui_running') == 1 and vim.fn.exists('*GuiWindowFrameless') == 1 then
+		table.insert(list, { label = 'frameless', run = function() require('genja.ui.gui-func-state').GuiWindowFrameless():advance() end })
+	end
 	return list
 end
 

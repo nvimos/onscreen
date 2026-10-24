@@ -15,6 +15,7 @@ local imports = {
 	{ import = 'lazyp.phunnee' },  -- fun, cool stuff
 	{ import = 'lazyp.term' },     -- terminal integrations, floaters
 	{ import = 'lazyp.ui' },       -- adjustments for nvim, qt, neovide
+	{ import = 'lazyp.ui-gui' },       -- gui stuff
 	{ import = 'lazyp.ui-telescope' },       -- adjustments for nvim, qt, neovide
 	{ import = 'lazyp.util-qol' },  -- make it better (quality of life and utilities)
 }

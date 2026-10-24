@@ -41,6 +41,7 @@ M.init = function()
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)
 	M.add_item('Neogit', function() vim.cmd('Neogit') end)
 	M.add_item('andy.bat', M.run_andy)
+	M.add_item('GuiFuncs', function() require('telescope._extensions.mylunsj.gui-funcs').show_picker() end)
 
 
 	-- Dashboard doesnt start. no idea why… there is <space>jD
