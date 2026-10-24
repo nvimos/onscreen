@@ -1,0 +1,5 @@
+- [x] make: gitea targets moved to the setup-2026-cut project (2026-10-24)
+    - [x] `Makefile.gitea.mk` moved to `C:/_setup.new/setup-2026-cut`; its `include` dropped from `Makefile`
+    - [x] `lua/genja/f2/readme.testing-manual.md`: make targets no longer list `gitea: …`
+    - [x] `todo-2027.txt` item moved to `todo-done/2026-gitea-to-setup.md`; #33 marked done in `doc-wip/squash-ideas-oct-17.done.md`
+    - [ ] test: `<F2>` make targets in nvim lists the main and `lazy: …` targets only; `make` in setup-2026-cut has the gitea targets

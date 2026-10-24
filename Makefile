@@ -1,4 +1,4 @@
-include Makefile.lazy.mk Makefile.gitea.mk
+include Makefile.lazy.mk
 
 # explicit: the includes come first, so their first target (lazy's `all`) would win
 .DEFAULT_GOAL := refresh-spell

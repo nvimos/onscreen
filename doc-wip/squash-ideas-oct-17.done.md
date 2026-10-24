@@ -118,7 +118,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 - #19a codecompanion: spec kept; ACP trial and hourglass check untested.
 - #20 voice input: stop at Win+H; whisper.cpp spec in todo-2027.txt.
 - #26a abdul-keymaps section order: stays by name.
-- #33 gitea to w11s-cut: moved to todo-2027.txt.
+- #33 gitea to w11s-cut: moved to todo-2027.txt. Done 2026-10-24: Makefile.gitea.mk now in C:/_setup.new/setup-2026-cut.
 
 Notes moved from the summary:
 

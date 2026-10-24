@@ -14,7 +14,7 @@ keys; `buffer(0)` scope; `autoremove()` on keys; `cmd` item in overseer.
 
 - [ ] Sub-picker: `<F2>` in `lua/genja/opt.lua` shows one `make: targets (N)  (nvim)`
   item; picking it opens `make targets: ~/AppData/Local/nvim` with the
-  targets (main Makefile first, then `gitea: …`, `lazy: …`).
+  targets (main Makefile first, then `lazy: …`).
 - [ ] Run a target from it: a harmless one (e.g. `refresh-spell`). Expect an
   overseer task `make refresh-spell` that ends in SUCCESS.
 - [ ] `<Tab>` two targets, `<CR>`: two overseer tasks, in mark order.

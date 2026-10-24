@@ -14,9 +14,6 @@ new setup 2027
           / search (empty resets), r refresh, h key hints
     - search key, desc and category; mode letters instead of icons
 
-- [ ] move gitea definition to w11s-cut project (todo-ideas #33, skipped 2026-10-23)
-    - Makefile.gitea.mk and its `include` in Makefile
-
 - [ ] voice input with whisper.cpp (todo-ideas #20, spec 2026-10-23)
     - local whisper.cpp, binaries and models in %LOCALAPPDATA%/whisper.cpp
     - languages: English, Norwegian, Russian; -l auto
