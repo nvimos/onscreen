@@ -118,7 +118,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
 - Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`; `:ClaudeFterm` comes from `plug-wip/genja-claudefterm.nvim`).
 - `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `plug-wip/genja-claudefterm.nvim`.
-- `<leader>pc` opens the ask popup, `<leader>pC` pastes context into claude, `<leader>mC` lists running claude terminals (`plugin/claude-fterm.lua`).
+- `<leader>pc` opens the ask popup, `<leader>pC` pastes context into claude, `<leader>mC` lists running claude terminals (`plugin/claude-fterm.lua`); `<F2>` lists them too (`lua/genja/f2/claude.lua`).
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
 - When adding keys:
     - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.
