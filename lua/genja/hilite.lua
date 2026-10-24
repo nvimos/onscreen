@@ -31,6 +31,8 @@ function M.setup()
 	vim.api.nvim_set_hl(0, 'TelescopeNormal',       cc('#AAAAAA'):t())
 	vim.api.nvim_set_hl(0, 'TelescopePromptNormal', cc('#AAAAAA'):t())
 	vim.api.nvim_set_hl(0, 'TelescopePromptTitle',  cc('#AAAAAA'):t())
+
+
 end
 
 -- M.setup()

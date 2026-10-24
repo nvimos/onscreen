@@ -1,4 +1,7 @@
+" vim: fdm=marker 
 "	https://coolors.co/palettes/trending/orange
+
+" {{{ primer
 "
 "	cterm={attr-list}			*attr-list* *highlight-cterm* *E418*
 "		attr-list is a comma-separated list (without spaces) of the
@@ -17,13 +20,24 @@
 "			altfont
 "			nocombine	override attributes instead of combining them
 "			NONE		no attributes used (used to reset it)
+" }}}
 
 " Heñaral
 hi VertSplit  cterm=NONE ctermbg=235 guibg=#111115
 hi Split      cterm=NONE ctermbg=235 guibg=#111115
-hi Search     guifg=orange guibg=#441111
-hi IncSearch  guifg=orange guibg=#441111
-hi CurSearch  guifg=cyan   guibg=#441111
+
+hi Search     guifg=orange guibg=#330B08
+hi IncSearch  guifg=orange guibg=#330B08
+hi CurSearch  guifg=cyan   guibg=#330B08
+
+
+" Darkened by 20%: #360e0e
+" Darkened by 30%: #300c0c
+" Darkened by 40%: #330B08
+
+
+
+
 hi MatchParen guifg=orange guibg=NONE
 hi MatchParen guisp=orange gui=bold,standout,underline
 hi Visual     guifg=orange guibg=#332277 gui=bold
@@ -79,7 +93,7 @@ hi ErrorMsg guifg=#ff99c8
 hi ErrorMsg guibg=NONE
 hi ErrorMsg gui=bold
 
-" Diagnostic
+" Diagnosticz
 
 hi DiagnosticInfo guifg=#666666 guibg=NONE 
 hi DiagnosticUnderlineInfo guisp=#553333

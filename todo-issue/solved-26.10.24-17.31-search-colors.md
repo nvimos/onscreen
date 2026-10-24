@@ -1,0 +1,4 @@
+- [x] hilite: darker Search/IncSearch/CurSearch background (2026-10-24)
+    - [x] lua/genja/hilite.vim: #330B08, primer in a fold (fdm=marker)
+    - [ ] test: /search, check the colors
+    - [ ] `" Diagnosticz` comment typo
