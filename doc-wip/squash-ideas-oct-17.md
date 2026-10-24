@@ -22,27 +22,30 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 28  | window sizes, resize mode; smart-splits off   | S/M    | 6e9c477 | untested |
 | 32  | tabline: nvim-qt resize changed tabs          | M      | a4bca16, 8f2a667 | untested |
 | 36  | startdirs plugin, oil keys, ranking           | M      | fe676f6 | untested |
-| 26b | telescope keymaps: refine, `<M-r>` groups     | S      | 2322c3b | untested |
-| 19  | claude floaterm per project, `<leader>pt`     | M      | 80f96ba | untested |
 | 14e | nvim-lint first wave (8 linters)              | M      | b5383bd | untested |
 | 35  | genja-recent.nvim, `<C-F1>`                   | M      | 147e827 | untested |
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
-| 19  | ask popup `<M-p>` to floaterm; `<leader>pc`   | XS     | a289890 | untested |
-| -   | startdirs ranking by frecency                 | XS     | 26ed71f | untested |
-| 14e | nvim-lint second wave (hadolint, ruff, ec, vint) | S   | 608ad0f | untested |
-| -   | map-plugin miss log, `:checkhealth genja.map-plugin` | S | 89e227d | untested |
 
-## Open, ranked (auto-todo-20261024-0014)
+## Open, ranked (auto-todo-20261024-2315)
 
-Nothing built is left open. What remains in todo-ideas.md:
+Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easiest first.
 
-| #   | Idea                                               | Ask  | Tokens |
-|-----|----------------------------------------------------|------|--------|
-| 32  | confirm the tabline fix by resizing nvim-qt        | 0 (you test) | 0 |
-| 14  | genja-commit: try it (untested list)               | 0 (you test) | 0 |
-| 19  | try `<leader>pc` / `<M-p>`; session marker notes   | 0 (you test) | 0 |
-| 14e | still later: vale, gitleaks                        | 1    | ~8k    |
+| #   | Idea                                                       | Ask | Tokens |
+|-----|------------------------------------------------------------|-----|--------|
+| -   | close map-plugin health (done, tested)                     | 0   | ~1k    |
+| 19  | close; new item: session marker toggle, `!!` txt markers   | 0   | ~2k    |
+| -   | aerial: `<leader>oo` / `<leader>oO`, `<Esc>` closes nav    | 0   | ~3k    |
+| -   | gitsigns: skip filetypes (markdown), `<leader>mGs` toggle  | 0   | ~5k    |
+| -   | f2 item names: display filter, labels rewritten            | 0   | ~10k   |
+| 14e | gitleaks (any ft), vale (markdown, shared .vale.ini)       | 0   | ~12k   |
+| -   | diagnostics: 3 per severity, `<leader>tt3`, F2 show all    | 0   | ~14k   |
+| -   | zen: z1<->z2 reopen, z0 restores size, z1 limit 2          | 0   | ~6k    |
+| -   | markdown: `<leader>mfx`, fix on save, abbreviations file   | 0   | ~14k   |
+| -   | `:Messages -dump/-quick/-loc`, F2 messages, capture (off)  | 0   | ~22k   |
+| -   | comps011 tests: lsp/cmp/lint, fast/slow/gather groups      | 0   | ~45k   |
+| -   | telescope: key footer prototype + spec                     | 0   | ~12k   |
+| 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 
 Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),
 startdirs frecency, #14e second wave, map-plugin healthcheck.

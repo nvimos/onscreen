@@ -5,8 +5,11 @@ key or command to try, file, guide.
 
 ## Session auto-todo-20261023-2048
 
-- [ ] telescope keymaps: <leader>jM, <M-r>/<M-R> desc groups, <M-f>/<M-x>/<BS> (lua/genja/telescope-keymaps.lua) -> doc-wip/readme.2026-10-23.telescope-keymaps.md
-- [ ] claude per project: :ClaudeFterm in two repos, <leader>pt / :ClaudeFterm! picker, <M-d> kill (lua/genja/claude.lua) -> doc-wip/readme.2026-10-23.claude-per-project.md
+- [x] telescope keymaps: <leader>jM, <M-r>/<M-R> desc groups, <M-f>/<M-x>/<BS> (lua/genja/telescope-keymaps.lua) -> doc-wip/readme.2026-10-23.telescope-keymaps.md
+    - 2026-10-24: steps 1-4, 6 by hand; <M-r> after <M-f> lost the filter, fixed; `make dir D=telescope-keymaps` in tests/ (10 cases)
+- [x] claude per project: :ClaudeFterm in two repos, <leader>mC / :ClaudeFterm! picker, <M-d> kill (plug-wip/genja-claudefterm.nvim) -> doc-wip/readme.2026-10-23.claude-per-project.md
+    - 2026-10-24: unit tests, `make dir D=claudefterm` in tests/ (tests/claudefterm/, 15 cases, fake claude); "paste starts claude" skips on Windows (headless terminal output goes to the outer console)
+    - found: several FloatermKills in a row (kill() with 2+ terminals just started) sometimes crash the headless test nvim on Windows; maybe at :s:/quit too, not seen by hand
 - [ ] linters: :MasonToolsInstall, then a .md / .yaml / workflow / playbook / Makefile with errors (lua/genja/lint.lua) -> doc-wip/readme.2026-10-23.lint-first-wave.md
 - [ ] recent files: <C-F1> project first, <M-a> all, saved file ranks first (plug-wip/genja-recent.nvim, lua/genja/recent.lua) -> doc-wip/readme.2026-10-23.genja-recent.md
 - [ ] right-click per filetype: markdown checkbox, oil git add, LSP entries, Morning (lua/genja/popup-menu.lua) -> doc-wip/readme.2026-10-23.mouse-morning.md
@@ -39,7 +42,7 @@ key or command to try, file, guide.
 - [ ] genja-finder scope: from:arg root in oil, prompt title last three parts, unix path labels (#8) -> doc-wip/squash-ideas-oct-17.details.done.md #8
 - [ ] F2 git add picker: <C-p> preview, <M-t> tabs, <M-e> edit, :F2Reload (#18) -> lua/genja/f2/readme.testing-manual.md
 - [ ] F2 adhoc: go mod init for a .go file without go.mod (#18) -> doc-wip/readme.idea18-f2-context.md
-- [ ] claude floaterm: :ClaudeFterm [flags], <leader>pc paste, <leader>pC popup, session marker via /rename (#19) -> doc-wip/squash-ideas-oct-17.details.md #19
+- [ ] claude floaterm: :ClaudeFterm [flags], <leader>pc popup, <leader>pC paste, session marker via /rename (#19) -> doc-wip/squash-ideas-oct-17.details.md #19
 - [ ] claude terminal: hourglass cursor while claude starts (4e79669) (#19a) -> todo-ideas.md
 - [ ] codecompanion: <leader>ac / <leader>aa (#19a) -> doc-wip/readme.idea19-companion.md
 - [ ] focus.nvim: off by default; excluded buftypes when on (lua/lazyp/ui/focus.lua) -> doc-wip/squash-ideas-oct-17.done.md extras

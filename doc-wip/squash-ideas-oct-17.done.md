@@ -20,6 +20,12 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 13 | winbar: json/yaml: key path               | M      | ~15k   | yes  |
 | 15 | oil: hide folders via `.oily` + hide key  | M      | ~18k   | yes  |
 | 17 | `g.`: catch-all action menu               | M      | ~20k   | yes  |
+| 26b | telescope keymaps: refine, `<M-r>` groups     | S      | 2322c3b | yes (2026-10-24) |
+| 19  | claude floaterm per project, `<leader>pt`     | M      | 80f96ba | yes (2026-10-24) |
+| 19  | ask popup `<M-p>` to floaterm; `<leader>pc`   | XS     | a289890 | yes (2026-10-24) |
+| -   | startdirs ranking by frecency                 | XS     | 26ed71f | yes (2026-10-24) |
+| 14e | nvim-lint second wave (hadolint, ruff, ec, vint) | S   | 608ad0f | yes (2026-10-24) |
+| -   | map-plugin miss log, `:checkhealth genja.map-plugin` | S | 89e227d | yes (2026-10-24) |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).

@@ -91,6 +91,11 @@ migration from 0.9 to 0.11 (the file that started it all)
     - [x] second wave (decided 2026-10-24): hadolint, ruff (only without the ruff LSP),
       editorconfig-checker (any filetype, below a .editorconfig), vint
         - untested, doc-wip/readme.2026-10-24.lint-second-wave.md
+        - tested 2026-10-24: hadolint, ruff, editorconfig-checker ok (.editorconfig got indent_style)
+        - [ ] vint disabled (2026-10-24): broken on Windows. Python 3.13 venv: no `pkg_resources`
+          (Vimjas/vint#394, draft PR #397; pinning setuptools<81 in the mason venv gets past it),
+          then `PosixPath` can't be instantiated on Windows (#378, open since 2022). Last release 2019.
+          Revisit for heavy vimscript editing: Linux/WSL only, or a fork.
     - still later: vale, gitleaks
 
 - [x] extras outside the idea list (2026-10-23)
@@ -162,6 +167,37 @@ migration from 0.9 to 0.11 (the file that started it all)
     - GuiWindowMaximized: on for z2 only, commented out in z0/z1; decide
     - [x] keys moved into lua/genja/map-plugin/zenmode.lua (2f5fdaa)
     - [x] <leader>z0 closes zen and unsets frameless; z1 then z0 tested in nvim-qt (209380a)
+
+- [ ] markdown lang
+		- find a way to autocorrect mistakes
+		- make sure ft settings are correct for markdown
+
+- [ ] diagnostics
+    - only display the first 3 if there are more than 3 for one buffer
+		- this should be possible to toggle
+		- add an f2 action do toggle diagnostics if there are more than 3 of the same type
+			- maybe make a way to toggle this thing
+
+- [ ] comps011
+		- generate integration tests with headless nvim
+			- test the configured lsp servers
+			- test the configured linters
+			- generate sameple files in the test dir for the comp011 plugin
+
+- [ ] telescope
+		- exploration in order to improve usability
+		- try removing all the predefined keys except my own through the decorator
+		- or maybe unset them via global config
+		- i want to check if the built in <c-/> can be used to discover functionality
+		- maybe i need to think about and experiment with a more elaborate layout
+			- a footer for relvant keymaps with descriptions thats always on
+			- a custom preview-like component with hand-picked keys and leave <c-/> as is
+
+- [ ] f2 item names
+		- make them less noisy
+		- all lower case
+		- no punctuation «» ' ! etc
+		- parenthesis is ok, but very sparingly
 
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

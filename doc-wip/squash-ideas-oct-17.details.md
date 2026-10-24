@@ -113,100 +113,6 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 
 # Open
 
-## 19. Claude from nvim
-
-- Claude Code: coder/claudecode.nvim implements the IDE integration
-  (WebSocket MCP server in nvim; Claude Code sees selection, opens diffs in
-  nvim). Check its Windows issues before adopting. Simpler: run `claude` in
-  floaterm/toggleterm (`:ClaudeFterm` per the `Fterm` naming rule) and map a
-  key that sends the visual selection with file:line to that terminal.
-- Claude Desktop: has no API to inject a prompt from outside; only possible
-  link is MCP (Desktop calling a server that reads nvim state via
-  `--listen`/`nvim --server`). Not worth it; note and skip.
-- Overlaps with #16; #16 is a one-shot question, #19 is a session.
-- Options (2026-10-18), cheapest first:
-  - A. `claude` in a floaterm, no plugin (picked, done)
-    - `:ClaudeFterm`, `<leader>pc` pastes file/selection context, `<leader>pC` prompt popup
-    - Claude edits files directly; floaterm's checktime refreshes open buffers
-    - no live cursor/selection sharing, no in-nvim diffs
-  - B. coder/claudecode.nvim (not picked for now)
-    - same protocol as the VS Code/JetBrains extensions, over a local WebSocket
-    - live file/selection context, edits shown as nvim diffs (`:w` accept, `:q` reject)
-    - native terminal provider, no snacks needed
-    - beta; native Windows undocumented (pure Lua, no Windows bug in issue titles)
-  - C. codecompanion.nvim, «idea 19 companion» (picked, spec added)
-    - chat buffer in nvim; Claude Code through ACP (`claude-agent-acp`)
-    - or the Anthropic API with a key, billed apart from the subscription
-    - big plugin with its own workflow; Windows undocumented
-  - D. Claude Desktop: no inbound prompt API, only MCP plumbing; skipped
-- `claude -p` is print mode: one prompt, print, exit. Each call starts a new
-  process (settings, CLAUDE.md, hooks, MCP), so seconds before the model even
-  runs; `--bare` and `--model` trim it. The `<leader>pC` popup pastes into the
-  running session instead: no startup, context kept.
-- Outcome so far (wip, uncommitted, untested):
-  - A: `lua/genja/claude.lua`, keys in `plugin/claude-fterm.lua`.
-    `:ClaudeFterm` (auto-alias.vim) passes the floaterm options as a dict,
-    so they stay out of `claude.lua`; claude starts in a right vsplit.
-    `<leader>pc` pastes `@file` or `path:lines` + fenced code (fence longer
-    than any backtick run; no paste from oil/terminal buffers).
-    `<leader>pC` popup: draft kept, history `<C-p>`/`<C-n>`, brief mode
-    `<C-b>`, snacks-style `<Esc>`. Text goes in as one bracketed paste.
-    `<C-q>`/`<C-j>` in the claude terminal: back to the previous window.
-    Still floaterm calls inside `claude.lua` (bufnr, show, hide, kill).
-  - A, session marker (`claude.lua`, "session marker" section):
-    - A new claude gets `--session-id <uuid>`, so its transcript
-      `~/.claude/projects/<cwd, non-alnum -> '-'>/<uuid>.jsonl` is known.
-    - `/rename` appends a `custom-title` line there. A 2 s timer reads what
-      was appended and writes `claude-session: <uuid> <title>` (with
-      `commentstring`) into the buffer claude was started from: replaces an
-      older marker, else appends at the end; not saved.
-    - Starting from a buffer with a marker in its first or last 5 lines:
-      `--resume <uuid>`, floaterm `--cwd` from the transcript's `"cwd"`
-      (fallback: the file's parent that encodes to the project dir name).
-    - Polled, not `fs_event`: a new session's transcript doesn't exist until
-      claude writes it.
-    - Limits: `--resume` of a session open elsewhere makes a copy with a new
-      id, so its renames don't reach the marker; a space in the cwd is
-      escaped for floaterm, unchecked.
-  - C: `lua/lazyp/langs-comps/codecompanion.lua` (v20, `claude_code` ACP
-    adapter, `<leader>ac`/`<leader>aa`); setup and quirks in
-    `doc-wip/readme.idea19-companion.md`. Needs the npm adapter and a token.
-  - Open: a spec (see #16 for the popup's direction).
-  - Later:
-    - terminal buffer named `claude-ft «<session title>»`, else the cwd
-      basename; title capped at 16 chars (bfd6eef)
-    - `<C-Left>` in the claude terminal: window on the left; claude's
-      terminal title updates off while it starts, against the hourglass
-      cursor flicker (4e79669)
-    - `:ClaudeFterm [flags]` (`--chrome`, `--model`, `--effort`,
-      `--permission-mode`, ...) at start, with `<Tab>` completion (55240fa)
-    - `<C-Right>` in the claude terminal: next tab (4a917a0)
-    - `<M-]>`/`<M-[>` next/previous tab, `<M-{>` previous window in the
-      claude terminal (af9c7a4, 6a4c414)
-    - `:DevReloadClaude` drops the cached claude modules (bab761a)
-    - prompt popup 90x8, placed up-left (55140b2); `<C-CR>` sends, `<CR>`
-      adds a newline (96562ed)
-    - one floaterm per project root as specced below; `<leader>pt` (not
-      `<leader>pl`, that is Perplexity) and `:ClaudeFterm!` pick running
-      ones (80f96ba). Untested.
-    - claude's exit closes or swaps the window itself; floaterm gets
-      `--autoclose=never` (E444 on the last window) (14cd1f8)
-    - `<C-Up>` in the claude terminal: normal mode (45c94fe)
-    - moved into `plug-wip/genja-ask.nvim` and `plug-wip/genja-claudefterm.nvim`;
-      floaterm options from `setup()`, so every start opens the vsplit (6ebff35)
-    - keys: `<leader>pc` ask popup, `<leader>pC` paste context, `<leader>mC`
-      running terminals (7452969)
-    - `<F2>` claude source, one item per running terminal (4f57a26)
-    - `:ClaudeFterm -1` / `-one`: claude replaces the current buffer;
-      `:ClaudeFterm` or `/exit` puts it back. Tested (1d15d43)
-- Spec (2026-10-23, auto-todo): one floaterm per project root. Root: the
-  session marker's cwd, else the git root, else cwd. Name
-  `claude-<root basename>`. `:ClaudeFterm` shows the current project's
-  terminal or starts it; `<leader>pc` / `<leader>pC` send to it.
-  `<leader>pl` ("Claude: list terminals") and `:ClaudeFterm!` open a
-  telescope dropdown of running ones: `<CR>` shows, `<M-d>` kills.
-  Oil resume: not needed.
-
 ## 14e. nvim-lint: further linters (M)
 
 - Per tool: Windows support, install path, stdin or file. Skip for now.
@@ -225,24 +131,6 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - Second wave (608ad0f, 2026-10-24): hadolint (dockerfile), ruff (python,
   skipped while the ruff LSP is attached), editorconfig-checker (`M.any`,
   below a `.editorconfig`), vint (vim). Still later: vale, gitleaks. Untested.
-
-## 19. paste / ask popup (2026-10-24)
-
-- `<leader>pC` opens the ask popup, whose default target is claude-p; sending
-  to the claude terminal needed `<M-t>`. `<M-p>` in the popup now sends to
-  the floaterm whatever the target (a289890). `<leader>pc` unchanged, untested.
-- Oil resume closed `[-]`: not needed.
-
-## startdirs frecency (2026-10-24)
-
-- `ranked()`: count x recency (genja-recent's weights, copied); usage file
-  `count<Tab>time<Tab>path`, old lines read with time 0 (26ed71f). Headless-tested.
-
-## map-plugin miss log and healthcheck (2026-10-24)
-
-- Misses: once per kind+name per session, to `stdpath('log')/genja-map-plugin.log`
-  with the caller's file, no notify. `:checkhealth genja.map-plugin`: runtime
-  only (misses, keys not asked for, mappings not run yet) (89e227d).
 
 ## Extras done along the way
 
@@ -279,4 +167,4 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    81a2844263d3d6515189ae0a44a50cfe69e6ed0e  issue: close claudefterm -one back-keys follow-up
+    de5c652f73410d7c54c9afee17035f0cd1095477  todo: ideas and squash files up to 81a2844
