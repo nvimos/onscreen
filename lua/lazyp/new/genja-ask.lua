@@ -1,9 +1,9 @@
--- Ask popup (idea 16): plug-wip/genja-ask.nvim. Keys: <M-?> (plugin/ask.lua), <leader>pC (plugin/claude-fterm.lua).
+-- Ask popup (idea 16): plug-wip/genja-ask.nvim. Keys: <M-?> (plugin/ask.lua), <leader>pc (plugin/claude-fterm.lua).
 
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-ask.nvim',
-	-- lazy (default), no trigger: loads on the first require('genja-ask'), i.e. <M-?> / <leader>pC
+	-- lazy (default), no trigger: loads on the first require('genja-ask'), i.e. <M-?> / <leader>pc
 
 	---@type genja-ask.Opts
 	opts = {

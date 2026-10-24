@@ -7,7 +7,7 @@ return {
 	cmd = 'ClaudeFterm', -- the keys and genja-ask load it through require('genja-claudefterm')
 
 	opts = {
-		-- every start uses these, also when <leader>pc or the ask popup starts claude first
+		-- every start uses these, also when <leader>pC or the ask popup starts claude first
 		term = { title = 'claude', wintype = 'vsplit', position = 'botright', width = 0.45, autoclose = 'smart', cmd = 'claude' },
 	},
 

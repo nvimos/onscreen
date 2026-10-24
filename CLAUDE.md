@@ -23,7 +23,7 @@ Unmarked bullets were stated by user.
 
 Each has its own CLAUDE.md; read it before changing that plugin.
 
-- @plug-wip/genja-ask.nvim/CLAUDE.md: ask popup (`<M-?>`, `<leader>pC`), backends claude -p, claudefterm, gemini, copilot, aichat.
+- @plug-wip/genja-ask.nvim/CLAUDE.md: ask popup (`<M-?>`, `<leader>pc`), backends claude -p, claudefterm, gemini, copilot, aichat.
 - @plug-wip/genja-claudefterm.nvim/CLAUDE.md: claude in a floaterm, one per project: `:ClaudeFterm`, session markers, paste context, `send()`.
 - @plug-wip/genja-commit.nvim/CLAUDE.md: commit popup (oil), gitcommit lint, message generation.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
@@ -118,6 +118,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `<leader>?` belongs to keymaps.nvim; cheatsheet.nvim's mapping is commented out.
 - Floaterm commands end in `Fterm` (`:LazygitFterm`, `:BashFterm`, `:PythonFterm`, `:RangerFterm`, `:ClaudeFterm`, in `auto-alias.vim`; `:ClaudeFterm` comes from `plug-wip/genja-claudefterm.nvim`).
 - `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `plug-wip/genja-claudefterm.nvim`.
+- `<leader>pc` opens the ask popup, `<leader>pC` pastes context into claude, `<leader>mC` lists running claude terminals (`plugin/claude-fterm.lua`).
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
 - When adding keys:
     - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.

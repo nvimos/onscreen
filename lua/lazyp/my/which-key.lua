@@ -57,7 +57,7 @@ return {
 				{ '<leader>h',        group = 'Git: hunk, blame, diff, quickfix' },
 				{ '<leader>i',        group = 'Insert: chars' },
 				{ '<leader>j',        group = 'Jump: pickers, cd, start dirs' },
-				{ '<leader>m',        group = 'UI: panels, git' },
+				{ '<leader>m',        group = 'UI: panels, git, claude' },
 				{ '<leader>mG',       group = 'UI: git log, commit' },
 				{ '<leader>mx',       group = 'UI: Close' },
 				{ '<leader>p',        group = 'AI: claude, pplx' },
