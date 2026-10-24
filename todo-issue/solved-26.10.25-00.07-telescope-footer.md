@@ -1,0 +1,6 @@
+- [x] telescope: key footer prototype and exploration spec (2026-10-24)
+    - [x] `lua/genja/telescope-footer.lua`, `plugin/telescope-footer.lua`, `:TelescopeFooter`
+    - [x] spec with 6 questions: doc-wip/readme.2026-10-24.telescope-explore.md
+    - [x] `tests/telescope-footer/` 3/3; committed in 9829d55
+    - [ ] test: `<leader>jM`, `<F1>`, `<C-F1>`: the footer line
+    - [ ] answer the spec questions
