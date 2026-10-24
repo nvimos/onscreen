@@ -1,0 +1,6 @@
+- [x] messages: jump from lua traces in :messages to file:line (2026-10-24)
+    - [x] `:Messages -dump/-quick/-loc` (`plugin/messages.lua`, `lua/genja/messages.lua`); -dump replaces :DumpMessages's two-buffer bug
+    - [x] F2 `messages` source, newest 10 (`lua/genja/f2/messages.lua`)
+    - [x] `lua/genja/messages-capture.lua`: vim.notify recorder, not active; uses and prior art in its header
+    - [x] `tests/messages/` 10/10; committed in 481191b
+    - [ ] test: `:luafile` a failing file, `:Messages`, `<CR>`; `:Messages -quick`
