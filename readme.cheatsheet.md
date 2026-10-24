@@ -16,6 +16,12 @@ Breadcrumbs and outline (dropbar, aerial)
     <leader>mo  outline sidebar                  <leader>mO  outline nav float
     <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
 
+Zen mode (zen-mode.nvim, lua/genja/map-plugin/zenmode.lua)
+
+    <leader>mz  toggle zen mode (spec defaults)
+    <leader>z1  zen, width 120, no numbers     <leader>z2  zen, width 80, relnum, colorcolumn 4,8,80
+    <leader>z0  zen width 0, no numbers (toggles like the others)
+
 Split padding (plug-wip/genja-splitpad.nvim)
 
     <leader>tp  toggle padding column in unfocused splits   :SplitPadToggle

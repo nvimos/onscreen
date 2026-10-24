@@ -131,5 +131,14 @@ migration from 0.9 to 0.11 (the file that started it all)
     - i think its aerial
     - <leader>oo opens the sidebar outline
 
+- [ ] test out zen mode toggles (lua/genja/map-plugin/zenmode.lua, moved from map-convoluted.lua)
+    - <leader>mz :ZenMode with spec defaults
+    - <leader>z1 width 120, no numbers, frameless GUI window
+    - <leader>z2 width 80, relnum, colorcolumn 4,8,80, frameless + maximized
+    - <leader>z0 closes, unsets frameless, then reopens at width 80: should it stay closed?
+        - remember the width from before z1/z2 (the commented-out `width` code)?
+    - switching z1 <-> z2 while zen is open: zen_mode.open() on an open zen window
+    - GuiWindowMaximized: on for z2 only, commented out in z0/z1; decide
+
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

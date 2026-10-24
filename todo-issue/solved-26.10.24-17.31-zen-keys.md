@@ -1,0 +1,5 @@
+- [x] zen: <leader>z0/z1/z2 moved out of map-convoluted.lua (2026-10-24)
+    - [x] lua/genja/map-plugin/zenmode.lua: zen_off, zen_wide, zen_relnum, frameless GUI window
+    - [x] readme.cheatsheet.md section, todo-ideas.md test item
+    - [ ] test: <leader>z1, <leader>z2, <leader>z0 in nvim-qt
+    - [ ] z0 reopens zen at width 80: should it stay closed?

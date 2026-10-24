@@ -77,31 +77,6 @@ km('n',
 	,nosi 'transform to Lazy')
 
 
--- Zen Mode (folke/zen-mode)
-local wo = vim.wo
-local function zm(width, opts)
-	require('zen-mode').setup { window = { width = width, options = opts } }
-	require('zen-mode').toggle()
-end
-local function z0()
-	vim.wo.wrap, vim.wo.number, vim.wo.rnu = false, false, false
-	vim.opt.colorcolumn = '0'
-	zm(0, {})
-end
-local function z1()
-	vim.wo.wrap, vim.wo.number, vim.wo.rnu = false, false, false
-	vim.opt.colorcolumn = '0'
-	zm(120, {})
-end
-local function z2()
-	wo.wrap, wo.number, wo.rnu = false, true, true
-	vim.opt.colorcolumn = '4,8,80'
-	zm(80, {})
-end
-vim.keymap.set('n', '<leader>z0', z0, { desc = 'Zen mode off' })
-vim.keymap.set('n', '<leader>z1', z1, { desc = 'Zen Mode' })
-vim.keymap.set('n', '<leader>z2', z2, { desc = 'Zen Mode (relnum)' })
-
 --------------------------------------
 --------------------------------------
 --------------------------------------
@@ -240,3 +215,4 @@ end
 -------------------
 -------------------
 -------------------
+-- claude-session: 81e3f677-9cbe-4aaa-ba43-56e06ab8cb1c move zenmode keys
