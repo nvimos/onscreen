@@ -42,7 +42,7 @@ local T = MiniTest.new_set({
 T['offered for a go buffer without go.mod'] = needs_go(function()
 	local got = child.lua([[return labels('go')]])
 	eq(#got, 1)
-	MiniTest.expect.no_equality(got[1]:find('^adhoc: go mod init f2go  %('), nil)
+	eq(got[1], 'adhoc: go mod init f2go')
 end)
 
 T['not offered when go.mod exists'] = needs_go(function()

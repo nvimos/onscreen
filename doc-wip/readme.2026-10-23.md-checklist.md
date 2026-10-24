@@ -8,7 +8,7 @@ the first caller of the f2 task API (#18). Visual `<F2>` is new in
 
 ## Use
 
-- Select lines, `<F2>`, pick `markdown: checklist: add/remove [ ] …`.
+- Select lines, `<F2>`, pick `markdown: checklist toggle`.
 - Each non-blank line gets a box: `text` -> `- [ ] text`,
   `- item` -> `- [ ] item`, `* item` -> `* [ ] item`, `1. x` -> `1. [ ] x`.
   Indent is kept, blank lines are skipped, boxed lines stay.

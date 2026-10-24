@@ -70,7 +70,7 @@ end
 
 ---@param buf integer
 function M.register(buf)
-	require('genja.f2').add_task('markdown', 'preview: glow in a new terminal')
+	require('genja.f2').add_task('markdown', 'glow preview')
 		:fn(function()
 			M.preview()
 		end)

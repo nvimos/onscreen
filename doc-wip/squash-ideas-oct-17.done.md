@@ -30,6 +30,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 19  | claude from nvim closed (todo-done/ideas-19)  | -      | 63800da | yes (2026-10-24) |
 | 40  | aerial: <leader>oo / <leader>oO, <Esc> closes nav | S | auto-todo-20261024-2315 | untested |
 | 41  | gitsigns: skip filetypes (markdown), <leader>mGs | S | auto-todo-20261024-2315 | untested |
+| 42  | f2 item names: display filter, labels rewritten | S | auto-todo-20261024-2315 | untested |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).

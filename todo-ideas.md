@@ -125,11 +125,4 @@ migration from 0.9 to 0.11 (the file that started it all)
 			- a footer for relvant keymaps with descriptions thats always on
 			- a custom preview-like component with hand-picked keys and leave <c-/> as is
 
-- [ ] f2 item names
-		- make them less noisy
-		- all lower case
-		- no punctuation «» ' ! etc
-		- parenthesis is ok, but very sparingly
-
-
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

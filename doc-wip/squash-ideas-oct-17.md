@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | f2 item names: display filter, labels rewritten            | 0   | ~10k   |
 | 14e | gitleaks (any ft), vale (markdown, shared .vale.ini)       | 0   | ~12k   |
 | -   | diagnostics: 3 per severity, `<leader>tt3`, F2 show all    | 0   | ~14k   |
 | -   | zen: z1<->z2 reopen, z0 restores size, z1 limit 2          | 0   | ~6k    |

@@ -54,7 +54,7 @@ local function go_mod_init(ctx)
 	local name = vim.fs.basename(dir)
 	return {
 		group = 'adhoc',
-		label = ('go mod init %s  (%s)'):format(name, vim.fn.fnamemodify(dir, ':~')),
+		label = 'go mod init ' .. name,
 		action = function()
 			run.overseer('go mod init ' .. name, { 'go', 'mod', 'init', name }, dir, function(code)
 				if code == 0 then

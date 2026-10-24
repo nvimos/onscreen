@@ -14,9 +14,14 @@ function M.collect(_, done)
 	end
 	local claude = require('genja-claudefterm')
 	for i, term in ipairs(claude.running()) do
+		-- 'claude-ft «fix tabline»' -> 'fix tabline'; no title yet: the root's name
+		local title = term.label:match('«(.*)»')
+		if not title or title == '' then
+			title = vim.fs.basename(term.root)
+		end
 		table.insert(items, {
 			group = 'claude',
-			label = term.label .. '  (' .. vim.fn.fnamemodify(term.root, ':~') .. ')',
+			label = title,
 			order = i,
 			action = function()
 				claude.show(term.name)

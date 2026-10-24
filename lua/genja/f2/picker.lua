@@ -10,6 +10,19 @@ local M = {}
 ---@field title string
 ---@field show_group? boolean display `group: label` (main list) or just the label
 
+-- dropped from what the list shows; `:` (group: label) and parens stay
+local NOISE = '[«»\'"!`%[%]]'
+
+---Label as the list shows it: lower case, no quotes, guillemets, brackets or `!`, single spaces.
+---The task keeps its own label (the registry matches on it).
+---@param text string
+---@return string
+function M.clean(text)
+	local shown = text:lower():gsub(NOISE, '')
+	shown = shown:gsub('%s+', ' ')
+	return vim.trim(shown)
+end
+
 ---@param entries genja.f2.Entry[] already sorted
 ---@param ctx genja.f2.Ctx
 ---@param opts genja.f2.PickOpts
@@ -21,9 +34,9 @@ function M.entries(entries, ctx, opts)
 		finder = require('telescope.finders').new_table({
 			results = entries,
 			entry_maker = function(entry)
-				local display = entry.task.label
+				local display = M.clean(entry.task.label)
 				if opts.show_group then
-					display = entry.task.group .. ': ' .. entry.task.label
+					display = M.clean(entry.task.group) .. ': ' .. display
 				end
 				return { value = entry, display = display, ordinal = display }
 			end,

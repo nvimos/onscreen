@@ -138,7 +138,7 @@ function M.collect(ctx, done)
 			{
 				group = 'make',
 				-- folder name: shows which Makefile was found (e.g. ~/makefile from oil at ~)
-				label = ('targets (%d)  (%s)'):format(#entries, vim.fs.basename(dir)),
+				label = ('targets in %s (%d)'):format(vim.fs.basename(dir), #entries),
 				action = function(pick_ctx)
 					picker.entries(entries, pick_ctx, { title = 'make targets: ' .. vim.fn.fnamemodify(dir, ':~') })
 				end,

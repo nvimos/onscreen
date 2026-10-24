@@ -19,7 +19,7 @@ keys; `buffer(0)` scope; `autoremove()` on keys; `cmd` item in overseer.
   overseer task `make refresh-spell` that ends in SUCCESS.
 - [ ] `<Tab>` two targets, `<CR>`: two overseer tasks, in mark order.
 - [ ] f2's own Makefile: `<F2>` in a file in `lua/genja/f2/` shows
-  `make: targets (2)  (f2)` with `test` and `test-file`. Running `test` needs
+  `make: targets in f2 (2)` with `test` and `test-file`. Running `test` needs
   mini.test installed (`:Lazy install`) and runs the unit tests.
 
 ## git (oil)
