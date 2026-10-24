@@ -1,0 +1,5 @@
+- [x] f2: item names less noisy (2026-10-24)
+    - [x] `picker.clean()`: lower case, no `«» ' " ! [ ]`; labels rewritten, no `(~/path)` suffix
+    - [x] `tests/f2/test_picker.lua`; f2 tests 53/53
+    - [x] committed in d15d2ac; guide doc-wip/readme.2026-10-24.f2-item-names.md
+    - [ ] test: `<F2>` in markdown, with a claude running, in nvim-qt
