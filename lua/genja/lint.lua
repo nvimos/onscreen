@@ -285,6 +285,30 @@ function M.setup()
 
 	vim.api.nvim_create_user_command('ValeSync', vale_sync, { desc = 'Lint: download the shared vale styles' })
 
+	-- checkmake: nvim-lint passes --format='…\n' with shell quotes; on Windows no shell strips
+	-- them (and a newline can't pass through cmd.exe), so nothing parsed. One line, `@@` ends a record.
+	local checkmake = lint.linters.checkmake
+	if vim.fn.has('win32') == 1 and type(checkmake) == 'table' then
+		checkmake.args = { '--format={{.LineNumber}}:{{.Rule}}:{{.Violation}}@@' }
+		checkmake.parser = function(output)
+			local diagnostics = {}
+			for record in output:gmatch('(.-)@@') do
+				local lnum, rule, message = vim.trim(record):match('^(%d+):([^:]+):(.*)$')
+				if lnum then
+					table.insert(diagnostics, {
+						lnum = math.max(tonumber(lnum) - 1, 0),
+						col = 0,
+						message = message,
+						code = rule,
+						source = 'checkmake',
+						severity = vim.diagnostic.severity.WARN,
+					})
+				end
+			end
+			return diagnostics
+		end
+	end
+
 	local group = vim.api.nvim_create_augroup('genja_lint', { clear = true })
 	vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost', 'InsertLeave' }, {
 		group = group,
