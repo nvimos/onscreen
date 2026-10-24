@@ -1,0 +1,4 @@
+- [x] cmdline: `<C-j>`/`<C-k>` pick menu items, `<Up>`/`<Down>` always recall history (2026-10-24)
+    - [x] `plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua`: `<C-j>`/`<C-k>` next/previous item while the menu is open; `<Down>`/`<Up>` close the menu, then recall history
+    - [x] plugin `CLAUDE.md` and `readme.cheatsheet.md` updated
+    - [ ] test: `:e <Tab>`, then `<C-j>`/`<C-k>` move in the menu; `<Up>` closes it and shows the previous command

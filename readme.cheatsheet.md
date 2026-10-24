@@ -85,8 +85,8 @@ Telescope keymaps (lua/genja/telescope-keymaps.lua, keys in map-telescope.lua)
 Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; : / ?)
 
     <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)
-    <Down>  next item                     <Up>     previous item
-            (menu closed: <Up>/<Down> recall history)
+    <C-j>   next item                     <C-k>    previous item
+    <Down>  history next (closes menu)    <Up>     history previous (closes menu)
 
 Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
 
