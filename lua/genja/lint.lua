@@ -13,7 +13,7 @@ local M = {}
 ---Filetype parts -> nvim-lint linter names; a compound filetype (yaml.ansible) gets every part.
 ---@type table<string, string[]>
 M.by_ft = {
-	markdown = { 'markdownlint-cli2', 'typos' },
+	markdown = { 'markdownlint-cli2', 'typos', 'vale' },
 	gitcommit = { 'typos' },
 	yaml = { 'yamllint', 'actionlint' },
 	ansible = { 'ansible_lint_wsl' },
@@ -27,13 +27,13 @@ M.by_ft = {
 
 ---Linters for every filetype (after the by_ft ones).
 ---@type string[]
-M.any = { 'editorconfig-checker' }
+M.any = { 'editorconfig-checker', 'gitleaks' }
 
 ---Mason packages for the linters above; ansible-lint runs inside WSL instead.
 ---@type string[]
 M.mason = {
 	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'checkmake', 'phpcs',
-	'hadolint', 'ruff', 'editorconfig-checker',
+	'hadolint', 'ruff', 'editorconfig-checker', 'gitleaks', 'vale',
 	-- 'vint', -- disabled, see by_ft.vim
 }
 
@@ -47,6 +47,63 @@ local ROOT_MARKERS = {
 
 ---Shared markdownlint rules (line length off), used when the project has none of its own.
 local MARKDOWNLINT_CONFIG = vim.fs.joinpath(vim.fn.stdpath('config'), 'lint', '.markdownlint.jsonc')
+
+-- {{{ vale
+
+---Shared vale config (Microsoft, write-good), used when the project has no .vale.ini.
+local VALE_CONFIG = vim.fs.joinpath(vim.fn.stdpath('config'), 'lint', '.vale.ini')
+---Styles for the shared config, downloaded by :ValeSync; not in the repo.
+local VALE_STYLES = vim.fs.joinpath(vim.fn.stdpath('data'), 'vale', 'styles')
+local VALE_PROJECT = { '.vale.ini', '_vale.ini' }
+
+---nvim-lint's own vale args, before the shared --config is put in front.
+---@type table|nil
+local vale_args = nil
+
+---Point vale at the project's config, else at the shared one.
+---@param linter table nvim-lint's vale linter (changed in place before each run)
+---@param buf integer
+---@return string|false|nil cwd # the project's dir; nil: shared config; false: skip the run
+local function prepare_vale(linter, buf)
+	if vale_args == nil then
+		vale_args = vim.deepcopy(linter.args)
+	end
+	local project = vim.fs.root(buf, VALE_PROJECT)
+	if project then
+		-- vale finds the project's config from the cwd up
+		linter.args = vim.deepcopy(vale_args)
+		linter.env = nil
+		return project
+	end
+	-- the shared config needs its styles; without them vale prints an error, not JSON
+	if not vim.uv.fs_stat(vim.fs.joinpath(VALE_STYLES, 'Microsoft')) then
+		return false
+	end
+	linter.args = { '--config', VALE_CONFIG }
+	vim.list_extend(linter.args, vim.deepcopy(vale_args))
+	-- VALE_STYLES_PATH overrides StylesPath, so the ini needs no machine-specific path
+	linter.env = { VALE_STYLES_PATH = VALE_STYLES }
+	return nil
+end
+
+---:ValeSync: download the shared config's styles into stdpath('data')/vale/styles.
+local function vale_sync()
+	if vim.fn.executable('vale') == 0 then
+		vim.notify(SRC .. 'no vale in PATH; :MasonToolsInstall first', vim.log.levels.WARN)
+		return
+	end
+	vim.fn.mkdir(VALE_STYLES, 'p')
+	vim.notify(SRC .. 'vale sync into ' .. VALE_STYLES .. ' …')
+	local env = { VALE_STYLES_PATH = VALE_STYLES }
+	vim.system({ 'vale', '--config', VALE_CONFIG, 'sync' }, { env = env, text = true }, vim.schedule_wrap(function(res)
+		if res.code == 0 then
+			vim.notify(SRC .. 'vale styles synced; markdown buffers lint with them from the next save')
+		else
+			vim.notify(SRC .. 'vale sync failed: ' .. vim.trim((res.stderr or '') .. (res.stdout or '')), vim.log.levels.ERROR)
+		end
+	end))
+end
+-- }}}
 
 ---True for GitHub workflow files (.github/workflows/*.yml).
 ---@param buf integer
@@ -197,6 +254,14 @@ function M.lint(buf, event)
 			cwd = vim.fs.root(buf, ROOT_MARKERS[name])
 			ok = cwd ~= nil
 		end
+		if ok and name == 'vale' then
+			local vale_cwd = prepare_vale(linter, buf)
+			if vale_cwd == false then
+				ok = false
+			else
+				cwd = vale_cwd
+			end
+		end
 		if ok then
 			vim.api.nvim_buf_call(buf, function()
 				lint.try_lint(name, { cwd = cwd })
@@ -217,6 +282,8 @@ function M.setup()
 	elseif not vim.uv.fs_stat(MARKDOWNLINT_CONFIG) then
 		vim.notify(SRC .. 'no ' .. MARKDOWNLINT_CONFIG .. '; markdownlint uses its defaults', vim.log.levels.WARN)
 	end
+
+	vim.api.nvim_create_user_command('ValeSync', vale_sync, { desc = 'Lint: download the shared vale styles' })
 
 	local group = vim.api.nvim_create_augroup('genja_lint', { clear = true })
 	vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost', 'InsertLeave' }, {

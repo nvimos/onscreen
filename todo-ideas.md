@@ -58,6 +58,9 @@ migration from 0.9 to 0.11 (the file that started it all)
           then `PosixPath` can't be instantiated on Windows (#378, open since 2022). Last release 2019.
           Revisit for heavy vimscript editing: Linux/WSL only, or a fork.
     - still later: vale, gitleaks
+        - [x] done 2026-10-24: gitleaks on every filetype; vale on markdown, project .vale.ini or the shared
+          lint/.vale.ini (Microsoft, write-good; :ValeSync downloads the styles); untested,
+          doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
 
 - [x] extras outside the idea list (2026-10-23)
     - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)
