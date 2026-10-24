@@ -37,11 +37,11 @@ local function entry_dir()
 	end
 	return dir
 end
-O.startdirs_add        = { desc = "Stardirs: add dir under cursor", callback = function()
+O.startdirs_add        = { desc = "Startdirs: add dir under cursor", callback = function()
 	local dir = entry_dir()
 	if dir then require('genja-startdirs').add(dir, 'oil') end
 end }
-O.startdirs_remove     = { desc = "Stardirs: remove dir from start", callback = function()
+O.startdirs_remove     = { desc = "Startdirs: remove dir from start", callback = function()
 	local dir = entry_dir()
 	if dir then require('genja-startdirs').remove(dir) end
 end }

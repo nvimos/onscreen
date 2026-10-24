@@ -1,0 +1,2 @@
+- [x] oil: `Stardirs` typo in action descs (2026-10-24)
+    - [x] lua/genja/oil-actions.lua: `Startdirs: add…`, `Startdirs: remove…`
