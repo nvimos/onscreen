@@ -53,3 +53,13 @@ Checked by Claude: headless `loadfile`, `require('genja.claude')`, the
 
 Limits: `:DevReloadClaude` forgets the running terminals (they keep running,
 but the picker no longer lists them).
+
+Unit tests (2026-10-24): `make dir D=claudefterm` in `tests/`, `tests/claudefterm/test_per_project.lua`
+(15 cases): real vim-floaterm, claude replaced by `fake_claude.cmd` / `.sh`, which logs its cwd and
+args to `$FAKE_LOG`; pastes recorded by stubbing `nvim_chan_send`. Covers steps 1-7: two repos, same
+basename (hash), no repo, toggle hide/show, `:ClaudeFterm` inside the terminal, `show()`, paste to the
+right project (normal and visual), `send()`, picker `<CR>` / `<M-d>`, `kill()`, session marker resume
+and `/rename` marker. "Paste starts claude, pastes once it is up" skips on Windows: in headless nvim
+the terminal's output goes to the outer console, so claude never looks ready.
+Keys moved since: `<leader>mC` lists the terminals (was `<leader>pt`), `<leader>pc` ask popup,
+`<leader>pC` paste; files now in `plug-wip/genja-claudefterm.nvim`.
