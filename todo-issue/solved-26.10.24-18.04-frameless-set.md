@@ -2,4 +2,4 @@
     - [x] cause: set() sent 1 only for the number 1; advance() passes booleans
     - [x] lua/genja/ui/gui-func-state/init.lua: set() turns true/1 and false/0 into a boolean first
     - [x] test: <leader>mQw, right-click frameless
-    - [ ] test: <leader>mQm, <leader>mQF (same code path)
+    - [x] test: <leader>mQm, <leader>mQF (same code path)
