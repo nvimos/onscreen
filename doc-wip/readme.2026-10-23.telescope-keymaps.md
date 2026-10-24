@@ -19,7 +19,9 @@ Files: `lua/genja/telescope-keymaps.lua`, keys in `lua/genja/map-telescope.lua`
 
 - Groups come from the text before `: ` in each desc, biggest group first.
   The prompt title shows `Keymaps [Git: 1/14]`.
-- The groups are taken from the list as it was at the first `<M-r>`.
+- The groups come from the list shown when a cycle starts: after `<M-f>`/`<M-x>`, `<M-r>` cycles
+  the groups of the refined list (fixed 2026-10-24: it went back to the full list).
+  `<BS>` back to a group view continues that view's cycle. The group stays in the title: `[Git: 1/9] [filter]`.
 - Modes: telescope's default `n, i, c, x`.
 
 ## Try it
@@ -32,5 +34,5 @@ Files: `lua/genja/telescope-keymaps.lua`, keys in `lua/genja/map-telescope.lua`
 6. `<BS>` on the empty prompt: the filter is undone.
 7. `<M-x>` with `oil` typed: entries with "oil" disappear.
 
-Checked by Claude: headless `loadfile` of the three files. Not run in a
-real nvim.
+Unit tests: `make dir D=telescope-keymaps` in `tests/` (`tests/telescope-keymaps/test_keymaps.lua`,
+10 cases, real keys in a child nvim with telescope). Steps 1-4, 6 also tested by hand.

@@ -50,7 +50,7 @@ mappings and funcs for them
      popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
      recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
      lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vim; editorconfig-checker on all)
-     telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation
+     telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)
      map-zero.lua       - keymaps, essential that must not fail
 
 meta, random
