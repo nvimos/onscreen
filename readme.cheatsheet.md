@@ -66,7 +66,7 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
 Mouse (lua/genja/popup-menu.lua, lua/genja/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
-                  LSP buffers: code action, rename, references     everywhere: Morning
+                  LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless
     statusline    click file name -> oil   branch -> Neogit   E/W counts -> location list
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds
@@ -139,6 +139,20 @@ F2 in markdown (lua/genja/md-checklist.lua, lua/genja/md-glow.lua, from after/ft
     <F2> > markdown: checklist   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
     <F2> > markdown: preview     glow on the file in a new pwsh window, any key closes (Windows only)
+
+nvim-qt GUI toggles (neovim-gui-shim, keys in lua/genja/map-plugin/neovim-gui-shim.lua)
+
+    <leader>mQt  tabline           <leader>mQb  tabline buffers    <leader>mQp  popupmenu
+    <leader>mQs  scrollbar         <leader>mQe  treeview           <leader>mQl  ligatures
+    <leader>mQa  bold/italic       <leader>mQc  adaptive color     <leader>mQf  adaptive font
+    <leader>mQF  fullscreen        <leader>mQm  maximized          <leader>mQw  frameless
+    <leader>mQh  mouse hide
+
+nvim-qt GuiFuncs picker (<F3> mylunsj > GuiFuncs, or <F2> group gui in a GUI; lua/telescope/_extensions/mylunsj/gui-funcs/)
+
+    <CR>         flip on/off, next style (list from :GuiAdaptiveStyleList), next number (wraps); GuiFont opens the font dialog; stays open
+    state shared with <leader>mQ and right-click (lua/genja/ui/gui-func-state.lua); linespace 0-5, opacity 0-1 by 0.05
+    <M-0> <M-1>  set GuiLinespace / GuiWindowOpacity to 0 or 1
 
 Window sizes (lua/genja/winsize.lua, keys in lua/genja/map-zero.lua)
 

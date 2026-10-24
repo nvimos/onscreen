@@ -114,4 +114,22 @@ migration from 0.9 to 0.11 (the file that started it all)
         - untested, doc-wip/readme.2026-10-24.map-plugin-health.md
 
 
+
+- [ ] when a lua trace makes it to the :messages list
+    - add an <f2> action to go to the relevant file and line
+    - can this be done in an efficient way?
+    - need to monitor all notifications?
+    - explore options. other people must have done something similar before
+
+- [ ] disable gitsigns indicators in markdown files by default
+    - add a toggle keybind
+        - <leader>mGs
+
+
+- [ ] <leader>oO opens the same ui as <leader>mO
+    - that ui needs an <esc> bind to disappear
+    - i think its aerial
+    - <leader>oo opens the sidebar outline
+
+
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->
