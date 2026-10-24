@@ -6,6 +6,7 @@
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   claude one item per running claude terminal (genja-claudefterm): show it
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
+--   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/diag-limit.lua)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx
@@ -36,7 +37,7 @@ local M = {}
 local SRC = 'lua/genja/f2/init.lua: '
 
 ---Group order in the picker; callers may replace it.
-M.group_order = { 'adhoc', 'git', 'make', 'oil', 'claude', 'gui' }
+M.group_order = { 'adhoc', 'diagnostics', 'git', 'make', 'oil', 'claude', 'gui' }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.
@@ -56,6 +57,7 @@ local sources = {
 	require('genja.f2.make'),
 	require('genja.f2.claude'),
 	require('genja.f2.gui'),
+	require('genja.f2.diag'),
 }
 
 -- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path

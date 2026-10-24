@@ -67,7 +67,7 @@ return {
 				{ '<leader>s',        group = 'Dirs: start dirs' },
 				{ '<leader><space>s', group = 'Spell: check, add' },
 				{ '<leader>t',        group = 'Tab: move, toggle' },
-				{ '<leader>tt',       group = 'Toggle: diag, hints' },
+				{ '<leader>tt',       group = 'Toggle: diag, hints, diag limit' },
 				{ '<leader>w',        group = 'Text: wrap, trim; window resize' },
 				{ '<leader>W',        group = 'Resize: window (loop: <leader>wr)' },
 				{ '<leader>ws',       group = 'Text: strip' },

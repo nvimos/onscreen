@@ -191,3 +191,9 @@ Start dirs (plug-wip/genja-startdirs.nvim, keys in lua/genja/map-plugin/genja-st
     ,s  ,S  (oil)                    add / remove the dir under the cursor (else oil's dir), [oil] group
     <leader>jd                       find files in all start dirs
     removed: <leader>sp sort paragraph, <leader>sf guifont (use <F7>)
+
+Diagnostics limit (lua/genja/diag-limit.lua, key in plugin/diag-limit.lua)
+
+    <leader>tt3  first 3 per severity drawn (virtual text, signs, underline) / all; default on
+    <F2>         diagnostics: show all (N hidden), this buffer only
+    vim.g.diag_limit = n   b:diag_limit = n   (0: all; zen <leader>z1 sets 2)

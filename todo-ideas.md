@@ -107,12 +107,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 		- find a way to autocorrect mistakes
 		- make sure ft settings are correct for markdown
 
-- [ ] diagnostics
-    - only display the first 3 if there are more than 3 for one buffer
-		- this should be possible to toggle
-		- add an f2 action do toggle diagnostics if there are more than 3 of the same type
-			- maybe make a way to toggle this thing
-
 - [ ] comps011
 		- generate integration tests with headless nvim
 			- test the configured lsp servers
