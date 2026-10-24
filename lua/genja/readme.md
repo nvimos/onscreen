@@ -31,6 +31,7 @@ custom funcs
      oil/        - functions for nvim-oil, by topic; oil/init.lua lists the files, oil/plug/ holds the self-contained ones
      oil-actions.lua - oil actions (desc + callback), used by map-oil.lua
      f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), sources adhoc.lua, git.lua (oil only), make.lua; registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); Makefile + readme.testing.md: tests in tests/f2/
+     md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
      ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
