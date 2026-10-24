@@ -22,3 +22,4 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 - [ ] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
 - [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md
 - [ ] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
+- [ ] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/messages.lua) -> doc-wip/readme.2026-10-24.messages.md

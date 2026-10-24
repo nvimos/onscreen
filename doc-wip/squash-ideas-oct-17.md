@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | `:Messages -dump/-quick/-loc`, F2 messages, capture (off)  | 0   | ~22k   |
 | -   | comps011 tests: lsp/cmp/lint, fast/slow/gather groups      | 0   | ~45k   |
 | -   | telescope: key footer prototype + spec                     | 0   | ~12k   |
 | 39  | claude session marker: enabled:false toggle, `!!` in txt   | 1   | ~4k    |

@@ -201,3 +201,10 @@ Diagnostics limit (lua/genja/diag-limit.lua, key in plugin/diag-limit.lua)
     <leader>tt3  first 3 per severity drawn (virtual text, signs, underline) / all; default on
     <F2>         diagnostics: show all (N hidden), this buffer only
     vim.g.diag_limit = n   b:diag_limit = n   (0: all; zen <leader>z1 sets 2)
+
+Messages (lua/genja/messages.lua, command in plugin/messages.lua)
+
+    :Messages / :Messages -dump   :messages in a scratch buffer; <CR> opens file:line, q closes
+    :Messages -quick              append the file:line locations to the quickfix list
+    :Messages -loc                append them to this window's location list
+    <F2> > messages: <file>:<n>   newest 10 locations from :messages

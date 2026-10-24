@@ -86,12 +86,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 
 
-- [ ] when a lua trace makes it to the :messages list
-    - add an <f2> action to go to the relevant file and line
-    - can this be done in an efficient way?
-    - need to monitor all notifications?
-    - explore options. other people must have done something similar before
-
 - [ ] comps011
 		- generate integration tests with headless nvim
 			- test the configured lsp servers

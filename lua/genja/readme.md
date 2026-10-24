@@ -31,6 +31,8 @@ custom funcs
      oil-actions.lua - oil actions (desc + callback), used by map-oil.lua
      f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), sources adhoc.lua, git.lua (oil only), make.lua, claude.lua (running claude terminals); registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); Makefile + readme.testing.md: tests in tests/f2/
      md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
+     messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
+     messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
      md-fix.lua - markdown fixers: <leader>mfx and on save (typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save
      md-abbrev.lua, md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)
      fu.lua      - user functions (lua) :UserFunction
