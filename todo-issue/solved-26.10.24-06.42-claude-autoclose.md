@@ -1,0 +1,7 @@
+- [x] claude: closing a finished claude terminal failed with E444 when it was the last window (2026-10-24)
+    - [x] `lua/genja/claude.lua`: floaterm starts with `--autoclose=never`; `on_exit` (TermClose) applies the requested autoclose itself
+    - [x] last window: shows the origin buffer (or a new one) instead of closing; other windows close
+    - [x] floaterm's `floaterm_enter_insertmode` autocmds on the buffer are cleared first, so they don't close the window again
+    - [x] `CLAUDE.md` Quirks section (4cd8630)
+    - [ ] test: `:ClaudeFterm` as the only window, `/exit` in claude: the window stays, on the origin buffer, no E444
+    - [ ] test: claude in a split, `/exit`: the claude window closes

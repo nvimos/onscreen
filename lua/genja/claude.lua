@@ -47,6 +47,7 @@ local TERM_PREFIX = 'claude-'
 ---@field root string project root, also claude's cwd; paths are made relative to it
 ---@field origin_buf integer|nil buffer claude was started from; gets the session marker
 ---@field watch_timer uv.uv_timer_t|nil polls the transcript for /rename
+---@field autoclose string|nil floaterm's --autoclose, done here (see on_exit)
 
 local state = {
 	---@type genja.claude.TermOpts last given to toggle(); floaterm defaults until then
@@ -457,6 +458,54 @@ local function term_win(bufnr)
 	return nil
 end
 
+---When claude's job ends: close its windows like floaterm's --autoclose would.
+---floaterm's own close fails with E444 when a split is the last window,
+---so floaterm gets --autoclose=never and this keeps the last window open on another buffer.
+---@param term genja.claude.Term
+---@param bufnr integer terminal buffer
+local function on_exit(term, bufnr)
+	vim.api.nvim_create_autocmd('TermClose', {
+		buffer = bufnr,
+		once = true,
+		callback = function()
+			local status = vim.v.event.status
+			local ac = tostring(term.autoclose or 'smart')
+			if state.terms[term.name] == term then
+				forget(term.name)
+			end
+			if not (ac == 'always' or (ac == 'smart' and status == 0)) then
+				return
+			end
+			-- after floaterm's exit callback, which still reads the buffer
+			vim.schedule(function()
+				if not vim.api.nvim_buf_is_valid(bufnr) then
+					return
+				end
+				-- floaterm's BufHidden/BufWipeout autocmd would close the window again (E444)
+				pcall(vim.api.nvim_clear_autocmds, { group = 'floaterm_enter_insertmode', buffer = bufnr })
+				for _, win in ipairs(vim.fn.win_findbuf(bufnr)) do
+					if vim.api.nvim_win_is_valid(win) then
+						local tab = vim.api.nvim_win_get_tabpage(win)
+						local last = #vim.api.nvim_tabpage_list_wins(tab) == 1
+							and #vim.api.nvim_list_tabpages() == 1
+						if last then
+							-- E444 otherwise: show some other buffer in the last window
+							local alt = term.origin_buf
+							if not (alt and vim.api.nvim_buf_is_valid(alt)) then
+								alt = vim.api.nvim_create_buf(true, false)
+							end
+							vim.api.nvim_win_set_buf(win, alt)
+						else
+							pcall(vim.api.nvim_win_close, win, true)
+						end
+					end
+				end
+				pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+			end)
+		end,
+	})
+end
+
 ---Wait until a freshly started claude has drawn its UI, then run `cb`.
 ---A guess: first output + 800 ms. The folder-trust question or a slow MCP start
 ---can still be on screen then, and the paste lands there instead of the prompt.
@@ -538,6 +587,8 @@ local function open(focus, cb, t)
 		end
 		state.terms[t.name] = term
 		local opts, id = start_opts(t)
+		term.autoclose = opts.autoclose
+		opts.autoclose = 'never' -- on_exit closes the window instead
 		-- claude's title updates make the mouse cursor flicker between normal and hourglass;
 		-- related: "terminalProgressBarEnabled": false in claude's settings.json.
 		-- Set only while the job starts, so other terminals keep their titles.
@@ -548,6 +599,7 @@ local function open(focus, cb, t)
 		bufnr = term_bufnr(t.name)
 		if bufnr then
 			set_term_keys(bufnr)
+			on_exit(term, bufnr)
 			vim.b[bufnr].claude_session_id = id
 			vim.b[bufnr].claude_term = t.name
 			set_term_name(bufnr, t.title, t.root)
