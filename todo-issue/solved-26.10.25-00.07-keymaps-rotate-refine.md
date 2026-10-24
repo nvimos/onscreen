@@ -1,0 +1,6 @@
+- [x] telescope-keymaps: `<M-r>` after `<M-f>`/`<M-x>` went back to the full list (2026-10-24)
+    - [x] groups from the list shown when a cycle starts; `<BS>` back to a group view continues it (`lua/genja/telescope-keymaps.lua`)
+    - [x] title keeps the group: `refine.show_title()` in genja-finder
+    - [x] `tests/telescope-keymaps/` (10 cases, real keys), `tests/Makefile`
+    - [x] committed in 2debb3b
+    - [ ] test: `<leader>jM`, `<M-r>`, type, `<M-f>`, `<M-r>`: groups of the filtered list
