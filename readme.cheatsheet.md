@@ -126,6 +126,12 @@ Fold markers with a title (lua/genja/wrapfold.lua, keys in lua/genja/map-zero.lu
     <leader>wwf        same for the paragraph under the cursor (visual: the selection)
     :[range]WrapFold [title]   same as a command; no title asks
 
+Wrap and quote lines (lua/genja/map-convoluted.lua)
+
+    <leader>w, (visual)  each line -> "line",  keeps indent, skips empty lines, any visual mode
+    <leader>w" (visual)  same idea via $A / I, block selection
+    <leader>w" (normal)  replace " with ' on the current line
+
 Action menu on right-click (lua/genja/fn.vim, menu from lua/genja/actions.lua)
 
     right-click > Actions (g.)   same menu as g. / <LocalLeader>/

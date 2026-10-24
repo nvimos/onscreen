@@ -1,0 +1,6 @@
+- [x] edit: wrap selected lines as "line", (2026-10-24)
+    - [x] <leader>w, (visual) in lua/genja/map-convoluted.lua, keeps indent, skips empty lines
+    - [x] title-case moved to <leader>wsT, sort paragraph back on <leader>wsp
+    - [x] readme.cheatsheet.md section
+    - [ ] test: V-select lines, <leader>w,; also with <C-v>
+    - [ ] test: <leader>wsp, <leader>wsT
