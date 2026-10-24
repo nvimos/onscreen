@@ -27,6 +27,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 14e | nvim-lint second wave (hadolint, ruff, ec, vint) | S   | 608ad0f | yes (2026-10-24) |
 | -   | map-plugin miss log, `:checkhealth genja.map-plugin` | S | 89e227d | yes (2026-10-24) |
 | -   | map-plugin item closed (todo-done/ideas-38)    | -      | af13aed | yes (2026-10-24) |
+| 19  | claude from nvim closed (todo-done/ideas-19)  | -      | 63800da | yes (2026-10-24) |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).
@@ -136,3 +137,10 @@ Notes moved from the summary:
 ## 20. Voice input
 - Free now: Windows voice typing (`Win+H`) types into the terminal in insert mode. Try it first.
 - Full: record (ffmpeg) -> whisper.cpp local -> insert text at cursor. Spec in todo-2027.txt.
+
+## 19. Claude from nvim
+- So far (wip, untested): `claude` in a floaterm (`lua/genja/claude.lua`): `:ClaudeFterm`, `<leader>pc` context paste, `<leader>pC` prompt popup; codecompanion spec as an alternative.
+- Session marker: `/rename` in claude writes `claude-session: <uuid> <title>` as a comment into the buffer claude was started from; `:ClaudeFterm` from a file with a marker resumes that session in its cwd.
+- Later (2026-10-24): close on exit (14cd1f8), `<C-Up>` normal mode (45c94fe); moved into genja-ask.nvim / genja-claudefterm.nvim (6ebff35); keys `<leader>pc` ask, `<leader>pC` paste, `<leader>mC` terminals (7452969); `<F2>` claude source (4f57a26); `:ClaudeFterm -one` in the current window, tested (1d15d43).
+- Later: one floaterm per project root, picker `<leader>pt` / `:ClaudeFterm!` (80f96ba); terminal `<M-]>`/`<M-[>` tabs, `<M-{>` previous window (af9c7a4, 6a4c414); `:DevReloadClaude` (bab761a); prompt popup `<C-CR>` sends (55140b2, 96562ed).
+

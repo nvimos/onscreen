@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| 19  | close; new item: session marker toggle, `!!` txt markers   | 0   | ~2k    |
 | -   | aerial: `<leader>oo` / `<leader>oO`, `<Esc>` closes nav    | 0   | ~3k    |
 | -   | gitsigns: skip filetypes (markdown), `<leader>mGs` toggle  | 0   | ~5k    |
 | -   | f2 item names: display filter, labels rewritten            | 0   | ~10k   |
@@ -44,6 +43,7 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 | -   | `:Messages -dump/-quick/-loc`, F2 messages, capture (off)  | 0   | ~22k   |
 | -   | comps011 tests: lsp/cmp/lint, fast/slow/gather groups      | 0   | ~45k   |
 | -   | telescope: key footer prototype + spec                     | 0   | ~12k   |
+| 39  | claude session marker: enabled:false toggle, `!!` in txt   | 1   | ~4k    |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 
 Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),
@@ -56,12 +56,6 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 
 ## 16. `<M-?>` AI popup
 - Spec 2026-10-23 in the details file: `lua/genja/ask.lua` + `ask/backends/`, the float turns into the answer, sessions, log.
-
-## 19. Claude from nvim
-- So far (wip, untested): `claude` in a floaterm (`lua/genja/claude.lua`): `:ClaudeFterm`, `<leader>pc` context paste, `<leader>pC` prompt popup; codecompanion spec as an alternative.
-- Session marker: `/rename` in claude writes `claude-session: <uuid> <title>` as a comment into the buffer claude was started from; `:ClaudeFterm` from a file with a marker resumes that session in its cwd.
-- Later (2026-10-24): close on exit (14cd1f8), `<C-Up>` normal mode (45c94fe); moved into genja-ask.nvim / genja-claudefterm.nvim (6ebff35); keys `<leader>pc` ask, `<leader>pC` paste, `<leader>mC` terminals (7452969); `<F2>` claude source (4f57a26); `:ClaudeFterm -one` in the current window, tested (1d15d43).
-- Later: one floaterm per project root, picker `<leader>pt` / `:ClaudeFterm!` (80f96ba); terminal `<M-]>`/`<M-[>` tabs, `<M-{>` previous window (af9c7a4, 6a4c414); `:DevReloadClaude` (bab761a); prompt popup `<C-CR>` sends (55140b2, 96562ed).
 
 ## Extras done along the way
 
