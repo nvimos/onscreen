@@ -1,0 +1,5 @@
+- [x] zen: z1 <-> z2 reopens, z0 restores size and diagnostics limit (2026-10-24)
+    - [x] `lua/genja/map-plugin/zenmode.lua`: close before open, size and limit saved before the first z1/z2, maximized on z2 only, z1 limit 2
+    - [x] committed in 5f04a07; guide doc-wip/readme.2026-10-24.zen-toggles.md
+    - [ ] test: z1, z2, z1, z0 in nvim-qt
+    - [ ] does setting `&columns`/`&lines` resize the nvim-qt window or only the grid?
