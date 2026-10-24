@@ -1,0 +1,5 @@
+- [x] lint: vint crashes on Windows; editorconfig test needed indent_style (2026-10-24)
+    - [x] vint off in `lua/genja/lint.lua` (by_ft.vim, M.mason): no `pkg_resources` (Vimjas/vint#394), then `PosixPath` (#378)
+    - [x] `.editorconfig`: `indent_style = tab`
+    - [x] findings in todo-ideas.md 14e; committed in 266485f
+    - [ ] revisit vint on Linux/WSL or a fork for heavy vimscript editing
