@@ -1,5 +1,5 @@
 -- lua/genja/ui/gui-func-state.lua against a real nvim-qt: `make test-gui` starts nvim-qt with this file.
--- The report opens in the GUI window; quit with :qa. Outside a GUI every case is skipped.
+-- run_gui.lua writes the report to gui-report.txt and quits. Outside a GUI every case is skipped.
 
 local eq = MiniTest.expect.equality
 local GuiFuncState = require('genja.ui.gui-func-state')

@@ -117,12 +117,20 @@ end
 
 -- nvim-qt answers :GuiAdaptiveStyleList later with `echo "a\nb"` over RPC.
 -- A redir variable fills only at `redir END`, so each tick ends it, reads, and starts again.
+-- Right after start nvim-qt can take over a second to answer.
 ---@return string[]
 local function discover_styles()
 	local out = ''
+	-- the multi-line echo would stop at a hit-enter prompt; restored once it has been shown
+	local messagesopt = vim.o.messagesopt
+	vim.o.messagesopt = messagesopt:gsub('hit%-enter', 'wait:0')
+	vim.defer_fn(function()
+		vim.o.messagesopt = messagesopt
+	end, 500)
+
 	vim.cmd('redir => g:mylunsj_gui_styles')
 	vim.cmd('GuiAdaptiveStyleList')
-	vim.wait(1000, function()
+	vim.wait(5000, function()
 		vim.cmd('redir END')
 		out = vim.g.mylunsj_gui_styles or ''
 		if out:match('%S') then return true end

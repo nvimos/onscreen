@@ -10,3 +10,4 @@ lua/lazyp/maybe/*
 !/.claude/skills/
 
 # /doc-wip/*
+/lua/genja/ui/gui-func-state/gui-report.txt
