@@ -11,7 +11,6 @@ local function zen(width, options)
 	zen_mode.open()
 end
 
-local width = 0
 
 local function zen_off()
 	vim.wo.wrap = false
@@ -19,16 +18,8 @@ local function zen_off()
 	vim.wo.relativenumber = false
 	vim.opt.colorcolumn = '0'
 
-	-- todo: needs work
 	require('zen-mode').close()
-
 	require('genja.ui.gui-func-state').GuiWindowFrameless():set(0)
-	-- require('genja.ui.gui-func-state').GuiWindowMaximized():set(0)
-
-	-- if (width == 0) then width = 90 end
-	-- zen(width, {})
-
-	zen(80, {})
 end
 
 local function zen_wide()
@@ -40,7 +31,6 @@ local function zen_wide()
 	require('genja.ui.gui-func-state').GuiWindowFrameless():set(1)
 	-- require('genja.ui.gui-func-state').GuiWindowMaximized():set(1)
 
-	width = vim.api.nvim_win_get_width(0)
 	zen(120, {})
 end
 
@@ -53,7 +43,6 @@ local function zen_relnum()
 	require('genja.ui.gui-func-state').GuiWindowFrameless():set(1)
 	require('genja.ui.gui-func-state').GuiWindowMaximized():set(1)
 
-	width = vim.api.nvim_win_get_width(0)
 	zen(80, {})
 end
 

@@ -135,7 +135,7 @@ migration from 0.9 to 0.11 (the file that started it all)
     - <leader>mz :ZenMode with spec defaults
     - <leader>z1 width 120, no numbers, frameless GUI window
     - <leader>z2 width 80, relnum, colorcolumn 4,8,80, frameless + maximized
-    - <leader>z0 closes, unsets frameless, then reopens at width 80: should it stay closed?
+    - <leader>z0 closes and unsets frameless (decided: stays closed)
         - remember the width from before z1/z2 (the commented-out `width` code)?
     - switching z1 <-> z2 while zen is open: zen_mode.open() on an open zen window
     - GuiWindowMaximized: on for z2 only, commented out in z0/z1; decide

@@ -20,7 +20,7 @@ Zen mode (zen-mode.nvim, lua/genja/map-plugin/zenmode.lua)
 
     <leader>mz  toggle zen mode (spec defaults)
     <leader>z1  zen, width 120, no numbers     <leader>z2  zen, width 80, relnum, colorcolumn 4,8,80
-    <leader>z0  zen width 0, no numbers (toggles like the others)
+    <leader>z0  close zen, no numbers, GUI window framed again
 
 Split padding (plug-wip/genja-splitpad.nvim)
 
