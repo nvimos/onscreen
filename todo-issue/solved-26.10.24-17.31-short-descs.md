@@ -1,0 +1,5 @@
+- [x] ui: shorter descs for oil actions and <M-?> (2026-10-24)
+    - [x] lua/genja/oil-actions.lua: area prefixes Open, Preview, Undersort, Oily, Stardirs, Git
+    - [x] plugin/ask.lua: `AI: ask modal`
+    - [ ] test: g? in oil, which-key on <M-?>
+    - [ ] typo `Stardirs` -> `Startdirs`?
