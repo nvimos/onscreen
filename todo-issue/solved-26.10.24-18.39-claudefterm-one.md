@@ -6,4 +6,4 @@
     - [x] first try (full-size float) gave a 1x1 float: floaterm reads `1` as one cell
     - [x] tested by user
     - [x] committed in 1d15d43
-    - [ ] `<C-q>` and the other back keys go to the previous window, not the replaced buffer
+    - [x] `<C-q>` and the other back keys go to the previous window: kept as is; `/exit` restores the buffer (tested)
