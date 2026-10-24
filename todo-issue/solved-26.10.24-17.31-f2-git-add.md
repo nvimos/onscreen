@@ -1,0 +1,4 @@
+- [x] f2: git add one file and keep the picker open (2026-10-24)
+    - [x] <M-a> in lua/genja/f2/git.lua, row redrawn with the staged status
+    - [x] readme.cheatsheet.md section
+    - [ ] test: oil in a repo, <F2> > git add, <M-a> on a modified and an untracked file

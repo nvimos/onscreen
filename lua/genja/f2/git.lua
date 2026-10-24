@@ -1,7 +1,8 @@
 -- <F2> source, group `git`, oil buffers only. For the repo around oil's dir:
 --   add (N files)  sub-picker over the changed files (git status codes,
 --                  repo-relative paths), diff preview (hidden at start), <Tab> marks,
---                  <CR> git add, <C-p> toggles the preview, <M-t> tabedit (picker stays), <M-e> edit
+--                  <CR> git add, <M-a> git add current (picker stays, row shows the new status),
+--                  <C-p> toggles the preview, <M-t> tabedit (picker stays), <M-e> edit
 
 local M = {}
 
@@ -38,20 +39,40 @@ end
 
 ---@param root string
 ---@param paths string[]
-local function git_add(root, paths)
+---@param on_added? fun() called after a successful add
+local function git_add(root, paths, on_added)
 	local cmd = { 'git', 'add', '--' }
 	vim.list_extend(cmd, paths)
 	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
 		if res.code ~= 0 then
 			vim.notify(SRC .. 'git add failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
-		elseif res.stderr and res.stderr ~= '' then
-			vim.notify(SRC .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
+		else
+			if res.stderr and res.stderr ~= '' then
+				vim.notify(SRC .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
+			end
+			if on_added then
+				on_added()
+			end
 		end
 		-- oil-git refreshed on picker close, before git add finished
 		if vim.bo.filetype == 'oil' then
 			require('genja.oil.git').refresh_oil_git()
 		end
 	end))
+end
+
+-- status after `git add`: the worktree change moves to the staged column
+---@param xy string
+---@return string
+local function staged_xy(xy)
+	if xy == '??' then
+		return 'A '
+	end
+	local x = xy:sub(1, 1)
+	if x == ' ' then
+		x = xy:sub(2, 2)
+	end
+	return x .. ' '
 end
 
 -- diff for tracked files, the file itself (first 500 lines) for untracked
@@ -158,7 +179,32 @@ local function pick_files(root, files)
 					vim.notify(SRC .. 'tabedit failed: ' .. tostring(err), vim.log.levels.ERROR)
 				end
 			end
+			-- Adds the entry under the cursor and redraws its row with the new
+			-- status; the list keeps the file, the picker stays open.
+			local function add_current()
+				local picker = action_state.get_current_picker(bufnr)
+				local entry = action_state.get_selected_entry()
+				if not entry then
+					return
+				end
+				local file = entry.value
+				git_add(root, { file.path }, function()
+					file.xy = staged_xy(file.xy)
+					vim.notify(SRC .. 'added ' .. vim.fs.basename(file.path))
+					local index = picker.manager:find_entry(entry)
+					if not index or not vim.api.nvim_buf_is_valid(picker.results_bufnr) then
+						return
+					end
+					local row = picker:get_row(index)
+					picker:entry_adder(index, entry, nil, false)
+					-- entry_adder drops the caret and highlights; this redraws them
+					if entry == picker._selection_entry then
+						picker:set_selection(row)
+					end
+				end)
+			end
 			require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter
+			map({ 'i', 'n' }, '<M-a>', add_current, { desc = 'f2 git: add current file, keep the picker' })
 			-- same key as oil's preview toggle
 			map({ 'i', 'n' }, '<C-p>', require('telescope.actions.layout').toggle_preview, { desc = 'f2 git: toggle preview' })
 			map({ 'i', 'n' }, '<M-t>', tabedit_selected, { desc = 'f2 git: open selected in tabs, keep the picker' })

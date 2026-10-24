@@ -152,6 +152,11 @@ F2 in markdown (lua/genja/md-checklist.lua, lua/genja/md-glow.lua, from after/ft
                                  all lines boxed already: removes the boxes
     <F2> > markdown: preview     glow on the file in a new pwsh window, any key closes (Windows only)
 
+F2 in oil, git add picker (lua/genja/f2/git.lua)
+
+    <CR>    git add (marked or current), closes    <M-a>   git add current, stays; row shows the new status
+    <Tab>   mark    <C-p> preview    <M-t> tabedit, stays    <M-e> edit
+
 nvim-qt GUI toggles (neovim-gui-shim, keys in lua/genja/map-plugin/neovim-gui-shim.lua)
 
     <leader>mQt  tabline           <leader>mQb  tabline buffers    <leader>mQp  popupmenu
