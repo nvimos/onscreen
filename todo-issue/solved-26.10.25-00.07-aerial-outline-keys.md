@@ -1,0 +1,4 @@
+- [x] aerial: `<leader>oO` / `<leader>oo` outline keys, `<Esc>` closes the nav float (2026-10-24)
+    - [x] keys in `lua/genja/map-plugin/aerial.lua`, `nav.keymaps` in `lua/lazyp/ui/aerial.lua`, which-key `<leader>o`
+    - [x] committed in 019f95a; guide doc-wip/readme.2026-10-24.aerial-outline-keys.md
+    - [ ] test: `<leader>oo`, `<leader>oO`, `<Esc>` in the nav float
