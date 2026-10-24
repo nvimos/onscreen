@@ -1,0 +1,5 @@
+- [x] startdirs: `<M-1>` should open the most used dir (2026-10-24)
+    - [x] `jump()` uses `ranked()` instead of `dirs()` (file order)
+    - [x] key descs in `lua/genja/map-plugin/genja-startdirs.lua`, README, help, CLAUDE.md, `readme.cheatsheet.md`
+    - [x] committed in 1132d6b
+    - [ ] test: `<M-1>` goes to the top start dir of `:Telescope mydirs`
