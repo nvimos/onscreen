@@ -5,7 +5,7 @@ same float. Several targets; claude-p is your pwsh `claude-p` in Lua.
 
 Files: `lua/genja/ask.lua` (popup, sessions, log), backends in
 `lua/genja/ask/backends/` (`claude_p.lua`, `floaterm.lua`, `cli.lua` for
-gemini/copilot/aichat), key `<M-?>` in `plugin/ask.lua`, `<leader>pC` in
+gemini/copilot/aichat), key `<M-?>` in `plugin/ask.lua`, `<leader>pc` in
 `plugin/claude-fterm.lua`. The old popup in `claude.lua` is gone;
 `claude.lua` keeps `send()` for the floaterm target.
 
@@ -13,7 +13,7 @@ gemini/copilot/aichat), key `<M-?>` in `plugin/ask.lua`, `<leader>pC` in
 
 | Where | Key | Does |
 |-------|-----|------|
-| n, i, x | `<M-?>`, `<leader>pC` (n, x) | open; visual sends the selection (`path:lines` + code) along |
+| n, i, x | `<M-?>`, `<leader>pc` (n, x) | open; visual sends the selection (`path:lines` + code) along |
 | compose | `<C-CR>` | send |
 | compose | `<S-CR>`, `<C-j>` | newline |
 | compose | `<C-p>` / `<C-n>` | history |

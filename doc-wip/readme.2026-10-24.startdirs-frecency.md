@@ -14,7 +14,7 @@ Old `count<Tab>path` lines still read (time 0, weight x0.25) and get rewritten o
 
 1. `:e` the usage file: old lines have two fields.
 2. Pick a dir you rarely use from the ranked picker (or `<M-1>`…`<M-4>`) two or three times.
-3. Open the ranked picker again: that dir is near the top, above dirs with many old uses.
+2. Pick a dir you rarely use from `:Mydirs` two or three times (`<M-1>`…`<M-4>` jumps are not counted since 1132d6b).
 4. The usage file now has three fields per touched line.
 
 Headless-tested: an old 50-use line ranks below a dir used 15 times just now.
