@@ -59,6 +59,7 @@ return {
 				{ '<leader>j',        group = 'Jump: pickers, cd, start dirs' },
 				{ '<leader>m',        group = 'UI: panels, git, claude, gui' },
 				{ '<leader>mG',       group = 'UI: git log, commit, signs' },
+				{ '<leader>mf',       group = 'Markdown: fix' },
 				{ '<leader>mQ',       group = 'GUI: nvim-qt toggles' },
 				{ '<leader>mx',       group = 'UI: Close' },
 				{ '<leader>o',        group = 'Outline: sidebar, nav' },

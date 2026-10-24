@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | markdown: `<leader>mfx`, fix on save, abbreviations file   | 0   | ~14k   |
 | -   | `:Messages -dump/-quick/-loc`, F2 messages, capture (off)  | 0   | ~22k   |
 | -   | comps011 tests: lsp/cmp/lint, fast/slow/gather groups      | 0   | ~45k   |
 | -   | telescope: key footer prototype + spec                     | 0   | ~12k   |

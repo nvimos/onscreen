@@ -34,6 +34,7 @@ moved here on 2026-10-23. Details in `squash-ideas-oct-17.details.done.md`.
 | 14e | gitleaks (any ft), vale (markdown, shared .vale.ini) | S | auto-todo-20261024-2315 | untested |
 | 43  | diagnostics: 3 per severity, <leader>tt3, F2 show all | S | auto-todo-20261024-2315 | untested |
 | 44  | zen: z1<->z2 reopen, z0 restores size, z1 limit 2 | S | auto-todo-20261024-2315 | untested |
+| 45  | markdown: <leader>mfx, fix on save, abbreviations | S | auto-todo-20261024-2315 | untested |
 
 ## 1. genja-finder.nvim move — done
 - Already landed in fc271a7 and 0f08579 (`lua/lazyp/new/genja-finder.lua`, mappings in `map-telescope.lua`).

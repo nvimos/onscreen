@@ -1,0 +1,17 @@
+# Insert-mode fixes in markdown buffers (lua/genja/md-abbrev.lua): wrong right
+# One pair per line; `right` may have spaces. Read when a markdown buffer opens.
+teh the
+adn and
+taht that
+recieve receive
+seperate separate
+occured occurred
+definately definitely
+wich which
+becuase because
+dont don't
+cant can't
+wont won't
+doesnt doesn't
+isnt isn't
+nvmi nvim

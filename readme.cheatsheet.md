@@ -152,9 +152,11 @@ Toggle and increment (lua/genja/tilde.lua in map-zero.lua; dial: lua/genja/map-p
 
 F2 in markdown (lua/genja/md-checklist.lua, lua/genja/md-glow.lua, from after/ftplugin/markdown.lua; visual <F2> in map-telescope.lua)
 
-    <F2> > markdown: checklist   add `[ ]` to the cursor line; visual <F2>: to the selected lines
+    <F2> > markdown: checklist toggle   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
-    <F2> > markdown: preview     glow on the file in a new pwsh window, any key closes (Windows only)
+    <F2> > markdown: glow preview  glow on the file in a new pwsh window, any key closes (Windows only)
+    <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
+    insert mode: abbreviations from lua/genja/md-abbrev.txt (teh -> the …)
 
 F2 in oil, git add picker (lua/genja/f2/git.lua)
 

@@ -92,10 +92,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     - need to monitor all notifications?
     - explore options. other people must have done something similar before
 
-- [ ] markdown lang
-		- find a way to autocorrect mistakes
-		- make sure ft settings are correct for markdown
-
 - [ ] comps011
 		- generate integration tests with headless nvim
 			- test the configured lsp servers
