@@ -1,0 +1,6 @@
+- [x] nvim-qt: dark title bar on Windows 11 (2026-10-25)
+    - [x] note in ginit.vim: title bar is drawn by Windows, use `-platform windows:darkmode=1` or `QT_QPA_PLATFORM`
+    - [x] nvim-qt.qss: dark tabline, scrollbar, context menu; load with `-stylesheet`
+    - [x] ginit.vim: font lines, GuiWindowMaximized commented out
+    - [ ] test: Windows dark app mode, start nvim-qt with `-platform windows:darkmode=1`, title bar is dark
+    - [ ] test: `-stylesheet %LOCALAPPDATA%\nvim\nvim-qt.qss` with `GuiTabline 1` / `GuiScrollBar 1`

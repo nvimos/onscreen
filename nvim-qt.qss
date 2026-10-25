@@ -1,0 +1,43 @@
+/* Qt stylesheet for nvim-qt.
+   Load it with:  nvim-qt.exe -stylesheet %LOCALAPPDATA%\nvim\nvim-qt.qss
+   It styles Qt widgets only (tabline, scrollbar, menus, popups).
+   The title bar is drawn by Windows, so it is set by -platform windows:darkmode=1, not here. */
+
+QWidget {
+	background-color: #1e1e1e;
+	color: #d4d4d4;
+}
+
+/* GuiTabline */
+QTabBar::tab {
+	background: #2d2d2d;
+	color: #a0a0a0;
+	padding: 4px 10px;
+	border: none;
+}
+QTabBar::tab:selected {
+	background: #1e1e1e;
+	color: #ffffff;
+}
+
+/* GuiScrollBar */
+QScrollBar:vertical {
+	background: #1e1e1e;
+	width: 10px;
+}
+QScrollBar::handle:vertical {
+	background: #424242;
+	min-height: 20px;
+}
+QScrollBar::add-line, QScrollBar::sub-line {
+	height: 0;
+}
+
+/* Context menu (GuiShowContextMenu) */
+QMenu {
+	background: #252526;
+	border: 1px solid #3c3c3c;
+}
+QMenu::item:selected {
+	background: #094771;
+}

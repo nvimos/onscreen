@@ -1,17 +1,36 @@
 " Config for nvim-qt
+" vim: fdm=marker
+
+" Dark title bar in Win11 {{{
+"                 Windows draws the titlebar, not Qt
+"                 cannot be set here or in a .qss.
+"
+" Windows settings -> use Dark mode
+" Stylesheet is for tabline, etc
+"
+"        nvim-qt.exe -platform windows:darkmode=1
+"                    -stylesheet %LOCALAPPDATA%\nvim\nvim-qt.qss
+"
+" alternatively, for all qt apps:
+"
+"                setx QT_QPA_PLATFORM windows:darkmode=1
+"                     darkmode=2 also makes Qt widgets dark.
+"
+" lnk {{{
+"      "C:\Program Files\neovim-qt 0.2.19\bin\nvim-qt.exe" -platform windows:darkmode=1 -stylesheet "%LOCALAPPDATA%\nvim\nvim-qt.qss"
+" }}}
+" }}}
 
 " enable mouse in all modes
 set mouse=a
 
-" " Set Editor Font
-" if exists(':GuiFont')
-" 	" Use GuiFont! to ignore font errors
-" 	GuiFont {font_name}:h{size}
-" endif
+" Set font
+"if exists(':GuiFont') | call GuiFont("JetBrainsMono NFM:h12") | endif
+"if exists(':GuiFont') | silent! call GuiFont("JetBrainsMonoNL NFM Thin:h12") | endif
 
 if exists('*GuiWindowFrameless')  | call GuiWindowFrameless(0)  | endif
 if exists(':GuiTabline')          | execute 'GuiTabline 0'      | endif
-if exists('*GuiWindowMaximized')  | call GuiWindowMaximized(0)  | endif
+"if exists('*GuiWindowMaximized')  | call GuiWindowMaximized(0)  | endif
 if exists('*GuiWindowFullScreen') | call GuiWindowFullScreen(0) | endif
 if exists('*GuiMousehide')        | call GuiMousehide(1)        | endif
 
@@ -33,4 +52,3 @@ if exists(':GuiAdaptiveStyle')   | execute 'GuiAdaptiveStyle Fusion' | endif " Q
 " inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
 " xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
 " snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
-"claude-session: 76dc1051-17df-4cf7-b97d-75c551affb4e guifuncz
