@@ -1,0 +1,4 @@
+- [x] md: substitutions that wrap vim key notation in backticks (2026-10-25)
+    - [x] `lua/genja/md-fix.vim-keys-escape.vim`: very magic version, joins adjacent keys into one span
+    - [ ] not listed in `lua/genja/readme.md` yet
+    - [ ] test: `:source lua/genja/md-fix.vim-keys-escape.vim` in a markdown file with `<C-x><C-o>`, `<leader>ff`, `<F5>`
