@@ -229,6 +229,38 @@ local function available(linter)
 	return type(cmd) == 'string' and vim.fn.executable(cmd) == 1
 end
 
+---On Windows nvim-lint runs every linter as `cmd.exe /C <cmd>`, so its exit-code warning
+---names cmd.exe. Wrap lint.lint: uv.spawn is swapped during the (synchronous) spawn, the exit
+---code is reported here with the linter's name, and nvim-lint's callback gets 0.
+---@param lint table require('lint')
+local function name_failed_linters(lint)
+	local lint_orig = lint.lint
+	lint.lint = function(linter, opts)
+		if linter.ignore_exitcode then
+			return lint_orig(linter, opts)
+		end
+		local uv = vim.uv
+		local spawn = uv.spawn
+		uv.spawn = function(cmd, spawn_opts, on_exit)
+			return spawn(cmd, spawn_opts, function(code, signal)
+				if code ~= 0 then
+					local name = linter.name or tostring(linter.cmd)
+					vim.schedule(function()
+						vim.notify(SRC .. 'linter ' .. name .. ' exited with code: ' .. code, vim.log.levels.WARN)
+					end)
+				end
+				on_exit(0, signal)
+			end)
+		end
+		local ok, result = pcall(lint_orig, linter, opts)
+		uv.spawn = spawn
+		if not ok then
+			error(result, 0)
+		end
+		return result
+	end
+end
+
 ---Lint `buf` with its linters that are installed and apply here.
 ---@param buf integer
 ---@param event string autocmd event; InsertLeave runs only stdin linters (the file isn't saved)
@@ -274,6 +306,9 @@ end
 function M.setup()
 	local lint = require('lint')
 	lint.linters.ansible_lint_wsl = ansible_lint_wsl()
+	if vim.fn.has('win32') == 1 then
+		name_failed_linters(lint)
+	end
 
 	-- markdownlint: shared rules unless the project brings its own (cwd is :pwd)
 	local mdl = lint.linters['markdownlint-cli2']

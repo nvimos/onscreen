@@ -1,0 +1,8 @@
+- [x] lint: "Linter command `cmd.exe` exited with code: 1" doesn't name the linter (2026-10-25)
+    - [x] cause: nvim-lint wraps every linter in `cmd.exe /C` on win32 (lint.lua:374, message at :428); not fixed upstream
+    - [x] only gitleaks and vale lack `ignore_exitcode`; both called with flags that exit 0, so 1 means the tool failed
+    - [x] `lua/genja/lint.lua`: `name_failed_linters()` wraps `lint.lint`, swaps `uv.spawn` during the spawn, warns `linter <name> exited with code: N`
+    - [x] manual runs: gitleaks on lint.lua exits 0; vale with the shared config exits 2 (no Microsoft styles; nvim skips it then)
+    - [ ] test: restart nvim, open the buffer that gave the warning, check `:messages` names the linter
+    - [ ] find which file makes the named linter fail and fix it
+    - [ ] report upstream (mfussenegger/nvim-lint): exit-code warning should use `linter.name`
