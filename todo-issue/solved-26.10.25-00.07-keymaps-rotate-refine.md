@@ -3,4 +3,4 @@
     - [x] title keeps the group: `refine.show_title()` in genja-finder
     - [x] `tests/telescope-keymaps/` (10 cases, real keys), `tests/Makefile`
     - [x] committed in 2debb3b
-    - [ ] test: `<leader>jM`, `<M-r>`, type, `<M-f>`, `<M-r>`: groups of the filtered list
+    - [x] test: `<leader>jM`, `<M-r>`, type, `<M-f>`, `<M-r>`: groups of the filtered list (2026-10-25)
