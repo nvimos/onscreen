@@ -21,6 +21,7 @@ vim.cmd('source ' .. C .. '/lua/genja/hilite.vim')     -- colors
 vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 Safeload('genja.hilite', function(m) m.setup() end)
+Safeload 'genja.opt-term'           -- terminal cursor; after hilite, reads StatusLine color
 Safeload 'genja.auto' -- autocommads
 Safeload 'genja.lazy-plug-spec'
 Safeload 'genja.map-lsp'

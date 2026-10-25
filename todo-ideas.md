@@ -1,6 +1,5 @@
 # list of improvements to nvim
 
-
 ## related files
 
 squash ideas details and estimations
@@ -18,6 +17,12 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas october
 
+- [ ] 48. terminal cursor: hollow box (unresolved, lua/genja/opt-term.lua)
+    - 'guicursor' has no hollow shape; Windows Terminal draws one with `"cursorShape": "emptyBox"`,
+      but only when nvim sends no shape (`:set guicursor=`), which drops the shapes in all modes
+    - still blinks: since 0.11 the app in the terminal sets cursor shape/blink (DECSCUSR);
+      check which app (cmd vs pwsh vs claude), or turn blink off in Windows (Keyboard: cursor blink rate)
+
 - [ ] 39. claude session marker follow-up (from #19, todo-done/ideas-19-claude-from-nvim.md)
     - the commentstring can have enabled:false which can be toggled manually
     - for txt files, just put the markers at the bottom with !! as prefix
@@ -29,7 +34,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     - copilot ghost text in commit buffers, accept with <M-f>
     - opt-in Conventional Commits mode; cmp offers types, scopes, footers
     - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
-
 
 - [~] 14e. nvim-lint: further linters (not covered by an LSP)
     - yaml / ansible: ansible-lint, yamllint
@@ -84,15 +88,13 @@ migration from 0.9 to 0.11 (the file that started it all)
     - [x] startdirs: <M-1>…<M-4> jump by rank and don't count a use; :Mydirs picker,
           :Mydirs reset deletes the usage file; tested (1132d6b)
 
-
-
 - [~] telescope
 		- exploration in order to improve usability
 		- try removing all the predefined keys except my own through the decorator
 		- or maybe unset them via global config
 		- i want to check if the built in <c-/> can be used to discover functionality
 		- maybe i need to think about and experiment with a more elaborate layout
-			- a footer for relvant keymaps with descriptions thats always on
+			- a footer for relevant keymaps with descriptions thats always on
 			- a custom preview-like component with hand-picked keys and leave <c-/> as is
 		- [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
 		  doc-wip/readme.2026-10-24.telescope-explore.md; untested

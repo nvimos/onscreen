@@ -138,6 +138,10 @@ km('n', '', '<C-e>', { silent = true, noremap = true, desc = 'Scroll: extra lin
 -- Yank & Paste {{{
 -- Paste from clipboard ("+ register) in insert mode
 km(ic, '<S-Insert>', '<c-r>+', nosi 'Paste: clipboard (<c-r>+)')
+-- nvim_paste sends the text to the job as a bracketed paste, so shells don't run each line
+km('t', '<S-Insert>', function()
+	vim.api.nvim_paste(vim.fn.getreg('+'), true, -1)
+end, nosi 'Paste: clipboard into terminal')
 km(n,  '<leader>yf', '"%p',    nosi 'Paste: filename  ("%p)')
 km(nv, '<leader>y=', '"+yy',   nosi 'Yank: into clipboard   ("+yy)')
 km(nv, '<leader>y8', '"*yy',   nosi 'Yank: into x11:primary ("*yy)')

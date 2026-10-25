@@ -20,6 +20,7 @@ config
      auto.lua    - autocmds in lua
      intro.lua   - startup intro screen without the charity lines (virtual lines, from auto.lua)
      opt.lua     - neovim configuration
+     opt-term.lua - terminal-mode cursor: bar (default), StatusLine orange; :TermCursorShape bar|block
      env.lua     - shell vars
      ft.lua      - filetype settings, maybe merge with something
 

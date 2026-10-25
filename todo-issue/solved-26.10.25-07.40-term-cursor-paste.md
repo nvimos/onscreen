@@ -1,0 +1,7 @@
+- [x] term: terminal-mode cursor and clipboard paste (2026-10-25)
+    - [x] `lua/genja/opt-term.lua`: bar cursor, no blink, StatusLine color; `:TermCursorShape bar|block`; loaded in `lua/genja/init.lua` after hilite
+    - [x] `<S-Insert>` in terminal mode pastes "+ via `nvim_paste` (bracketed paste) (`lua/genja/map-zero.lua`)
+    - [x] cheatsheet, `lua/genja/readme.md`; todo-ideas #48 for the hollow box and the blink
+    - [ ] test: `:terminal`, insert: steady bar in orange; `:TermCursorShape block`
+    - [ ] test: copy two lines, `<S-Insert>` in a pwsh terminal: pasted, not run line by line
+    - [ ] 48. hollow box cursor, blink set by the app in the terminal (todo-ideas.md)

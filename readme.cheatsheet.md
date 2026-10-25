@@ -3,6 +3,14 @@ Always forget
     win pane to new tab     <c-w>T
     send split to a new tab <c-w>T
 
+Paste (lua/genja/map-zero.lua)
+
+    <S-Insert>  clipboard ("+) in insert, cmdline and terminal mode
+
+Terminal cursor (lua/genja/opt-term.lua)
+
+    :TermCursorShape block | bar   steady cursor in the StatusLine orange while typing in a terminal
+
 Indent text objects (vim-indent-object, loads on VeryLazy)
 
     ii  lines at the same indent              vii  cii  dii  yii
