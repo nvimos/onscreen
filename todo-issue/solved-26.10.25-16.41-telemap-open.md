@@ -1,0 +1,5 @@
+- [x] genja-finder: `<C-]>` opens the entry in pickers (2026-10-25)
+    - [x] telemap.lua: map `<C-]>` to `select_default`
+    - [x] CLAUDE.md, README.md, doc/genja-finder.txt: list the key
+    - [ ] test: `<C-]>` in a picker opens the selected file
+    - [ ] add the key to readme.cheatsheet.md
