@@ -61,22 +61,20 @@ vim.opt.sessionoptions:remove('terminal')
 
 vim.o.laststatus = 3 -- only one status line even with several windows
 -- {{{ folds (from vimrc.almalinux.vim)
+vim.opt.foldopen:remove 'block'
 vim.opt.foldcolumn = '3'                     -- fdc=2 ; overrides the '2' above
 vim.opt.fillchars = 'fold:│'
 vim.opt.fillchars = 'fold:·'
+
+vim.opt.fillchars = vim.opt.fillchars + 'foldopen:▼'  -- folds
+vim.opt.fillchars = vim.opt.fillchars + 'foldclose:▶' -- folds
+vim.opt.fillchars = vim.opt.fillchars + 'foldsep:│'   -- folds
+
 vim.opt.fillchars = vim.opt.fillchars + 'stl: '      -- statusline
 vim.opt.fillchars = vim.opt.fillchars + 'stlnc:─'    -- statusline (non-current)
 vim.opt.fillchars = vim.opt.fillchars + 'vert::'     -- v:version >= 800 is always true in nvim
 vim.opt.fillchars = vim.opt.fillchars + 'vert:│'     -- v:version >= 800 is always true in nvim
-
-
--- vim.opt.fillchars:append({ vert = '  │' }) -- Two spaces before the line
-
-
-vim.opt.fillchars = vim.opt.fillchars + 'foldopen:▼'
-vim.opt.fillchars = vim.opt.fillchars + 'foldclose:▶'
-vim.opt.fillchars = vim.opt.fillchars + 'foldsep:│'
-vim.opt.foldopen:remove 'block'
+-- }}}
 
 -- maybe-todo: redo this for nvim
 -- vim.cmd[[
