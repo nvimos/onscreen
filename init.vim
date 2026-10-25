@@ -10,6 +10,8 @@ highlight Normal guibg=#0D1117 guifg=#E6EDF3  " GitHub Dark
 
 highlight Normal guibg=#0D1117  guifg=#C0CAF5 ctermbg=233 ctermfg=153 " Tokyo Night GitHub Dark
 
+" source <sfile>:h/lua/genja/hilite.vim
+
 
 let maplocalleader = ","
 let mapleader      = "\<Space>"

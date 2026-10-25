@@ -1,7 +1,7 @@
 " vim: fdm=marker
 
 " todo: break up into parts and source indivitually from nvim
-"       idea is to keep it maintainable and concatenate a 
+"       idea is to keep it maintainable and concatenate a
 "       full solid alma-vimrc when needed for the nomad setup
 
 
@@ -127,7 +127,7 @@ nnoremap <m-f> kz.
 " {{{ keymaps random
 " dont move on #
 " nn # #<c-o>
-nnoremap <f5>          <cmd>source %<cr>
+nnoremap <f5>          <cmd>source %<cr> " simple source this
 nnoremap !             :<up><home><c-right>!<cr>
 " }}}
 
@@ -191,9 +191,11 @@ cnoreabbrev eps. e ~/.config/bash
 " cnoreabbrev ;w     <left>
 
 " {{{ session
-cnoreabbrev j:     source     $MYVIMDIR/tmp/viss
-cnoreabbrev s:     pclose \| mksession! $MYVIMDIR/tmp/viss \| qa
-cnoreabbrev save:  pclose \| mksession! $MYVIMDIR/tmp/viss
+if !has("nvim")
+	cnoreabbrev j:     source     $MYVIMDIR/tmp/viss
+	cnoreabbrev s:     pclose \| mksession! $MYVIMDIR/tmp/viss \| qa
+	cnoreabbrev save:  pclose \| mksession! $MYVIMDIR/tmp/viss
+endif
  " }}}
 
 " {{{ substitute global, paragraph, section
@@ -655,7 +657,7 @@ function! Redir(cmd, range, start, end)
 	setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
 	call setline(1, output)
 endfunction
-command! -nargs=1 -complete=command -bar -range Redir 
+command! -nargs=1 -complete=command -bar -range Redir
 			\ silent call Redir(<q-args>, <range>, <line1>, <line2>)
 " }}}
 
@@ -1136,7 +1138,7 @@ function! s:iPlug(autoload_plug_vim, url='https://raw.githubusercontent.com/june
 			" Plug 'SilentGlasses/colorhighlighter' " render detected colors
 			" Plug 'KabbAmine/vCoolor.vim' " color picker (needs os gui)
 			" Plug 'lpenz/vimcommander' " basic file manager
-			
+
 
 			" themez Plug 'chriskempson/base16-vim'
 			" themez Plug 'dracula/vim', { 'as': 'dracula' }
@@ -1161,7 +1163,7 @@ function! s:iPlug(autoload_plug_vim, url='https://raw.githubusercontent.com/june
 			" testing "Plug 'junegunn/vader.vim'
 			" for java Plug 'artur-shaik/vim-javacomplete2' " needs configuration
 			" for html Plug 'mattn/emmet-vim'
-			" for php phpcomplete.vim 
+			" for php phpcomplete.vim
 			" for linting syntastic
 
 			" test 'tomtom/tlib.....'
@@ -1330,7 +1332,7 @@ let g:netrw_dirhistmax = 99
 " let g:syntastic_javascript_checkers = ['cat']
 " let g:syntastic_javascript_checkers = ['jshint']
 " " }}}
-" 
+"
 " let g:syntastic_quiet_messages = { "type": "style" }
 " let g:syntastic_sh_checkers = ['shellcheck']
 " let g:syntastic_php_checkers = ['php', 'phpcs' ]

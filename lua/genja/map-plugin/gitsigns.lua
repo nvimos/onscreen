@@ -52,52 +52,62 @@ return function(Maps)
 			end
 
 			-- in diff mode keep nvim's ]c [c (next/previous change)
-			vim.keymap.set('n', ']c', function()
+			local function hunk_next()
 				if vim.wo.diff then
 					vim.cmd.normal({ ']c', bang = true })
 				else
 					gs.nav_hunk('next')
 				end
-			end, o 'hunk next')
-			vim.keymap.set('n', '[c', function()
+			end
+			local function hunk_prev()
 				if vim.wo.diff then
 					vim.cmd.normal({ '[c', bang = true })
 				else
 					gs.nav_hunk('prev')
 				end
-			end, o 'hunk previous')
-
-			-- stage_hunk on a staged hunk unstages it
-			vim.keymap.set('n', '<leader>hs', gs.stage_hunk, o 'hunk stage/unstage')
-			vim.keymap.set('n', '<leader>hr', gs.reset_hunk, o 'hunk reset')
-			vim.keymap.set('v', '<leader>hs', function()
+			end
+			local function stage_lines()
 				gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-			end, o 'lines stage/unstage')
-			vim.keymap.set('v', '<leader>hr', function()
+			end
+			local function reset_lines()
 				gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-			end, o 'lines reset')
-			vim.keymap.set('n', '<leader>hS', gs.stage_buffer, o 'buffer stage')
-			vim.keymap.set('n', '<leader>hR', gs.reset_buffer, o 'buffer reset')
-
-			vim.keymap.set('n', '<leader>hp', gs.preview_hunk, o 'hunk preview float')
-			vim.keymap.set('n', '<leader>hi', gs.preview_hunk_inline, o 'hunk preview inline')
-			vim.keymap.set('n', '<leader>hb', function()
+			end
+			local function blame_line_full()
 				gs.blame_line({ full = true })
-			end, o 'blame line')
-			vim.keymap.set('n', '<leader>hB', gs.toggle_current_line_blame, o 'blame line toggle')
-			vim.keymap.set('n', '<leader>hw', gs.toggle_word_diff, o 'diff word toggle')
-
-			vim.keymap.set('n', '<leader>hd', gs.diffthis, o 'diff vs index')
-			vim.keymap.set('n', '<leader>hD', function()
+			end
+			local function diff_last_commit()
 				gs.diffthis('~')
-			end, o 'diff vs last commit')
-
-			vim.keymap.set('n', '<leader>hq', gs.setqflist, o 'quickfix buffer hunks')
-			vim.keymap.set('n', '<leader>hQ', function()
+			end
+			local function qf_repo_hunks()
 				gs.setqflist('all')
-			end, o 'quickfix repo hunks')
+			end
 
-			vim.keymap.set({ 'o', 'x' }, 'ih', gs.select_hunk, o 'hunk text object')
+			vim.keymap.set('n', ']c',         hunk_next,                    o  'hunk: next')
+			vim.keymap.set('n', '[c',         hunk_prev,                    o  'hunk: previous')
+
+			vim.keymap.set('n', '<leader>hs', gs.stage_hunk,                o  'hunk: stage/un')
+			vim.keymap.set('v', '<leader>hs', stage_lines,                  o  'hunk: stage/un')
+			vim.keymap.set('n', '<leader>hr', gs.reset_hunk,                o  'hunk: reset'   )
+			vim.keymap.set('v', '<leader>hr', reset_lines,                  o  'hunk: reset'   )
+
+            vim.keymap.set('n', '<leader>hS', gs.stage_buffer,              o 'buffer stage')
+            vim.keymap.set('n', '<leader>hR', gs.reset_buffer,              o 'buffer reset')
+
+			vim.keymap.set('n', '<leader>hp', gs.preview_hunk,              o  'hunk: preview float')
+			vim.keymap.set('n', '<leader>hi', gs.preview_hunk_inline,       o  'hunk: preview inline')
+
+
+			vim.keymap.set('n', '<leader>hb', blame_line_full,              o  'blame: line')
+			vim.keymap.set('n', '<leader>hB', gs.toggle_current_line_blame, o  'blame: line toggle')
+			vim.keymap.set('n', '<leader>hw', gs.toggle_word_diff,          o  'diff: word toggle')
+
+			vim.keymap.set('n', '<leader>hd', gs.diffthis,                  o  'diff: vs index')
+			vim.keymap.set('n', '<leader>hD', diff_last_commit,             o  'diff: vs last commit')
+
+			vim.keymap.set('n', '<leader>hq', gs.setqflist,                 o  'quickfix: buffer hunks')
+			vim.keymap.set('n', '<leader>hQ', qf_repo_hunks,                o  'quickfix: repo hunks')
+
+			vim.keymap.set({ 'o', 'x' }, 'ih', gs.select_hunk,              o 'select: hunk')
 		end
 	end)
 end
