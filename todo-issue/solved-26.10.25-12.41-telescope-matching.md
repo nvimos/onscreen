@@ -1,0 +1,3 @@
+- [x] hilite: matched chars in pickers use Visual's foreground, bold, no background (2026-10-25)
+    - [x] `TelescopeMatching` in `lua/genja/hilite.lua`
+    - [ ] test: `<F1>`, type a word: matches readable in lunaperche

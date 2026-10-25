@@ -32,7 +32,9 @@ function M.setup()
 	vim.api.nvim_set_hl(0, 'TelescopePromptNormal', cc('#AAAAAA'):t())
 	vim.api.nvim_set_hl(0, 'TelescopePromptTitle',  cc('#AAAAAA'):t())
 
-
+	-- Matched chars in pickers: Visual's foreground and bold, no background.
+	local visual = vim.api.nvim_get_hl(0, { name = 'Visual', link = false })
+	vim.api.nvim_set_hl(0, 'TelescopeMatching', { fg = visual.fg, bold = visual.bold })
 end
 
 -- M.setup()
