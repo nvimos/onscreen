@@ -131,6 +131,11 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - Second wave (608ad0f, 2026-10-24): hadolint (dockerfile), ruff (python,
   skipped while the ruff LSP is attached), editorconfig-checker (`M.any`,
   below a `.editorconfig`), vint (vim). Still later: vale, gitleaks. Untested.
+- Later (266485f): vint off, broken on Windows (Vimjas/vint#394, #378).
+- Later (9853946): gitleaks on every filetype; vale on markdown with the
+  project's `.vale.ini` or the shared `lint/.vale.ini`, `:ValeSync`. Untested.
+- Later (8dd25c3): checkmake works on Windows (own `--format` and parser).
+- Later (09cc345): exit-code warnings name the linter instead of `cmd.exe`.
 
 ## Extras done along the way
 
@@ -161,10 +166,27 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   on `<leader>wsT`, sort paragraph on `<leader>wsp`.
 - f2 git (e6c04ac): `<M-a>` git adds the file, picker stays open.
 - Hilite (a1b0857): darker Search/IncSearch/CurSearch background.
+- Telescope keymaps (2debb3b): `<M-r>` after `<M-f>`/`<M-x>` cycles the
+  groups of the refined list; the title keeps the group. Tested.
+- Tests (af13aed, 63800da, 9f5f014): map-plugin miss log and health,
+  claudefterm per project, comps011 lsp/cmp/lint with groups and timings;
+  `tests/Makefile` runs every dir.
+- Telescope (9829d55): key footer prototype, `:TelescopeFooter`; spec with
+  6 questions in `readme.2026-10-24.telescope-explore.md`. Footer abandoned 2026-10-25 and removed; key help in the results buffer kept.
+- Terminal (51a1942, #48 in todo-ideas): bar cursor without blink in the
+  StatusLine color, `:TermCursorShape bar|block`; `<S-Insert>` pastes `"+`
+  in terminal mode. Hollow box still open.
+- Aerial (cbe6c13): nav float winblend 5.
+- Gitsigns (e9e50f7): `<leader>mGs` attaches skipped buffers again.
+- f2 (5edddfa): groups of at most 6 chars (`diag`, `msgs`, `md`); the main
+  list shows `group  label` with the labels in one column.
+- Floaterm (50e4b8a): `:PwshFterm`.
+- Mason (19d67f5): `make mason-luals` reinstalls lua-language-server headless.
+- fu (38e3d2d): `:ToggleDiagnostics` for the current buffer.
 
 ## Last scanned commit
 
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    de5c652f73410d7c54c9afee17035f0cd1095477  todo: ideas and squash files up to 81a2844
+    d7c7cf3caf34bc91fcdb17d89f6c6dbd36919211  lint: note the commands to run gitleaks and vale by hand

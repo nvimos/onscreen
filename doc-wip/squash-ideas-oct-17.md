@@ -33,7 +33,7 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | telescope: answer the 6 spec questions (telescope-explore.md) | 6   | ~15k   |
+| -   | telescope: footer abandoned; key help untested; open: remove defaults (A), <C-/> (B1) | 2   | ~8k    |
 | 39  | claude session marker: enabled:false toggle, `!!` in txt   | 1   | ~4k    |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 
@@ -67,4 +67,13 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 - f2 git: `<M-a>` git add, picker stays (e6c04ac).
 - Hilite: darker search background (a1b0857).
 - Startdirs: `<M-n>` by rank, not counted; `:Mydirs`, `:Mydirs reset`; tested (1132d6b).
+- Telescope keymaps: `<M-r>` after `<M-f>`/`<M-x>` cycles the refined list; tested (2debb3b).
+- Tests: map-plugin (af13aed), claudefterm (63800da), comps011 lsp/cmp/lint (9f5f014).
+- Telescope: key footer prototype, `:TelescopeFooter`, spec with 6 questions (9829d55). Footer abandoned 2026-10-25, removed; key help in the results buffer kept.
+- Lint (#14e): vint off (266485f), gitleaks + vale (9853946), checkmake on Windows (8dd25c3), warnings name the linter (09cc345).
+- Terminal (#48): bar cursor in StatusLine color, `:TermCursorShape`, `<S-Insert>` paste (51a1942).
+- Aerial: nav float winblend 5 (cbe6c13).
+- Gitsigns: `<leader>mGs` attaches skipped buffers (e9e50f7).
+- f2: groups ≤ 6 chars, `group  label` columns (5edddfa).
+- `:PwshFterm` (50e4b8a); `make mason-luals` (19d67f5); `:ToggleDiagnostics` (38e3d2d).
 

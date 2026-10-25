@@ -18,6 +18,7 @@ migration from 0.9 to 0.11 (the file that started it all)
 ## ideas october
 
 - [ ] 48. terminal cursor: hollow box (unresolved, lua/genja/opt-term.lua)
+    - [x] bar cursor, no blink, StatusLine color; :TermCursorShape bar|block; <S-Insert> pastes "+ in terminal mode (51a1942)
     - 'guicursor' has no hollow shape; Windows Terminal draws one with `"cursorShape": "emptyBox"`,
       but only when nvim sends no shape (`:set guicursor=`), which drops the shapes in all modes
     - still blinks: since 0.11 the app in the terminal sets cursor shape/blink (DECSCUSR);
@@ -60,11 +61,13 @@ migration from 0.9 to 0.11 (the file that started it all)
         - [ ] vint disabled (2026-10-24): broken on Windows. Python 3.13 venv: no `pkg_resources`
           (Vimjas/vint#394, draft PR #397; pinning setuptools<81 in the mason venv gets past it),
           then `PosixPath` can't be instantiated on Windows (#378, open since 2022). Last release 2019.
-          Revisit for heavy vimscript editing: Linux/WSL only, or a fork.
+          Revisit for heavy vimscript editing: Linux/WSL only, or a fork. (266485f)
     - still later: vale, gitleaks
         - [x] done 2026-10-24: gitleaks on every filetype; vale on markdown, project .vale.ini or the shared
           lint/.vale.ini (Microsoft, write-good; :ValeSync downloads the styles); untested,
-          doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
+          doc-wip/readme.2026-10-24.lint-vale-gitleaks.md (9853946)
+    - [x] checkmake works on Windows: own --format and parser (8dd25c3)
+    - [x] exit-code warnings name the linter, not cmd.exe (09cc345)
 
 - [x] extras outside the idea list (2026-10-23)
     - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)
@@ -88,15 +91,28 @@ migration from 0.9 to 0.11 (the file that started it all)
     - [x] startdirs: <M-1>…<M-4> jump by rank and don't count a use; :Mydirs picker,
           :Mydirs reset deletes the usage file; tested (1132d6b)
 
+- [x] extras outside the idea list (2026-10-25)
+    - [x] telescope keymaps: <M-r> after <M-f>/<M-x> cycles the groups of the refined list; tested (2debb3b)
+    - [x] tests: map-plugin miss log and health (af13aed), claudefterm per project (63800da),
+          comps011 lsp/cmp/lint with groups and timings (9f5f014); tests/Makefile runs every dir
+    - [x] aerial: nav float 5% see-through (cbe6c13)
+    - [x] gitsigns: <leader>mGs attaches skipped buffers again (e9e50f7)
+    - [x] f2: groups of at most 6 chars, main list `group  label` in one column (5edddfa)
+    - [x] floaterm: :PwshFterm (50e4b8a)
+    - [x] mason: make mason-luals reinstalls lua-language-server headless (19d67f5)
+    - [x] :ToggleDiagnostics for the current buffer (38e3d2d)
+
 - [~] telescope
 		- exploration in order to improve usability
 		- try removing all the predefined keys except my own through the decorator
 		- or maybe unset them via global config
 		- i want to check if the built in <c-/> can be used to discover functionality
 		- maybe i need to think about and experiment with a more elaborate layout
-			- a footer for relevant keymaps with descriptions thats always on
+			- [-] a footer for relevant keymaps with descriptions thats always on
+			- key help table (key | m | description) in the empty results buffer (lua/genja/telescope-virthelp.lua); untested
 			- a custom preview-like component with hand-picked keys and leave <c-/> as is
 		- [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
-		  doc-wip/readme.2026-10-24.telescope-explore.md; untested
+		  doc-wip/readme.2026-10-24.telescope-explore.md; untested (9829d55)
+		- [-] 2026-10-25: footer abandoned (approach not liked); footer code, :TelescopeFooter and its tests removed
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

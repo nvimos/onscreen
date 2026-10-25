@@ -22,9 +22,11 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 - [x] f2 item names: <F2> in markdown, with a claude running, in nvim-qt (lua/genja/f2/picker.lua) -> doc-wip/readme.2026-10-24.f2-item-names.md
     - ok (2026-10-25); then `group  label` with groups of 6 chars or less, right-aligned: untested
 - [ ] lint: gitleaks on any file, vale on markdown after :ValeSync (lua/genja/lint.lua) -> doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
-- [ ] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
+- [x] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
+    - ok (2026-10-25); then <F2> hide excess after show all: untested
 - [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md
 - [ ] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
 - [ ] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
-- [ ] telescope key footer (prototype): <leader>jM, <F1>, <C-F1>; :TelescopeFooter (lua/genja/telescope-footer.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
+- [-] telescope key footer (prototype): abandoned 2026-10-25, removed; <leader>jM, <F1>, <C-F1>; :TelescopeFooter (lua/genja/telescope-footer.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
+- [ ] telescope key help in the empty results (key | m | description): <leader>jM, <F1>, <C-F1> (lua/genja/telescope-virthelp.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
 - [ ] comps011 tests: make dir D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md
