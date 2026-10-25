@@ -2,7 +2,7 @@
 -- Pure functions; runs in the test process.
 
 local eq = MiniTest.expect.equality
-local make = require('genja.f2.make')
+local make = require('genja.f2.collect.make')
 
 -- trimmed `make -rRpq` dump: the parts parse_targets reads
 local DUMP = table.concat({

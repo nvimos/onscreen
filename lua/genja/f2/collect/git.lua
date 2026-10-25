@@ -6,7 +6,7 @@
 
 local M = {}
 
-local SRC = 'lua/genja/f2/git.lua: '
+local SRC = 'lua/genja/f2/collect/git.lua: '
 
 ---@class genja.f2.GitFile
 ---@field xy string porcelain status, e.g. ' M', '??'

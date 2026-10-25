@@ -1,6 +1,6 @@
 -- <F2>: context picker (idea #18). One telescope dropdown with `group  label`
 -- items from the sources below and from f2.add_tasks(); runs the chosen one.
--- Sources (one file each, ask the current buffer on every <F2>):
+-- Sources (one file each in collect/, ask the current buffer on every <F2>):
 --   adhoc  one-off fixes, e.g. `go mod init` for a .go file without go.mod
 --   git    oil only: `add (N files)`, a sub-picker of changed files to add
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
@@ -53,13 +53,13 @@ M.add_task = require('genja.f2.builder').new
 
 ---@type genja.f2.Source[]
 local sources = {
-	require('genja.f2.adhoc'),
-	require('genja.f2.git'),
-	require('genja.f2.make'),
-	require('genja.f2.claude'),
-	require('genja.f2.gui'),
-	require('genja.f2.diag'),
-	require('genja.f2.messages'),
+	require('genja.f2.collect.adhoc'),
+	require('genja.f2.collect.git'),
+	require('genja.f2.collect.make'),
+	require('genja.f2.collect.claude'),
+	require('genja.f2.collect.gui'),
+	require('genja.f2.collect.diag'),
+	require('genja.f2.collect.messages'),
 }
 
 -- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path
@@ -140,15 +140,11 @@ M._sort = sort
 -- Drops the cached f2 modules; the next <F2> loads them fresh. Tasks added
 -- with f2.add_tasks() are lost with the registry.
 vim.api.nvim_create_user_command('DevReloadF2', function()
-	package.loaded['genja.f2'] = nil
-	package.loaded['genja.f2.adhoc'] = nil
-	package.loaded['genja.f2.builder'] = nil
-	package.loaded['genja.f2.git'] = nil
-	package.loaded['genja.f2.gui'] = nil
-	package.loaded['genja.f2.make'] = nil
-	package.loaded['genja.f2.picker'] = nil
-	package.loaded['genja.f2.registry'] = nil
-	package.loaded['genja.f2.run'] = nil
+	for name in pairs(package.loaded) do
+		if name == 'genja.f2' or vim.startswith(name, 'genja.f2.') then
+			package.loaded[name] = nil
+		end
+	end
 	package.loaded['genja-finder.telemap'] = nil
 	vim.notify(SRC .. 'f2 modules unloaded, next <F2> reloads them')
 end, { desc = 'f2: unload the context picker modules' })

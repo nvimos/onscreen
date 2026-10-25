@@ -117,7 +117,7 @@ T['F2 source: newest first, relative labels'] = function()
 	]])
 	local items = child.lua([[
 		local out
-		require('genja.f2.messages').collect({}, function(t) out = t end)
+		require('genja.f2.collect.messages').collect({}, function(t) out = t end)
 		return vim.tbl_map(function(t) return t.label end, out)
 	]])
 	eq(vim.endswith(items[1], 'bad2.lua:1'), true)

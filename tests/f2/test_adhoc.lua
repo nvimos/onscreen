@@ -19,7 +19,7 @@ local T = MiniTest.new_set({
 		pre_case = function()
 			child.restart({ '-u', 'tests/minimal_init.lua' })
 			child.lua([[
-				_G.adhoc = require('genja.f2.adhoc')
+				_G.adhoc = require('genja.f2.collect.adhoc')
 				_G.dir = vim.fs.normalize(vim.fn.tempname()) .. '/f2go'
 				vim.fn.mkdir(dir, 'p')
 				-- labels adhoc offers for ctx; collect calls done synchronously

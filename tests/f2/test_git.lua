@@ -2,7 +2,7 @@
 -- Pure function; runs in the test process.
 
 local eq = MiniTest.expect.equality
-local git = require('genja.f2.git')
+local git = require('genja.f2.collect.git')
 
 local function z(...)
 	return table.concat({ ... }, '\0') .. '\0'

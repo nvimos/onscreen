@@ -2,7 +2,7 @@
 --   :Messages [-dump]   :messages in a scratch buffer (current window); <CR> jumps, q closes
 --   :Messages -quick    append the locations to the quickfix list, open it
 --   :Messages -loc      append them to this window's location list, open it
---   <F2>                one item per location, newest first, at most 10 (lua/genja/f2/messages.lua)
+--   <F2>                one item per location, newest first, at most 10 (lua/genja/f2/collect/messages.lua)
 -- Reads :messages when asked; nothing runs in the background. The recording variant
 -- (wraps vim.notify, off by default) is lua/genja/messages-capture.lua.
 -- Command: plugin/messages.lua. Tests: tests/messages/.

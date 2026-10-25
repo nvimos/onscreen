@@ -167,7 +167,7 @@ F2 in markdown (lua/genja/md-checklist.lua, lua/genja/md-glow.lua, from after/ft
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
     insert mode: abbreviations from lua/genja/md-abbrev.txt (teh -> the …)
 
-F2 in oil, git add picker (lua/genja/f2/git.lua)
+F2 in oil, git add picker (lua/genja/f2/collect/git.lua)
 
     <CR>    git add (marked or current), closes    <M-a>   git add current, stays; row shows the new status
     <Tab>   mark    <C-p> preview    <M-t> tabedit, stays    <M-e> edit

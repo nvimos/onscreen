@@ -6,7 +6,7 @@ local picker = require('genja.f2.picker')
 
 local M = {}
 
-local SRC = 'lua/genja/f2/make.lua: '
+local SRC = 'lua/genja/f2/collect/make.lua: '
 
 local function find_makefile(dir)
 	local names = { 'GNUmakefile', 'makefile', 'Makefile' }
