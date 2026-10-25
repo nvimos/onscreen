@@ -246,9 +246,6 @@ km('n', ':w<cr>', '<cmd>write<cr>', { desc = 'Vim: write (no cmdline, no complet
 km("n", "<leader>zZ", '<cmd>x<cr>', { desc = 'Vim: write, quit', silent = true })
 -- }}}
 
--- Edit my init file {{{
-km('n', '<leader>eI', cfg('tabedit', 'init.lua'), nosi 'edit init file')
--- }}}
 
 
 -- Spelling {{{
@@ -297,14 +294,20 @@ km('n', '<leader>el', cfg('tabedit', '../lazyp/'), nosi 'edit lazyp dir')
 -- }}}
 
 
+-- Edit my init file {{{
+km('n', '<leader>eI', cfg('tabedit', 'init.lua'), nosi 'edit init file')
+-- }}}
+
 -- Highlight init in the confdir. {{{
-km('n', '<leader>ei',
-	cmd('lua pcall(Close_nerdtree_wins)') ..
-	cfg('cd', '../..') ..
-	cfg('tabedit') ..
-	cmd('/init.lua') ..
-	cmd('nohl') ..
-	[[/]], { desc = 'edit init dir' })
+-- km('n', '<leader>ei', cfg('cd', '../..') .. cfg('tabedit') .. cmd('/init.lua') .. cmd('nohl') .. [[/]], { desc = 'edit init dir' })
+
+-- portable: path from stdpath() instead of the Windows env var
+-- km('n', '<leader>ei', [[<cmd>exe 'cd' stdpath('config')|tabe lua/genja/<cr><cmd>/init.lua<cr><cmd>noh<cr>/]], { desc = 'edit init dir' })
+
+-- portable, tab-local
+km('n', '<leader>ei', [[<cmd>exe 'tabe' stdpath('config').'/lua/genja/'|exe 'tcd' stdpath('config')<cr><cmd>/init.lua<cr>zz<cmd>noh<cr>/]], { desc = 'edit init dir' })
+
+
 -- }}}
 
 

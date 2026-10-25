@@ -1,0 +1,4 @@
+- [x] keymaps: `<leader>ei` portable and tab-local (2026-10-25)
+    - [x] lua/genja/map-zero.lua: path from `stdpath('config')`, `tcd` instead of `cd`
+    - [x] moved `<leader>eI` next to it
+    - [ ] test: `<leader>ei` opens lua/genja/ in a new tab, cwd changes only in that tab
