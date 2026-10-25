@@ -122,6 +122,9 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
 - When adding keys:
     - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.
+    - don't list a file's keymaps again in its comments; the code (`desc`) is the list.
+    - main config: keys go only in `readme.cheatsheet.md`, not in `lua/genja/readme.md` or other readmes.
+    - plug-wip plugin or module with its own README: keys go there only if it already has a keymaps section.
     - write `desc` so it sorts well: which-key sorts by `desc` (`lua/lazyp/my/which-key.lua`), so start with the area and then the object, e.g. `Git: hunk stage`, `Git: hunk reset`, `UI: git status (Neogit)`.
     - add a which-key group (`{ '<leader>x', group = 'Area: topics' }`) in `lua/lazyp/my/which-key.lua` for each new prefix, and widen an existing group's label when new keys land under it.
 
