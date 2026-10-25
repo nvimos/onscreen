@@ -1,0 +1,3 @@
+- [x] genja-finder refine: shorter key descs, no notify on `<M-n>` before `<M-f>` (2026-10-25)
+    - [x] `refine: more`, `refine: <BS> or undo refine`, `refine: switch fuzzy or exact`, `refine: exclude` in `plug-wip/genja-finder.nvim/lua/genja-finder/refine.lua`
+    - [ ] test: key help in `<F1>` shows the short descs; `<M-n>` before `<M-f>` does nothing
