@@ -1,0 +1,3 @@
+- [x] mouse: remove nvim's default "How-to disable mouse" popup item (2026-10-25)
+    - [x] lua/genja/fn.vim: `aunmenu` the item and its separator
+    - [ ] test: right click, the item and separator are gone
