@@ -26,6 +26,7 @@ command! DumpMessages :call DumpMessages()
 command! LazygitFterm :FloatermNew --height=0.96 --width=0.94 --wintype=float --name=lazygit --autoclose=smart lazygit <cr>
 command! PythonFterm  :FloatermNew                            --wintype=vsplit --name=python python <cr>
 
+command! PwshFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=pwsh --autoclose=smart pwsh <cr>
 command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=smart bash <cr>
 command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=smart ranger --cmd="cd ~"
 " :ClaudeFterm comes from plug-wip/genja-claudefterm.nvim (spec: lua/lazyp/new/genja-claudefterm.lua)
