@@ -1,0 +1,4 @@
+- [x] genja-statusline: `[Nameless]` for normal buffers without a name (2026-10-25)
+    - [x] `NAMELESS`, `is_nameless()` in `plug-wip/genja-statusline.nvim/lua/genja-statusline/util.lua`
+    - [x] used in `statusline.lua` and `winbar.lua`
+    - [ ] test: `:enew`: statusline and winbar show `[Nameless]`; help and quickfix keep their labels
