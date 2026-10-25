@@ -2,5 +2,5 @@
     - [x] keys in `lua/genja/map-plugin/aerial.lua`, `nav.keymaps` in `lua/lazyp/ui/aerial.lua`, which-key `<leader>o`
     - [x] committed in 019f95a; guide doc-wip/readme.2026-10-24.aerial-outline-keys.md
     - [x] test: `<leader>oo`, `<leader>oO`, `<Esc>` in the nav float (2026-10-25)
-    - [x] nav float `winblend = 5` (`nav.win_opts` in `lua/lazyp/ui/aerial.lua`); the sidebar is a split, no blend
-    - [ ] test: `<leader>oO`: the float is slightly see-through
+    - [x] nav float `winblend = 2` (`nav.win_opts` in `lua/lazyp/ui/aerial.lua`); the sidebar is a split, no blend
+    - [ ] test: `<leader>oO`: the float is barely see-through (winblend 2)

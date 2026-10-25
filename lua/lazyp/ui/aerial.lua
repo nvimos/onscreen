@@ -27,8 +27,8 @@ return {
 		-- the nav float closes on <C-c> only by default; the listed keys are merged into aerial's
 		nav = {
 			keymaps = { ['<Esc>'] = 'actions.close' },
-			-- 5% see-through (aerial's default is 10); the sidebar is a split, winblend doesn't apply
-			win_opts = { cursorline = true, winblend = 5 },
+			-- 2% see-through (aerial's default is 10); the sidebar is a split, winblend doesn't apply
+			win_opts = { cursorline = true, winblend = 2 },
 		},
 		highlight_on_hover = true,
 		-- defaults kept: off above 10000 lines or 2 MB; json shows object keys
