@@ -1,0 +1,4 @@
+- [x] lint: selene allows one-line `if` (2026-10-25)
+    - [x] `[config] multiple_statements = { one_line_if = "allow" }` in `selene.toml`
+    - [x] `-- selene: allow(multiple_statements)` above the inline `Safeload` callbacks in `lua/genja/init.lua`
+    - [ ] test: lint `lua/genja/init.lua`: no multiple_statements warning

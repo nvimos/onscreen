@@ -1,2 +1,5 @@
 # selene (lua linter) for this config, run by lua/genja/lint.lua; std in vim.yml
 std = "vim"
+
+[config]
+multiple_statements = { one_line_if = "allow" }
