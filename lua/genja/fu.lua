@@ -1,5 +1,12 @@
-UserComm('WootA', function(c) print(vim.inspect(c)) end, { nargs = '*', force = true, desc = "What is a function?", bar = true })
-UserComm('WootB', function(c) print(vim.inspect(c)) end, { nargs = '?', force = true, desc = "What is a function?" })
+local SRC = 'lua/genja/fu.lua: '
+
+local UserComm = vim.api.nvim_create_user_command
+
+
+
+-- UserComm('WootA', function(c) print(vim.inspect(c)) end, { nargs = '*', force = true, desc = "What is a function?", bar = true })
+-- UserComm('WootB', function(c) print(vim.inspect(c)) end, { nargs = '?', force = true, desc = "What is a function?" })
+
 
 vim.api.nvim_create_user_command('Ymd', function()
 	-- AKA :put =luaeval('Ymd()')
@@ -18,12 +25,8 @@ UserComm('PurgeShada', function()
 	print('Cleared ' .. #tmp_files .. ' temporary ShaDa files')
 end, {})
 
-UserComm('Winfo', function(c)
-	local zzz = vim.api.nvim_get_current_buf()
-	-- print(vim.api.nvim_buf_get_name(z))
-	-- print(vim.inspect(vim.bo.fenc))
-	--print(vim.inspect(vim.bo.filetype))
-	info = {}
+UserComm('Winfo', function(_)
+	local info = {}
 	info.win = vim.api.nvim_get_current_win()
 	info.name = vim.fn.bufname()
 	info.modified = vim.fn.getbufvar(0, "&modified") == 1
@@ -35,8 +38,19 @@ UserComm('Winfo', function(c)
 	print(vim.inspect(info))
 end, { desc = 'gather info about current window/buffer' })
 
+
 UserComm('Nospell', function(c) vim.o.spell = not vim.o.spell end, { desc = "toggle spelling", bar = true })
 UserComm('ToggleSpell', function(c) vim.o.spell = not vim.o.spell end, { desc = "toggle spelling", bar = true })
+UserComm('ToggleDiagnostics', function(c)
+	local filter = { bufnr = 0 }
+	local enable = not vim.diagnostic.is_enabled(filter)
+	vim.diagnostic.enable(enable, filter)
+	local state = 'off'
+	if enable then
+		state = 'on'
+	end
+	vim.notify(SRC .. 'diagnostics ' .. state .. ' (buffer)')
+end, { desc = "toggle diagnostics (current buffer)", bar = true })
 UserComm('ToggleListchars', function(c) vim.o.list = not vim.o.list end, { desc = "toggle listchars", bar = true })
 
 UserComm('CycleDirs', function() CycleDirs() end, {})

@@ -1,0 +1,4 @@
+- [x] fu: `:ToggleDiagnostics` for the current buffer (2026-10-25)
+    - [x] `vim.diagnostic.enable(not is_enabled, { bufnr = 0 })`, notify on/off (`lua/genja/fu.lua`)
+    - [x] fu.lua: `SRC`, local `UserComm`, `:Winfo` without globals; `:WootA` / `:WootB` commented out
+    - [ ] test: `:ToggleDiagnostics` twice in a lua file with warnings
