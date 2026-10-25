@@ -180,7 +180,10 @@ vim.opt.listchars:append('lead: ,leadmultispace:·   ')
 -- vim.opt.listchars:append('trail:󱁐,')
 vim.opt.listchars:append('trail:_,')
 vim.opt.listchars:append('extends:→,precedes:←')
-vim.opt.listchars:append('tab: ')
+
+if vim.fn.has('gui_running') == 1 then
+    vim.opt.listchars:append('tab: ')
+end
 
 vim.o.list = true
 -- }}}

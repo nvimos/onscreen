@@ -17,6 +17,12 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas october
 
+- [ ] f2 context: show git staged files and hunks
+
+- [ ] for commit and paste popups
+  - <C-CR> does not work in windows terminal
+  - try <m-s> for submit
+
 - [ ] 48. terminal cursor: hollow box (unresolved, lua/genja/opt-term.lua)
     - [x] bar cursor, no blink, StatusLine color; :TermCursorShape bar|block; <S-Insert> pastes "+ in terminal mode (51a1942)
     - 'guicursor' has no hollow shape; Windows Terminal draws one with `"cursorShape": "emptyBox"`,

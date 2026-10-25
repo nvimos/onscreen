@@ -20,9 +20,7 @@ end
 return function(Maps)
 	local spec_name = Maps.current_file()
 
-	Maps:add_keys(spec_name, {
-		{ '<leader>mGc', function()
-			require('genja-commit').open(commit_dir())
-		end, desc = 'UI: git commit popup (genja-commit)' },
-	})
+    Maps:add_keys(spec_name, {
+        { '<leader>mGc', function() require('genja-commit').open(commit_dir()) end, desc = 'UI: git commit popup (genja-commit)' }, 
+    })
 end
