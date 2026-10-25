@@ -2,4 +2,8 @@
     - [x] `lua/genja/diag-limit.lua` wraps virtual_text, signs, underline; `<leader>tt3` in `plugin/diag-limit.lua`
     - [x] F2 `diagnostics: show all (N hidden)` (`lua/genja/f2/diag.lua`)
     - [x] `tests/diag-limit/` 8/8; committed in 395c004
-    - [ ] test: a Lua file with 5 errors: 3 drawn, `]d` visits all, `<F2>` show all
+    - [x] test: 3 drawn, `]d` visits all, `<F2>` show all, `<leader>tt3` (2026-10-25)
+    - [x] sample files `plug-wip/genja-completion011.nvim/test-files/seven-errors.{lua,md,sh}`
+    - [x] F2 group `diag`; after show all, `diag  hide excess (N over 3 per severity)`: `hide_excess()`, `excess()` in `lua/genja/diag-limit.lua`
+    - [x] test case in `tests/diag-limit/test_diag_limit.lua`
+    - [ ] test: `<F2>` show all, `<F2>` hide excess: back to 3

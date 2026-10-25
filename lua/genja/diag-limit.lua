@@ -2,7 +2,8 @@
 -- The rest stay in vim.diagnostic.get(), the loclist and the floats; only the display is cut.
 -- First = by line, then column, over every namespace (LSP and each linter together).
 --   vim.g.diag_limit   number per severity (default 3); 0 or false: show all
---   b:diag_limit       the same for one buffer, wins over the global one (F2 "show all" sets 0)
+--   b:diag_limit       the same for one buffer, wins over the global one (F2 "show all" sets 0,
+--                      F2 "hide excess" clears it again)
 -- Keys and setup: plugin/diag-limit.lua. Zen z1 sets the limit to 2 (lua/genja/map-plugin/zenmode.lua).
 
 local SRC = 'lua/genja/diag-limit.lua: '
@@ -12,16 +13,26 @@ local M = {}
 local DEFAULT = 3
 local HANDLERS = { 'virtual_text', 'signs', 'underline' }
 
----Limit for `bufnr`: b:diag_limit, else g:diag_limit, else DEFAULT; 0 means none.
+---Limit for buffers without their own: g:diag_limit, else DEFAULT; 0 means none.
+---@return integer
+function M.global_limit()
+	local n = vim.g.diag_limit
+	if n == nil then
+		n = DEFAULT
+	end
+	if n == false then
+		n = 0
+	end
+	return n
+end
+
+---Limit for `bufnr`: b:diag_limit, else the global one; 0 means none.
 ---@param bufnr integer
 ---@return integer
 function M.limit(bufnr)
 	local n = vim.b[bufnr].diag_limit
 	if n == nil then
-		n = vim.g.diag_limit
-	end
-	if n == nil then
-		n = DEFAULT
+		return M.global_limit()
 	end
 	if n == false then
 		n = 0
@@ -68,6 +79,21 @@ end
 ---@return integer
 function M.hidden(bufnr)
 	local limit = M.limit(bufnr)
+	if limit <= 0 then
+		return 0
+	end
+	local _, hidden = shown_keys(bufnr, limit)
+	return hidden
+end
+
+---After "show all" in `bufnr`: how many the global limit would hide there; 0 otherwise.
+---@param bufnr integer
+---@return integer
+function M.excess(bufnr)
+	if vim.b[bufnr].diag_limit ~= 0 then
+		return 0
+	end
+	local limit = M.global_limit()
 	if limit <= 0 then
 		return 0
 	end
@@ -134,6 +160,13 @@ end
 ---@param bufnr integer
 function M.show_all(bufnr)
 	vim.b[bufnr].diag_limit = 0
+	vim.diagnostic.show(nil, bufnr)
+end
+
+---Undo show_all (F2 "hide excess"): `bufnr` follows the global limit again.
+---@param bufnr integer
+function M.hide_excess(bufnr)
+	vim.b[bufnr].diag_limit = nil
 	vim.diagnostic.show(nil, bufnr)
 end
 

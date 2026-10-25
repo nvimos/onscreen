@@ -97,20 +97,38 @@ T['toggle: off, then on again'] = function()
 	eq(child.lua([[return drawn('virt')]]), { 0, 1, 2, 9, 10, 11 })
 end
 
-T['F2 source: an item while some are hidden, none when all show'] = function()
+T['F2 source: show all while some are hidden, then hide excess'] = function()
 	child.lua([[put()]])
 	local labels = child.lua([[
 		local out
-		require('genja.f2.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
+		require('genja.f2.collect.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
 		return vim.tbl_map(function(t) return t.group .. ': ' .. t.label end, out)
 	]])
 	eq(labels, { 'diag: show all (5 hidden)' })
 	child.lua([[L.show_all(buf)]])
 	eq(child.lua([[
 		local out
-		require('genja.f2.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
-		return #out
-	]]), 0)
+		require('genja.f2.collect.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
+		return vim.tbl_map(function(t) return t.label end, out)
+	]]), { 'hide excess (5 over 3 per severity)' })
+end
+
+T['F2 hide excess: the global limit applies again, the item goes away'] = function()
+	child.lua([[put()]])
+	child.lua([[L.show_all(buf)]])
+	eq(#child.lua([[return drawn('virt')]]), 11)
+	child.lua([[
+		local out
+		require('genja.f2.collect.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
+		out[1].action()
+	]])
+	eq(child.lua([[return drawn('virt')]]), { 0, 1, 2, 9, 10, 11 })
+	eq(child.lua([[return vim.b[buf].diag_limit]]), vim.NIL)
+	eq(child.lua([[
+		local out
+		require('genja.f2.collect.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
+		return vim.tbl_map(function(t) return t.label end, out)
+	]]), { 'show all (5 hidden)' })
 end
 
 return T
