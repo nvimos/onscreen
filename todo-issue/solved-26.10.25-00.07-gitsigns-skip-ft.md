@@ -1,4 +1,7 @@
 - [x] gitsigns: off in markdown by default, toggle per buffer (2026-10-24)
     - [x] `vim.g.gitsigns_skip_ft` (default markdown), `on_attach` returns false; `<leader>mGs` (`lua/genja/map-plugin/gitsigns.lua`)
     - [x] committed in 55187fa; guide doc-wip/readme.2026-10-24.gitsigns-skip-ft.md
-    - [ ] test: a tracked .md: no signs; `<leader>mGs` twice
+    - [ ] ~~test: a tracked .md: no signs; `<leader>mGs` twice~~ failed: `<leader>mGs` didn't attach (2026-10-25)
+    - [x] cause: gitsigns sets `b:gitsigns_status_dict` before `on_attach`, so a skipped buffer looked attached and the key detached it
+    - [x] check `require('gitsigns.cache').cache[bufnr]`; attach with `{ bufnr, force = true }`
+    - [ ] test: a tracked .md: no signs; `<leader>mGs`: signs; again: gone

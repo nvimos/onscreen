@@ -17,12 +17,14 @@ end
 local function toggle_attach()
 	local gs = require('gitsigns')
 	local bufnr = vim.api.nvim_get_current_buf()
-	if vim.b[bufnr].gitsigns_status_dict then
+	-- not b:gitsigns_status_dict: gitsigns sets it before on_attach, so skipped buffers have it too
+	local attached = require('gitsigns.cache').cache[bufnr] ~= nil
+	if attached then
 		vim.b[bufnr].gitsigns_force = false
 		gs.detach(bufnr)
 	else
 		vim.b[bufnr].gitsigns_force = true
-		gs.attach(bufnr)
+		gs.attach({ bufnr = bufnr, force = true })
 	end
 end
 

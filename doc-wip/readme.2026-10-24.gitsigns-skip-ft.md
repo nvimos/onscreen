@@ -13,6 +13,9 @@ skipped filetypes; `toggle_attach()`), which-key `<leader>mG` group, cheatsheet 
   `b:gitsigns_force` is false, or when it is unset and the filetype is in the list.
 - `<leader>mGs` on an attached buffer: detach, `b:gitsigns_force = false`
   (stays off, also after `:e`). On a detached one: `b:gitsigns_force = true`, attach.
+- "Attached" means gitsigns has the buffer in its cache (`gitsigns.cache`). Not
+  `b:gitsigns_status_dict`: gitsigns sets it before `on_attach`, also on skipped buffers
+  (the first version checked it, so `<leader>mGs` never attached; fixed 2026-10-25).
 - More filetypes: `vim.g.gitsigns_skip_ft = { 'markdown', 'text' }` before gitsigns
   loads (it loads on VeryLazy), e.g. in `lua/genja/opt.lua`.
 
