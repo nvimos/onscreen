@@ -1,0 +1,4 @@
+- [x] init: enable ui2 only on new enough nvim (2026-10-25)
+    - [x] `vim.fn.has('nvim-0.13')` guard in `lua/genja/init.lua`; `vim._extui` branch for 0.12 commented out
+    - [ ] the comment says 0.12, the check 0.13; `else if` must be `elseif` before uncommenting
+    - [ ] test: start nvim 0.11 / 0.12: no require error

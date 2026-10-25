@@ -5,6 +5,11 @@ vim.cmd 'colorscheme lunaperche'
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
 
+-- ui2 ships with nvim 0.12
+if vim.fn.has('nvim-0.13') == 1 then require('vim._core.ui2').enable({}) end
+-- else if vim.fn.has('nvim-0.12') == 1 then
+	-- require('vim._extui').enable({})
+
 local Safeload = require('genja.api').Safeload
 
 Safeload 'genja.env'
