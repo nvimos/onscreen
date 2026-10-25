@@ -88,6 +88,11 @@ Mouse (lua/genja/popup-menu.lua, lua/genja/morning.lua, genja-statusline clicks 
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds
 
+Live grep / find (plug-wip/genja-finder.nvim/lua/genja-finder/scope.lua; <F1> <S-F1> <leader>jj)
+
+    <M-r>  cycle root (pwd, .git, bufdir, home)   <M-Up>  parent dir, one-off   <M-i>  skip set
+    <F1>   grep <-> find   <M-c>  command   <C-p>  preview   <M-f>  filter   <BS>  undo filter
+
 Recent files (plug-wip/genja-recent.nvim, picker lua/genja/recent.lua, key in map-telescope.lua)
 
     <C-F1>   recent files of this project (git root, else :pwd), frecency order

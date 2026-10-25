@@ -1,0 +1,5 @@
+- [x] genja-finder: `<M-Up>` rescans in the parent dir, one-off (2026-10-25)
+    - [x] map in `plug-wip/genja-finder.nvim/lua/genja-finder/scope.lua`; `o.one_off` keeps it from becoming root `arg`
+    - [x] `<M-r>` clears it; `<F1>` switch keeps it
+    - [x] README, doc, CLAUDE.md of the plugin; `readme.cheatsheet.md` section "Live grep / find"
+    - [ ] test: `<F1>`, `<M-Up>` twice, `<M-r>`: back on the root cycle; `<M-Up>` at the drive root notifies
