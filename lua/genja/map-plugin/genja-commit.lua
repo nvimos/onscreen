@@ -18,9 +18,13 @@ end
 
 ---@param Maps genja.MapPlugin
 return function(Maps)
-	local spec_name = Maps.current_file()
+    local commit_popup = function() require('genja-commit').open(commit_dir()) end
 
+    local spec_name = Maps.current_file()
+    -- todo: add function Maps:keys_for_plug that avoids having to look up filename via maps.current_file (just one stack deeper)
     Maps:add_keys(spec_name, {
-        { '<leader>mGc', function() require('genja-commit').open(commit_dir()) end, desc = 'UI: git commit popup (genja-commit)' }, 
+        { '<leader>mGc', commit_popup, desc = 'UI: Git commit modal' },
+        { '<leader>gcm', commit_popup, desc = 'UI: Git commit modal' },
+        { '<leader>C', commit_popup, desc = 'UI: Git commit modal' },
     })
 end
