@@ -213,6 +213,7 @@ km('n', '<leader>w<right>', cmd ':norm gqj', nosi 'Text: conform to width')
 -- Vim actions {{{
 -- vim.keymap.set('n', '<S-F5>', ':source %<cr>
 km('', '<Esc>', '<cmd>nohlsearch<cr><Esc>')
+-- todo: pull out into a function. if sourcing a lua file, invalidate it by path for require(), be clever about init.lua
 km('n', '<S-F5>', ':source %<cr><cmd>echo "{sourced}" resolve(expand("%:t"))<cr>', nosi 'source current file')
 --
 km(nv, '<leader>.', '&', nosi 'Vim: Repeat last command')
