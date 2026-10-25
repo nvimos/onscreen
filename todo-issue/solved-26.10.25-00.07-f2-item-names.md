@@ -2,4 +2,8 @@
     - [x] `picker.clean()`: lower case, no `«» ' " ! [ ]`; labels rewritten, no `(~/path)` suffix
     - [x] `tests/f2/test_picker.lua`; f2 tests 53/53
     - [x] committed in d15d2ac; guide doc-wip/readme.2026-10-24.f2-item-names.md
-    - [ ] test: `<F2>` in markdown, with a claude running, in nvim-qt
+    - [x] test: `<F2>` in markdown, with a claude running, in nvim-qt (2026-10-25)
+    - [x] groups at most 6 chars: `diagnostics` -> `diag`, `messages` -> `msgs`, `markdown` -> `md`; registry warns on longer ones
+    - [x] main list `group  label`: group right-aligned to 6, two spaces, no `:` (`picker.display()`); prompt filters without the padding
+    - [x] convention in `lua/genja/f2/readme.md`; tests in `tests/f2/test_picker.lua`
+    - [ ] test: `<F2>` in a markdown file: labels start in one column

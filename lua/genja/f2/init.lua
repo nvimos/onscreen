@@ -1,4 +1,4 @@
--- <F2>: context picker (idea #18). One telescope dropdown with `group: label`
+-- <F2>: context picker (idea #18). One telescope dropdown with `group  label`
 -- items from the sources below and from f2.add_tasks(); runs the chosen one.
 -- Sources (one file each, ask the current buffer on every <F2>):
 --   adhoc  one-off fixes, e.g. `go mod init` for a .go file without go.mod
@@ -7,7 +7,7 @@
 --   claude one item per running claude terminal (genja-claudefterm): show it
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
 --   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/diag-limit.lua)
---   messages  file:line from :messages (tracebacks), newest 10 (lua/genja/messages.lua)
+--   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/messages.lua)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx
@@ -17,7 +17,7 @@
 
 ---@class genja.f2.Task
 ---@field label string
----@field group string shown as the prefix `group: `
+---@field group string at most 6 chars, right-aligned before the label (readme.md)
 ---@field action? string|fun(ctx: genja.f2.Ctx): boolean? string: normal-mode keys (with mappings)
 ---@field cmd? string|string[] instead of action: a command to run
 ---@field runner? 'overseer'|'floaterm' for cmd; default overseer
@@ -38,7 +38,7 @@ local M = {}
 local SRC = 'lua/genja/f2/init.lua: '
 
 ---Group order in the picker; callers may replace it.
-M.group_order = { 'adhoc', 'diagnostics', 'git', 'make', 'oil', 'claude', 'gui', 'messages' }
+M.group_order = { 'adhoc', 'diag', 'git', 'make', 'oil', 'claude', 'gui', 'msgs' }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.

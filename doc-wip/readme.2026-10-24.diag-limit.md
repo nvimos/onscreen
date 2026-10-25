@@ -14,7 +14,7 @@ Tests: `tests/diag-limit/test_diag_limit.lua` (`make dir D=diag-limit` in `tests
 | Key / setting | Does |
 |---------------|------|
 | `<leader>tt3` | limit on (3) / off (all) |
-| `<F2>` -> `diagnostics: show all (N hidden)` | this buffer shows all; others keep the limit |
+| `<F2>` -> `diag  show all (N hidden)` | this buffer shows all; others keep the limit |
 | `vim.g.diag_limit = n` | per severity, all buffers; `0`: all |
 | `vim.b.diag_limit = n` | one buffer, wins over the global one |
 | zen `<leader>z1` | sets 2, `<leader>z0` puts the old value back |
@@ -22,7 +22,7 @@ Tests: `tests/diag-limit/test_diag_limit.lua` (`make dir D=diag-limit` in `tests
 ## Test
 
 1. A Lua file with 5 undefined globals: virtual text on the first 3 only; `]d` still visits all 5.
-2. `<F2>`: `diagnostics: show all (2 hidden)`; pick it: all 5 drawn here.
+2. `<F2>`: `diag  show all (2 hidden)`; pick it: all 5 drawn here.
 3. `<leader>tt3`: all drawn everywhere; again: back to 3.
 
 Checked by Claude: `make dir D=diag-limit`: 8 cases, 0 fails (extmarks of the real handlers).

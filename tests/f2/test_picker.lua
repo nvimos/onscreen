@@ -19,4 +19,15 @@ T['keeps colons and parens'] = function()
 	eq(clean('git: add (3 files)'), 'git: add (3 files)')
 end
 
+T['display: group right-aligned to 6, two spaces, label'] = function()
+	local display = require('genja.f2.picker').display
+	eq(display('diag', 'Show all (2 hidden)'), '  diag  show all (2 hidden)')
+	eq(display('claude', 'fix the tabline'), 'claude  fix the tabline')
+	eq(display('md', 'glow preview'), '    md  glow preview')
+end
+
+T['display: a longer group is not cut'] = function()
+	eq(require('genja.f2.picker').display('toolong', 'x'), 'toolong  x')
+end
+
 return T

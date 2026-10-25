@@ -8,9 +8,12 @@ local M = {}
 
 ---@class genja.f2.PickOpts
 ---@field title string
----@field show_group? boolean display `group: label` (main list) or just the label
+---@field show_group? boolean display `group  label` (main list) or just the label
 
--- dropped from what the list shows; `:` (group: label) and parens stay
+---Groups are at most this long; shorter ones are padded on the left (readme.md).
+M.GROUP_WIDTH = 6
+
+-- dropped from what the list shows; `:` and parens stay
 local NOISE = '[«»\'"!`%[%]]'
 
 ---Label as the list shows it: lower case, no quotes, guillemets, brackets or `!`, single spaces.
@@ -21,6 +24,20 @@ function M.clean(text)
 	local shown = text:lower():gsub(NOISE, '')
 	shown = shown:gsub('%s+', ' ')
 	return vim.trim(shown)
+end
+
+---Main-list line: the group right-aligned to GROUP_WIDTH, two spaces, the label.
+---  `  diag  show all (2 hidden)`, `claude  fix the tabline`
+---@param group string
+---@param label string
+---@return string
+function M.display(group, label)
+	local shown = M.clean(group)
+	local pad = M.GROUP_WIDTH - vim.fn.strdisplaywidth(shown)
+	if pad > 0 then
+		shown = string.rep(' ', pad) .. shown
+	end
+	return shown .. '  ' .. M.clean(label)
 end
 
 ---@param entries genja.f2.Entry[] already sorted
@@ -36,9 +53,10 @@ function M.entries(entries, ctx, opts)
 			entry_maker = function(entry)
 				local display = M.clean(entry.task.label)
 				if opts.show_group then
-					display = M.clean(entry.task.group) .. ': ' .. display
+					display = M.display(entry.task.group, entry.task.label)
 				end
-				return { value = entry, display = display, ordinal = display }
+				-- the padding isn't matched against the prompt
+				return { value = entry, display = display, ordinal = vim.trim(display) }
 			end,
 		}),
 		sorter = require('telescope.config').values.generic_sorter({}),

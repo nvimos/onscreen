@@ -1,4 +1,4 @@
--- <F2> source, group `diagnostics`: when the diagnostics limit (lua/genja/diag-limit.lua)
+-- <F2> source, group `diag`: when the diagnostics limit (lua/genja/diag-limit.lua)
 -- hides some in this buffer, one item that shows them all here.
 
 local M = {}
@@ -11,7 +11,7 @@ function M.collect(ctx, done)
 	local hidden = limit.hidden(ctx.bufnr)
 	if hidden > 0 then
 		table.insert(items, {
-			group = 'diagnostics',
+			group = 'diag',
 			label = ('show all (%d hidden)'):format(hidden),
 			action = function()
 				limit.show_all(ctx.bufnr)

@@ -15,9 +15,12 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 
 ## Session auto-todo-20261024-2315
 
-- [ ] outline keys: <leader>oo / <leader>oO, <Esc> closes the nav float (lua/genja/map-plugin/aerial.lua) -> doc-wip/readme.2026-10-24.aerial-outline-keys.md
+- [x] outline keys: <leader>oo / <leader>oO, <Esc> closes the nav float (lua/genja/map-plugin/aerial.lua) -> doc-wip/readme.2026-10-24.aerial-outline-keys.md
+    - ok (2026-10-25); then nav float winblend 5: untested
 - [ ] gitsigns off in markdown, <leader>mGs toggles per buffer (lua/genja/map-plugin/gitsigns.lua) -> doc-wip/readme.2026-10-24.gitsigns-skip-ft.md
-- [ ] f2 item names: <F2> in markdown, with a claude running, in nvim-qt (lua/genja/f2/picker.lua) -> doc-wip/readme.2026-10-24.f2-item-names.md
+    - failed 2026-10-25: <leader>mGs didn't attach; fixed (attach check), retest
+- [x] f2 item names: <F2> in markdown, with a claude running, in nvim-qt (lua/genja/f2/picker.lua) -> doc-wip/readme.2026-10-24.f2-item-names.md
+    - ok (2026-10-25); then `group  label` with groups of 6 chars or less, right-aligned: untested
 - [ ] lint: gitleaks on any file, vale on markdown after :ValeSync (lua/genja/lint.lua) -> doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
 - [ ] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
 - [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md

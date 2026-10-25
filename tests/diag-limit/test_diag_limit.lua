@@ -104,7 +104,7 @@ T['F2 source: an item while some are hidden, none when all show'] = function()
 		require('genja.f2.diag').collect({ bufnr = buf, dir = '.', filetype = '' }, function(t) out = t end)
 		return vim.tbl_map(function(t) return t.group .. ': ' .. t.label end, out)
 	]])
-	eq(labels, { 'diagnostics: show all (5 hidden)' })
+	eq(labels, { 'diag: show all (5 hidden)' })
 	child.lua([[L.show_all(buf)]])
 	eq(child.lua([[
 		local out

@@ -1,4 +1,4 @@
--- <F2> source, group `messages`: file:line locations from :messages (Lua tracebacks,
+-- <F2> source, group `msgs`: file:line locations from :messages (Lua tracebacks,
 -- Vim script errors), newest first, at most 10; picking one opens it (lua/genja/messages.lua).
 
 local M = {}
@@ -12,7 +12,7 @@ function M.collect(_, done)
 	local items = {}
 	for i, loc in ipairs(messages.newest(MAX)) do
 		table.insert(items, {
-			group = 'messages',
+			group = 'msgs',
 			label = vim.fn.fnamemodify(loc.filename, ':~:.') .. ':' .. loc.lnum,
 			order = i,
 			action = function()
