@@ -1,0 +1,7 @@
+- [x] telescope: footer removed, key help in the empty results kept (2026-10-25)
+    - [x] removed `lua/genja/telescope-footer.lua`, `plugin/telescope-footer.lua`, `:TelescopeFooter`, `tests/telescope-footer/`
+    - [x] key help is `lua/genja/telescope-virthelp.lua` (`plugin/telescope-virthelp.lua`)
+    - [x] rows sorted by description; `<Esc>`, `<F#>`, `<S-F#>` left out; indented three spaces, start on line 2
+    - [x] every row `TelescopeResultsTitle`; the prompt hint in `after/plugin/telescope-after.lua` too
+    - [x] spec in `doc-wip/readme.2026-10-24.telescope-explore.md`
+    - [ ] test: `<leader>jM`, `<F1>`, `<C-F1>`: table shows before input, goes on typing, back on no results

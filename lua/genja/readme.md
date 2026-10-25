@@ -56,7 +56,7 @@ mappings and funcs for them
      recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
      diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/diag-limit/)
      lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync); editorconfig-checker and gitleaks on all)
-     telescope-footer.lua - prototype: key footer on the results border of every picker (plugin/telescope-footer.lua, :TelescopeFooter; tests: tests/telescope-footer/)
+     telescope-virthelp.lua - prototype: key help table in the empty results of every picker (plugin/telescope-virthelp.lua); the footer was removed
      telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)
      map-zero.lua       - keymaps, essential that must not fail
 

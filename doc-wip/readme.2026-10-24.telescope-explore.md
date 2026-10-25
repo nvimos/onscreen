@@ -1,5 +1,9 @@
 # Telescope: usability exploration (spec, open questions) + key footer prototype
 
+**Footer abandoned 2026-10-25:** the footer code, `:TelescopeFooter` and `tests/telescope-footer/`
+were removed. The key help in the results buffer stays, renamed to `lua/genja/telescope-virthelp.lua` (`plugin/telescope-virthelp.lua`).
+Still open: removing telescope's default keys (A) and `<C-/>` for discovery (B1).
+
 From todo-ideas.md "telescope": remove predefined keys except your own, check whether
 `<C-/>` is good for discovery, a more elaborate layout (always-on key footer, or a
 preview-like panel with hand-picked keys).
@@ -18,6 +22,34 @@ the prompt's insert-mode keys whose desc reads `Area: what` (the config's conven
 - Tests: `tests/telescope-footer/test_footer.lua`.
 
 Try: `<leader>jM` (keymaps: `<M-r>` group keys show too), `<F1>` live grep, `<C-F1>` recent files.
+
+## Key help in the results buffer (built: `M.help_attach`, untested)
+
+The footer was abandoned (see the top). The key help:
+
+- The generated help goes into the results buffer as virtual text, before any results arrive.
+- Formatted as a table with columns `key | m | description`, e.g.
+
+      key     m  description
+      <M-f>   i  filter the listed results
+      <M-n>   i  switch between fuzzy and exact match
+      <M-x>   i  exclude entries containing any typed word…
+
+- Only the keys of the current mode; redrawn on `ModeChanged`.
+- All non-default keys of the prompt buffer. A map is default when its lhs is in
+  `require('telescope.mappings').default_mappings[mode]` and its desc equals the one telescope
+  builds for that action (`telescope|<action name>`). So rebound default keys and
+  `defaults.mappings` from `after/plugin/telescope-after.lua` show too.
+- Left out: `<Esc>`, `<F#>` and `<S-F#>` keys.
+- Rows sorted by description (case-insensitive; same description: by key).
+- desc shown without the `telescope|` prefix. Anonymous maps without desc (`telescopej|{json}`)
+  show as `file:line` from the encoded source.
+- A description too long for one line is truncated.
+- Removed as soon as the prompt has any input, or results are in.
+- Shown again when the results are empty.
+- Color: `TelescopeResultsTitle` for every row, header included; no own highlight groups.
+- Rows indented three spaces; the header starts on the second visible line of the results window.
+- Off: `vim.g.telescope_keyhelp = false` (separate from the footer switch).
 
 ## What exists today
 
