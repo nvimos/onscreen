@@ -3,7 +3,8 @@ return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-completion011.nvim/',
 	-- BufReadPre/BufNewFile: servers are enabled before the first file's FileType.
 	-- VeryLazy: cmdline completion is ready on an empty start screen too.
-	cmd = 'Mason',
+	-- MasonInstall: headless `make mason-luals` runs before VeryLazy fires.
+	cmd = { 'Mason', 'MasonInstall' },
 	event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
 	dependencies = {
 		'hrsh7th/nvim-cmp', -- lua/lazyp/comps/nvim-cmp.lua

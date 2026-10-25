@@ -6,7 +6,10 @@
 ---@type LazySpec
 return {
 	'WhoIsSethDaniel/mason-tool-installer.nvim',
-	dependencies = { 'mason-org/mason.nvim' },
+	dependencies = {
+		'mason-org/mason.nvim',
+		'genja-completion011.nvim', -- runs require('mason').setup(); headless runs start before VeryLazy
+	},
 	cmd = {
 		'MasonToolsInstall',
 		'MasonToolsInstallSync',

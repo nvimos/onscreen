@@ -1,0 +1,5 @@
+- [x] mason: `make mason-luals` reinstalls lua-language-server headless (2026-10-25)
+    - [x] target in `Makefile.lazy.mk`: `MasonInstall --force lua-language-server`
+    - [x] `MasonInstall` loads genja-completion011 (`lua/lazyp/new/genja-comp011.lua`); headless runs start before VeryLazy
+    - [x] mason-tool-installer depends on genja-completion011, which runs `require('mason').setup()`
+    - [ ] test: `make mason-luals`, then `make mason`
