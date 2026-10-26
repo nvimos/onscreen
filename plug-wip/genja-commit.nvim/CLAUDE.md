@@ -20,7 +20,7 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 ## Popup
 
 - Moved out of `lua/genja/oil/git-commit.lua` (todo 14); oil only calls `open(dir)`.
-- `<C-CR>` commits, `<CR>` is a newline, `<Esc>` in insert goes to normal, `<Esc>`/`q` in normal aborts.
+- `<C-CR>`, `<M-CR>` and `<C-s>` commit (`<C-CR>` does not reach nvim through Windows Terminal; Alt+Enter there must be unbound from fullscreen), `<CR>` is a newline, `<Esc>` in insert goes to normal, `<Esc>`/`q` in normal aborts.
 - `<M-u>` inserts `update: <first file>` (was `<C-CR>`); other staged files go in the body.
 - `<C-CR>` with ERROR diagnostics asks once (`confirm()`); warnings don't ask.
 - Leaving the window closes it (WinLeave), as before; an empty message aborts.

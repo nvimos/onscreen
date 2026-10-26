@@ -21,7 +21,7 @@ from the staged diff.
 
 | key      | mode | action                          |
 |----------|------|---------------------------------|
-| `<C-CR>` | n, i | commit (asks once on errors)    |
+| `<C-CR>`, `<M-CR>`, `<C-s>` | n, i | commit (asks once on errors); only the last two arrive through Windows Terminal |
 | `<M-u>`  | n, i | insert `update: <file>`         |
 | `<M-g>`  | n, i | generate the message            |
 | `<C-c>`  | n, i | cancel generating               |
@@ -35,7 +35,7 @@ from the staged diff.
 	dir = '.../genja-commit.nvim',
 	ft = 'gitcommit',
 	opts = {
-		keys = { commit = '<C-CR>', fill = '<M-u>', abort = { '<Esc>', 'q' }, generate = '<M-g>', cancel = '<C-c>' },
+		keys = { commit = { '<C-CR>', '<M-CR>', '<C-s>' }, fill = '<M-u>', abort = { '<Esc>', 'q' }, generate = '<M-g>', cancel = '<C-c>' },
 		lint = { title_max = 65, body_max = 72, debounce = 300, install_gitlint = true },
 		generate = {
 			order = { 'claude', 'copilot', 'gemini', 'aichat' },

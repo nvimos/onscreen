@@ -1,7 +1,7 @@
 -- Options: defaults merged with setup(opts).
 
 ---@class genja-commit.Keys
----@field commit string popup: commit
+---@field commit string|string[] popup: commit; several keys: <C-CR> doesn't reach nvim through Windows Terminal
 ---@field fill string popup: insert 'update: <file>'
 ---@field abort string[] popup, normal mode: close
 ---@field generate string all gitcommit buffers: write the message
@@ -62,7 +62,7 @@ local M = {}
 ---@type genja-commit.Config
 local defaults = {
 	keys = {
-		commit = '<C-CR>',
+		commit = { '<C-CR>', '<M-CR>', '<C-s>' },
 		fill = '<M-u>',
 		abort = { '<Esc>', 'q' },
 		generate = '<M-g>',

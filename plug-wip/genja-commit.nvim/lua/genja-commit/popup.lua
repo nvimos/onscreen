@@ -96,10 +96,20 @@ local function run_commit(dir, message, key, path)
 	end))
 end
 
+---A key option as a list: one key or several.
+---@param lhs string|string[]
+---@return string[]
+local function key_list(lhs)
+	if type(lhs) == 'string' then
+		return { lhs }
+	end
+	return lhs
+end
+
 ---@param keys genja-commit.Keys
 local function title_for(keys)
 	return (' Commit · %s commit · %s update <file> · %s generate · %s abort '):format(
-		keys.commit, keys.fill, keys.generate, keys.abort[1] or 'q')
+		table.concat(key_list(keys.commit), '/'), keys.fill, keys.generate, keys.abort[1] or 'q')
 end
 
 ---Show a status in the popup's title; nil restores it. No-op for other buffers.
@@ -258,7 +268,9 @@ function M.open(dir)
 	end
 
 	local function o(desc) return { buffer = buf, desc = desc } end
-	vim.keymap.set({ 'n', 'i' }, keys.commit, submit, o 'Commit: submit')
+	for _, lhs in ipairs(key_list(keys.commit)) do
+		vim.keymap.set({ 'n', 'i' }, lhs, submit, o 'Commit: submit')
+	end
 	vim.keymap.set({ 'n', 'i' }, keys.fill, fill, o 'Commit: insert "update: <file>"')
 	for _, lhs in ipairs(keys.abort) do
 		vim.keymap.set('n', lhs, close, o 'Commit: abort')
