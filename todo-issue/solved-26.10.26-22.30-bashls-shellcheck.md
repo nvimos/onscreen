@@ -1,0 +1,5 @@
+- [x] comp011: bashls gave no shellcheck diagnostics on Windows (2026-10-26)
+    - [x] cause: lsp.log "ShellCheck: disabling linting as no executable was found at path 'shellcheck'"; Node can't start mason's shellcheck.cmd by name
+    - [x] `lang/bash.lua`: `bashIde.shellcheckPath` = mason's `shellcheck.exe` on Windows, when it exists
+    - [x] ran `make test D=comps011 G=bashls`: passes
+    - [ ] test: open a .sh with `if [ -n $1 ]`: shellcheck warnings show
