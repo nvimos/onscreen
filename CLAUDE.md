@@ -49,6 +49,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Before patching around a tool's bugs, check upstream issues and check platform support before recommending a tool.
 - Prefer built-in vim/nvim functions over new dependencies.
 - Hint: say plainly when something was not run or tested that you wanted to run or test.
+- Prompts are often dictated by voice; some words arrive misheard ("deer" = dir, "OAuth" = "followed by", "whip doc"/"VIP doc" = doc-wip). When a phrase makes no sense, read it as speech-to-text and pick the likely word; ask only if still unclear.
 
 ## Files and formatting
 

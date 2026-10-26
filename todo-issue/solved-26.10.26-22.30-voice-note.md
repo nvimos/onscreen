@@ -1,0 +1,2 @@
+- [x] CLAUDE.md: prompts are dictated, some words arrive misheard (2026-10-26)
+    - [x] `## Working style`: read odd phrases as speech-to-text ("deer" = dir, "OAuth" = "followed by", "whip doc" = doc-wip)
