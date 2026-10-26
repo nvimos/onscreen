@@ -29,6 +29,7 @@ command! PythonFterm  :FloatermNew                            --wintype=vsplit -
 command! PwshFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=pwsh --autoclose=smart pwsh <cr>
 command! BashFterm    :FloatermNew --height=0.8 --width=0.8 --wintype=float --name=bash --autoclose=smart bash <cr>
 command! RangerFterm  :FloatermNew --height=0.6 --width=0.4 --wintype=float --name=floaterm1 --position=topleft --autoclose=smart ranger --cmd="cd ~"
+command! -nargs=* Ct ClaudeFterm <args>
 " :ClaudeFterm comes from plug-wip/genja-claudefterm.nvim (spec: lua/lazyp/new/genja-claudefterm.lua)
 
 command! QQQ tabdo write | qa

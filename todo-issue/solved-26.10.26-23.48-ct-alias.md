@@ -1,0 +1,3 @@
+- [x] auto-alias: :Ct as a short :ClaudeFterm (2026-10-26)
+    - [x] `lua/genja/auto-alias.vim`: `command! -nargs=* Ct ClaudeFterm <args>`
+    - [ ] test: `:Ct` and `:Ct --chrome` start claude like `:ClaudeFterm`
