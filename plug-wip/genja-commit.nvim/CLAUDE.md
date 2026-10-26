@@ -13,6 +13,7 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 
 - `init.lua`: `setup(opts)`, `open(dir)`, `attach(buf)` (FileType gitcommit).
 - `config.lua`: defaults and types; `popup.lua`, `lint.lua`, `generate.lua`, `git.lua`.
+- The popup float comes from `genja-util.float` (`plug-wip/genja-util.nvim`, a spec dependency).
 - The plugin must not require `genja.*`; the config passes `on_commit` (oil-git refresh). (inferred: same rule as genja-oily)
 - Keys are buffer-local and set from `opts.keys`, so there is no `map-plugin/` file. (inferred)
 - Hint: nothing here was run or tested yet (2026-10-22).

@@ -90,10 +90,8 @@ end
 ---@param sev integer vim.diagnostic.severity
 ---@param message string
 local function diag(buf, lnum, line, max, sev, message)
-	local col = vim.fn.byteidx(line, max)
-	if col < 0 then
-		col = 0
-	end
+	-- byteidx is -1 past the end of the line
+	local col = math.max(vim.fn.byteidx(line, max), 0)
 	return { bufnr = buf, lnum = lnum, col = col, end_col = #line, severity = sev, message = message, source = 'genja-commit' }
 end
 
@@ -120,10 +118,7 @@ local function rules(buf)
 					table.insert(diagnostics, diag(buf, i - 1, line, opts.title_max, severity.WARN,
 						('title is %d chars, max %d'):format(len, opts.title_max)))
 				end
-				local cc_error = nil
-				if vim.b[buf].genja_commit_conventional and line ~= '' then
-					cc_error = convention.title_error(line)
-				end
+				local cc_error = vim.b[buf].genja_commit_conventional and line ~= '' and convention.title_error(line)
 				if cc_error then
 					table.insert(diagnostics, diag(buf, i - 1, line, 0, severity.ERROR, cc_error))
 				end
@@ -149,10 +144,7 @@ local function run(buf)
 			register_gitlint(lint)
 		end
 		vim.diagnostic.reset(ns, buf) -- gitlint may have arrived mid-session
-		local name = LINTER
-		if vim.b[buf].genja_commit_conventional then
-			name = LINTER_CC
-		end
+		local name = (vim.b[buf].genja_commit_conventional and LINTER_CC or LINTER)
 		vim.api.nvim_buf_call(buf, function()
 			lint.try_lint(name, { cwd = git.buf_dir(buf) })
 		end)

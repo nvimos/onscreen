@@ -5,6 +5,7 @@
 
 local config = require('genja-commit.config')
 local git = require('genja-commit.git')
+local float = require('genja-util.float')
 
 local M = {}
 
@@ -100,15 +101,12 @@ end
 ---@param lhs string|string[]
 ---@return string[]
 local function key_list(lhs)
-	if type(lhs) == 'string' then
-		return { lhs }
-	end
-	return lhs
+	return (type(lhs) == 'string' and { lhs } or lhs)
 end
 
 ---@param keys genja-commit.Keys
 local function title_for(keys)
-	return (' Commit · %s commit · %s update <file> · %s generate · %s abort '):format(
+	return ('Commit · %s commit · %s update <file> · %s generate · %s abort'):format(
 		table.concat(key_list(keys.commit), '/'), keys.fill, keys.generate, keys.abort[1] or 'q')
 end
 
@@ -120,11 +118,7 @@ function M.set_status(buf, text)
 	if not popup or not vim.api.nvim_win_is_valid(popup.win) then
 		return
 	end
-	local title = popup.title
-	if text then
-		title = ' ' .. text .. ' '
-	end
-	vim.api.nvim_win_set_config(popup.win, { title = title, title_pos = 'center' })
+	vim.api.nvim_win_set_config(popup.win, { title = ' ' .. (text or popup.title) .. ' ', title_pos = 'center' })
 end
 
 ---Open the popup for the repo at dir.
@@ -148,8 +142,7 @@ function M.open(dir)
 	local key = path or dir
 	local lines = initial_lines(key, path, dir)
 
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.bo[buf].bufhidden = 'wipe'
+	local buf = float.scratch(lines)
 	vim.bo[buf].swapfile = false
 	if path then
 		-- fails when COMMIT_EDITMSG is already open in another buffer
@@ -163,31 +156,16 @@ function M.open(dir)
 	end
 	vim.b[buf].genja_commit_dir = dir
 	vim.b[buf].genja_commit_popup = true
-	if lines then
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-	end
 	vim.bo[buf].modified = false
 
 	-- text area 80 x 6 (more rows for a long body/draft, up to 15); width/height
 	-- exclude the border, so leave 2 for it plus a little margin on small screens
-	local width = math.min(80, vim.o.columns - 4)
-	local needed = math.max(#files + 1, 6) -- summary, blank, body
-	if lines then
-		needed = math.max(needed, #lines)
-	end
-	local height = math.min(needed, 15, vim.o.lines - vim.o.cmdheight - 4)
-	height = math.max(height, 1)
+	local needed = math.max(#files + 1, 6, (lines and #lines or 0)) -- summary, blank, body
 	local title = title_for(keys)
-	local win = vim.api.nvim_open_win(buf, true, {
-		relative = 'editor',
-		width = width,
-		height = height,
-		row = math.floor((vim.o.lines - height) / 2),
-		col = math.floor((vim.o.columns - width) / 2),
-		style = 'minimal',
-		border = 'rounded',
+	local win = float.open(buf, {
+		width = math.min(80, vim.o.columns - 4),
+		height = math.min(needed, 15, vim.o.lines - vim.o.cmdheight - 4),
 		title = title,
-		title_pos = 'center',
 	})
 	popups[buf] = { win = win, title = title }
 	-- after the window: the FileType autocmd (lint, <M-g>) sees the popup's dir
@@ -209,12 +187,7 @@ function M.open(dir)
 		closed = true
 		save_draft()
 		popups[buf] = nil
-		if vim.api.nvim_get_current_win() == win then
-			vim.cmd.stopinsert()
-		end
-		if vim.api.nvim_win_is_valid(win) then
-			vim.api.nvim_win_close(win, true)
-		end
+		float.close(win)
 	end
 
 	local function submit()
@@ -243,11 +216,7 @@ function M.open(dir)
 		end
 		vim.api.nvim_buf_set_text(buf, 0, col, 0, col, { text })
 		if #files > 1 then
-			local body = { '' }
-			for i = 2, #files do
-				table.insert(body, files[i])
-			end
-			vim.api.nvim_buf_set_lines(buf, 1, -1, false, body)
+			vim.api.nvim_buf_set_lines(buf, 1, -1, false, vim.list_extend({ '' }, files, 2))
 		end
 		vim.api.nvim_win_set_cursor(win, { 1, col + #text })
 	end

@@ -21,18 +21,10 @@ local CONFIG_FILES = {
 ---@param scope '--local'|'--global'
 ---@return boolean? nil when unset
 local function git_setting(dir, scope)
+	-- unset: git exits 1, run() gives nil
 	local out = git.run(dir, { 'config', scope, '--type=bool', '--get', 'genja-commit.conventional' })
-	if not out then
-		return nil -- unset: git exits 1
-	end
-	out = vim.trim(out)
-	if out == 'true' then
-		return true
-	end
-	if out == 'false' then
-		return false
-	end
-	return nil
+	local values = { ['true'] = true, ['false'] = false }
+	return values[vim.trim(out or '')]
 end
 
 ---@param path string
@@ -56,13 +48,9 @@ local function project_uses_it(root)
 	local package_json = read(root .. '/package.json')
 	if package_json then
 		local ok, data = pcall(vim.json.decode, package_json)
-		if ok and type(data) == 'table' then
-			if data.commitlint then
-				return true
-			end
-			if type(data.config) == 'table' and data.config.commitizen then
-				return true
-			end
+		if ok and type(data) == 'table'
+			and (data.commitlint or (type(data.config) == 'table' and data.config.commitizen)) then
+			return true
 		end
 	end
 	local pyproject = read(root .. '/pyproject.toml')

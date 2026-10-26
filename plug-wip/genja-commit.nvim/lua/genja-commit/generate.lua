@@ -158,9 +158,7 @@ end
 local function finish(buf)
 	running[buf] = nil
 	popup.set_status(buf, nil)
-	local cancel = config.get().keys.cancel
-	pcall(vim.keymap.del, 'n', cancel, { buffer = buf })
-	pcall(vim.keymap.del, 'i', cancel, { buffer = buf })
+	pcall(vim.keymap.del, { 'n', 'i' }, config.get().keys.cancel, { buffer = buf })
 end
 
 ---Generate a message for the gitcommit buffer buf.

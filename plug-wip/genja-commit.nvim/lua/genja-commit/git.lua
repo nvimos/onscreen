@@ -8,9 +8,7 @@ local M = {}
 ---@return string? stdout
 ---@return string? err
 function M.run(dir, args)
-	local cmd = { 'git' }
-	vim.list_extend(cmd, args)
-	local res = vim.system(cmd, { cwd = dir, text = true }):wait()
+	local res = vim.system(vim.list_extend({ 'git' }, args), { cwd = dir, text = true }):wait()
 	if res.code ~= 0 then
 		return nil, vim.trim(res.stderr or '')
 	end
@@ -43,11 +41,7 @@ end
 ---@param dir string
 ---@return integer
 function M.last_commit_time(dir)
-	local out = M.run(dir, { 'log', '-1', '--format=%ct' })
-	if not out then
-		return 0
-	end
-	return tonumber(vim.trim(out)) or 0
+	return tonumber(vim.trim(M.run(dir, { 'log', '-1', '--format=%ct' }) or '')) or 0
 end
 
 ---Repo dir for a gitcommit buffer: the popup's dir, else nvim's cwd
@@ -55,11 +49,7 @@ end
 ---@param buf integer
 ---@return string
 function M.buf_dir(buf)
-	local dir = vim.b[buf].genja_commit_dir
-	if dir then
-		return dir
-	end
-	return vim.fn.getcwd()
+	return vim.b[buf].genja_commit_dir or vim.fn.getcwd()
 end
 
 return M
