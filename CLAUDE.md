@@ -33,6 +33,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - @plug-wip/genja-recent.nvim/CLAUDE.md: recent files with own rules, frecency ranking; picker on `<C-F1>`.
 - @plug-wip/genja-splitpad.nvim/CLAUDE.md: padding column next to the split separator in unfocused windows.
 - @plug-wip/genja-statusline.nvim/CLAUDE.md: statusline, tabline, winbar.
+- @plug-wip/genja-util.nvim/CLAUDE.md: helpers shared by the plug-wip plugins (centred float).
 
 ## Working style
 
@@ -55,7 +56,9 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - Unix newlines (LF) everywhere; only `desktop.ini` is CRLF (`.gitattributes`, `.editorconfig`). Don't mention line endings in replies.
 - Tabs, single quotes.
-- Readable Lua over clever Lua: plain assignments and `if` blocks, not `x and y or z` to build values.
+- Readable Lua over clever Lua: plain assignments and `if` blocks.
+    - A short, non-nested two-way `(x and y or z)` is fine, wrapped in parentheses; anything longer or nested is an `if` block.
+- Shared helpers between plug-wip plugins live in `plug-wip/genja-util.nvim`.
 - Comments: short, explain why. For tricky code, at most one line per callback or function.
 - Annotate with LuaLS types: `---@type LazySpec` on specs, typed `opts`. `.luarc.json` disables `missing-fields`.
 
