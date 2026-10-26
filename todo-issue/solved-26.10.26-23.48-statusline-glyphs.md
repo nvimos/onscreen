@@ -1,0 +1,5 @@
+- [x] statusline: plain separators in terminals, Nerd Font icons in a GUI (2026-10-26)
+    - [x] tabline.lua: `∘` / `x` in terminals, icons when `gui_running`
+    - [x] statusline.lua: `·` dir separator in terminals
+    - [ ] statusline.lua: `local Dirseparator` inside the `if` shadows the outer one, so the GUI never gets its icon; drop `local`
+    - [ ] test: nvim in Windows Terminal and in nvim-qt: separators and tab close mark
