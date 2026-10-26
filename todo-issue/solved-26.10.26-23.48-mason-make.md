@@ -1,0 +1,3 @@
+- [x] mason: make target to reinstall autotools_ls after Python moved (2026-10-26)
+    - [x] `Makefile.lazy.mk`: `mason-make` runs `MasonInstall --force autotools-language-server`; `mason-luals` moved next to it
+    - [x] cause: Python 3.13 went from the per-user install to a machine-wide winget install; the venv kept the old `home =` (see `:checkhealth genja.lsp`)
