@@ -154,3 +154,4 @@ Notes moved from the summary:
 - Later (2026-10-24): close on exit (14cd1f8), `<C-Up>` normal mode (45c94fe); moved into genja-ask.nvim / genja-claudefterm.nvim (6ebff35); keys `<leader>pc` ask, `<leader>pC` paste, `<leader>mC` terminals (7452969); `<F2>` claude source (4f57a26); `:ClaudeFterm -one` in the current window, tested (1d15d43).
 - Later: one floaterm per project root, picker `<leader>pt` / `:ClaudeFterm!` (80f96ba); terminal `<M-]>`/`<M-[>` tabs, `<M-{>` previous window (af9c7a4, 6a4c414); `:DevReloadClaude` (bab761a); prompt popup `<C-CR>` sends (55140b2, 96562ed).
 
+| 48  | terminal cursor: bar cursor, hollow box not possible | S | 51a1942 | yes (2026-10-26) |

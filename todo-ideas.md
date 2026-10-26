@@ -23,13 +23,6 @@ migration from 0.9 to 0.11 (the file that started it all)
   - <C-CR> does not work in windows terminal
   - try <m-s> for submit
 
-- [ ] 48. terminal cursor: hollow box (unresolved, lua/genja/opt-term.lua)
-  - [x] bar cursor, no blink, StatusLine color; :TermCursorShape bar|block; <S-Insert> pastes "+ in terminal mode (51a1942)
-  - 'guicursor' has no hollow shape; Windows Terminal draws one with `"cursorShape": "emptyBox"`,
-      but only when nvim sends no shape (`:set guicursor=`), which drops the shapes in all modes
-  - still blinks: since 0.11 the app in the terminal sets cursor shape/blink (DECSCUSR);
-      check which app (cmd vs pwsh vs claude), or turn blink off in Windows (Keyboard: cursor blink rate)
-
 - [ ] 39. claude session marker follow-up (from #19, todo-done/ideas-19-claude-from-nvim.md)
   - the commentstring can have enabled:false which can be toggled manually
   - for txt files, just put the markers at the bottom with !! as prefix
