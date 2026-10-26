@@ -1,0 +1,2 @@
+- [x] todo-test: test notes moved into todo-test/ (2026-10-26)
+    - [x] `test/check-features.md`, `testink-now.md` -> `todo-test/`; `make dir` -> `make test` in testink-now

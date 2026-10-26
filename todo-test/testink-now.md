@@ -66,7 +66,7 @@
       - result: window size remained maxed
 
 - comps011 tests
-    1. make dir D=comps011 G=gather
+    1. make test D=comps011 G=gather
     2. make timings.
 - Claude window
     1. :ClaudeFterm as the only window
