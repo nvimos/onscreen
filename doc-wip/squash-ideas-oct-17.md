@@ -36,6 +36,8 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 | 14e | vint: revisit (Linux/WSL or a fork)                        | spec | -     |
 
+Closed in auto-todo-20261026-2311: #48 (tested), checkmake minphony, popup submit keys,
+telescope default keys + `<C-/>` descs, #39 marker toggle, F2 git staged.
 Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),
 startdirs frecency, #14e second wave, map-plugin healthcheck.
 Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
