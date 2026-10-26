@@ -1,4 +1,4 @@
-
+-- vim: fdm=marker foldlevel=0
 
 -- [[ ftplugins ]]
 
@@ -159,19 +159,23 @@ vim.o.showbreak = '`      ' -- display after wrapped
 
 -- {{{ tab replcement character
 if vim.fn.has('gui_running') == 1 then
-	vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
-	vim.o.listchars = 'eol:󰭿,tab: '
-	vim.o.listchars = 'tab: '
+    vim.o.listchars = 'eol:`,tab: ' -- todo: make an easy-swap pluqin in telescope (myeasy-swap)
+    vim.o.listchars = 'eol:󰭿,tab: '
+    vim.o.listchars = 'tab: '
 else
-	vim.o.listchars = 'eol:`'
+	-- vim.o.listchars = 'eol:`' -- toggle visible-invisible
+    vim.o.listchars = 'eol: '
 end
----- how it looks....
+
+-- how listchars look {{{
 ----....====++++
                                                 -- multispace
 												--[[ tabs
 z                                               
 	-tab
  ---space]]
+-- }}}
+
 -- vim.opt.listchars:append('space: ,multispace:·   ') -- multispace is distracting more than anything
 vim.opt.listchars:append('space: ,multispace:    ')
 vim.opt.listchars:append('lead: ,leadmultispace:·   ')
@@ -181,12 +185,15 @@ vim.opt.listchars:append('extends:→,precedes:←')
 
 if vim.fn.has('gui_running') == 1 then
     vim.opt.listchars:append('tab: ')
+else
+    vim.opt.listchars:append('tab:• ')
+    vim.opt.listchars:append('tab:∘ ')
+    vim.opt.listchars:append('tab:· ')
+    vim.opt.listchars:append('tab:  ') -- todo: toggle visible-invisible
 end
 
 vim.o.list = true
 -- }}}
-
-
 
 vim.o.shiftwidth = 4
 

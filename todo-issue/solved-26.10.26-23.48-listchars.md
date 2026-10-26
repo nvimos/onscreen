@@ -1,0 +1,3 @@
+- [x] opt: listchars variants commented, eol marker off (2026-10-26)
+    - [x] `lua/genja/opt.lua`: listchars alternatives kept as comments, `eol:` line commented
+    - [ ] the commented listchars lines are indented with spaces; the repo uses tabs
