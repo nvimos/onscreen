@@ -1,0 +1,8 @@
+- [x] comp011: detect servers and mason tools that silently never start (2026-10-26)
+    - [x] trigger: autotools_ls exit 103, its venv's Python moved (`pyvenv.cfg` `home =`)
+    - [x] `:checkhealth genja.lsp` (`lsp/health.lua`): servers not installed, venvs whose Python is gone, launchers whose target is gone
+    - [x] `lsp/installed.lua`, `lsp/venv.lua` (first `home =` wins, as the launcher reads it), `lsp/shim.lua` (`%dp0%` and full-path launchers; full path = older mason, warn)
+    - [x] `require('genja.lsp').servers()` and `.languages()`; `note` in `lang/gitconfig.lua`, `lang/sshconfig.lua` for `make status`
+    - [x] the config's tests: cases `mason: servers installed`, `mason: python-venv`, `mason: shims` (group mason); venv and shim checks seen failing on a broken venv and passing after
+    - [x] plugin README "Health check: missing and broken servers", plugin CLAUDE.md layout
+    - [ ] `:MasonInstall --force css-lsp eslint-lsp html-lsp json-lsp` to drop the full-path launchers (warnings)
