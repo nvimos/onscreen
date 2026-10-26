@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | checkmake: shared lint/checkmake.ini, minphony off         | 0   | ~3k    |
 | -   | commit + ask popups: `<M-CR>`, `<C-s>` submit              | 0   | ~4k    |
 | -   | telescope: default keys listed commented out (A1+A2); descs for `<C-/>` (B1) | 0 | ~5k |
 | 39  | marker `enabled:false`, :ClaudeFtermMarkerToggle, `!!` in text files | 0 | ~7k |

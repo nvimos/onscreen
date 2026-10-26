@@ -45,6 +45,30 @@ local ROOT_MARKERS = {
 	['editorconfig-checker'] = { '.editorconfig' },
 }
 
+---Shared checkmake rules (minphony off), used when the project has no checkmake.ini.
+local CHECKMAKE_CONFIG = vim.fs.joinpath(vim.fn.stdpath('config'), 'lint', 'checkmake.ini')
+---checkmake's args as set up in M.setup(), before the shared --config is put in front.
+---@type string[]|nil
+local checkmake_args = nil
+
+---Point checkmake at the project's checkmake.ini, else at the shared one.
+---@param linter table nvim-lint's checkmake linter (changed in place before each run)
+---@param buf integer
+---@return string|nil cwd # the project's dir, where checkmake finds its checkmake.ini
+local function prepare_checkmake(linter, buf)
+	if checkmake_args == nil then
+		checkmake_args = vim.deepcopy(linter.args or {})
+	end
+	local project = vim.fs.root(buf, { 'checkmake.ini' })
+	if project then
+		linter.args = vim.deepcopy(checkmake_args)
+		return project
+	end
+	linter.args = { '--config', CHECKMAKE_CONFIG }
+	vim.list_extend(linter.args, vim.deepcopy(checkmake_args))
+	return nil
+end
+
 ---Shared markdownlint rules (line length off), used when the project has none of its own.
 local MARKDOWNLINT_CONFIG = vim.fs.joinpath(vim.fn.stdpath('config'), 'lint', '.markdownlint.jsonc')
 
@@ -285,6 +309,9 @@ function M.lint(buf, event)
 		if ok and ROOT_MARKERS[name] then
 			cwd = vim.fs.root(buf, ROOT_MARKERS[name])
 			ok = cwd ~= nil
+		end
+		if ok and name == 'checkmake' then
+			cwd = prepare_checkmake(linter, buf)
 		end
 		if ok and name == 'vale' then
 			local vale_cwd = prepare_vale(linter, buf)

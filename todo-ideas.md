@@ -120,6 +120,4 @@ migration from 0.9 to 0.11 (the file that started it all)
     doc-wip/readme.2026-10-24.telescope-explore.md; untested (9829d55)
   - [-] 2026-10-25: footer abandoned (approach not liked); footer code, :TelescopeFooter and its tests removed
 
-- [ ] linter for makefile: disable "required" target all and clean
-
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

@@ -155,3 +155,4 @@ Notes moved from the summary:
 - Later: one floaterm per project root, picker `<leader>pt` / `:ClaudeFterm!` (80f96ba); terminal `<M-]>`/`<M-[>` tabs, `<M-{>` previous window (af9c7a4, 6a4c414); `:DevReloadClaude` (bab761a); prompt popup `<C-CR>` sends (55140b2, 96562ed).
 
 | 48  | terminal cursor: bar cursor, hollow box not possible | S | 51a1942 | yes (2026-10-26) |
+| -   | checkmake: shared lint/checkmake.ini, minphony off | XS | (this commit) | untested (2026-10-26) |
