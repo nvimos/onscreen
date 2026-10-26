@@ -17,8 +17,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas october
 
-- [ ] f2 context: show git staged files and hunks
-
 - [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
   - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
   - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing

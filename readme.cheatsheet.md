@@ -177,6 +177,10 @@ F2 in oil, git add picker (lua/genja/f2/collect/git.lua)
     <CR>    git add (marked or current), closes    <M-a>   git add current, stays; row shows the new status
     <Tab>   mark    <C-p> preview    <M-t> tabedit, stays    <M-e> edit
 
+F2 in oil, git staged picker (same file): `git diff --cached` preview, same keys except
+
+    <CR>    unstage (git restore --staged; marked or current), closes    no <M-a>
+
 nvim-qt GUI toggles (neovim-gui-shim, keys in lua/genja/map-plugin/neovim-gui-shim.lua)
 
     <leader>mQt  tabline           <leader>mQb  tabline buffers    <leader>mQp  popupmenu

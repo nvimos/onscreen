@@ -159,3 +159,4 @@ Notes moved from the summary:
 | -   | commit + ask popups: `<M-CR>`, `<C-s>` submit | XS | 2026-10-26 | untested (2026-10-26) |
 | -   | telescope: default keys listed (A1+A2), descs for `<C-/>` (B1) | S | 2026-10-26 | untested (2026-10-26) |
 | 39  | marker `enabled:false`, :ClaudeFtermMarkerToggle, `!!` in text files | S | 2026-10-26 | untested (2026-10-26) |
+| -   | F2 git: `staged (N files)`, `<CR>` unstages, cached diff preview | S | 2026-10-26 | untested (2026-10-26) |

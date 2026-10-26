@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | F2 git: `staged (N files)`, `<CR>` unstages, cached diff preview | 0 | ~8k |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 | 14e | vint: revisit (Linux/WSL or a fork)                        | spec | -     |
 

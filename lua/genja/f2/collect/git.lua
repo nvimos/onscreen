@@ -1,4 +1,6 @@
 -- <F2> source, group `git`, oil buffers only. For the repo around oil's dir:
+--   staged (N files)  sub-picker over the staged files, `git diff --cached` preview,
+--                  <CR> unstages (git restore --staged), <Tab> marks
 --   add (N files)  sub-picker over the changed files (git status codes,
 --                  repo-relative paths), diff preview (hidden at start), <Tab> marks,
 --                  <CR> git add, <M-a> git add current (picker stays, row shows the new status),
@@ -13,10 +15,9 @@ local SRC = 'lua/genja/f2/collect/git.lua: '
 ---@field path string relative to the repo root
 
 -- `git status --porcelain=v1 -z`: "XY path\0", renames/copies add "\0orig".
--- Keeps files with a worktree change (Y set) or untracked; staged-only ones
--- have nothing left to add.
----@return genja.f2.GitFile[]
-local function parse_status(stdout)
+---@param stdout string
+---@return genja.f2.GitFile[] every entry, unsorted
+local function status_entries(stdout)
 	local files = {}
 	local parts = vim.split(stdout, '\0', { plain = true })
 	local i = 1
@@ -27,14 +28,61 @@ local function parse_status(stdout)
 			if xy:sub(1, 1) == 'R' or xy:sub(1, 1) == 'C' then
 				i = i + 1 -- skip the original path
 			end
-			if xy == '??' or xy:sub(2, 2) ~= ' ' then
-				table.insert(files, { xy = xy, path = part:sub(4) })
-			end
+			table.insert(files, { xy = xy, path = part:sub(4) })
 		end
 		i = i + 1
 	end
+	return files
+end
+
+---@param files genja.f2.GitFile[]
+---@return genja.f2.GitFile[]
+local function by_path(files)
 	table.sort(files, function(a, b) return a.path < b.path end)
 	return files
+end
+
+-- Keeps files with a worktree change (Y set) or untracked; staged-only ones
+-- have nothing left to add.
+---@return genja.f2.GitFile[]
+local function parse_status(stdout)
+	local files = {}
+	for _, file in ipairs(status_entries(stdout)) do
+		if file.xy == '??' or file.xy:sub(2, 2) ~= ' ' then
+			table.insert(files, file)
+		end
+	end
+	return by_path(files)
+end
+
+-- Files with a staged change (X set, not untracked): what `git restore --staged` can take back.
+---@return genja.f2.GitFile[]
+local function parse_staged(stdout)
+	local files = {}
+	for _, file in ipairs(status_entries(stdout)) do
+		local x = file.xy:sub(1, 1)
+		if x ~= ' ' and x ~= '?' then
+			table.insert(files, file)
+		end
+	end
+	return by_path(files)
+end
+
+---@param root string
+---@param paths string[]
+local function git_unstage(root, paths)
+	local cmd = { 'git', 'restore', '--staged', '--' }
+	vim.list_extend(cmd, paths)
+	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
+		if res.code ~= 0 then
+			vim.notify(SRC .. 'git restore --staged failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
+		else
+			vim.notify(SRC .. 'unstaged ' .. #paths .. ' file(s)')
+		end
+		if vim.bo.filetype == 'oil' then
+			require('genja.oil.git').refresh_oil_git()
+		end
+	end))
 end
 
 ---@param root string
@@ -75,11 +123,17 @@ local function staged_xy(xy)
 	return x .. ' '
 end
 
--- diff for tracked files, the file itself (first 500 lines) for untracked
+-- diff for tracked files, the file itself (first 500 lines) for untracked;
+-- staged: what's in the index (`git diff --cached`), hunk by hunk
 ---@param root string
 ---@param file genja.f2.GitFile
+---@param staged? boolean
 ---@return string[] lines, string filetype
-local function preview_lines(root, file)
+local function preview_lines(root, file, staged)
+	if staged then
+		local res = vim.system({ 'git', 'diff', '--cached', '--', file.path }, { cwd = root, text = true }):wait()
+		return vim.split(res.stdout or '', '\n'), 'diff'
+	end
 	if file.xy == '??' then
 		local ok, lines = pcall(vim.fn.readfile, root .. '/' .. file.path, '', 500)
 		if not ok then
@@ -104,8 +158,20 @@ local function display(file)
 end
 
 ---@param root string
+---@param staged? boolean
+---@return string
+local function title_for(root, staged)
+	local dir = vim.fn.fnamemodify(root, ':~')
+	if staged then
+		return 'git staged: ' .. dir .. '  (<Tab> marks, <CR> unstages)'
+	end
+	return 'git add: ' .. dir .. '  (<Tab> marks)'
+end
+
+---@param root string
 ---@param files genja.f2.GitFile[]
-local function pick_files(root, files)
+---@param staged? boolean the staged picker: cached diff preview, <CR> unstages
+local function pick_files(root, files, staged)
 	local actions = require('telescope.actions')
 	local action_state = require('telescope.actions.state')
 	local previewers = require('telescope.previewers')
@@ -119,7 +185,7 @@ local function pick_files(root, files)
 		preview = { hide_on_startup = true }, -- <C-p> shows it
 	}
 	require('telescope.pickers').new(picker_opts, {
-		prompt_title = 'git add: ' .. vim.fn.fnamemodify(root, ':~') .. '  (<Tab> marks)',
+		prompt_title = title_for(root, staged),
 		finder = require('telescope.finders').new_table({
 			results = files,
 			entry_maker = function(file)
@@ -130,7 +196,7 @@ local function pick_files(root, files)
 		previewer = previewers.new_buffer_previewer({
 			title = 'diff',
 			define_preview = function(self, entry)
-				local lines, ft = preview_lines(root, entry.value)
+				local lines, ft = preview_lines(root, entry.value, staged)
 				vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
 				require('telescope.previewers.utils').highlighter(self.state.bufnr, ft)
 			end,
@@ -204,14 +270,21 @@ local function pick_files(root, files)
 				end)
 			end
 			require('genja-finder').attach_shared_keys(map) -- Telemap keys and <M-f> filter
-			map({ 'i', 'n' }, '<M-a>', add_current, { desc = 'f2 git: add current file, keep the picker' })
+			if not staged then
+				map({ 'i', 'n' }, '<M-a>', add_current, { desc = 'f2 git: add current file, keep the picker' })
+			end
 			-- same key as oil's preview toggle
 			map({ 'i', 'n' }, '<C-p>', require('telescope.actions.layout').toggle_preview, { desc = 'f2 git: toggle preview' })
 			map({ 'i', 'n' }, '<M-t>', tabedit_selected, { desc = 'f2 git: open selected in tabs, keep the picker' })
 			map({ 'i', 'n' }, '<M-e>', edit_selected, { desc = 'f2 git: edit selected' })
 			actions.select_default:replace(function()
 				local paths = take_paths()
-				if #paths > 0 then
+				if #paths == 0 then
+					return
+				end
+				if staged then
+					git_unstage(root, paths)
+				else
 					git_add(root, paths)
 				end
 			end)
@@ -239,21 +312,28 @@ function M.collect(ctx, done)
 			return
 		end
 		local files = parse_status(res.stdout or '')
-		if #files == 0 then
-			done({})
-			return
-		end
-		done({
-			{
+		local staged = parse_staged(res.stdout or '')
+		local tasks = {}
+		if #files > 0 then
+			table.insert(tasks, {
 				group = 'git',
 				label = ('add (%d files)'):format(#files),
 				action = function() pick_files(root, files) end,
-			},
-		})
+			})
+		end
+		if #staged > 0 then
+			table.insert(tasks, {
+				group = 'git',
+				label = ('staged (%d files)'):format(#staged),
+				action = function() pick_files(root, staged, true) end,
+			})
+		end
+		done(tasks)
 	end))
 end
 
 -- exposed for tests/f2
 M._parse_status = parse_status
+M._parse_staged = parse_staged
 
 return M

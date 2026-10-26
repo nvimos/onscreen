@@ -16,6 +16,14 @@ local function parsed(stdout)
 	return out
 end
 
+local function parsed_staged(stdout)
+	local out = {}
+	for _, f in ipairs(git._parse_staged(stdout)) do
+		table.insert(out, f.xy .. '|' .. f.path)
+	end
+	return out
+end
+
 local T = MiniTest.new_set()
 
 T['keeps unstaged and untracked, sorted by path'] = function()
@@ -41,6 +49,10 @@ end
 
 T['empty output'] = function()
 	eq(parsed(''), {})
+end
+
+T['staged: keeps files with a staged change, drops untracked and unstaged-only'] = function()
+	eq(parsed_staged(z('M  a.lua', 'MM b.lua', ' M c.lua', '?? d.txt', 'A  e.lua')), { 'M |a.lua', 'MM|b.lua', 'A |e.lua' })
 end
 
 return T
