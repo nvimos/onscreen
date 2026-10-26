@@ -4,6 +4,7 @@
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-claudefterm.nvim',
+	dependencies = { { dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' } },
 	cmd = 'ClaudeFterm', -- the keys and genja-ask load it through require('genja-claudefterm')
 
 	opts = {

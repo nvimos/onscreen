@@ -50,6 +50,7 @@ local T = MiniTest.new_set({
 				vim.opt.rtp:prepend(lazy .. 'plenary.nvim')
 				vim.opt.rtp:prepend(lazy .. 'telescope.nvim')
 				vim.opt.rtp:prepend(config .. '/plug-wip/genja-claudefterm.nvim')
+				vim.opt.rtp:prepend(config .. '/plug-wip/genja-util.nvim')
 				-- rtp added after startup: plugin/ files are not sourced on their own
 				vim.cmd('runtime plugin/floaterm.vim')
 				vim.cmd('runtime plugin/genja-claudefterm.lua')
