@@ -3,6 +3,7 @@
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-ask.nvim',
+	dependencies = { { dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' } },
 	-- lazy (default), no trigger: loads on the first require('genja-ask'), i.e. <M-?> / <leader>pc
 
 	---@type genja-ask.Opts
