@@ -1,0 +1,5 @@
+- [x] claudefterm: `kill() stops every terminal` crashed the test child about one run in three (2026-10-26)
+    - [x] cause: FloatermKills back to back crash a headless nvim on Windows ("ch N was closed by the peer")
+    - [x] `kill()` waits 200 ms between terminals, still synchronous (`s:` runs `:qa` right after); `lua/genja-claudefterm/init.lua`
+    - [x] ran `make test D=claudefterm` 6 times: 6 of 6 pass
+    - [ ] test: `s:` with two claude terminals open: both close, session saved, nvim quits
