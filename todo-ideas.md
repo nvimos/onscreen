@@ -115,5 +115,11 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
     doc-wip/readme.2026-10-24.telescope-explore.md; untested (9829d55)
   - [-] 2026-10-25: footer abandoned (approach not liked); footer code, :TelescopeFooter and its tests removed
+  - [x] 2026-10-26: telescope's default keys listed, commented out one per line, in two places: global
+      (after/plugin/telescope-after.lua, A1) and pickers with attach_shared_keys (genja-finder `unmap`,
+      lua/lazyp/new/genja-finder.lua, A2); uncomment to switch a key off; untested by hand
+  - [x] 2026-10-26: <C-/> stays; loclist/quickfix picker keys got descs, so its list shows
+      `Telescope: all to quickfix` etc. instead of action names (lua/genja/map-telescope.lua)
+      - guide: doc-wip/readme.2026-10-26.telescope-default-keys.md
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

@@ -73,13 +73,22 @@ km('n', '<leader>jjj', F.genja_finder_find,  nosi 'Telescope: genja find')
 -- <Tab> marks entries. Alt: send the marked ones, Alt+Shift: append them, Ctrl: send all results.
 -- l = location list, q = quickfix list (<C-q>/<M-q> are telescope defaults, listed here for the set).
 local actions = require('telescope.actions')
+
+---A picker key with a desc: telescope's key list (<C-/>, ?) shows the desc instead of the action names.
+---@param action table|fun(prompt_bufnr: integer)
+---@param desc string
+---@return table
+local function with_desc(action, desc)
+	return { action, type = 'action', opts = { desc = desc } }
+end
+
 local list_keys = {
-	['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
-	['<M-L>'] = actions.add_selected_to_loclist + actions.open_loclist,
-	['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
-	['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-	['<M-Q>'] = actions.add_selected_to_qflist + actions.open_qflist,
-	['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+	['<M-l>'] = with_desc(actions.send_selected_to_loclist + actions.open_loclist, 'Telescope: marked to loclist'),
+	['<M-L>'] = with_desc(actions.add_selected_to_loclist + actions.open_loclist, 'Telescope: marked added to loclist'),
+	['<C-l>'] = with_desc(actions.send_to_loclist + actions.open_loclist, 'Telescope: all to loclist'),
+	['<M-q>'] = with_desc(actions.send_selected_to_qflist + actions.open_qflist, 'Telescope: marked to quickfix'),
+	['<M-Q>'] = with_desc(actions.add_selected_to_qflist + actions.open_qflist, 'Telescope: marked added to quickfix'),
+	['<C-q>'] = with_desc(actions.send_to_qflist + actions.open_qflist, 'Telescope: all to quickfix'),
 }
 
 local M = {}

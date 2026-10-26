@@ -157,3 +157,4 @@ Notes moved from the summary:
 | 48  | terminal cursor: bar cursor, hollow box not possible | S | 51a1942 | yes (2026-10-26) |
 | -   | checkmake: shared lint/checkmake.ini, minphony off | XS | (this commit) | untested (2026-10-26) |
 | -   | commit + ask popups: `<M-CR>`, `<C-s>` submit | XS | 2026-10-26 | untested (2026-10-26) |
+| -   | telescope: default keys listed (A1+A2), descs for `<C-/>` (B1) | S | 2026-10-26 | untested (2026-10-26) |
