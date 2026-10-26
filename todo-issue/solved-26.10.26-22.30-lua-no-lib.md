@@ -1,0 +1,8 @@
+- [x] comp011: lua_ls needs 5-7 s to index its libraries before it completes; tests don't need them (2026-10-26)
+    - [x] env `GENJA_LUA_NO_LIB=1`: empty `workspace.library` (`lang/lua.lua`), lazydev `enabled` returns false (`lua/lazyp/langs-comps/lazydev.lua`)
+    - [x] `tests/Makefile` sets it by default (`?=`, exported); `tests/manual/measure-lua-ls.ps1 -NoLib` times it
+    - [x] `lazy_lib` is back in `workspace.library` for normal use (it had been commented out)
+    - [x] plugin README section "lua_ls without libraries", plugin CLAUDE.md bullet
+    - [ ] test: `pwsh -File tests/manual/measure-lua-ls.ps1 -Runs 3` and `-NoLib`: compare ready times
+    - [ ] test: `make test D=comps011 G=lua_ls V=1`: ready/cmp pass well under 10 s
+    - [ ] lower the lua_ls ready/cmp timeouts once the -NoLib numbers are known
