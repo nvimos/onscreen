@@ -15,7 +15,8 @@ highlight Normal guibg=#0D1117  guifg=#C0CAF5 ctermbg=233 ctermfg=153 " Tokyo Ni
 
 let maplocalleader = ","
 let mapleader      = "\<Space>"
-let &guifont       = "Cascadia Code:h14:l"
+"let &guifont       = "Cascadia Code:h14:l" " set guifont=
+let &guifont       = "JetBrainsMono NFM:h12" " set guifont=
 
 let &errorfile = expand('~/Desktop/nvim.log')    " log to a visible path
 let g:genja_enable_autoresource = v:true         " reload configs after save

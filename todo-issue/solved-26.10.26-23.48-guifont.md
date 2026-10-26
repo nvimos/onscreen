@@ -1,0 +1,2 @@
+- [x] init.vim: guifont JetBrainsMono NFM 12 (2026-10-26)
+    - [x] `init.vim`: Cascadia Code kept as a comment
