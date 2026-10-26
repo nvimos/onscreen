@@ -1,0 +1,4 @@
+- [x] ws: drafts for a frameless nvim-qt window only when maximized (2026-10-26)
+    - [x] `ws/ginit.frameless-conditional.vim`: threshold on `&lines`, deferred
+    - [x] `ws/ginit.overkill.vim`: compares the window with its monitor work area
+    - [ ] pick one and move it into ginit.vim, or drop both
