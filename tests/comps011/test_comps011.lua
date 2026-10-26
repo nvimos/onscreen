@@ -1,9 +1,11 @@
 -- Integration tests for genja-completion011 and lua/genja/lint.lua: a child nvim boots the real
 -- config (init.vim), opens a sample from tests/comps011/samples/ (copied to a temp dir) and waits
 -- for a server to attach and report, for cmp to offer server items, for a linter to report.
---   make dir D=comps011 G=<group> in tests/   groups: lsp cmp lint fast slow gather all
+--   make test D=comps011 G=<group> in tests/   groups: mason lsp ready cmp lint fast slow gather,
+--   or a case name (lua_ls, typos ...); `make list` shows them all
 -- Timeouts, slow cutoffs and timings: tests/helpers/timing.lua. A server or linter that isn't
--- enabled or installed skips its case. mason installs nothing here (g:genja_lsp_no_install).
+-- enabled or installed skips its case; `mason: servers installed` fails for a server an enabled
+-- language wants but can't start. mason installs nothing here (g:genja_lsp_no_install).
 
 local H = require('helpers.timing')
 local S = H.suite('comps011')
@@ -73,6 +75,63 @@ local T = MiniTest.new_set({
 	},
 })
 
+-- {{{ mason: Python venvs still find the Python they were built from
+
+-- A moved or uninstalled Python breaks every mason Python tool at once (autotools_ls exits 103).
+-- Same check as :checkhealth genja.lsp; runs here, no child needed.
+T['mason: python-venv'] = S:case({ name = 'mason python-venv', groups = { 'mason', 'python-venv' } }, function()
+	local venv = dofile(config .. '/plug-wip/genja-completion011.nvim/lua/genja/lsp/venv.lua')
+	local broken = {}
+	for _, v in ipairs(venv.list()) do
+		if not v.ok then
+			table.insert(broken, ('%s: no %s, fix: %s'):format(v.name, v.python or ('home in ' .. v.cfg), venv.fix(v)))
+		end
+	end
+	if #broken > 0 then
+		error('mason venvs whose Python is gone:\n  ' .. table.concat(broken, '\n  '))
+	end
+end)
+
+-- A launcher in mason/bin whose package files are gone still counts as executable.
+T['mason: shims'] = S:case({ name = 'mason shims', groups = { 'mason', 'shims' } }, function()
+	local shim = dofile(config .. '/plug-wip/genja-completion011.nvim/lua/genja/lsp/shim.lua')
+	local broken = {}
+	for _, s in ipairs(shim.list()) do
+		if not s.ok then
+			table.insert(broken, ('%s: no %s, fix: %s'):format(s.name, s.target or 'target found in it', shim.fix(s)))
+		elseif s.absolute then
+			-- works today; only a moved mason folder breaks it
+			MiniTest.add_note(('%s: full path from an older mason, fix: %s'):format(s.name, shim.fix(s)))
+		end
+	end
+	if #broken > 0 then
+		error('mason launchers whose target is gone:\n  ' .. table.concat(broken, '\n  '))
+	end
+end)
+
+-- mason-lspconfig enables a server only once it is installed: a missing one would only show up
+-- as `lsp: <server>` skipping with "not enabled". Needs the child: the list comes from the config.
+T['mason: servers installed'] = S:case({ name = 'mason servers installed', groups = { 'mason', 'servers' } }, function()
+	boot()
+	-- nvim-lspconfig's lsp/<server>.lua (the cmds) is on the rtp only once lazy has loaded it
+	local list = child.lua([[
+		pcall(require, 'lspconfig')
+		return require('genja.lsp.installed').list()
+	]])
+	local fix = child.lua([[return require('genja.lsp.installed').fix({ server = '<server>' })]])
+	local missing = {}
+	for _, item in ipairs(list) do
+		if not item.ok then
+			table.insert(missing, ('%s: %s'):format(item.server, item.note or (item.cmd .. ' is not executable')))
+		end
+	end
+	if #missing > 0 then
+		error('servers of enabled languages that cannot start:\n  ' .. table.concat(missing, '\n  ')
+			.. '\nfix: ' .. fix)
+	end
+end)
+-- }}}
+
 -- {{{ LSP: attaches and reports a diagnostic
 
 ---@class genja.tests.LspCase
@@ -105,7 +164,7 @@ local LSP = {
 }
 
 for _, c in ipairs(LSP) do
-	T['lsp: ' .. c.name] = S:case({ name = 'lsp ' .. c.name, groups = { 'lsp' }, timeout = c.timeout, slow = c.slow }, function(ctx)
+	T['lsp: ' .. c.name] = S:case({ name = 'lsp ' .. c.name, groups = { 'lsp', c.name }, requires = { server = c.server, cmd = c.cmd }, timeout = c.timeout, slow = c.slow }, function(ctx)
 		boot()
 		if not child.lua('return vim.lsp.is_enabled(...)', { c.server }) then
 			MiniTest.skip(c.server .. ' is not enabled (lua/genja/lsp/local.lua)')
@@ -131,17 +190,46 @@ for _, c in ipairs(LSP) do
 end
 -- }}}
 
+-- {{{ ready: time from opening a file to the server's first useful completion
+
+-- Same check by hand, with times: pwsh -File tests/manual/measure-lua-ls.ps1
+---@type { name: string, server: string, sample: string, file: string, cmd: string, want: string, timeout?: integer, slow?: integer }[]
+local READY = {
+	-- lua_ls answers empty lists while loading: ready 5-7 s after opening the file
+	{ name = 'lua_ls', server = 'lua_ls', sample = 'ready-lua', file = 'main.lua', cmd = 'lua-language-server', want = 'hello', timeout = 10000, slow = 8000 },
+}
+
+for _, c in ipairs(READY) do
+	T['ready: ' .. c.name] = S:case({ name = 'ready ' .. c.name, groups = { 'ready', c.name }, requires = { server = c.server, cmd = c.cmd }, timeout = c.timeout, slow = c.slow }, function(ctx)
+		boot()
+		if not child.lua('return vim.lsp.is_enabled(...)', { c.server }) then
+			MiniTest.skip(c.server .. ' is not enabled (lua/genja/lsp/local.lua)')
+		end
+		if child.lua('return vim.fn.executable(...)', { c.cmd }) == 0 then
+			MiniTest.skip(c.cmd .. ' not installed')
+		end
+		local file = copy_sample(c.sample) .. '/' .. c.file
+		local helper = config .. '/tests/helpers/lsp-hello.lua'
+		local r = child.lua('local h, f, w, t = ...; return dofile(h).measure(f, w, t)', { helper, file, c.want, ctx.timeout })
+		if r.error then
+			error(('%s: %s: %s'):format(c.name, r.error, vim.inspect(r, { newline = ' ', indent = '' })))
+		end
+		MiniTest.add_note(('%s: attach %d ms, ready %d ms, %d tries'):format(c.name, r.attach_ms, r.ready_ms, r.tries))
+	end)
+end
+-- }}}
+
 -- {{{ cmp: offers items from the server
 
 ---@type { name: string, server: string, sample: string, file: string, cmd: string, line: integer, type: string, want: string, timeout?: integer, slow?: integer }[]
 local CMP = {
 	-- after `t.`: the table's fields
-	{ name = 'lua_ls', server = 'lua_ls', sample = 'cmp-lua', file = 'main.lua', cmd = 'lua-language-server', line = 3, type = 't.al', want = 'alpha', timeout = 20000, slow = 10000 },
+	{ name = 'lua_ls', server = 'lua_ls', sample = 'cmp-lua', file = 'main.lua', cmd = 'lua-language-server', line = 3, type = 't.al', want = 'alpha', timeout = 10000, slow = 8000 },
 	{ name = 'vimls', server = 'vimls', sample = 'cmp-vim', file = 'main.vim', cmd = 'vim-language-server', line = 2, type = 'call str', want = 'strlen', slow = 6000 },
 }
 
 for _, c in ipairs(CMP) do
-	T['cmp: ' .. c.name] = S:case({ name = 'cmp ' .. c.name, groups = { 'cmp' }, timeout = c.timeout, slow = c.slow }, function(ctx)
+	T['cmp: ' .. c.name] = S:case({ name = 'cmp ' .. c.name, groups = { 'cmp', c.name }, requires = { server = c.server, cmd = c.cmd }, timeout = c.timeout, slow = c.slow }, function(ctx)
 		boot()
 		if not child.lua('return vim.lsp.is_enabled(...)', { c.server }) then
 			MiniTest.skip(c.server .. ' is not enabled')
@@ -159,22 +247,61 @@ for _, c in ipairs(CMP) do
 		local found = H.wait(function()
 			return child.lua(string.format([[
 				local cmp = require('cmp')
-				if not cmp.visible() then cmp.complete() end
+				-- close first: an open menu (buffer items) would never ask the server again
+				if cmp.visible() then cmp.close() end
+				cmp.complete()
 				for _, e in ipairs(cmp.get_entries()) do
 					if e.source.name == 'nvim_lsp' and e:get_word() == %q then return true end
 				end
 				return false
 			]], c.want))
 		end, ctx.timeout, 300)
+		-- what cmp offered instead, read before <Esc> closes the menu
+		local state = nil
+		if not found then
+			state = child.lua([[
+				local cmp = require('cmp')
+				local items = {}
+				for i, e in ipairs(cmp.get_entries()) do
+					if i > 20 then break end
+					table.insert(items, e.source.name .. ':' .. e:get_word())
+				end
+				-- ask the server directly: empty answer, or cmp not using it?
+				local client = vim.lsp.get_clients({ bufnr = 0 })[1]
+				local direct = 'no client'
+				if client then
+					local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+					-- lua_ls answers an empty list while it is still loading its workspace
+					local res, err = vim.lsp.buf_request_sync(0, 'textDocument/completion', params, 3000)
+					direct = {}
+					if not res then
+						table.insert(direct, 'no answer: ' .. tostring(err))
+					end
+					for _, r in pairs(res or {}) do
+						local list = r.result or {}
+						for _, it in ipairs(list.items or list) do
+							table.insert(direct, it.label)
+						end
+						if r.err then table.insert(direct, 'err: ' .. vim.inspect(r.err)) end
+					end
+				end
+				return { visible = cmp.visible(), line = vim.api.nvim_get_current_line(), items = items,
+					clients = vim.tbl_map(function(x) return x.name end, vim.lsp.get_clients({ bufnr = 0 })),
+					sources = vim.tbl_map(function(s) return s.name end, cmp.get_config().sources), direct = direct }
+			]])
+		end
 		child.type_keys('<Esc>')
-		eq(found, true)
+		if not found then
+			error(('%s: no nvim_lsp item %q within %d ms: %s'):format(c.name, c.want, ctx.timeout,
+				vim.inspect(state, { newline = ' ', indent = '' })))
+		end
 	end)
 end
 -- }}}
 
 -- {{{ lint: each linter of lua/genja/lint.lua reports on its sample
 
----@type { name: string, sample: string, file: string, cmd: string, source: string, write?: fun(dir: string), timeout?: integer, slow?: integer, needs?: string }[]
+---@type { name: string, sample: string, file: string, cmd: string, source: string, write?: fun(dir: string), timeout?: integer, slow?: integer, needs?: string, needs_fix?: string }[]
 local LINT = {
 	{ name = 'markdownlint-cli2', sample = 'lint-markdownlint', file = 'x.md', cmd = 'markdownlint-cli2', source = 'markdownlint' },
 	{ name = 'typos', sample = 'lint-typos', file = 'x.md', cmd = 'typos', source = 'typos' },
@@ -197,13 +324,14 @@ local LINT = {
 	{
 		name = 'vale', sample = 'lint-vale', file = 'x.md', cmd = 'vale', source = 'vale',
 		needs = vim.fs.joinpath(vim.fn.stdpath('data'), 'vale', 'styles', 'Microsoft'),
+		needs_fix = 'run :ValeSync',
 	},
 }
 
 for _, c in ipairs(LINT) do
-	T['lint: ' .. c.name] = S:case({ name = 'lint ' .. c.name, groups = { 'lint' }, timeout = c.timeout, slow = c.slow }, function(ctx)
+	T['lint: ' .. c.name] = S:case({ name = 'lint ' .. c.name, groups = { 'lint', c.name }, requires = { cmd = c.cmd, path = c.needs, path_fix = c.needs_fix }, timeout = c.timeout, slow = c.slow }, function(ctx)
 		if c.needs and not vim.uv.fs_stat(c.needs) then
-			MiniTest.skip(c.name .. ': run :ValeSync first')
+			MiniTest.skip(c.name .. ': ' .. (c.needs_fix or ('missing ' .. c.needs)))
 		end
 		boot()
 		if child.lua('return vim.fn.executable(...)', { c.cmd }) == 0 then

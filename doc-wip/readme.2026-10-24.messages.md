@@ -6,7 +6,7 @@ become jump targets. Nothing runs in the background: `:messages` is read when yo
 
 Files: `lua/genja/messages.lua`, `plugin/messages.lua` (`:Messages`), F2 source
 `lua/genja/f2/messages.lua`. Not active: `lua/genja/messages-capture.lua`.
-Tests: `tests/messages/test_messages.lua` (`make dir D=messages` in `tests/`).
+Tests: `tests/messages/test_messages.lua` (`make test D=messages` in `tests/`).
 
 ## Commands and keys
 
@@ -43,4 +43,4 @@ Try: `:lua require('genja.messages-capture').enable()`.
 2. `:Messages -quick` twice: the items appear twice (appended), title `:Messages`.
 3. `<F2>`: `messages: …/bad.lua:2` at the bottom; pick it.
 
-Checked by Claude: `make dir D=messages`: 10 cases, 0 fails; f2 tests 53/53.
+Checked by Claude: `make test D=messages`: 10 cases, 0 fails; f2 tests 53/53.

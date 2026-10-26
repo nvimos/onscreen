@@ -10,7 +10,7 @@ What: three ways to fix markdown mistakes.
 
 Files: `lua/genja/md-fix.lua`, `lua/genja/md-abbrev.lua`, `lua/genja/md-abbrev.txt`,
 set up per buffer in `after/ftplugin/markdown.lua`. Tests: `tests/md/test_md_fix.lua`
-(`make dir D=md` in `tests/`). markdownlint: the project's config, else `lint/.markdownlint.jsonc`.
+(`make test D=md` in `tests/`). markdownlint: the project's config, else `lint/.markdownlint.jsonc`.
 
 ## Your list
 
@@ -36,4 +36,4 @@ Now: `wrap`, `conceallevel=1`, `showbreak=NONE`, `j`/`k` -> `gj`/`gk`.
 2. Write `This is teh text.` and a `#Heading` (no space), `:w`: both fixed, cursor stays.
 3. `:let g:md_fix_on_save = v:false`, break it again, `:w`: stays; `<leader>mfx`: fixed.
 
-Checked by Claude: `make dir D=md`: 7 cases, 0 fails (one runs the real typos).
+Checked by Claude: `make test D=md`: 7 cases, 0 fails (one runs the real typos).

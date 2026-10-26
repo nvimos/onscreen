@@ -34,5 +34,5 @@ Files: `lua/genja/telescope-keymaps.lua`, keys in `lua/genja/map-telescope.lua`
 6. `<BS>` on the empty prompt: the filter is undone.
 7. `<M-x>` with `oil` typed: entries with "oil" disappear.
 
-Unit tests: `make dir D=telescope-keymaps` in `tests/` (`tests/telescope-keymaps/test_keymaps.lua`,
+Unit tests: `make test D=telescope-keymaps` in `tests/` (`tests/telescope-keymaps/test_keymaps.lua`,
 10 cases, real keys in a child nvim with telescope). Steps 1-4, 6 also tested by hand.

@@ -1,0 +1,13 @@
+- [x] tests: runner through pwsh, per-name groups, timings for every case, plan/status/slow/failed (2026-10-26)
+    - [x] `tests/Makefile`: pwsh recipes, Lua in `tests/helpers/*.lua` (no Lua through the shell); `make help` from `##` lines; `dir` target gone, `make test` everywhere in docs
+    - [x] groups: each comps011 case also grouped by its name (`G=lua_ls`); `all` dropped, `gather` kept; `make gather`
+    - [x] timings: every case timed (`adopt()` for plain cases), weighted average (newest run 30%); default run prints what it left out as slow and days since last gather
+    - [x] `make list`, `list-sh`, `plan` (run/skip/slow with reasons, time estimates), `status` (languages, servers, tools, linters), `slow`, `failed` (V=1)
+    - [x] failures tracked in `genja-tests/failed.json`
+    - [x] `V=1` verbose; failures keep their own traceback (`MiniTest.finally`, not pcall); cmp re-asks the server after closing the menu
+    - [x] `ready: lua_ls` case and `tests/manual/measure-lua-ls.ps1` (`-Help`); lua_ls ready/cmp timeouts 10 s, slow 8 s
+    - [x] vale skip says `run :ValeSync`; main CLAUDE.md `## Tests`; idea and pushback in `doc-wip/readme.2026-10-26.slow-cutoff.md`
+    - [ ] test: `make gather`, then `make slow` and `make timings`: other dirs' cases show up
+    - [ ] test: `make plan`, `make status`: tables and estimates read well
+    - [ ] test: break a test, `make test`, then `make failed`: only it reruns, verbose
+    - [ ] test: default `make test`: slow line after the summary

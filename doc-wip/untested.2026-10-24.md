@@ -29,4 +29,4 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 - [ ] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
 - [-] telescope key footer (prototype): abandoned 2026-10-25, removed; <leader>jM, <F1>, <C-F1>; :TelescopeFooter (lua/genja/telescope-footer.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
 - [ ] telescope key help in the empty results (key | m | description): <leader>jM, <F1>, <C-F1> (lua/genja/telescope-virthelp.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
-- [ ] comps011 tests: make dir D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md
+- [ ] comps011 tests: make test D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md

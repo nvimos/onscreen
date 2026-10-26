@@ -5,4 +5,4 @@
     - [x] first runs: lint 10/10, lsp 2 pass, cmp 1 pass; committed in 9f5f014
     - [ ] reinstall lua-language-server (half-installed, mason/staging left) and autotools-language-server (gone Python)
     - [ ] bashls and gopls: attach without diagnostics; check `go` on PATH
-    - [ ] test: `make dir D=comps011 G=gather`, then `make timings`
+    - [ ] test: `make test D=comps011 G=gather`, then `make timings`

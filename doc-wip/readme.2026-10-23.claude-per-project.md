@@ -54,7 +54,7 @@ Checked by Claude: headless `loadfile`, `require('genja.claude')`, the
 Limits: `:DevReloadClaude` forgets the running terminals (they keep running,
 but the picker no longer lists them).
 
-Unit tests (2026-10-24): `make dir D=claudefterm` in `tests/`, `tests/claudefterm/test_per_project.lua`
+Unit tests (2026-10-24): `make test D=claudefterm` in `tests/`, `tests/claudefterm/test_per_project.lua`
 (15 cases): real vim-floaterm, claude replaced by `fake_claude.cmd` / `.sh`, which logs its cwd and
 args to `$FAKE_LOG`; pastes recorded by stubbing `nvim_chan_send`. Covers steps 1-7: two repos, same
 basename (hash), no repo, toggle hide/show, `:ClaudeFterm` inside the terminal, `show()`, paste to the

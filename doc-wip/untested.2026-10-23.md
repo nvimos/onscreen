@@ -6,9 +6,9 @@ key or command to try, file, guide.
 ## Session auto-todo-20261023-2048
 
 - [x] telescope keymaps: <leader>jM, <M-r>/<M-R> desc groups, <M-f>/<M-x>/<BS> (lua/genja/telescope-keymaps.lua) -> doc-wip/readme.2026-10-23.telescope-keymaps.md
-    - 2026-10-24: steps 1-4, 6 by hand; <M-r> after <M-f> lost the filter, fixed; `make dir D=telescope-keymaps` in tests/ (10 cases)
+    - 2026-10-24: steps 1-4, 6 by hand; <M-r> after <M-f> lost the filter, fixed; `make test D=telescope-keymaps` in tests/ (10 cases)
 - [x] claude per project: :ClaudeFterm in two repos, <leader>mC / :ClaudeFterm! picker, <M-d> kill (plug-wip/genja-claudefterm.nvim) -> doc-wip/readme.2026-10-23.claude-per-project.md
-    - 2026-10-24: unit tests, `make dir D=claudefterm` in tests/ (tests/claudefterm/, 15 cases, fake claude); "paste starts claude" skips on Windows (headless terminal output goes to the outer console)
+    - 2026-10-24: unit tests, `make test D=claudefterm` in tests/ (tests/claudefterm/, 15 cases, fake claude); "paste starts claude" skips on Windows (headless terminal output goes to the outer console)
     - found: several FloatermKills in a row (kill() with 2+ terminals just started) sometimes crash the headless test nvim on Windows; maybe at :s:/quit too, not seen by hand
 - [ ] linters: :MasonToolsInstall, then a .md / .yaml / workflow / playbook / Makefile with errors (lua/genja/lint.lua) -> doc-wip/readme.2026-10-23.lint-first-wave.md
 - [ ] recent files: <C-F1> project first, <M-a> all, saved file ranks first (plug-wip/genja-recent.nvim, lua/genja/recent.lua) -> doc-wip/readme.2026-10-23.genja-recent.md

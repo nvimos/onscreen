@@ -3,4 +3,4 @@
     - [x] `SRC` paths, tests in `tests/f2/`, `tests/messages/`, readme and doc paths updated
     - [x] `:DevReloadF2` unloads every `genja.f2.*` module
     - [ ] test: `<F2>` in a lua file, in oil, in markdown; `:DevReloadF2`, then `<F2>`
-    - [ ] test: `make dir D=f2` in `tests/`
+    - [ ] test: `make test D=f2` in `tests/`

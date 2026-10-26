@@ -2,7 +2,7 @@
 -- and <M-r>/<M-R>: show one desc group at a time (`Git:`, `LSP:`, `Fold:` ...), then all again.
 -- The groups come from the list shown when the cycle starts, so after <M-f>/<M-x> they cycle
 -- within the refined list. Keys: <leader>jM, <leader>jbk, <leader>jb? (lua/genja/map-telescope.lua).
--- Tests: tests/telescope-keymaps/ (`make dir D=telescope-keymaps` in tests/).
+-- Tests: tests/telescope-keymaps/ (`make test D=telescope-keymaps` in tests/).
 
 local SRC = 'lua/genja/telescope-keymaps.lua: '
 

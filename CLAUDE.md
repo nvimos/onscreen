@@ -146,6 +146,23 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - Perplexity search: `plugin/perplexity-search.lua`, query encoded with `vim.uri_encode(q, 'rfc2396')`.
 
+## Tests
+
+- `tests/Makefile` runs mini.test through pwsh; `make help` lists targets and variables.
+- Timings: every case is timed, its weighted average (newest run 30%) kept in `stdpath('state')/genja-tests/timings.json` (throw-away; `make timings` shows it). Code and details: header of `tests/helpers/timing.lua`.
+    - comps011 cases use `S:case()`: groups, a timeout, a slow cutoff, `requires` (what it skips without). Other dirs' cases are timed by `adopt()` with the default timeout (12 s) and cutoff (3 s), no groups.
+    - A case is slow when its average is above its cutoff. The default run (`G=` unset) leaves slow cases out and says so after the summary, with the days since the last full `make gather`; `make gather` runs everything; `G=slow` only the slow ones; `make slow` lists them. A skip is not timed; a timeout counts as its timeout.
+    - `make plan` estimates from the averages: the selected run, the slow ones left out, and every test of any group (average capped at today's timeout; never timed: the timeout, or "not timed yet" for plain cases).
+    - Failures: after each run, `genja-tests/failed.json` (next to the timings) gets the cases that failed and loses the ones that passed or skipped; cases that didn't run keep their last result. `make failed` reruns those, whatever their group, verbose by default.
+    - Timeouts are for a working machine, not padded for worst cases: lua_ls `ready`/`cmp` 10 s, slow at 8 s. The tests run with `GENJA_LUA_NO_LIB=1` (lua_ls without libraries); they check that servers work, not the libraries.
+- Output of `make status` (and other table output from `tests/helpers/`) is a neat table:
+    - The name column (language, tool, linter) comes first.
+    - Then the short, fixed-width columns (on/off, ok/MISSING); long or variable ones (commands, paths, notes) go to the right.
+    - Each table has a header row with column names at the same widths as its rows; a one-line legend above it when values aren't obvious from the names (`-`, `*`, `enabled`).
+    - Row order: on and ok, then on but missing, then off. Within that, the languages table sorts by the server column; rows without a server come last.
+    - Notes are terse, no parentheses: `parse errors: ftplugin/gitconfig.lua`.
+- `make help` text: lowercase, terse; target descriptions don't mention the variables (D=, G=, V=); no parenthesised asides; don't explain what an unset variable does.
+
 ## Quirks
 
 - vim-floaterm `--autoclose` (and `g:floaterm_autoclose`) takes only `always`, `never`, `smart`; numbers like `0` give an argument error.

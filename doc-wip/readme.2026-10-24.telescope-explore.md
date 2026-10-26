@@ -90,4 +90,4 @@ The footer was abandoned (see the top). The key help:
 5. Does `<C-/>` stay as the full list, or should it open our own list (with descs) instead?
 6. Footer on the border (overlay) or a separate row (custom layout, C3)?
 
-Checked by Claude: `make dir D=telescope-footer` (see the commit). Not looked at in nvim-qt.
+Checked by Claude: `make test D=telescope-footer` (see the commit). Not looked at in nvim-qt.

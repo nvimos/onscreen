@@ -9,12 +9,12 @@ Harness (shared): `tests/helpers/timing.lua`, runner `tests/Makefile`.
 
 ## Running
 
-    make dir D=comps011            default: every case except those found slow
-    make dir D=comps011 G=lsp      one group: lsp, cmp, lint
-    make dir D=comps011 G=fast     only cases not found slow
-    make dir D=comps011 G=slow     only cases found slow
-    make dir D=comps011 G=gather   everything, ignoring slow flags: refreshes the timings
-    make dir D=comps011 G=all      everything
+    make test D=comps011           default: every case except those found slow
+    make test D=comps011 G=lsp     one group: lsp, cmp, lint
+    make test D=comps011 G=fast    only cases not found slow
+    make test D=comps011 G=slow    only cases found slow
+    make test D=comps011 G=gather  everything, ignoring slow flags: refreshes the timings
+    make test D=comps011 G=all     everything
     make timings                   recorded times, slowest first
 
 `G=` works for every test dir; cases not wrapped with `S:case()` always run.

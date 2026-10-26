@@ -7,7 +7,7 @@ see all of them.
 
 Files: `lua/genja/diag-limit.lua` (wraps nvim's `virtual_text`, `signs`, `underline` handlers),
 `plugin/diag-limit.lua` (setup, key), F2 source `lua/genja/f2/diag.lua`.
-Tests: `tests/diag-limit/test_diag_limit.lua` (`make dir D=diag-limit` in `tests/`).
+Tests: `tests/diag-limit/test_diag_limit.lua` (`make test D=diag-limit` in `tests/`).
 
 ## Keys and settings
 
@@ -28,6 +28,6 @@ Tests: `tests/diag-limit/test_diag_limit.lua` (`make dir D=diag-limit` in `tests
    Sample files: `plug-wip/genja-completion011.nvim/test-files/seven-errors.{lua,md,sh}`.
 3. `<leader>tt3`: all drawn everywhere; again: back to 3.
 
-Checked by Claude: `make dir D=diag-limit`: 8 cases, 0 fails (extmarks of the real handlers);
+Checked by Claude: `make test D=diag-limit`: 8 cases, 0 fails (extmarks of the real handlers);
 not run after adding hide excess (9 cases).
 Not tried in a real nvim with an LSP.
