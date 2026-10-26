@@ -54,6 +54,7 @@ local T = MiniTest.new_set({
 				vim.opt.rtp:prepend(lazy .. 'plenary.nvim')
 				vim.opt.rtp:prepend(lazy .. 'telescope.nvim')
 				vim.opt.rtp:prepend(config .. '/plug-wip/genja-finder.nvim')
+				vim.opt.rtp:prepend(config .. '/plug-wip/genja-util.nvim')
 				require('telescope').setup({})
 
 				-- nvim's default maps differ between versions; only ours, two desc groups: Git (7, biggest), LSP (3)
