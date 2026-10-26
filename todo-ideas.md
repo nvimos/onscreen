@@ -108,6 +108,12 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] mason: make mason-luals reinstalls lua-language-server headless (19d67f5)
   - [x] :ToggleDiagnostics for the current buffer (38e3d2d)
 
+- [x] extras outside the idea list (2026-10-26)
+  - [x] tests: pwsh Makefile, per-name groups, timings for every case, make gather/failed/plan/slow/status (8d2d86c)
+  - [x] lua_ls: GENJA_LUA_NO_LIB=1 skips libraries, set by tests/Makefile (53642d0)
+  - [x] :checkhealth genja.lsp: servers not installed, broken Python venvs, mason launchers (96b7910)
+  - [x] bashls: mason's shellcheck.exe path on Windows (0bdc719); claudefterm kill() crash (0b46cfa)
+
 - [~] telescope
   - exploration in order to improve usability
   - try removing all the predefined keys except my own through the decorator
@@ -120,5 +126,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
     doc-wip/readme.2026-10-24.telescope-explore.md; untested (9829d55)
   - [-] 2026-10-25: footer abandoned (approach not liked); footer code, :TelescopeFooter and its tests removed
+
+- [ ] linter for makefile: disable "required" target all and clean
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->

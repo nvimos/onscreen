@@ -27,15 +27,20 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
 
-## Open, ranked (auto-todo-20261024-2315)
+## Open, ranked (auto-todo-20261026-2311)
 
 Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easiest first.
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | telescope: footer abandoned; key help untested; open: remove defaults (A), <C-/> (B1) | 2   | ~8k    |
-| 39  | claude session marker: enabled:false toggle, `!!` in txt   | 1   | ~4k    |
+| 48  | terminal cursor: close (tested, good enough)               | 0   | ~1k    |
+| -   | checkmake: shared lint/checkmake.ini, minphony off         | 0   | ~3k    |
+| -   | commit + ask popups: `<M-CR>`, `<C-s>` submit              | 0   | ~4k    |
+| -   | telescope: default keys listed commented out (A1+A2); descs for `<C-/>` (B1) | 0 | ~5k |
+| 39  | marker `enabled:false`, :ClaudeFtermMarkerToggle, `!!` in text files | 0 | ~7k |
+| -   | F2 git: `staged (N files)`, `<CR>` unstages, cached diff preview | 0 | ~8k |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
+| 14e | vint: revisit (Linux/WSL or a fork)                        | spec | -     |
 
 Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),
 startdirs frecency, #14e second wave, map-plugin healthcheck.
