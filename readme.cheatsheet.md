@@ -53,6 +53,7 @@ Floaterm commands (lua/genja/auto-alias.vim; :ClaudeFterm from plug-wip/genja-cl
     <C-Left>  window on the left    <C-Right>  next tab    <C-Up>  normal mode
     one claude per project root (marker cwd, git root, else :pwd), named claude-<root>
     :ClaudeFterm!  <leader>mC   running claude terminals: <CR> show, <M-d> kill; also in <F2> (group claude)
+    :ClaudeFtermMarkerToggle    session marker off (enabled:false, start new sessions) or on (resume)
     <leader>pc  ask popup, same as <M-?>     <leader>pC  paste @file / selection (plugin/claude-fterm.lua)
 
 Ask popup (plug-wip/genja-ask.nvim; <M-?> in plugin/ask.lua, n/i/x; visual sends the selection)

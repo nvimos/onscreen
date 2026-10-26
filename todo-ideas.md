@@ -19,10 +19,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 - [ ] f2 context: show git staged files and hunks
 
-- [ ] 39. claude session marker follow-up (from #19, todo-done/ideas-19-claude-from-nvim.md)
-  - the commentstring can have enabled:false which can be toggled manually
-  - for txt files, just put the markers at the bottom with !! as prefix
-
 - [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
   - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
   - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing
