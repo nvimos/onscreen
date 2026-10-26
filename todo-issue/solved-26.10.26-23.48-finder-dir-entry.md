@@ -1,0 +1,4 @@
+- [x] genja-finder: <C-]> on a directory entry opens the entry itself (2026-10-26)
+    - [x] `telemap.lua` `entry_dir()`: a dir entry is its own target; files open their dirname
+    - [x] CLAUDE.md, README.md, doc/genja-finder.txt describe it
+    - [ ] test: F2 or a find picker, select a dir, `<C-]>`: oil opens that dir
