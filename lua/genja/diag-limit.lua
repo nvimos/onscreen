@@ -13,17 +13,20 @@ local M = {}
 local DEFAULT = 3
 local HANDLERS = { 'virtual_text', 'signs', 'underline' }
 
+---A g:/b:diag_limit value as a number: false means 0 (show all).
+---@param n integer|false
+---@return integer
+local function as_limit(n)
+	return (n == false and 0 or n)
+end
+
 ---Limit for buffers without their own: g:diag_limit, else DEFAULT; 0 means none.
 ---@return integer
 function M.global_limit()
-	local n = vim.g.diag_limit
-	if n == nil then
-		n = DEFAULT
+	if vim.g.diag_limit == nil then
+		return DEFAULT
 	end
-	if n == false then
-		n = 0
-	end
-	return n
+	return as_limit(vim.g.diag_limit)
 end
 
 ---Limit for `bufnr`: b:diag_limit, else the global one; 0 means none.
@@ -34,10 +37,7 @@ function M.limit(bufnr)
 	if n == nil then
 		return M.global_limit()
 	end
-	if n == false then
-		n = 0
-	end
-	return n
+	return as_limit(n)
 end
 
 ---Identity of a diagnostic across vim.diagnostic.get() copies and handler arguments.
@@ -114,13 +114,7 @@ local function wrap(name)
 			local limit = M.limit(bufnr)
 			if limit > 0 then
 				local shown = shown_keys(bufnr, limit)
-				local kept = {}
-				for _, d in ipairs(diagnostics) do
-					if shown[key(d)] then
-						table.insert(kept, d)
-					end
-				end
-				diagnostics = kept
+				diagnostics = vim.tbl_filter(function(d) return shown[key(d)] end, diagnostics)
 			end
 			orig.show(namespace, bufnr, diagnostics, opts)
 		end,
