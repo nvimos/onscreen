@@ -31,7 +31,16 @@ return {
 		'ricardoramirezr/blade-nav.nvim',
 		cond = laravel,
 		ft = { 'blade', 'php' },
-		dependencies = { 'hrsh7th/nvim-cmp' },
 		opts = {},
+		config = function(_, opts)
+			require('blade-nav').setup(opts)
+			-- its own blink.cmp source: <x- components, route(' names
+			local ok, blink = pcall(require, 'blink.cmp')
+			if ok then
+				blink.add_source_provider('blade-nav', { name = 'blade-nav', module = 'blade-nav.integrations.blink' })
+				blink.add_filetype_source('blade', 'blade-nav')
+				blink.add_filetype_source('php', 'blade-nav')
+			end
+		end,
 	},
 }

@@ -74,7 +74,7 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 - Empty title: no format error. (inferred: no noise in a fresh popup)
 - Message language: English only, no option.
 - Completion for types, scopes and footers is the `gitcommit` source in genja-completion011.nvim.
-- Completion is on in the popup again: commit moved to `<C-CR>`, which cmp doesn't map; `<CR>` confirms only a selected item. (inferred)
+- Completion is on in the popup again: commit moved to `<C-CR>`, which blink.cmp doesn't map; `<CR>` accepts blink's preselected item while the menu is open.
 
 ## Copilot
 
