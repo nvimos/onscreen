@@ -8,10 +8,7 @@ local out = {}
 ---@param ok boolean
 ---@return string
 local function mark(ok)
-	if ok then
-		return 'ok'
-	end
-	return 'MISSING'
+	return (ok and 'ok' or 'MISSING')
 end
 
 -- row order in every section: on and ok, then on but missing, then off
@@ -41,17 +38,17 @@ end
 ---@param ok boolean
 ---@return integer
 local function rank(ok)
-	if ok then
-		return OK
-	end
-	return BROKEN
+	return (ok and OK or BROKEN)
 end
+
+-- language rows: name, on, installed, server, command or note
+local LANG_ROW = '  %-12s %-4s %-12s %-16s %s'
 
 -- {{{ languages and their servers
 table.insert(out, 'languages (lua/genja/lsp/local.lua), servers')
 table.insert(out, '  installed: ok or MISSING, enabled = vim.lsp.enable() ran for it; - = language off')
 -- column names, same widths as the rows below
-table.insert(out, ('  %-12s %-4s %-12s %-16s %s'):format('language', 'on', 'installed', 'server', 'command or note'))
+table.insert(out, LANG_ROW:format('language', 'on', 'installed', 'server', 'command or note'))
 local tools = {}
 local rows = {}
 for _, lang in ipairs(require('genja.lsp').languages()) do
@@ -63,12 +60,9 @@ for _, lang in ipairs(require('genja.lsp').languages()) do
 		end
 	end
 	if #lang.servers == 0 then
-		local row_rank = OFF
-		if lang.on then
-			row_rank = OK
-		end
+		local row_rank = (lang.on and OK or OFF)
 		-- '~' sorts after letters: rows without a server come last in their rank
-		table.insert(rows, { rank = row_rank, key = '~', line = ('  %-12s %-4s %-12s %-16s %s'):format(lang.name, state, '-', '(no server)', lang.note or '') })
+		table.insert(rows, { rank = row_rank, key = '~', line = LANG_ROW:format(lang.name, state, '-', '(no server)', lang.note or '') })
 	end
 	for _, server in ipairs(lang.servers) do
 		local item = installed.check(server)
@@ -83,7 +77,7 @@ for _, lang in ipairs(require('genja.lsp').languages()) do
 			end
 		end
 		-- name first, then the fixed-width columns, the long command last
-		table.insert(rows, { rank = row_rank, key = server, line = ('  %-12s %-4s %-12s %-16s %s'):format(lang.name, state, result, server, cmd) })
+		table.insert(rows, { rank = row_rank, key = server, line = LANG_ROW:format(lang.name, state, result, server, cmd) })
 	end
 end
 add_ranked(rows)

@@ -25,10 +25,7 @@ local function skip_reason(req)
 		return nil
 	end
 	if req.path and not vim.uv.fs_stat(req.path) then
-		if req.path_fix then
-			return req.path_fix
-		end
-		return 'missing ' .. req.path
+		return req.path_fix or ('missing ' .. req.path)
 	end
 	if req.server and not vim.lsp.is_enabled(req.server) then
 		return req.server .. ' not enabled'
@@ -72,12 +69,8 @@ for _, case in ipairs(cases) do
 	end
 
 	if H.keep(case) then
-		if why then
-			state = 'skip'
-			reason = why
-		else
-			state = 'run'
-		end
+		state = (why and 'skip' or 'run')
+		reason = why or ''
 	elseif meta and slow_out and H.is_slow(meta) then
 		-- other cases outside the group are not listed: G= asked for them to be left out
 		state = 'slow'
@@ -89,10 +82,7 @@ for _, case in ipairs(cases) do
 	end
 	-- a skip takes no time worth counting
 	if state == 'run' or state == 'slow' then
-		local avg = nil
-		if meta then
-			avg = H.average(meta)
-		end
+		local avg = meta and H.average(meta)
 		if avg then
 			ms[state] = ms[state] + avg
 		else
@@ -116,14 +106,8 @@ local function estimate(total, n_unknown)
 	return text
 end
 
-local shown_group = group
-if shown_group == '' then
-	shown_group = 'default'
-end
-local shown_dir = dir
-if shown_dir == '*' then
-	shown_dir = 'all dirs'
-end
+local shown_group = (group == '' and 'default' or group)
+local shown_dir = (dir == '*' and 'all dirs' or dir)
 table.insert(out, 1, ('%s, group %s'):format(shown_dir, shown_group))
 table.insert(out, ('%d run, %d skip, %d left out as slow'):format(counts.run, counts.skip, counts.slow))
 table.insert(out, 'time to run: ' .. estimate(ms.run, unknown.run))
