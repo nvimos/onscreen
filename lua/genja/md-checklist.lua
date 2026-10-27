@@ -43,17 +43,9 @@ function M.toggle(first, last)
 		first, last = last, first
 	end
 	local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
-	local all_boxed = true
-	local any = false
-	for _, line in ipairs(lines) do
-		if not line:match('^%s*$') then
-			any = true
-			if not has_box(line) then
-				all_boxed = false
-			end
-		end
-	end
-	if not any then
+	local text = vim.tbl_filter(function(line) return not line:match('^%s*$') end, lines)
+	local all_boxed = vim.iter(text):all(has_box)
+	if #text == 0 then
 		vim.notify(SRC .. 'only blank lines, nothing to do')
 		return
 	end

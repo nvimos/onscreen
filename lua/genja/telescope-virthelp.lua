@@ -52,12 +52,7 @@ local function default_desc(key_func)
 		return 'telescope|' .. opts.desc
 	end
 	if type(key_func) == 'table' then
-		local names = {}
-		for _, action in ipairs(key_func) do
-			if type(action) == 'string' then
-				table.insert(names, action)
-			end
-		end
+		local names = vim.tbl_filter(function(action) return type(action) == 'string' end, key_func)
 		return 'telescope|' .. table.concat(names, ' + ')
 	elseif type(key_func) == 'function' then
 		local info = debug.getinfo(key_func)
@@ -96,8 +91,7 @@ local function help_desc(km)
 	if source then
 		return vim.fn.fnamemodify(source, ':t') .. ':' .. line
 	end
-	local plain = desc:gsub('^telescope|', '')
-	return plain
+	return (desc:gsub('^telescope|', ''))
 end
 
 ---Keys left out of the help: <Esc>, <F#> and <S-F#>.
@@ -105,13 +99,7 @@ end
 ---@return boolean
 local function hidden_key(lhs)
 	local key = lhs:lower()
-	if key == '<esc>' then
-		return true
-	end
-	if key:match('^<f%d+>$') or key:match('^<s%-f%d+>$') then
-		return true
-	end
-	return false
+	return key == '<esc>' or key:match('^<f%d+>$') ~= nil or key:match('^<s%-f%d+>$') ~= nil
 end
 
 ---Non-default maps of prompt buffer `bufnr` in `mode`, sorted by description.
@@ -192,10 +180,7 @@ local function help_show(picker, bufnr)
 	if not win or not vim.api.nvim_win_is_valid(win) or not buf or not vim.api.nvim_buf_is_valid(buf) then
 		return
 	end
-	local mode = 'n'
-	if vim.api.nvim_get_mode().mode:sub(1, 1) == 'i' then
-		mode = 'i'
-	end
+	local mode = (vim.api.nvim_get_mode().mode:sub(1, 1) == 'i' and 'i' or 'n')
 	local items = M.help_items(bufnr, mode)
 	if #items == 0 then
 		return
@@ -204,12 +189,8 @@ local function help_show(picker, bufnr)
 	-- descending pickers keep blank rows above the results: anchor on the top visible row;
 	-- all rows go below it as virt_lines, so the help starts on line 2
 	local row = vim.fn.line('w0', win) - 1
-	local virt_lines = {}
-	for _, line in ipairs(lines) do
-		table.insert(virt_lines, { { line, 'TelescopeResultsTitle' } })
-	end
 	vim.api.nvim_buf_set_extmark(buf, help_ns, row, 0, {
-		virt_lines = virt_lines,
+		virt_lines = vim.tbl_map(function(line) return { { line, 'TelescopeResultsTitle' } } end, lines),
 	})
 end
 

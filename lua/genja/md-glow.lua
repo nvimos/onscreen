@@ -71,9 +71,7 @@ end
 ---@param buf integer
 function M.register(buf)
 	require('genja.f2').add_task('md', 'glow preview')
-		:fn(function()
-			M.preview()
-		end)
+		:fn(function() M.preview() end)
 		:buffer(buf)
 		:add()
 end
