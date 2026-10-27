@@ -34,15 +34,10 @@ end
 local function step_size(vertical)
 	local c = M.config
 	if c.step == 'cells' then
-		if vertical then
-			return c.cols
-		end
-		return c.rows
+		return (vertical and c.cols or c.rows)
 	end
-	if vertical then
-		return math.max(1, math.floor(vim.o.columns * c.percent / 100))
-	end
-	return math.max(1, math.floor(vim.o.lines * c.percent / 100))
+	local total = (vertical and vim.o.columns or vim.o.lines)
+	return math.max(1, math.floor(total * c.percent / 100))
 end
 
 --- Grow (sign 1) or shrink (sign -1) the current window along its split.
@@ -67,39 +62,27 @@ end
 
 -- {{{ share cycle (<M-0>)
 
----Width of a winlayout() node: a leaf's width, a column's first leaf, a row's children plus separators.
+---Size of a winlayout() node along `along`: 'row' gives the width (children side by side),
+---'col' the height. A split along the other axis takes its first child's size; one along
+---`along` sums its children plus a separator (or statusline) between each two.
 ---@param node table
+---@param along 'row'|'col'
 ---@return integer
-local function node_width(node)
+local function node_size(node, along)
 	if node[1] == 'leaf' then
-		return vim.api.nvim_win_get_width(node[2])
-	end
-	if node[1] == 'col' then
-		return node_width(node[2][1])
-	end
-	local sum = 0
-	for _, child in ipairs(node[2]) do
-		sum = sum + node_width(child)
-	end
-	return sum + #node[2] - 1
-end
-
----Height of a winlayout() node, the same way with rows and columns swapped.
----@param node table
----@return integer
-local function node_height(node)
-	if node[1] == 'leaf' then
+		if along == 'row' then
+			return vim.api.nvim_win_get_width(node[2])
+		end
 		return vim.api.nvim_win_get_height(node[2])
 	end
-	if node[1] == 'row' then
-		return node_height(node[2][1])
+	if node[1] ~= along then
+		return node_size(node[2][1], along)
 	end
-	local sum = 0
+	local sum = #node[2] - 1
 	for _, child in ipairs(node[2]) do
-		sum = sum + node_height(child)
+		sum = sum + node_size(child, along)
 	end
-	-- each window but the last has a statusline between it and the next
-	return sum + #node[2] - 1
+	return sum
 end
 
 ---@param node table
@@ -165,15 +148,13 @@ function M.cycle()
 	if #split[2] == 2 then
 		target = split[2][1]
 	end
+	local size = math.floor(node_size(split, split[1]) * pct / 100)
 	if split[1] == 'row' then
-		local total = node_width(split)
-		vim.api.nvim_win_set_width(some_win(target), math.floor(total * pct / 100))
+		vim.api.nvim_win_set_width(some_win(target), size)
 	else
-		local total = node_height(split)
-		vim.api.nvim_win_set_height(some_win(target), math.floor(total * pct / 100))
+		vim.api.nvim_win_set_height(some_win(target), size)
 	end
-	local other = 100 - pct
-	vim.api.nvim_echo({ { string.format('split %d/%d', pct, other) } }, false, {})
+	vim.api.nvim_echo({ { ('split %d/%d'):format(pct, 100 - pct) } }, false, {})
 end
 -- }}}
 
@@ -190,11 +171,7 @@ end
 
 --- Switch step between percent and fixed cells.
 function M.toggle_step()
-	if M.config.step == 'percent' then
-		M.config.step = 'cells'
-	else
-		M.config.step = 'percent'
-	end
+	M.config.step = (M.config.step == 'percent' and 'cells' or 'percent')
 	vim.notify(SRC .. 'step: ' .. M.config.step)
 end
 
