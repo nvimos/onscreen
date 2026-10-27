@@ -68,11 +68,7 @@ function M.entries(entries, ctx, opts)
 					marked = { action_state.get_selected_entry() }
 				end
 				actions.close(bufnr)
-				local picked = {}
-				for _, selected in ipairs(marked) do
-					table.insert(picked, selected.value)
-				end
-				run.entries(picked, ctx)
+				run.entries(vim.tbl_map(function(selected) return selected.value end, marked), ctx)
 			end)
 			return true
 		end,

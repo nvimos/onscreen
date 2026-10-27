@@ -46,67 +46,60 @@ end
 -- have nothing left to add.
 ---@return genja.f2.GitFile[]
 local function parse_status(stdout)
-	local files = {}
-	for _, file in ipairs(status_entries(stdout)) do
-		if file.xy == '??' or file.xy:sub(2, 2) ~= ' ' then
-			table.insert(files, file)
-		end
-	end
-	return by_path(files)
+	return by_path(vim.tbl_filter(function(file)
+		return file.xy == '??' or file.xy:sub(2, 2) ~= ' '
+	end, status_entries(stdout)))
 end
 
 -- Files with a staged change (X set, not untracked): what `git restore --staged` can take back.
 ---@return genja.f2.GitFile[]
 local function parse_staged(stdout)
-	local files = {}
-	for _, file in ipairs(status_entries(stdout)) do
+	return by_path(vim.tbl_filter(function(file)
 		local x = file.xy:sub(1, 1)
-		if x ~= ' ' and x ~= '?' then
-			table.insert(files, file)
-		end
-	end
-	return by_path(files)
+		return x ~= ' ' and x ~= '?'
+	end, status_entries(stdout)))
 end
 
+---Run `git <args> -- <paths>` in root; `on_ok(stderr)` after success, then refresh oil-git
+---(it refreshed on picker close, before git finished).
 ---@param root string
+---@param args string[]
 ---@param paths string[]
-local function git_unstage(root, paths)
-	local cmd = { 'git', 'restore', '--staged', '--' }
-	vim.list_extend(cmd, paths)
-	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
+---@param on_ok fun(stderr: string)
+local function git_paths(root, args, paths, on_ok)
+	local cmd = vim.list_extend(vim.list_extend({ 'git' }, args), { '--' })
+	vim.system(vim.list_extend(cmd, paths), { cwd = root, text = true }, vim.schedule_wrap(function(res)
 		if res.code ~= 0 then
-			vim.notify(SRC .. 'git restore --staged failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
+			vim.notify(SRC .. 'git ' .. table.concat(args, ' ') .. ' failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
 		else
-			vim.notify(SRC .. 'unstaged ' .. #paths .. ' file(s)')
+			on_ok(res.stderr or '')
 		end
 		if vim.bo.filetype == 'oil' then
 			require('genja.oil.git').refresh_oil_git()
 		end
 	end))
+end
+
+---@param root string
+---@param paths string[]
+local function git_unstage(root, paths)
+	git_paths(root, { 'restore', '--staged' }, paths, function()
+		vim.notify(SRC .. 'unstaged ' .. #paths .. ' file(s)')
+	end)
 end
 
 ---@param root string
 ---@param paths string[]
 ---@param on_added? fun() called after a successful add
 local function git_add(root, paths, on_added)
-	local cmd = { 'git', 'add', '--' }
-	vim.list_extend(cmd, paths)
-	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
-		if res.code ~= 0 then
-			vim.notify(SRC .. 'git add failed:\n' .. (res.stderr or ''), vim.log.levels.ERROR)
-		else
-			if res.stderr and res.stderr ~= '' then
-				vim.notify(SRC .. res.stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
-			end
-			if on_added then
-				on_added()
-			end
+	git_paths(root, { 'add' }, paths, function(stderr)
+		if stderr ~= '' then
+			vim.notify(SRC .. stderr, vim.log.levels.WARN) -- e.g. CRLF warnings
 		end
-		-- oil-git refreshed on picker close, before git add finished
-		if vim.bo.filetype == 'oil' then
-			require('genja.oil.git').refresh_oil_git()
+		if on_added then
+			on_added()
 		end
-	end))
+	end)
 end
 
 -- status after `git add`: the worktree change moves to the staged column
@@ -130,18 +123,18 @@ end
 ---@param staged? boolean
 ---@return string[] lines, string filetype
 local function preview_lines(root, file, staged)
-	if staged then
-		local res = vim.system({ 'git', 'diff', '--cached', '--', file.path }, { cwd = root, text = true }):wait()
-		return vim.split(res.stdout or '', '\n'), 'diff'
-	end
-	if file.xy == '??' then
+	if file.xy == '??' and not staged then
 		local ok, lines = pcall(vim.fn.readfile, root .. '/' .. file.path, '', 500)
 		if not ok then
 			return { 'unreadable: ' .. file.path }, ''
 		end
 		return lines, vim.filetype.match({ filename = file.path }) or ''
 	end
-	local res = vim.system({ 'git', 'diff', '--', file.path }, { cwd = root, text = true }):wait()
+	local cmd = { 'git', 'diff', '--', file.path }
+	if staged then
+		table.insert(cmd, 3, '--cached')
+	end
+	local res = vim.system(cmd, { cwd = root, text = true }):wait()
 	return vim.split(res.stdout or '', '\n'), 'diff'
 end
 
@@ -149,12 +142,8 @@ end
 -- green, unstaged column and untracked red
 ---@param file genja.f2.GitFile
 local function display(file)
-	local text = file.xy .. ' ' .. file.path
-	local staged = 'Added'
-	if file.xy == '??' then
-		staged = 'Removed'
-	end
-	return text, { { { 0, 1 }, staged }, { { 1, 2 }, 'Removed' } }
+	local first = (file.xy == '??' and 'Removed' or 'Added')
+	return file.xy .. ' ' .. file.path, { { { 0, 1 }, first }, { { 1, 2 }, 'Removed' } }
 end
 
 ---@param root string
@@ -209,11 +198,7 @@ local function pick_files(root, files, staged)
 				if #selected == 0 then
 					selected = { action_state.get_selected_entry() }
 				end
-				local paths = {}
-				for _, entry in ipairs(selected) do
-					table.insert(paths, entry.value.path)
-				end
-				return paths
+				return vim.tbl_map(function(entry) return entry.value.path end, selected)
 			end
 			-- same, and closes the picker
 			local function take_paths()

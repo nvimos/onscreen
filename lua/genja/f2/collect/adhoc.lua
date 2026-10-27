@@ -19,6 +19,7 @@ local function restart_gopls(dir)
 			local name = vim.fs.normalize(vim.api.nvim_buf_get_name(buf))
 			if vim.startswith(name:lower(), dir:lower() .. '/') then
 				below = true
+				break
 			end
 		end
 		if below then

@@ -129,11 +129,10 @@ function M.collect(ctx, done)
 			done({})
 			return
 		end
-		local entries = {}
 		local nothing = function() end -- targets aren't stored
-		for _, task in ipairs(sorted_tasks(targets, target_prefixes(dir, makefiles), dir)) do
-			table.insert(entries, { task = task, remove = nothing })
-		end
+		local entries = vim.tbl_map(function(task)
+			return { task = task, remove = nothing }
+		end, sorted_tasks(targets, target_prefixes(dir, makefiles), dir))
 		done({
 			{
 				group = 'make',

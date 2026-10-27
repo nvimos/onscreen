@@ -11,11 +11,7 @@ local function cmd_string(cmd)
 	if type(cmd) == 'string' then
 		return cmd
 	end
-	local parts = {}
-	for _, arg in ipairs(cmd) do
-		table.insert(parts, vim.fn.shellescape(arg))
-	end
-	return table.concat(parts, ' ')
+	return table.concat(vim.tbl_map(vim.fn.shellescape, cmd), ' ')
 end
 
 ---Run cmd as an overseer task.

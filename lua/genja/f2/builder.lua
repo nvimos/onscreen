@@ -65,11 +65,7 @@ end
 ---Remove after a run; for cmd the exit code that removes it (default 0).
 ---@param code? integer
 function Builder:autoremove(code)
-	if code == nil then
-		self.task.autoremove = true
-	else
-		self.task.autoremove = code
-	end
+	self.task.autoremove = (code == nil and true or code)
 	return self
 end
 
