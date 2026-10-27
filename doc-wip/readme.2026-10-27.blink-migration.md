@@ -41,7 +41,7 @@ The dictionary source's prefix index stays as it is. blink filters by keyword it
 ## Outside the plugin
 
 - `plug-wip/genja-ask.nvim/lua/genja-ask/init.lua`: `cmp.setup.buffer({ enabled = false })` becomes `vim.b[buf].completion = false`. Both can stay during the switch.
-- `lua/lazyp/langs/php-laravel.lua`: blade-nav.nvim lists `hrsh7th/nvim-cmp` as a dependency (its cmp source). It needs blink.compat or its own blink source (unchecked).
+- `lua/lazyp/langs/php-laravel.lua`: blade-nav.nvim lists `hrsh7th/nvim-cmp` as a dependency; it has its own blink source (`blade-nav.integrations.blink`), see Decisions.
 - `lua/lazyp/langs-comps/copilot.lua`: comments say nvim-cmp owns `<Tab>`; copilot.vim's ghost text is independent.
 - genja-commit's CLAUDE.md: "`<CR>` confirms only a selected item" holds only with `preselect = false`.
 - `lua/lazyp/new/genja-comp011.lua`: dependency `hrsh7th/nvim-cmp` becomes `saghen/blink.cmp` (`version = '1.*'`). `lua/lazyp/langs-comps/nvim-cmp.lua` and the cmp-* specs get `-- not used: 2026-10`.
@@ -58,8 +58,16 @@ The dictionary source's prefix index stays as it is. blink filters by keyword it
 
 Rough size: about 300 lines changed in `lua/genja/completion/`, plus the test helper. Nothing in the LSP half beyond the capabilities block.
 
-## Open questions
+## Decisions (2026-10-27)
 
-1. `<CR>`: accept only a selected item (as now), or blink's default (first item preselected, `<CR>` takes it)?
-2. Fuzzy matcher: the prebuilt Rust dll, or the Lua one to avoid a binary download?
-3. blade-nav: keep it through blink.compat, or drop its completion?
+- `<CR>`: blink's default (first item preselected, `<CR>` accepts it). Keymaps file keeps the old behaviour as a commented-out block:
+
+  ```lua
+  -- old nvim-cmp behaviour: nothing preselected, <CR> accepts only an item picked with <Tab>
+  -- opts.completion = { list = { selection = { preselect = false, auto_insert = true } } }
+  -- opts.keymap['<CR>'] = { 'accept', 'fallback' }
+  ```
+  genja-commit's CLAUDE.md bullet ("`<CR>` confirms only a selected item") changes with it.
+- Fuzzy matcher: the fastest, the prebuilt Rust one: `version = '1.*'`, `fuzzy = { implementation = 'prefer_rust_with_warning' }` (warns and falls back to Lua if the dll is missing).
+- blade-nav (Laravel only: `gf` on Blade directives, components, routes, views; completes `<x-` components and `route('` names): has its own blink source, no blink.compat:
+  `providers['blade-nav'] = { name = 'blade-nav', module = 'blade-nav.integrations.blink' }`, listed in `per_filetype` for `blade` and `php`. Its spec drops the `hrsh7th/nvim-cmp` dependency (upstream marks it optional).
