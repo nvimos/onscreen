@@ -114,6 +114,41 @@ migration from 0.9 to 0.11 (the file that started it all)
       lua/lazyp/new/genja-finder.lua, A2); uncomment to switch a key off; untested by hand
   - [x] 2026-10-26: <C-/> stays; loclist/quickfix picker keys got descs, so its list shows
       `Telescope: all to quickfix` etc. instead of action names (lua/genja/map-telescope.lua)
-      - guide: doc-wip/readme.2026-10-26.telescope-default-keys.md
+    - guide: doc-wip/readme.2026-10-26.telescope-default-keys.md
+
+- [ ] want true "Ghost Text" (gray text inside the buffer like GitHub Copilot) rather than a popup menu, it is highly recommended to use llm.nvim or copilot.vim architectural alternatives alongside blink.cmp.
+  - integrate ollama as a source / provider / backend ( ollama run qwen3.5
+  - use qwen
+    - 0.8b 2b 4b
+  - compare copilot.vim and llm.nvim. i probably want llm.nvim
+    - which parts (in my current config) do i have to rip out to get it.
+    - i think im using copilot.vim already
+  - set up the fastest/smallest qwen as a blink source in addition
+
+- [ ] set up a pre-write handler for this:
+  - when exiting...
+      E37: No write since last change
+      E162: No write since last change for buffer "C:/Users/jazzo/foo.txt"
+      Press ENTER or type command to continue
+  - im trying to simplify the act of closing unsaved buffers
+  - show a telescope picker with all unsaved buffers and files like that
+    - each file is a line in the picker (an item)
+    - one of several actions are possible for each file
+      - <m-x> discard without saving and close
+      - <m-w> write the buffer and keep open
+    - non-file buffers (like the one that is maked by DumpMessages)
+      - <m-w> does : start :cmd mode and feed keys :w ~/tmp/bufw-«WW»-«first-3-words»
+        - «WW» is the burrent week number
+        - «first-3-words» are the fist word-like patters from the buffer
+          - these should be treated:
+                      remove non-ascii, replace space with -, join by -, replace several -- by -
+                      essentially make the firs 3-word like text bolbs from the buffer safe for a filename
+      - <m-x> close the buffer and wipe it or whatever. throw it away
+    - real-file buffers
+      - <m-w> write out the file
+      - <m-x> reset the buffer i.e replace with on-disk contents
+  - after taking an action for the file the line in the picker disappears
+    - if the triggering action was to save a session and exit, that should be done
+    - if the triggering action was quit, that should be done
 
 <!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->
