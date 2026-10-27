@@ -64,9 +64,33 @@ local function prepare_checkmake(linter, buf)
 		linter.args = vim.deepcopy(checkmake_args)
 		return project
 	end
-	linter.args = { '--config', CHECKMAKE_CONFIG }
-	vim.list_extend(linter.args, vim.deepcopy(checkmake_args))
+	linter.args = vim.list_extend({ '--config', CHECKMAKE_CONFIG }, vim.deepcopy(checkmake_args))
 	return nil
+end
+
+---checkmake output in one line per record, `@@` ends one: nvim-lint passes --format='…\n'
+---with shell quotes; on Windows no shell strips them (and a newline can't pass through
+---cmd.exe), so nothing parsed.
+local CHECKMAKE_FORMAT = '--format={{.LineNumber}}:{{.Rule}}:{{.Violation}}@@'
+
+---@param output string
+---@return vim.Diagnostic[]
+local function parse_checkmake(output)
+	local diagnostics = {}
+	for record in output:gmatch('(.-)@@') do
+		local lnum, rule, message = vim.trim(record):match('^(%d+):([^:]+):(.*)$')
+		if lnum then
+			table.insert(diagnostics, {
+				lnum = math.max(tonumber(lnum) - 1, 0),
+				col = 0,
+				message = message,
+				code = rule,
+				source = 'checkmake',
+				severity = vim.diagnostic.severity.WARN,
+			})
+		end
+	end
+	return diagnostics
 end
 
 ---Shared markdownlint rules (line length off), used when the project has none of its own.
@@ -103,8 +127,7 @@ local function prepare_vale(linter, buf)
 	if not vim.uv.fs_stat(vim.fs.joinpath(VALE_STYLES, 'Microsoft')) then
 		return false
 	end
-	linter.args = { '--config', VALE_CONFIG }
-	vim.list_extend(linter.args, vim.deepcopy(vale_args))
+	linter.args = vim.list_extend({ '--config', VALE_CONFIG }, vim.deepcopy(vale_args))
 	-- VALE_STYLES_PATH overrides StylesPath, so the ini needs no machine-specific path
 	linter.env = { VALE_STYLES_PATH = VALE_STYLES }
 	return nil
@@ -168,11 +191,7 @@ local function wsl_distro()
 	if not ok then
 		return nil
 	end
-	local wsl = lsp.get().phpactor_wsl
-	if wsl then
-		return wsl.distro
-	end
-	return nil
+	return (lsp.get().phpactor_wsl or {}).distro
 end
 
 ---ansible-lint run by wsl.exe on the saved file; output lines `path:line[:col]: rule: message`.
@@ -224,22 +243,17 @@ end
 ---@return string[]
 local function names_for(buf)
 	local names = {}
-	local seen = {}
 	for _, part in ipairs(vim.split(vim.bo[buf].filetype, '.', { plain = true })) do
-		for _, name in ipairs(M.by_ft[part] or {}) do
-			if not seen[name] then
-				seen[name] = true
-				table.insert(names, name)
-			end
-		end
+		vim.list_extend(names, M.by_ft[part] or {})
 	end
-	for _, name in ipairs(M.any) do
-		if not seen[name] then
-			seen[name] = true
-			table.insert(names, name)
-		end
-	end
-	return names
+	vim.list_extend(names, M.any)
+	-- vim.list.unique is 0.12+
+	local seen = {}
+	return vim.tbl_filter(function(name)
+		local first = not seen[name]
+		seen[name] = true
+		return first
+	end, names)
 end
 
 ---Is the linter's command on PATH?
@@ -285,6 +299,37 @@ local function name_failed_linters(lint)
 	end
 end
 
+---Should linter `name` run on `buf` now, and in which dir?
+---@param name string
+---@param linter table|nil
+---@param buf integer
+---@param event string
+---@return boolean run
+---@return string|nil cwd
+local function should_run(name, linter, buf, event)
+	if not linter or not available(linter) then
+		return false
+	end
+	if event == 'InsertLeave' and not linter.stdin then
+		return false
+	end
+	if COND[name] and not COND[name](buf) then
+		return false
+	end
+	if ROOT_MARKERS[name] then
+		local cwd = vim.fs.root(buf, ROOT_MARKERS[name])
+		return cwd ~= nil, cwd
+	end
+	if name == 'checkmake' then
+		return true, prepare_checkmake(linter, buf)
+	end
+	if name == 'vale' then
+		local cwd = prepare_vale(linter, buf)
+		return cwd ~= false, cwd or nil
+	end
+	return true, nil
+end
+
 ---Lint `buf` with its linters that are installed and apply here.
 ---@param buf integer
 ---@param event string autocmd event; InsertLeave runs only stdin linters (the file isn't saved)
@@ -298,30 +343,8 @@ function M.lint(buf, event)
 		if type(linter) == 'function' then
 			linter = linter()
 		end
-		local ok = linter ~= nil and available(linter)
-		if ok and event == 'InsertLeave' and not linter.stdin then
-			ok = false
-		end
-		if ok and COND[name] then
-			ok = COND[name](buf)
-		end
-		local cwd = nil
-		if ok and ROOT_MARKERS[name] then
-			cwd = vim.fs.root(buf, ROOT_MARKERS[name])
-			ok = cwd ~= nil
-		end
-		if ok and name == 'checkmake' then
-			cwd = prepare_checkmake(linter, buf)
-		end
-		if ok and name == 'vale' then
-			local vale_cwd = prepare_vale(linter, buf)
-			if vale_cwd == false then
-				ok = false
-			else
-				cwd = vale_cwd
-			end
-		end
-		if ok then
+		local run, cwd = should_run(name, linter, buf, event)
+		if run then
 			vim.api.nvim_buf_call(buf, function()
 				lint.try_lint(name, { cwd = cwd })
 			end)
@@ -347,28 +370,10 @@ function M.setup()
 
 	vim.api.nvim_create_user_command('ValeSync', vale_sync, { desc = 'Lint: download the shared vale styles' })
 
-	-- checkmake: nvim-lint passes --format='…\n' with shell quotes; on Windows no shell strips
-	-- them (and a newline can't pass through cmd.exe), so nothing parsed. One line, `@@` ends a record.
 	local checkmake = lint.linters.checkmake
 	if vim.fn.has('win32') == 1 and type(checkmake) == 'table' then
-		checkmake.args = { '--format={{.LineNumber}}:{{.Rule}}:{{.Violation}}@@' }
-		checkmake.parser = function(output)
-			local diagnostics = {}
-			for record in output:gmatch('(.-)@@') do
-				local lnum, rule, message = vim.trim(record):match('^(%d+):([^:]+):(.*)$')
-				if lnum then
-					table.insert(diagnostics, {
-						lnum = math.max(tonumber(lnum) - 1, 0),
-						col = 0,
-						message = message,
-						code = rule,
-						source = 'checkmake',
-						severity = vim.diagnostic.severity.WARN,
-					})
-				end
-			end
-			return diagnostics
-		end
+		checkmake.args = { CHECKMAKE_FORMAT }
+		checkmake.parser = parse_checkmake
 	end
 
 	local group = vim.api.nvim_create_augroup('genja_lint', { clear = true })
