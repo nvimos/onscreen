@@ -22,16 +22,17 @@ return {
 			enabled = {
 				-- files from lua/genja/lang/ sans .lua
 				bash       = true,
+				powershell = true,
 				lua        = true,
-				c_cpp      = false,
-				go         = false,
 				json       = true,
+				vim        = true,
+				go         = true,
+				c_cpp      = false,
 				php        = false,
-				powershell = false,
 				python     = false,
 				typescript = false,
-				vim        = true,
 			},
+
 			mason = { ui = { border = 'double' } }, -- for require('mason').setup()
 			-- for vim.diagnostic.config()
 			diagnostics = {

@@ -1,0 +1,43 @@
+
+
+-- U+005F - LOW LINE: _
+-- U+203E - OVERLINE: ‾
+-- U+FF3F - FULLWIDTH LOW LINE: ＿
+-- U+0332 - COMBINING LOW LINE: ′̲ (This combines with the character before it)
+
+-- U+00B7 - MIDDLE DOT: ·
+-- U+2022 - BULLET: •
+-- U+2219 - BULLET OPERATOR: ∙
+-- U+00B4 - ACUTE ACCENT: ́ (Slightly raised)
+-- U+02D9 - DOT ABOVE: ˙ (Above)
+-- U+02C9 - MODIFIER LETTER MACRON: ˉ (Above)
+-- U+02D0 - MODIFIER LETTER TRIANGULAR COLON: ː (Above)
+--vim.opt.showbreak = '\\      ' 
+-- vim.opt.showbreak = '⦚      '
+-- vim.opt.showbreak = '⧙      '
+-- vim.opt.showbreak = '⧛      '
+-- vim.opt.showbreak = '⧚      '
+-- vim.opt.showbreak = '⧘      '
+-- vim.opt.showbreak = '⬈      '
+-- vim.opt.showbreak = '⬊      '
+-- vim.opt.showbreak = '⬋      '
+-- vim.opt.showbreak = '⬎      '
+-- vim.opt.showbreak = '⬏      '
+-- vim.opt.showbreak = '⬐      '
+-- vim.opt.showbreak = '⬑      '
+-- | 10214   | \u27e6  | ⟦     |
+-- | 10215   | \u27e7  | ⟧     |
+-- | 10216   | \u27e8  | ⟨     |
+-- | 10217   | \u27e9  | ⟩     |
+-- | 10218   | \u27ea  | ⟪     |
+-- | 10219   | \u27eb  | ⟫     |
+-- | 10220   | \u27ec  | ⟬     |
+-- | 10221   | \u27ed  | ⟭     |
+-- | 10222   | \u27ee  | ⟮     |
+-- | 10223   | \u27ef  | ⟯     |
+
+-- | 09252   | \u2424  | ␤     |
+-- | 09226   | \u240a  | ␊     |
+-- | 09773   | \u262d  | ☭     |
+-- vim.opt.showbreak = '⤴      '
+-- vim.opt.showbreak = '⤣      '

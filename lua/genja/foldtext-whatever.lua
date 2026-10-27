@@ -1,0 +1,66 @@
+-- maybe-todo: redo this for nvim
+-- vim.cmd[[
+-- " {{{ command WrapFold -- insert fold marker around selection
+-- function! s:wrap_fold_with_marker(fold_title='NamelessFold') range
+--   let csp = split(&commentstring, '%s')
+--   if len(csp) == 2
+--     let prefix = substitute(csp[0], '\s*$', '', '')
+--     let suffix = substitute(csp[1], '^\s*', '', '')
+--   else
+--     let suffix = ''
+--     let prefix = substitute(&commentstring, '%s', '', 'g')
+--   endif
+--   " call append(a:firstline - 1, printf('%s %s %s', prefix, repeat('{', 3), a:fold_title))
+--   let m1 = repeat('{', 3)
+--   let m2 = repeat('}', 3)
+--   let a = printf('%s %s %s', prefix, m1, a:fold_title)
+--   let b = printf('%s %s', prefix, m2)
+--   call append(a:firstline - 1, a)
+--   call append(getpos("'>")[1], b)
+-- endfunction
+-- command! -range -nargs=* WrapFold call <SID>wrap_fold_with_marker(<f-args>)
+-- " }}}
+-- " {{{ generate foldtext
+-- function s:generate_foldtext1()
+-- 	let margin = &fdc + &number * &numberwidth
+-- 	let extra = 0
+-- 	let wwin = winwidth(0) - margin - extra
+-- 	let hidden = v:foldend - v:foldstart
+-- 	let line = getline(v:foldstart)
+-- 	let csp = split(&commentstring, '%s')
+-- 	let comment1 = len(csp)>0 ? csp[0] : ' '
+-- 	let line = substitute(line, comment1 , ' ', '')
+-- 	let mark = split(&foldmarker, ',')
+-- 	let mark1 = len(mark) > 0 ? mark[0] : ''
+-- 	let line = substitute(line, mark1 , repeat(' ', len(mark1)), '')
+--  	let stab = strpart(repeat(' ', 99), 0, &tabstop)
+--  	let line = substitute(line, '\t', stab, 'g')
+-- " {{{ zzz
+--  	let line = strpart(line, 0, wwin -len(hidden))
+--  	let fill = wwin - len(line) - len(hidden)
+-- 	let prefixlen = len(matchstr(line, '^\s*'))
+-- 	let line = strpart(line, prefixlen)
+-- " }}}
+-- 	let left = '-'
+-- 	let left = '⏤'
+-- 	while prefixlen > 0 && strdisplaywidth(prefixs) < 3
+-- 		let left = '⏤'.prefixs
+-- 		let prefixlen -= 1
+-- 	endwhile
+-- 	" U+23E4 STRAIGHTNESS
+--  	return repeat(' ', prefixlen-2).left .' '
+-- 				\. line  . ' ⏤⏤⏤' .
+-- 				\. repeat(' ', fill-4) .
+-- 				\ hidden
+-- 
+--  	" return line . ' '
+-- " 				\ . repeat(' ', fillcharcount-3)
+-- " 				\ . repeat('…', 3)
+-- " 				\ .' '. hidden .' '
+-- endfunction
+-- set foldtext=s:generate_foldtext1()
+-- 
+-- ]]
+
+
+-- }}}

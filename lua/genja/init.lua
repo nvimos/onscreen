@@ -12,6 +12,7 @@ local Safeload = require('genja.api').Safeload
 Safeload 'genja.env'
 Safeload 'genja.map-zero'           -- stable early maps, if config breaks
 Safeload 'genja.opt'                -- just static options
+Safeload 'genja.opt-listchars'
 Safeload 'genja.fu'                 -- userfuncs
 
 require 'genja.fn'.win_chdir_home() -- cd ~ on windows
@@ -24,7 +25,7 @@ vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 -- selene: allow(multiple_statements)
 Safeload('genja.hilite', function(m) m.setup() end)
-Safeload 'genja.opt-term'           -- terminal cursor; after hilite, reads StatusLine color
+Safeload 'genja.term' -- terminal cursor; after hilite, reads StatusLine color
 Safeload 'genja.auto' -- autocommads
 Safeload 'genja.lazy-plug-spec'
 Safeload 'genja.map-lsp'
