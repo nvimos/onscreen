@@ -20,32 +20,27 @@ local function executable(...)
 			return path
 		end
 	end
-	if #paths > 0 then
-		return paths[1]
+	return paths[1] or ''
+end
+
+-- open `url` with rundll32's `handler` on Windows, else xdg-open
+local function rundll_or_xdg(handler, url)
+	local cmd = { 'xdg-open', url }
+	if vim.fn.executable('rundll32') == 1 then
+		cmd = { 'rundll32', handler, url }
 	end
-	return ""
+	local jid = vim.fn.jobstart(cmd, { detach = false })
+	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
 end
 -- }}}
 
--- {{{ open in browser
+-- {{{ open in browser, in shell
 function M.open_in_browser(url)
-	local cmd = { 'xdg-open', url }
-	if vim.fn.executable('rundll32') == 1 then
-		cmd = { 'rundll32', 'url.dll,FileProtocolHandler', url }
-	end
-	local jid = vim.fn.jobstart(cmd, { detach = false })
-	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
+	rundll_or_xdg('url.dll,FileProtocolHandler', url)
 end
--- }}}
 
--- {{{ open in shell
 function M.open_in_shell(url)
-	local cmd = { 'xdg-open', url }
-	if vim.fn.executable('rundll32') == 1 then
-		cmd = { 'rundll32', 'shell32.dll,ShellExec_RunDLL', url }
-	end
-	local jid = vim.fn.jobstart(cmd, { detach = false })
-	assert(jid > 0, 'jobstart() err: ' .. vim.inspect(cmd))
+	rundll_or_xdg('shell32.dll,ShellExec_RunDLL', url)
 end
 -- }}}
 
@@ -55,27 +50,24 @@ M.open_in_explorer = function()
 	if not path then
 		return
 	end
-	if G.IsDir(path) then
-		os.execute('explorer.exe ' .. path)
-	else
-		os.execute('explorer.exe ' .. G.Dirname(path))
+	if not G.IsDir(path) then
+		path = G.Dirname(path)
 	end
+	os.execute('explorer.exe ' .. path)
 end
 -- }}}
 
 -- {{{ open via shell
 M.open_via_shell = function()
-	local get_open_cmd = function(path)
-		if false then
-		elseif 1 == vim.fn.has("mac") then
-			return { "open", path }
-		elseif 1 == vim.fn.executable("explorer.exe") then
-			return { "explorer.exe", path }
-		elseif 1 == vim.fn.executable("xdg-open") then
-			return { "xdg-open", path }
-		else
-			return nil, "no handler found";
+	local function get_open_cmd(path)
+		if vim.fn.has('mac') == 1 then
+			return { 'open', path }
+		elseif vim.fn.executable('explorer.exe') == 1 then
+			return { 'explorer.exe', path }
+		elseif vim.fn.executable('xdg-open') == 1 then
+			return { 'xdg-open', path }
 		end
+		return nil, 'no handler found'
 	end
 	local e, dir, path = utils.oil_entry_dir_path()
 	if not e or not dir then
@@ -83,7 +75,7 @@ M.open_via_shell = function()
 	end
 	local cmd, err = get_open_cmd(path)
 	if not cmd then
-		vim.notify(string.format(SRC .. "could not open %s: %s", path, err), vim.log.levels.ERROR)
+		vim.notify((SRC .. 'could not open %s: %s'):format(path, err), vim.log.levels.ERROR)
 		return
 	end
 	if G.IsDir(path) then
@@ -96,33 +88,26 @@ M.open_via_shell = function()
 		-- only; on Windows vim.ui.open now runs `cmd.exe /c start "" <path>`.
 		-- Oil's gx (actions.open_external) already uses vim.ui.open.
 		local jid = vim.fn.jobstart(cmd, { detach = false }) -- original is "true"
-		assert(jid > 0, "Failed to start job")
+		assert(jid > 0, 'Failed to start job')
 	end
 end
 -- }}}
 
 -- {{{ rate on movielens
 M.rate_on_movielens = function()
-	local oil_entries = {}
-	local ok, oil = pcall(require, 'oil')
-	if ok then
-		if entry.VisualLine == vim.fn.mode() then
-			local buf = vim.api.nvim_get_current_buf()
-			local a, b = utils.visual_line_range()
-			for i = a, b do
-				local m = entry.entry_from_oil(oil.get_current_dir(), oil.get_entry_on_line(buf, i))
-				table.insert(oil_entries, m)
-			end
-		else
-			local m = entry.entry_from_oil(oil.get_current_dir(), oil.get_cursor_entry())
-			table.insert(oil_entries, m)
+	local oil = require('oil')
+	local dir = oil.get_current_dir()
+	local raw = { oil.get_cursor_entry() }
+	if entry.VisualLine == vim.fn.mode() then
+		local a, b = utils.visual_line_range()
+		raw = {}
+		for lnum = a, b do
+			table.insert(raw, oil.get_entry_on_line(0, lnum))
 		end
 	end
-	if ok and #oil_entries > 0 then
-		for _, e in pairs(oil_entries) do
-			local name = G.StripSceneTags(e.name)
-			M.open_in_browser('https://movielens.org/explore?q=' .. name)
-		end
+	for _, r in ipairs(raw) do
+		local e = entry.entry_from_oil(dir, r)
+		M.open_in_browser('https://movielens.org/explore?q=' .. G.StripSceneTags(e.name))
 	end
 end
 -- }}}
@@ -133,7 +118,8 @@ M.vlc_rar = function()
 	if not path then
 		return
 	end
-	os.execute(G.Join({ 'start', "A:\\bin\\7z-extract-tmp.bat", path:gsub("%.r%d%d", ".rar") }, ' '))
+	local rar = path:gsub('%.r%d%d', '.rar')
+	os.execute(table.concat({ 'start', [[A:\bin\7z-extract-tmp.bat]], rar }, ' '))
 end
 -- }}}
 
@@ -143,14 +129,10 @@ M.open_in_vlc = function()
 	if not path then
 		return
 	end
-	local vlc        = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]], 'vlc.exe', 'vlc')
+	local vlc = executable([[C:\Program Files\VideoLAN\VLC\vlc.exe]], 'vlc.exe', 'vlc')
 	-- 'shell' is cmd.exe, which os.execute uses too, so shellescape quotes with "..."
-	local cmd        = { 'start', '"play-file"', '/I',
-		vim.fn.shellescape(vlc),
-		vim.fn.shellescape(path) }
-	local z          = G.Join(cmd, ' ')
-	local e          = os.execute(z)
-	if e ~= 0 then
+	local cmd = { 'start', '"play-file"', '/I', vim.fn.shellescape(vlc), vim.fn.shellescape(path) }
+	if os.execute(table.concat(cmd, ' ')) ~= 0 then
 		M.open_in_explorer()
 	end
 end
@@ -214,13 +196,12 @@ M.select_custom = function()
 		return
 	end
 
-	local e, _, _ = utils.oil_entry_dir_path()
+	local e = utils.oil_entry_dir_path()
 	if not e then
 		return
 	end
 	local ext = G.Extensionname(e.name)
-	if false then
-	elseif 'rar' == ext or ext:match('r[a%d][r%d]$') then
+	if ext == 'rar' or ext:match('r[a%d][r%d]$') then
 		vim.cmd [[ OilVlcRar ]]
 	elseif G.IsVideoExtension(ext) then
 		-- M.open_in_explorer()

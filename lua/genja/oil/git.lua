@@ -96,13 +96,9 @@ local function split_tracked(dir, names)
 	local tracked = {}
 	local untracked = {}
 	for _, name in ipairs(names) do
-		local found = false
-		for _, path in ipairs(indexed) do
-			if path == name or vim.startswith(path, name .. '/') then
-				found = true
-				break
-			end
-		end
+		local found = vim.iter(indexed):any(function(path)
+			return path == name or vim.startswith(path, name .. '/')
+		end)
 		if found then
 			table.insert(tracked, name)
 		else
@@ -159,8 +155,7 @@ local function git_on_entries(args, label, opts)
 			return
 		end
 	end
-	local cmd = { 'git' }
-	vim.list_extend(cmd, args)
+	local cmd = vim.list_extend({ 'git' }, args)
 	table.insert(cmd, '--')
 	vim.list_extend(cmd, names) -- relative to dir, which is the cwd below
 
