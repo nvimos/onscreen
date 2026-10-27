@@ -1,6 +1,6 @@
 # Replacing nvim-cmp with blink.cmp in genja-completion011
 
-Research only, nothing changed. Checked against cmp.saghen.dev on 2026-10-27 (blink.cmp v1.10.2).
+Done 2026-10-27 (tag before-blink-2026-w44 is the state before). Checked against cmp.saghen.dev (blink.cmp v1.10.2).
 
 ## Upstream facts that matter here
 

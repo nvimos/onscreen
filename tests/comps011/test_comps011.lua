@@ -246,27 +246,27 @@ for _, c in ipairs(CMP) do
 		-- ask again while the server warms up
 		local found = H.wait(function()
 			return child.lua(string.format([[
-				local cmp = require('cmp')
-				-- close first: an open menu (buffer items) would never ask the server again
-				if cmp.visible() then cmp.close() end
-				cmp.complete()
-				for _, e in ipairs(cmp.get_entries()) do
-					if e.source.name == 'nvim_lsp' and e:get_word() == %q then return true end
+				local blink = require('blink.cmp')
+				for _, item in ipairs(blink.get_items() or {}) do
+					if item.source_id == 'lsp' and vim.startswith(item.label, %q) then return true end
 				end
+				-- not there yet: ask the server again (show() answers on a later poll)
+				blink.hide()
+				blink.show({ providers = { 'lsp' } })
 				return false
 			]], c.want))
 		end, ctx.timeout, 300)
-		-- what cmp offered instead, read before <Esc> closes the menu
+		-- what blink offered instead, read before <Esc> closes the menu
 		local state = nil
 		if not found then
 			state = child.lua([[
-				local cmp = require('cmp')
+				local blink = require('blink.cmp')
 				local items = {}
-				for i, e in ipairs(cmp.get_entries()) do
+				for i, item in ipairs(blink.get_items() or {}) do
 					if i > 20 then break end
-					table.insert(items, e.source.name .. ':' .. e:get_word())
+					table.insert(items, item.source_id .. ':' .. item.label)
 				end
-				-- ask the server directly: empty answer, or cmp not using it?
+				-- ask the server directly: empty answer, or blink not using it?
 				local client = vim.lsp.get_clients({ bufnr = 0 })[1]
 				local direct = 'no client'
 				if client then
@@ -285,14 +285,14 @@ for _, c in ipairs(CMP) do
 						if r.err then table.insert(direct, 'err: ' .. vim.inspect(r.err)) end
 					end
 				end
-				return { visible = cmp.visible(), line = vim.api.nvim_get_current_line(), items = items,
+				return { visible = blink.is_menu_visible(), line = vim.api.nvim_get_current_line(), items = items,
 					clients = vim.tbl_map(function(x) return x.name end, vim.lsp.get_clients({ bufnr = 0 })),
-					sources = vim.tbl_map(function(s) return s.name end, cmp.get_config().sources), direct = direct }
+					sources = require('blink.cmp.config').sources.default, direct = direct }
 			]])
 		end
 		child.type_keys('<Esc>')
 		if not found then
-			error(('%s: no nvim_lsp item %q within %d ms: %s'):format(c.name, c.want, ctx.timeout,
+			error(('%s: no lsp item %q within %d ms: %s'):format(c.name, c.want, ctx.timeout,
 				vim.inspect(state, { newline = ' ', indent = '' })))
 		end
 	end)

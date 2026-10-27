@@ -116,7 +116,7 @@ Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
     starts disabled to save credits: <leader>at or :Copilot enable
     insert:  <M-f>  accept           <M-w>  accept word     <M-j>  accept line
              <M-]>  next             <M-[>  previous        <C-]>  dismiss
-             <M-\>  suggest now      (<Tab> stays with cmp)
+             <M-\>  suggest now      (<Tab> stays with blink)
     normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
     :Copilot setup | status | enable | disable | panel | signout
 

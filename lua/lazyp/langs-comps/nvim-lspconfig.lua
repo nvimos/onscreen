@@ -14,7 +14,6 @@ return {
 		'neovim/nvim-lspconfig', -- only ships default server configs (lsp/*.lua)
 		event = { 'BufReadPre', 'BufNewFile' },
 		dependencies = {
-			'hrsh7th/cmp-nvim-lsp', -- completion capabilities sent to every server
 			'mason-org/mason.nvim', -- installs servers and tools
 			'mason-org/mason-lspconfig.nvim', -- lspconfig name <-> mason package, enable on install
 		},

@@ -7,7 +7,7 @@ return {
 	cmd = { 'Mason', 'MasonInstall' },
 	event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
 	dependencies = {
-		'hrsh7th/nvim-cmp', -- lua/lazyp/comps/nvim-cmp.lua
+		'saghen/blink.cmp', -- lua/lazyp/langs-comps/blink-cmp.lua
 		'neovim/nvim-lspconfig', -- lua/lazyp/comps/nvim-lspconfig.lua
 	},
 

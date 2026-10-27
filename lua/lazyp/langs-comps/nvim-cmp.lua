@@ -1,10 +1,11 @@
--- Plugins for completion. All configuration lives in lua/genja/completion/.
--- No config here: genja-completion011 (lua/genja/lazy-plug-spec.lua) calls
--- cmp.setup() through require('genja.comps').setup().
+-- not used: 2026-10 (blink.cmp instead: lua/lazyp/langs-comps/blink-cmp.lua; tag before-blink-2026-w44
+-- has the nvim-cmp setup of genja-completion011).
+-- Plugins for completion. All configuration lived in lua/genja/completion/.
 ---@type LazySpec
 return {
 	{
 		'hrsh7th/nvim-cmp',
+		enabled = false,
 		event = { 'InsertEnter', 'CmdlineEnter' },
 		dependencies = {
 			'hrsh7th/cmp-nvim-lsp', -- language servers
