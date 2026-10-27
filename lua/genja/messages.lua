@@ -29,10 +29,7 @@ end
 function M.resolve(path)
 	path = vim.fs.normalize(path)
 	if not vim.startswith(path, '...') then
-		if vim.uv.fs_stat(path) then
-			return path
-		end
-		return nil
+		return (vim.uv.fs_stat(path) and path or nil)
 	end
 	for _, dir in ipairs({ 'lua/', 'plugin/', 'after/', 'ftplugin/' }) do
 		local at = path:find('/' .. dir, 1, true)
@@ -91,15 +88,11 @@ end
 ---@param max? integer
 ---@return genja.messages.Location[]
 function M.newest(max)
-	local all = M.locations(M.lines())
-	local out = {}
-	for i = #all, 1, -1 do
-		table.insert(out, all[i])
-		if max and #out >= max then
-			break
-		end
+	local newest = vim.iter(M.locations(M.lines())):rev()
+	if max then
+		newest = newest:take(max)
 	end
-	return out
+	return newest:totable()
 end
 
 ---Open `loc` in the current window.
@@ -143,21 +136,10 @@ function M.dump()
 	end, { buffer = buf, desc = 'Messages: close' })
 end
 
----Locations as quickfix items.
----@param locs genja.messages.Location[]
----@return table[]
-local function qf_items(locs)
-	local items = {}
-	for _, loc in ipairs(locs) do
-		table.insert(items, { filename = loc.filename, lnum = loc.lnum, text = loc.text })
-	end
-	return items
-end
-
 ---:Messages -quick / -loc: append the locations (oldest first) and open the list.
 ---@param loc_list boolean true: this window's location list
 function M.to_list(loc_list)
-	local items = qf_items(M.locations(M.lines()))
+	local items = M.locations(M.lines()) -- filename, lnum, text: already quickfix items
 	if #items == 0 then
 		vim.notify(SRC .. 'no file:line in :messages', vim.log.levels.INFO)
 		return
