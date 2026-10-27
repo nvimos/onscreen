@@ -16,23 +16,9 @@ local eq = MiniTest.expect.equality
 local config = vim.fn.stdpath('config')
 local samples = config .. '/tests/comps011/samples/'
 
----Boot the real config in the child. mason's bin goes on PATH first: in the bare child
----mason may not have run before the first file's servers start.
+---Boot the real config in the child (tests/helpers/real-config.lua).
 local function boot()
-	local sep = ':'
-	if vim.fn.has('win32') == 1 then
-		sep = ';'
-	end
-	vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. sep .. vim.env.PATH
-	child.restart({
-		-- mini.test starts children with --clean, which drops the config dir from the rtp
-		'--cmd', 'set rtp^=' .. config .. ' rtp+=' .. config .. '/after',
-		'--cmd', 'let g:genja_lsp_no_install = v:true',
-		'-u', config .. '/init.vim',
-	})
-	-- lazy fires VeryLazy (nvim-lint, cmp's late parts) after UIEnter; a headless child has no UI
-	child.lua([[vim.api.nvim_exec_autocmds('UIEnter', {})]])
-	H.wait(function() return child.lua([[return vim.g.did_very_lazy == true]]) end, 5000)
+	dofile(config .. '/tests/helpers/real-config.lua').boot_child(child)
 end
 
 ---Copy samples/<name>/ into a fresh temp dir; returns that dir.
