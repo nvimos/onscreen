@@ -1,14 +1,8 @@
--- Terminal-mode cursor
--- no blink, bar or block, in the StatusLine color.
+-- Terminal-mode cursor: no blink, bar or block, in the StatusLine color.
 local SRC = 'lua/genja/opt-term.lua: '
-
 
 local M = {}
 
-
-
----@param name string key of SHAPES
-function M.set_shape(name)
 -- 't:' entries of 'guicursor', picked with :TermCursorShape.
 -- blinkon0 only covers nvim's side: since 0.11 the app in the terminal can set its own blink.
 local SHAPES = {
@@ -16,23 +10,20 @@ local SHAPES = {
 	bar = 't:ver25-blinkon0-TermCursor',
 }
 
-	local entry = SHAPES[name]
-	if entry == nil or not name then
+---@param name string key of SHAPES
+function M.set_shape(name)
+	local entry = SHAPES[name or '']
+	if not entry then
 		vim.notify(SRC .. 'unknown shape: ' .. (name or ''), vim.log.levels.WARN)
 		return
 	end
 	-- drop the old terminal-mode entry, keep the other modes
-	local kept = {}
-	for _, part in ipairs(vim.split(vim.o.guicursor, ',', { trimempty = true })) do
-		if not vim.startswith(part, 't:') then
-			table.insert(kept, part)
-		end
-	end
+	local kept = vim.tbl_filter(function(part)
+		return not vim.startswith(part, 't:')
+	end, vim.split(vim.o.guicursor, ',', { trimempty = true }))
 	table.insert(kept, entry)
 	vim.o.guicursor = table.concat(kept, ',')
 end
-
-
 
 -- TermCursor bg = StatusLine fg; the char under the cursor in the Normal fg (the TUI ignores guifg)
 function M.set_color()
@@ -58,7 +49,7 @@ vim.api.nvim_create_user_command('TermCursorShape', function(args)
 	M.set_shape(args.args)
 end, {
 	nargs = 1,
-	complete = function() return { 'block', 'bar' } end,
+	complete = function() return vim.tbl_keys(SHAPES) end,
 	desc = 'Terminal cursor shape: block or bar',
 })
 
