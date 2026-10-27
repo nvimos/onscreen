@@ -11,9 +11,7 @@ local function comment_parts()
 		return '#', ''
 	end
 	local left, right = cs:match('^(.-)%%s(.-)$')
-	left = vim.trim(left)
-	right = vim.trim(right)
-	return left, right
+	return vim.trim(left), vim.trim(right)
 end
 
 ---@param prefix string

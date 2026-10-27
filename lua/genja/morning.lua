@@ -43,17 +43,9 @@ local function recent_files()
 	if ok then
 		list = recent.list()
 	else
-		for _, f in ipairs(vim.v.oldfiles) do
-			if vim.uv.fs_stat(f) then
-				table.insert(list, f)
-			end
-		end
+		list = vim.tbl_filter(function(f) return vim.uv.fs_stat(f) ~= nil end, vim.v.oldfiles)
 	end
-	local out = {}
-	for i = 1, math.min(RECENT_MAX, #list) do
-		table.insert(out, list[i])
-	end
-	return out
+	return vim.list_slice(list, 1, RECENT_MAX)
 end
 
 ---Lines of `file` matching `pattern`, with their line numbers.

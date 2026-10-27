@@ -46,10 +46,14 @@ local chars = both_ways(char_pairs)
 ---@param like string
 ---@return string
 local function same_case(word, like)
-	if like:upper() == like and like:lower() ~= like then
+	-- has letters and all of them upper case
+	local function upper(s)
+		return s:upper() == s and s:lower() ~= s
+	end
+	if upper(like) then
 		return word:upper()
 	end
-	if like:sub(1, 1):upper() == like:sub(1, 1) and like:sub(1, 1):lower() ~= like:sub(1, 1) then
+	if upper(like:sub(1, 1)) then
 		return word:sub(1, 1):upper() .. word:sub(2)
 	end
 	return word
