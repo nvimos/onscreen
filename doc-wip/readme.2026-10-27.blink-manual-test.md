@@ -43,7 +43,7 @@ with `<Tab>`. Comment it again.
 
 - [ ] `.lua`: inside `require('gen`: lazydev offers module names first.
 - [ ] Any file: `./` then a few letters: file names (path source).
-- [ ] A file without a language server (e.g. `.txt` other than text ft, or `.ini`): words from the buffer.
+- [ ] A file without a language server (e.g. `.ini`): words from the buffer.
 - [ ] `.md` / `.txt`: type `Hou`: English words (`Hour`, `House` …), capitalised; at most 20.
 - [ ] `.gitignore`: type `pl`: dirs of that folder (`plug-wip/`); after `plug-wip/` the next level.
 - [ ] `~/.ssh/config`: at line start `Str`: `StrictHostKeyChecking`; after it and a space the menu
