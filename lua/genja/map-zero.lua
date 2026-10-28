@@ -64,6 +64,7 @@ km('n', '<leader>t=', cmd [[tabmove +1]], nosi 'Tab: move →')
 -- {{{ Toggles
 km('n', '<leader>tw', function() vim.o.wrap = ! vim.o.wrap end, nosi 'Toggle: wrap')
 km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle: number')
+km('n', '<leader>ts', function() vim.o.spell = ! vim.o.spell end, nosi 'Toggle: spelling')
 -- ~ swaps true/false, on/off, +/-, </> … under the cursor, else plain ~ (lua/genja/ext/tilde.lua)
 km('n', '~', function() require('genja.ext.tilde').toggle() end, nosi 'Toggle: switch word or case')
 km('n', '<M-~>', '~', nosi 'Toggle: case (plain ~)')
