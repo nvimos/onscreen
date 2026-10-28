@@ -1,0 +1,5 @@
+- [x] lsp: powershell_es asked the rename disclaimer every session (2026-10-28)
+    - [x] genja-completion011 lang/powershell.lua: settings.powershell.rename.acceptDisclaimer = true
+    - [x] createParameterAlias = false: no [Alias('oldName')] on renamed parameters
+    - [x] names taken from the installed PSES dll strings (powershell.rename), not the guessed renameSymbol.*
+    - [ ] test: restart nvim, grn on a variable in a .ps1 file; no disclaimer prompt, rename applied
