@@ -38,6 +38,7 @@ local function intro_lines()
 		'type  :help<Enter>          for help        ',
 		SEPARATOR,
 		string.format('type  :help news<Enter>     for v%d.%d notes ', vim.version().major, vim.version().minor),
+		'type  :help you<Enter>      selfmaxing      ',
 	}
 end
 

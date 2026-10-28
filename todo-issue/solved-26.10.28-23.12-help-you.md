@@ -1,0 +1,4 @@
+- [x] intro: :help you page (2026-10-28)
+    - [x] doc/you.txt and doc/tags: wellbeing, HALT, activity, alcohol
+    - [x] lua/genja/ext/intro.lua: intro line for :help you
+    - [ ] test: :help you opens it; start screen shows the line

@@ -1,0 +1,81 @@
+*you.txt*	Don't waste your potential
+
+==============================================================================
+CONTENTS						*you*
+
+  1. Five ways to wellbeing ............ |you-wellbeing|
+  2. HALT ............................. |you-halt|
+  3. Minimum physical activity ........ |you-activity|
+  4. How much alcohol is safe ......... |you-alcohol|
+
+==============================================================================
+1. FIVE WAYS TO WELLBEING				*you-wellbeing*
+
+From the New Economics Foundation (2008). Small daily actions.
+
+  Connect		Talk to people: family, friends, colleagues,
+			neighbours. Call instead of texting.
+  Be active		Walk, cycle, play, dance. Find something you enjoy.
+  Take notice		Look around. Notice the weather, the seasons, how
+			you feel. Look up from the screen.
+  Keep learning		Try something new, pick up an old interest, learn
+			to fix or cook something.
+  Give			Do something for someone else. Say thank you,
+			help out, volunteer.
+
+==============================================================================
+2. HALT							*you-halt*
+
+From the 12-step programs. Before acting on a craving, a bad mood or a
+rash decision, ask: am I
+
+  H  Hungry		Eat a proper meal.
+  A  Angry		Name it, walk it off, talk to someone.
+  L  Lonely		Reach out. Call someone, go where people are.
+  T  Tired		Rest, nap, go to bed.
+
+Fix the basic need first. The problem often shrinks after that.
+
+==============================================================================
+3. MINIMUM PHYSICAL ACTIVITY				*you-activity*
+
+Helsedirektoratet (Norwegian Directorate of Health), condensed.
+
+Adults ~
+  - 150-300 minutes of moderate activity a week, or 75-150 minutes of
+    vigorous activity, or a mix.
+  - Muscle strengthening for the large muscle groups, 2+ days a week.
+  - Sit less. Break up long sitting. Any activity beats none.
+
+Older adults (65+) ~
+  - As adults, plus balance training 3+ days a week.
+
+Children and youth (6-17) ~
+  - 60+ minutes of moderate to vigorous activity every day.
+  - Vigorous activity and strengthening 3+ days a week.
+
+Moderate: faster breathing, can still talk (brisk walk).
+Vigorous: hard breathing, talking is hard (running).
+
+==============================================================================
+4. HOW MUCH ALCOHOL IS SAFE				*you-alcohol*
+
+No amount is risk free. Less is better, none is best.
+
+  - "A glass a day is healthy" was a study bias: ill ex-drinkers were
+    counted as abstainers. Corrected, light drinkers live no longer.
+  - Death risk rises clearly from ~25 g/day (women), ~45 g/day (men).
+    One drink is 10-14 g.
+  - Under 40 years of age, the lowest-risk amount is zero.
+  - Alcohol causes at least 7 cancers, from the first drink.
+  - Nordic Nutrition Recommendations 2023 (Helsedirektoratet): no safe
+    limit.
+
+Papers ~
+  Zhao et al. JAMA Netw Open. 2023;6(3):e236185.
+  doi:10.1001/jamanetworkopen.2023.6185
+
+  GBD 2020 Alcohol Collaborators. Lancet. 2022;400(10347):185-235.
+  doi:10.1016/S0140-6736(22)00847-9
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
