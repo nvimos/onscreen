@@ -1,0 +1,5 @@
+- [x] markdown: settings live in after/ftplugin only (2026-10-28)
+    - [x] lua/genja/auto-alias.vim: _markdown and _git augroups removed (after/ftplugin/markdown.vim, gitcommit.lua)
+    - [x] comments and doc-wip name after/ftplugin/markdown.vim instead of markdown.lua
+    - [x] readme.cheatsheet.md: j/k by screen line, gq to 120 columns
+    - [ ] test: markdown buffer wraps, no spell; gitcommit wraps, spell on

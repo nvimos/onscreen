@@ -168,7 +168,7 @@ Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/m
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats
 
-F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.lua; visual <F2> in map-telescope.lua)
+F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.vim; visual <F2> in map-telescope.lua)
 
     <F2> > markdown: checklist toggle   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
@@ -176,6 +176,8 @@ F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from 
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
     insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
 
+    j k          screen line through wrapped text; with a count, real line (after/ftplugin/markdown.vim)
+    gq           format to 120 columns (textwidth); typing doesn't hard-wrap
 F2 in oil, git add picker (lua/genja/f2/collect/git.lua)
 
     <CR>    git add (marked or current), closes    <M-a>   git add current, stays; row shows the new status

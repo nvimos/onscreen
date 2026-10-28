@@ -9,7 +9,7 @@ What: three ways to fix markdown mistakes.
 | insert mode | abbreviations from `lua/genja/ext/md-abbrev.txt`: `teh` + space -> `the` |
 
 Files: `lua/genja/ext/md-fix.lua`, `lua/genja/ext/md-abbrev.lua`, `lua/genja/ext/md-abbrev.txt`,
-set up per buffer in `after/ftplugin/markdown.lua`. Tests: `tests/md/test_md_fix.lua`
+set up per buffer in `after/ftplugin/markdown.vim`. Tests: `tests/md/test_md_fix.lua`
 (`make test D=md` in `tests/`). markdownlint: the project's config, else `lint/.markdownlint.jsonc`.
 
 ## Your list

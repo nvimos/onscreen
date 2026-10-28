@@ -97,19 +97,7 @@ augroup _resize_equalize_tabs
 	autocmd VimResized * let s:tab = tabpagenr() | tabdo wincmd = | execute s:tab .. 'tabnext'
 augroup end
 
-augroup _markdown
-	autocmd!
-	autocmd FileType markdown setlocal wrap
-	autocmd FileType markdown setlocal nospell
-	autocmd FileType markdown setlocal listchars=tab:\ \ 
-	autocmd FileType markdown setlocal listchars=multispace:\ \ \ \ 
-augroup end
-
-augroup _git
-	autocmd!
-	autocmd FileType gitcommit setlocal wrap
-	autocmd FileType gitcommit setlocal spell
-augroup end
+" markdown and gitcommit settings: after/ftplugin/markdown.vim, after/ftplugin/gitcommit.lua
 
 
 

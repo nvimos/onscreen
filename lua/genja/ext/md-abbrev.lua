@@ -1,6 +1,6 @@
 -- Insert-mode abbreviations for markdown buffers, from lua/genja/ext/md-abbrev.txt:
 -- one `wrong right` pair per line (right may have spaces), `#` starts a comment.
--- Read when a markdown buffer opens (after/ftplugin/markdown.lua), so edits apply to new buffers.
+-- Read when a markdown buffer opens (after/ftplugin/markdown.vim), so edits apply to new buffers.
 
 local SRC = 'lua/genja/ext/md-abbrev.lua: '
 
