@@ -136,7 +136,7 @@ migration from 0.9 to 0.11 (the file that started it all)
     - one of several actions are possible for each file
       - <m-x> discard without saving and close
       - <m-w> write the buffer and keep open
-    - non-file buffers (like the one that is maked by DumpMessages)
+    - non-file buffers (like the one that is made by DumpMessages)
       - <m-w> does : start :cmd mode and feed keys :w ~/tmp/bufw-«WW»-«first-3-words»
         - «WW» is the burrent week number
         - «first-3-words» are the fist word-like patters from the buffer
@@ -151,4 +151,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     - if the triggering action was to save a session and exit, that should be done
     - if the triggering action was quit, that should be done
 
-<!-- claude-session: 7cdef237-3904-4b52-b7ca-c676e635151a test untested -->
+- [x] <leader>; - set follow up actions to jwfasrzxc instead of abc...
+
+- [ ] consider pros and cons of adding  <https://github.com/prichrd/netrw.nvim>

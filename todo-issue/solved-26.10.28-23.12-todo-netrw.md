@@ -1,0 +1,3 @@
+- [x] todo: netrw notes and idea, small todo fixes (2026-10-28)
+    - [x] doc-wip/ref.netrw.md: netrw tldr
+    - [x] todo-ideas.md: netrw.nvim to consider, dropbar letters done, typo, session marker dropped
