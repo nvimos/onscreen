@@ -7,7 +7,7 @@ Paste (lua/genja/map-zero.lua)
 
     <S-Insert>  clipboard ("+) in insert, cmdline and terminal mode
 
-Terminal cursor (lua/genja/opt-term.lua)
+Terminal cursor (lua/genja/ext/term.lua)
 
     :TermCursorShape block | bar   steady cursor in the StatusLine orange while typing in a terminal
 

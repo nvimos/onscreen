@@ -1,0 +1,3 @@
+- [x] docs: file list and cheatsheet follow the lua/genja/ext move (2026-10-28)
+    - [x] lua/genja/readme.md: moved modules listed as ext/<name>, ext/ entry, missing ones added
+    - [x] readme.cheatsheet.md: terminal cursor points at lua/genja/ext/term.lua

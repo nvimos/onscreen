@@ -18,27 +18,32 @@ init / boot
 config
 
      auto.lua    - autocmds in lua
-     intro.lua   - startup intro screen without the charity lines (virtual lines, from auto.lua)
+     ext/intro.lua   - startup intro screen without the charity lines (virtual lines, from auto.lua)
      opt.lua     - neovim configuration
-     opt-term.lua - terminal-mode cursor: bar (default), StatusLine orange; :TermCursorShape bar|block
+     ext/term.lua - terminal-mode cursor: bar (default), StatusLine orange; :TermCursorShape bar|block
      env.lua     - shell vars
      ft.lua      - filetype settings, maybe merge with something
 
 custom funcs
 
-     actions.lua - g. / <LocalLeader>/ action menu (telescope), cur: = item under cursor
+     ext/actions.lua - g. / <LocalLeader>/ action menu (telescope), cur: = item under cursor
+     ext/        - feature modules, one file each (the ext/ entries in this list)
      api.lua     - source from other config lua scripts
      oil/        - functions for nvim-oil, by topic; oil/init.lua lists the files, oil/plug/ holds the self-contained ones
      oil-actions.lua - oil actions (desc + callback), used by map-oil.lua
      f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), collect/: the sources, one per file, each with collect(ctx, done) (adhoc, git (oil only), make, claude, gui, diag, messages); registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); readme.md: conventions (groups ≤ 6 chars, `group  label` alignment); Makefile + readme.testing.md: tests in tests/f2/
-     md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
-     messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
-     messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
-     md-fix.lua - markdown fixers: <leader>mfx and on save (typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save
-     md-abbrev.lua, md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)
+     ext/md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
+     ext/messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
+     ext/messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
+     ext/md-fix.lua - markdown fixers: <leader>mfx and on save (typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save
+     ext/md-abbrev.lua, ext/md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
-     ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
+     ext/ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
+     ext/md-checklist.lua - <F2> in markdown: lines to a checklist and back
+     ext/tilde.lua - ~ toggles true/false, on/off, +/- … under the cursor
+     ext/winsize.lua - window sizes in big steps, share cycle, resize mode
+     ext/wrapfold.lua - fold markers with a title, :WrapFold
      ext/rename-inline.lua - LSP rename typed in a float over the word (grn, <leader>c2, right-click)
      ui/gui-func-state.lua - nvim-qt shim state: M.Gui<Name>() returns one singleton per Gui* function (:advance, :set, :text); used by the GuiFuncs picker, <leader>mQ keys, right-click frameless
 
@@ -52,13 +57,13 @@ mappings and funcs for them
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions), health.lua (:checkhealth genja.map-plugin); Makefile: tests in tests/map-plugin/
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
-     morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
-     popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
-     recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
-     diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/diag-limit/)
-     lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync); editorconfig-checker and gitleaks on all)
-     telescope-virthelp.lua - prototype: key help table in the empty results of every picker (plugin/telescope-virthelp.lua); the footer was removed
-     telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)
+     ext/morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
+     ext/popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
+     ext/recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
+     ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/diag-limit/)
+     ext/lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync); editorconfig-checker and gitleaks on all)
+     ext/telescope-virthelp.lua - prototype: key help table in the empty results of every picker (plugin/telescope-virthelp.lua); the footer was removed
+     ext/telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)
      map-zero.lua       - keymaps, essential that must not fail
 
 meta, random
