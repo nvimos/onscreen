@@ -8,12 +8,15 @@
 
 local pats = {}
 local genja = vim.fn.readdir(vim.fn.stdpath('config') .. '/lua/genja/', 'v:val =~ "\\.lua$"') -- init.lua, opt.lua …
-local vimsc = vim.fn.readdir(vim.fn.stdpath('config') .. '/lua/genja/', 'v:val =~ "\\.vim$"') -- hilite.vim, …
+-- hilite.vim, …; not the alma vimrc: it is a legacy-vim config, sourcing it would apply its portable top part
+local vimsc = vim.fn.readdir(vim.fn.stdpath('config') .. '/lua/genja/',
+	'v:val =~ "\\.vim$" && v:val !=# "vimrc.almalinux.vim"')
 local after = vim.fn.readdir(vim.fn.stdpath('config') .. '/after/plugin/', 'v:val =~ "\\.lua$"')
 
 vim.list_extend(pats, genja)
 vim.list_extend(pats, after)
 vim.list_extend(pats, vimsc)
+table.insert(pats, '*/lua/genja/ext/*.lua') -- feature modules
 
 vim.api.nvim_create_autocmd('BufWritePost', {
 	group = vim.api.nvim_create_augroup('conf-reload', { clear = true }),
