@@ -39,8 +39,8 @@ Files:
 
 ### Keys
 
-- `<leader>;` pick mode: each crumb gets a letter; press it to open that
-  crumb's menu
+- `<leader>;` pick mode: each crumb gets a letter from `jwfasrzxc`; press
+  it to open that crumb's menu
 - `[;` jump to the start of the current context (function, block, key)
 - `];` select the next context
 - Mouse: click a crumb for a menu of its siblings

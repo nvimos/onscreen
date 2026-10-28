@@ -37,6 +37,7 @@ return {
 			enable = false, -- never set 'winbar'; genja-statusline embeds the bar
 			sources = sources,
 			padding = { left = 0, right = 1 }, -- genja puts a space before it
+			pick = { pivots = 'jwfasrzxc' }, -- <leader>; crumb letters
 		},
 	},
 }

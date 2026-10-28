@@ -1,0 +1,4 @@
+- [x] dropbar: <leader>; crumb letters from jwfasrzxc (2026-10-28)
+    - [x] lua/lazyp/ui/dropbar.lua: pick.pivots
+    - [x] doc-wip/readme.idea13-dropbar-aerial.outer-key.md
+    - [ ] test: <leader>; shows j w f … on the crumbs
