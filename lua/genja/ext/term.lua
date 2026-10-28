@@ -1,4 +1,4 @@
--- Terminal-mode cursor: no blink, bar or block, in the StatusLine color.
+-- Terminal-mode cursor: no blink, bar or block, in the StatusLine color. Terminal windows: scrolloff 0.
 local SRC = 'lua/genja/ext/term.lua: '
 
 local M = {}
@@ -43,6 +43,18 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 	group = vim.api.nvim_create_augroup('genja_opt_term', { clear = true }),
 	callback = M.set_color,
 	desc = 'TermCursor: StatusLine orange again after a colorscheme change',
+})
+
+-- Terminal windows: scrolloff 0. Apps like claude move the cursor up to redraw; with a
+-- scrolloff nvim scrolls the window after it, and the view jitters.
+vim.api.nvim_create_autocmd({ 'TermOpen', 'BufWinEnter' }, {
+	group = vim.api.nvim_create_augroup('genja_term_scrolloff', { clear = true }),
+	callback = function(ev)
+		if vim.bo[ev.buf].buftype == 'terminal' then
+			vim.opt_local.scrolloff = 0
+		end
+	end,
+	desc = 'Terminal windows: scrolloff 0, no view jumps while the app redraws',
 })
 
 vim.api.nvim_create_user_command('TermCursorShape', function(args)

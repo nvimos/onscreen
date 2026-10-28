@@ -1,0 +1,5 @@
+- [x] term: scrolloff 0 in terminal windows (2026-10-28)
+    - [x] lua/genja/ext/term.lua: TermOpen/BufWinEnter set scrolloff 0 for terminal buffers
+    - [x] lua/genja/readme.md: noted on the ext/term.lua line
+    - [x] todo-2027.txt: wheel jitter in claude (nvim-qt) left for later, with a key log one-liner
+    - [ ] test: :setlocal scrolloff? in a claude terminal shows 0; wheel scrolling in insert mode

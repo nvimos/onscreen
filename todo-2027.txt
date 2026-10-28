@@ -29,6 +29,16 @@ new setup 2027
     - https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     - pass args to rg, fuzzy refine, maybe worth stealing some features
 
+- [ ] claude terminal: mouse wheel scroll jitters in terminal mode (nvim-qt, mouse wheel)
+    - scrolling up goes up, down, up, then scrolls as usual; wanted: scroll inside claude
+    - done 2026-10-28: scrolloff 0 in terminal windows (lua/genja/ext/term.lua), enough for now
+    - find the side: log the wheel keys nvim gets while scrolling in claude
+        :lua _G.wheel_log = {}; vim.on_key(function(k) local t = vim.fn.keytrans(k); if t:find('ScrollWheel') then table.insert(_G.wheel_log, t) end end, vim.api.nvim_create_namespace('wheel_log'))
+        :lua print(table.concat(_G.wheel_log, ' '))
+        - Up Down Up …: nvim-qt sends the reverse step; check nvim-qt issues, maybe filter in nvim
+        - Up Up Up …: claude mishandles them; claude-code issue #83298 (first wheel event after a direction change)
+    - compare: nvim TUI in Windows Terminal, same claude
+
 
 -[ ] make a safe fall-back version based on the solid-vimscript
 
