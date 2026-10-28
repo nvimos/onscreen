@@ -1,0 +1,5 @@
+- [x] completion: <Down>/<Up> walk the cmdline menu, history without one (2026-10-28)
+    - [x] completion/cmdline.lua: select_next/select_prev with fallback; <M-x> closes like <C-e>
+    - [x] tests/completion/test_cmdline.lua: menu walk and history cases
+    - [x] CLAUDE.md (being tried out) and readme.cheatsheet.md
+    - [ ] test: :e<Up> with the menu closed recalls filtered history

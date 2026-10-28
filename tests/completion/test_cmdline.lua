@@ -63,11 +63,20 @@ T['<C-j> / <C-k> walk the open menu'] = function()
 	eq(C.selected(), first)
 end
 
-T['<Down> closes the menu'] = function()
-	child.type_keys(':', 'echoh')
+T['<Down> / <Up> walk the open menu'] = function()
+	child.type_keys(':', 'ec')
 	cmd_items()
+	local first = require('helpers.timing').wait(C.selected, 3000)
 	child.type_keys('<Down>')
-	eq(child.lua('return require("blink.cmp").is_menu_visible()'), false)
+	check(C.selected() ~= first, 'selection did not move')
+	child.type_keys('<Up>')
+	eq(C.selected(), first)
+end
+
+T['<Up> without a menu: history'] = function()
+	child.type_keys(':', 'let g:hist_probe = 1', '<CR>')
+	child.type_keys(':', '<Up>')
+	eq(child.fn.getcmdline(), 'let g:hist_probe = 1')
 end
 
 T['/ search: buffer words'] = function()

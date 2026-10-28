@@ -113,7 +113,8 @@ Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/
 
     <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)
     <C-j>   next item                     <C-k>    previous item
-    <Down>  history next (closes menu)    <Up>     history previous (closes menu)
+    <Down>  next item; no menu: history   <Up>     previous item; no menu: history
+    <M-x>   close the menu (as <C-e>)
 
 Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
 
