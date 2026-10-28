@@ -1,0 +1,4 @@
+- [x] completion: menu colours from StatusLine, no selection bar (2026-10-28)
+    - [x] completion/appearance.lua: selection Normal fg, bold matches, kind/extra fg only, scrollbar from menu bg
+    - [x] set again on ColorScheme; CLAUDE.md decision added
+    - [ ] test: menu in two colorschemes, :colorscheme switch keeps it
