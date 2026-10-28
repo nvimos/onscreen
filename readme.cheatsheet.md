@@ -175,8 +175,6 @@ F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from 
                                  all lines boxed already: removes the boxes
     <F2> > markdown: glow preview  glow on the file in a new pwsh window, any key closes (Windows only)
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
-    insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
-
     j k          screen line through wrapped text; with a count, real line (after/ftplugin/markdown.vim)
     gq           format to 120 columns (textwidth); typing doesn't hard-wrap
     insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
