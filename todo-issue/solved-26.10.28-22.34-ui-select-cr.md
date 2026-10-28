@@ -1,0 +1,5 @@
+- [x] ui-select: <CR> in the telescope dropdown reported cancel before the pick (2026-10-28)
+    - [x] lua/genja/ui-select.lua: record the pick before actions.close, whose post hook sent on_choice(nil) first
+    - [x] cause seen with powershell_es rename disclaimer: "I accept" arrived as declined (showMessageRequest takes the first answer)
+    - [ ] test: :LspRestart powershell_es, rename, pick "I accept"; rename goes through
+    - [ ] test: <leader>ca code action still runs once

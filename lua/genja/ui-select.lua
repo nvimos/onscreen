@@ -34,12 +34,13 @@ local function select(items, opts, on_choice)
 	---@param bufnr integer prompt buffer
 	local function pick_selected(bufnr)
 		local entry = action_state.get_selected_entry()
-		actions.close(bufnr)
+		-- Record the pick before close: close's post hook would report nil first.
 		if entry then
 			finish(entry.value, entry.index)
 		else
 			finish(nil, nil)
 		end
+		actions.close(bufnr)
 	end
 
 	---After any close (<Esc>, <C-c>): report nil unless something was picked; callers expect on_choice(nil).
