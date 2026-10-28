@@ -28,14 +28,15 @@ set mouse=a
 "if exists(':GuiFont') | call GuiFont("JetBrainsMono NFM:h12") | endif
 "if exists(':GuiFont') | silent! call GuiFont("JetBrainsMonoNL NFM Thin:h12") | endif
 
-if exists('*GuiWindowFrameless')  | call GuiWindowFrameless(0)  | endif
-if exists(':GuiTabline')          | execute 'GuiTabline 0'      | endif
-"if exists('*GuiWindowMaximized')  | call GuiWindowMaximized(0)  | endif
-if exists('*GuiWindowFullScreen') | call GuiWindowFullScreen(0) | endif
 if exists('*GuiMousehide')        | call GuiMousehide(1)        | endif
+if exists('*GuiWindowFrameless')  | call GuiWindowFrameless(0)  | endif
+if exists('*GuiWindowFullScreen') | call GuiWindowFullScreen(0) | endif
+"if exists('*GuiWindowMaximized')  | call GuiWindowMaximized(0)  | endif
 
 
-" Gui* commands lack -bar: without execute, '| endif' becomes part of the argument
+" Gui* {{{
+" Gui* commands lack -bar: without execute «| endif» becomes part of the argument
+if exists(':GuiTabline')         | execute 'GuiTabline 0'            | endif
 if exists(':GuiAdaptiveColor')   | execute 'GuiAdaptiveColor 1'      | endif " widgets follow colorscheme
 if exists(':GuiAdaptiveFont')    | execute 'GuiAdaptiveFont 0'       | endif " widgets use GuiFont
 if exists(':GuiLinespace')       | execute 'GuiLinespace 0'          | endif
@@ -46,9 +47,4 @@ if exists(':GuiScrollBar')       | execute 'GuiScrollBar 0'          | endif " E
 if exists(':GuiTablineBuffers')  | execute 'GuiTablineBuffers 0'     | endif " tabs, not buffers
 if exists(':GuiWindowOpacity')   | execute 'GuiWindowOpacity 1.0'    | endif
 if exists(':GuiAdaptiveStyle')   | execute 'GuiAdaptiveStyle Fusion' | endif " Qt style, see :GuiAdaptiveStyleList
-
-" " Right Click Context Menu (Copy-Cut-Paste)
-" nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
-" inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
-" xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
-" snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
+" }}}

@@ -1,0 +1,4 @@
+- [x] gui: colorscheme set in init.vim, Gui* settings grouped (2026-10-28)
+    - [x] init.vim: colorscheme lunaperche after the Normal highlights; lua/genja/init.lua no longer sets it
+    - [x] ginit.vim: GuiMousehide first, GuiTabline in the Gui* fold, old context-menu comments removed
+    - [ ] test: nvim-qt start: colours, no tabline, mouse hides while typing

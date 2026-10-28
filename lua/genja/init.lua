@@ -1,6 +1,6 @@
 -- Genja init for nvim
 --
-vim.cmd 'colorscheme lunaperche'
+-- vim.cmd 'colorscheme lunaperche'
 --
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ','
