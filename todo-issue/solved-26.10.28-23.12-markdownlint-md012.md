@@ -1,0 +1,2 @@
+- [x] lint: markdownlint allows several blank lines in a row (2026-10-28)
+    - [x] lint/.markdownlint.jsonc: MD012 off

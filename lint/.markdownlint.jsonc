@@ -3,5 +3,7 @@
 {
 	"default": true,
 	// line length: notes and readmes wrap freely
-	"MD013": false
+	"MD013": false,
+	// multiple consecutive blank lines
+	"MD012": false
 }
