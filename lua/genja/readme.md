@@ -39,6 +39,7 @@ custom funcs
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
      ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
+     ext/rename-inline.lua - LSP rename typed in a float over the word (grn, <leader>c2, right-click)
      ui/gui-func-state.lua - nvim-qt shim state: M.Gui<Name>() returns one singleton per Gui* function (:advance, :set, :text); used by the GuiFuncs picker, <leader>mQ keys, right-click frameless
 
 mappings and funcs for them

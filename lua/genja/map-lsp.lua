@@ -80,6 +80,7 @@ local i__   = { 'i', }
 
 -- {{{ buf-local keymap functions
 local vlb       = vim.lsp.buf
+local inline_rename = function() require('genja.ext.rename-inline').rename() end -- float over the word, not the cmdline prompt
 local reformat  = function() vlb.format { async = true } end
 local split_and = function(fn) return function() vim.cmd.split(); fn(); end end                                                                     -- vim.cmd[[split]]
 local goto_prev = function() vim.diagnostic.jump({ count = -1, float = true }) end
@@ -104,7 +105,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		local o = function(desc) return { silent = true, noremap = true,  desc = desc, buffer = ev.buf } end -- buffer-local mappings
 
 		-- {{{ Actions
-		km(n__, '<leader>c2', vlb.rename, o 'LSP: rename') -- <F2> is the context picker (genja/f2/)
+		km(n__, '<leader>c2', inline_rename, o 'LSP: rename') -- <F2> is the context picker (genja/f2/)
 		km(n__, '<leader>r1', reformat,   o 'LSP: reformat')
 
 		km(nv_, '<leader>ca', vlb.code_action, o 'LSP: Code action')
@@ -130,7 +131,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		-- {{{ Jumps or navigation
 		-- nvim 0.11 defaults, remapped only to give them descriptions; gi stays built-in (insert at last insert)
-		km(n__, 'grn', vlb.rename,                o 'LSP: rename')
+		km(n__, 'grn', inline_rename,             o 'LSP: rename')
 		km(nv_, 'gra', vlb.code_action,           o 'LSP: code action')
 		km(n__, 'grr', vlb.references,            o 'LSP: references')
 		km(n__, 'gri', vlb.implementation,        o 'LSP: implementation')

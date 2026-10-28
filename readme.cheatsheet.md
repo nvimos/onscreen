@@ -74,6 +74,10 @@ Code actions by kind (map-lsp.lua; visual mode sends the selection)
     <leader>cl  run the code lens on this line (Go: run test, go.mod tidy/upgrade)
     Go saves run organize imports + format; :let b:go_format_on_save = v:false
 
+LSP rename (grn, <leader>c2; lua/genja/ext/rename-inline.lua): float over the word, in insert mode
+
+    <CR>  rename   <C-j>  accept completion   <Esc>  normal mode, then <Esc>/q cancel   <C-c>  cancel
+
 Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal mode)
 
     <Tab>  <S-Tab>  mark entries      <C-/> (insert)  ? (normal)  list the picker's keys

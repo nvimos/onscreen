@@ -74,7 +74,7 @@ local function entries()
 	end
 	if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
 		table.insert(list, { label = 'LSP: code action', run = function() vim.lsp.buf.code_action() end })
-		table.insert(list, { label = 'LSP: rename', run = function() vim.lsp.buf.rename() end })
+		table.insert(list, { label = 'LSP: rename', run = function() require('genja.ext.rename-inline').rename() end })
 		table.insert(list, { label = 'LSP: references', run = function() vim.lsp.buf.references() end })
 	end
 	table.insert(list, { label = 'Morning', run = function() require('genja.morning').open() end })

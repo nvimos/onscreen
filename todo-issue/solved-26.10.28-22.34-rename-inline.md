@@ -1,0 +1,10 @@
+- [x] lsp: rename typed in a float over the word instead of the cmdline prompt (2026-10-28)
+    - [x] lua/genja/ext/rename-inline.lua: one-line float over the word, insert mode, grows with the text
+    - [x] <CR> renames (closes the blink menu first), <C-j> accepts completion, <Esc>/q cancel in normal mode, <C-c> in insert
+    - [x] own insert keys set again after blink's InsertEnter mapping, so <CR> stays the rename
+    - [x] grn and <leader>c2 (map-lsp.lua), right-click "LSP: rename" (popup-menu.lua) use it
+    - [x] readme.cheatsheet.md: LSP rename section; lua/genja/readme.md: file entry
+    - [ ] test: grn on a variable, type a name, <CR>; rename applied
+    - [ ] test: menu open, <C-j> inserts the item and the float stays; <CR> then renames
+    - [ ] test: <Esc> <Esc> leaves the name unchanged
+    - [ ] powershell_es: settings.powershell.renameSymbol.acceptRenameDisclaimer = true in genja-completion011 lang/powershell.lua (setting name unverified)
