@@ -178,6 +178,8 @@ F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from 
 
     j k          screen line through wrapped text; with a count, real line (after/ftplugin/markdown.vim)
     gq           format to 120 columns (textwidth); typing doesn't hard-wrap
+    insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
+
 F2 in oil, git add picker (lua/genja/f2/collect/git.lua)
 
     <CR>    git add (marked or current), closes    <M-a>   git add current, stays; row shows the new status
@@ -232,3 +234,10 @@ Messages (lua/genja/ext/messages.lua, command in plugin/messages.lua)
     :Messages -quick              append the file:line locations to the quickfix list
     :Messages -loc                append them to this window's location list
     <F2> > messages: <file>:<n>   newest 10 locations from :messages
+
+Languages on the fly (plug-wip/genja-completion011.nvim, lua/genja/lsp/init.lua; F2 item in lua/genja/f2/collect/lang.lua)
+
+    :EnableLang [-on] <lang>      turn a language on, this session only (-on is the default)
+    :EnableLang -off <lang>       turn it off: servers stop unless another language uses them
+    :EnableLang -save <lang>      also save it in lua/genja/lsp/local.lua (with -off: saved as false)
+    <F2> > lsp: EnableLang <lang>   when the buffer's filetype belongs to an off language

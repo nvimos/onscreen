@@ -8,6 +8,7 @@
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
 --   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/ext/diag-limit.lua)
 --   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/ext/messages.lua)
+--   lsp    `EnableLang <lang>` when the buffer's language is off (genja-completion011)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx
@@ -38,7 +39,7 @@ local M = {}
 local SRC = 'lua/genja/f2/init.lua: '
 
 ---Group order in the picker; callers may replace it.
-M.group_order = { 'adhoc', 'diag', 'git', 'make', 'oil', 'claude', 'gui', 'msgs' }
+M.group_order = { 'adhoc', 'lsp', 'diag', 'git', 'make', 'oil', 'claude', 'gui', 'msgs' }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.
@@ -60,6 +61,7 @@ local sources = {
 	require('genja.f2.collect.gui'),
 	require('genja.f2.collect.diag'),
 	require('genja.f2.collect.messages'),
+	require('genja.f2.collect.lang'),
 }
 
 -- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path

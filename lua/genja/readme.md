@@ -31,7 +31,7 @@ custom funcs
      api.lua     - source from other config lua scripts
      oil/        - functions for nvim-oil, by topic; oil/init.lua lists the files, oil/plug/ holds the self-contained ones
      oil-actions.lua - oil actions (desc + callback), used by map-oil.lua
-     f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), collect/: the sources, one per file, each with collect(ctx, done) (adhoc, git (oil only), make, claude, gui, diag, messages); registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); readme.md: conventions (groups ≤ 6 chars, `group  label` alignment); Makefile + readme.testing.md: tests in tests/f2/
+     f2/         - <F2> context picker: init.lua (sources, sorting, add_tasks/add_task/remove_tasks API), picker.lua (shared dropdown: main list and make targets), collect/: the sources, one per file, each with collect(ctx, done) (adhoc, git (oil only), make, claude, gui, diag, messages, lang); registry.lua stores added tasks; builder.lua is the add_task builder; run.lua runs keys/functions/commands (overseer, floaterm); readme.md: conventions (groups ≤ 6 chars, `group  label` alignment); Makefile + readme.testing.md: tests in tests/f2/
      ext/md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
      ext/messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
      ext/messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header

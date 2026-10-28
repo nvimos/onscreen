@@ -1,0 +1,7 @@
+- [x] lsp: :EnableLang turns a language on or off for the session (2026-10-28)
+    - [x] genja-completion011 lua/genja/lsp/init.lua: set_lang(), -on/-off/-save, local.lua write checked by reloading it
+    - [x] lua/genja/f2/collect/lang.lua: <F2> item `EnableLang <lang>` for an off language (group lsp)
+    - [x] README.md, readme.cheatsheet.md, lua/genja/readme.md
+    - [ ] test: :EnableLang python in a .py buffer attaches pyright; -off stops it
+    - [ ] test: :EnableLang -save typescript writes lua/genja/lsp/local.lua, comments kept
+    - [ ] test: <F2> in a buffer of an off language lists the item
