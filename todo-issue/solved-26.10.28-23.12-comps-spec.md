@@ -1,0 +1,4 @@
+- [x] comps011: spec turns on php, python, gitconfig, sshconfig (2026-10-28)
+    - [x] lua/lazyp/new/genja-completion011.lua: enabled table updated, reindented
+    - [x] stale copies lua/lazyp/new/genja-comp011.lua and genja-completion011.nvim deleted
+    - [ ] spec is indented with spaces; config uses tabs
