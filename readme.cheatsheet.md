@@ -85,7 +85,7 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
-Mouse (lua/genja/popup-menu.lua, lua/genja/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
+Mouse (lua/genja/ext/popup-menu.lua, lua/genja/ext/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
                   LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless
@@ -98,12 +98,12 @@ Live grep / find (plug-wip/genja-finder.nvim/lua/genja-finder/scope.lua; <F1> <S
     <M-r>  cycle root (pwd, .git, bufdir, home)   <M-Up>  parent dir, one-off   <M-i>  skip set
     <F1>   grep <-> find   <M-c>  command   <C-p>  preview   <M-f>  filter   <BS>  undo filter
 
-Recent files (plug-wip/genja-recent.nvim, picker lua/genja/recent.lua, key in map-telescope.lua)
+Recent files (plug-wip/genja-recent.nvim, picker lua/genja/ext/recent.lua, key in map-telescope.lua)
 
     <C-F1>   recent files of this project (git root, else :pwd), frecency order
     <M-a>    in the picker: this project / all files     <leader>jo  telescope oldfiles
 
-Telescope keymaps (lua/genja/telescope-keymaps.lua, keys in map-telescope.lua)
+Telescope keymaps (lua/genja/ext/telescope-keymaps.lua, keys in map-telescope.lua)
 
     <leader>jM  <leader>jbk  <leader>jb?   open it
     <M-r>  <M-R>   next / previous desc group (Git:, LSP:, Fold: ...), then all again
@@ -142,7 +142,7 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>hc  commit at cursor, visual: log of the lines (mini.git)
     :Git <args>  mini.git, output in a split (fugitive is off)
 
-Fold markers with a title (lua/genja/wrapfold.lua, keys in lua/genja/map-zero.lua)
+Fold markers with a title (lua/genja/ext/wrapfold.lua, keys in lua/genja/map-zero.lua)
 
     zf (visual)        ask a title, wrap selection in  -- {{{ title  /  -- }}}   empty title: built-in zf
     <leader>wwf        same for the paragraph under the cursor (visual: the selection)
@@ -154,12 +154,12 @@ Wrap and quote lines (lua/genja/map-convoluted.lua)
     <leader>w" (visual)  same idea via $A / I, block selection
     <leader>w" (normal)  replace " with ' on the current line
 
-Action menu on right-click (lua/genja/fn.vim, menu from lua/genja/actions.lua)
+Action menu on right-click (lua/genja/fn.vim, menu from lua/genja/ext/actions.lua)
 
     right-click > Actions (g.)   same menu as g. / <LocalLeader>/
     in telescope: click selects an entry, double-click runs it (mouse=a)
 
-Toggle and increment (lua/genja/tilde.lua in map-zero.lua; dial: lua/genja/map-plugin/dial.lua)
+Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/map-plugin/dial.lua)
 
     ~          swap word under cursor: true/false on/off yes/no enable(d)/disable(d) and/or 0/1
                left/right up/down min/max first/last; chars + -  < >; case kept; else plain ~
@@ -168,13 +168,13 @@ Toggle and increment (lua/genja/tilde.lua in map-zero.lua; dial: lua/genja/map-p
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats
 
-F2 in markdown (lua/genja/md-checklist.lua, lua/genja/md-glow.lua, from after/ftplugin/markdown.lua; visual <F2> in map-telescope.lua)
+F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.lua; visual <F2> in map-telescope.lua)
 
     <F2> > markdown: checklist toggle   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
     <F2> > markdown: glow preview  glow on the file in a new pwsh window, any key closes (Windows only)
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
-    insert mode: abbreviations from lua/genja/md-abbrev.txt (teh -> the …)
+    insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
 
 F2 in oil, git add picker (lua/genja/f2/collect/git.lua)
 
@@ -199,7 +199,7 @@ nvim-qt GuiFuncs picker (<F3> mylunsj > GuiFuncs, or <F2> group gui in a GUI; lu
     state shared with <leader>mQ and right-click (lua/genja/ui/gui-func-state.lua); linespace 0-5, opacity 0-1 by 0.05
     <M-0> <M-1>  set GuiLinespace / GuiWindowOpacity to 0 or 1
 
-Window sizes (lua/genja/winsize.lua, keys in lua/genja/map-zero.lua)
+Window sizes (lua/genja/ext/winsize.lua, keys in lua/genja/map-zero.lua)
 
     <M-=> <M-->   grow / shrink the window along its split (10% of the screen; <leader>Ws: 8 cols / 4 lines)
     <M-0>         cycle the split share: 50/50 30/70 70/30 60/40 (left/top window; 3+ windows: current)
@@ -218,13 +218,13 @@ Start dirs (plug-wip/genja-startdirs.nvim, keys in lua/genja/map-plugin/genja-st
     <leader>jd                       find files in all start dirs
     removed: <leader>sp sort paragraph, <leader>sf guifont (use <F7>)
 
-Diagnostics limit (lua/genja/diag-limit.lua, key in plugin/diag-limit.lua)
+Diagnostics limit (lua/genja/ext/diag-limit.lua, key in plugin/diag-limit.lua)
 
     <leader>tt3  first 3 per severity drawn (virtual text, signs, underline) / all; default on
     <F2>         diagnostics: show all (N hidden), this buffer only
     vim.g.diag_limit = n   b:diag_limit = n   (0: all; zen <leader>z1 sets 2)
 
-Messages (lua/genja/messages.lua, command in plugin/messages.lua)
+Messages (lua/genja/ext/messages.lua, command in plugin/messages.lua)
 
     :Messages / :Messages -dump   :messages in a scratch buffer; <CR> opens file:line, q closes
     :Messages -quick              append the file:line locations to the quickfix list

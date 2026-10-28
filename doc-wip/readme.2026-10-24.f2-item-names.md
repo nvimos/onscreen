@@ -6,8 +6,8 @@ most 6 chars, right-aligned, two spaces, no `:` (`lua/genja/f2/readme.md`). The 
 list no longer ends items in `(~/path)`.
 
 Files: `lua/genja/f2/picker.lua` (`clean()`, used for every row and group), labels in
-`f2/claude.lua`, `f2/gui.lua`, `f2/adhoc.lua`, `f2/make.lua`, `lua/genja/md-checklist.lua`,
-`lua/genja/md-glow.lua`. Tests: `tests/f2/test_picker.lua`, `test_adhoc.lua`.
+`f2/claude.lua`, `f2/gui.lua`, `f2/adhoc.lua`, `f2/make.lua`, `lua/genja/ext/md-checklist.lua`,
+`lua/genja/ext/md-glow.lua`. Tests: `tests/f2/test_picker.lua`, `test_adhoc.lua`.
 
 ## Before / after
 

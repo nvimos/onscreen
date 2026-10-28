@@ -7,7 +7,7 @@
 -- The fixed entries (ToggleWrap, Actions (g.)) stay in lua/genja/fn.vim.
 -- Loaded from plugin/popup-menu.lua.
 
-local SRC = 'lua/genja/popup-menu.lua: '
+local SRC = 'lua/genja/ext/popup-menu.lua: '
 
 local M = {}
 
@@ -77,7 +77,7 @@ local function entries()
 		table.insert(list, { label = 'LSP: rename', run = function() require('genja.ext.rename-inline').rename() end })
 		table.insert(list, { label = 'LSP: references', run = function() vim.lsp.buf.references() end })
 	end
-	table.insert(list, { label = 'Morning', run = function() require('genja.morning').open() end })
+	table.insert(list, { label = 'Morning', run = function() require('genja.ext.morning').open() end })
 	if vim.fn.has('gui_running') == 1 and vim.fn.exists('*GuiWindowFrameless') == 1 then
 		table.insert(list, { label = 'frameless', run = function() require('genja.ui.gui-func-state').GuiWindowFrameless():advance() end })
 	end
@@ -109,7 +109,7 @@ function M.refresh()
 	current = entries()
 	for i, entry in ipairs(current) do
 		local name = menu_name(entry.label)
-		vim.cmd('anoremenu ' .. name .. ' <Cmd>lua require("genja.popup-menu").run(' .. i .. ')<CR>')
+		vim.cmd('anoremenu ' .. name .. ' <Cmd>lua require("genja.ext.popup-menu").run(' .. i .. ')<CR>')
 		table.insert(shown, name)
 	end
 end

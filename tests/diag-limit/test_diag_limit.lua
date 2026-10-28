@@ -1,4 +1,4 @@
--- lua/genja/diag-limit.lua: the first N diagnostics per severity and buffer are drawn.
+-- lua/genja/ext/diag-limit.lua: the first N diagnostics per severity and buffer are drawn.
 -- Counts the extmarks nvim's own handlers draw (virtual text, signs). Fresh child per case.
 
 local child = MiniTest.new_child_neovim()
@@ -9,7 +9,7 @@ local T = MiniTest.new_set({
 		pre_case = function()
 			child.restart({ '-u', 'tests/minimal_init.lua' })
 			child.lua([=[
-				_G.L = require('genja.diag-limit')
+				_G.L = require('genja.ext.diag-limit')
 				L.setup()
 				vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
 				_G.buf = vim.api.nvim_get_current_buf()

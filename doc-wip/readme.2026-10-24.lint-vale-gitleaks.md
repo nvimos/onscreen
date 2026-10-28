@@ -5,7 +5,7 @@
 | gitleaks | every filetype (`M.any`) | read, save, InsertLeave (stdin) | reports secrets (API keys, tokens) |
 | vale | markdown | read, save, InsertLeave (stdin) | prose style; project `.vale.ini` / `_vale.ini`, else the shared `lint/.vale.ini` |
 
-Files: `lua/genja/lint.lua` (`prepare_vale`, `:ValeSync`), `lint/.vale.ini`.
+Files: `lua/genja/ext/lint.lua` (`prepare_vale`, `:ValeSync`), `lint/.vale.ini`.
 mason-tool-installer installs both (`M.mason`).
 
 ## vale config

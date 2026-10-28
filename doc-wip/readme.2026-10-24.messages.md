@@ -4,8 +4,8 @@ What: Lua tracebacks (`C:/…/x.lua:42:`, also shortened `...ocal/nvim/lua/genja
 and Vim script errors (`Error detected while processing <file>:` + `line 12:`) in `:messages`
 become jump targets. Nothing runs in the background: `:messages` is read when you ask.
 
-Files: `lua/genja/messages.lua`, `plugin/messages.lua` (`:Messages`), F2 source
-`lua/genja/f2/messages.lua`. Not active: `lua/genja/messages-capture.lua`.
+Files: `lua/genja/ext/messages.lua`, `plugin/messages.lua` (`:Messages`), F2 source
+`lua/genja/f2/messages.lua`. Not active: `lua/genja/ext/messages-capture.lua`.
 Tests: `tests/messages/test_messages.lua` (`make test D=messages` in `tests/`).
 
 ## Commands and keys
@@ -33,7 +33,7 @@ so messages without a path in their text still point at the code. `enable()`, `d
 `entries()`, `to_qflist()`, `last()`, `count_by_source()`, `dump()`. Its header lists uses
 (startup audit, noisy plugin finder, tests asserting no warnings) and how noice, nvim-notify,
 snacks, scriptease, VS Code, Emacs and JetBrains keep message history.
-Try: `:lua require('genja.messages-capture').enable()`.
+Try: `:lua require('genja.ext.messages-capture').enable()`.
 
 ## Test
 

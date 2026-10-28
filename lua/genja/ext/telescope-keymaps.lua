@@ -4,7 +4,7 @@
 -- within the refined list. Keys: <leader>jM, <leader>jbk, <leader>jb? (lua/genja/map-telescope.lua).
 -- Tests: tests/telescope-keymaps/ (`make test D=telescope-keymaps` in tests/).
 
-local SRC = 'lua/genja/telescope-keymaps.lua: '
+local SRC = 'lua/genja/ext/telescope-keymaps.lua: '
 
 local M = {}
 

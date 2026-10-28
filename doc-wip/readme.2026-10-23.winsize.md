@@ -1,6 +1,6 @@
 # Window sizes (idea 28)
 
-`lua/genja/winsize.lua`, keys in `lua/genja/map-zero.lua` (Windows block),
+`lua/genja/ext/winsize.lua`, keys in `lua/genja/map-zero.lua` (Windows block),
 which-key group `<leader>W` in `lua/lazyp/my/which-key.lua`.
 
 ## Use
@@ -13,9 +13,9 @@ which-key group `<leader>W` in `lua/lazyp/my/which-key.lua`.
 - `<leader>wr`: resize mode. A which-key popup stays open; `h` narrower,
   `l` wider, `j` lower, `k` taller, `=` equal, `0` share cycle, `s` step
   percent/cells. `<Esc>` leaves.
-- `<leader>Ws` or `require('genja.winsize').config.step = 'cells'`:
+- `<leader>Ws` or `require('genja.ext.winsize').config.step = 'cells'`:
   fixed steps of 8 columns / 4 lines instead of 10%.
-- Config: `require('genja.winsize').config` (`percent`, `cols`, `rows`,
+- Config: `require('genja.ext.winsize').config` (`percent`, `cols`, `rows`,
   `shares`).
 - smart-splits.nvim: spec with typed opts in `lua/lazyp/new/smart-splits.lua`,
   `enabled = false`. Enable to compare: `<M-h/j/k/l>` resize,

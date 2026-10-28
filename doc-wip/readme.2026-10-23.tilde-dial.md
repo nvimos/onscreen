@@ -1,6 +1,6 @@
 # `~` toggles and dial.nvim (idea 29a)
 
-## `~` (lua/genja/tilde.lua, key in lua/genja/map-zero.lua)
+## `~` (lua/genja/ext/tilde.lua, key in lua/genja/map-zero.lua)
 
 - On a word in the list, `~` swaps it: true/false, on/off, yes/no,
   enable/disable, enabled/disabled, and/or, 0/1, left/right, up/down,

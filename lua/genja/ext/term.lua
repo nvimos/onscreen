@@ -1,5 +1,5 @@
 -- Terminal-mode cursor: no blink, bar or block, in the StatusLine color.
-local SRC = 'lua/genja/opt-term.lua: '
+local SRC = 'lua/genja/ext/term.lua: '
 
 local M = {}
 

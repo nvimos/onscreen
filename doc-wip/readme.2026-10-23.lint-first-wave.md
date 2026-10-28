@@ -3,7 +3,7 @@
 What: linters for filetypes without a language server for that job. They
 show as normal diagnostics (`]d`, `[d`, the diagnostic float and lists).
 
-Files: `lua/genja/lint.lua` (lists, conditions, WSL ansible-lint, autocmds),
+Files: `lua/genja/ext/lint.lua` (lists, conditions, WSL ansible-lint, autocmds),
 spec `lua/lazyp/new/nvim-lint.lua` (now loads on `VeryLazy`), installer list
 in `lua/lazyp/langs-comps/mason-tool-installer.lua`, configs
 `lint/.markdownlint.jsonc`, `selene.toml` + `vim.yml` (repo root).
@@ -50,7 +50,7 @@ node, yamllint needs python. ansible-lint goes into the WSL distro:
 8. PHP in a project with `phpcs.xml`: phpcs.
 9. Commit popup: typos runs next to gitlint.
 
-Checked by Claude: headless `loadfile`, `require('genja.lint')`, `setup()`
+Checked by Claude: headless `loadfile`, `require('genja.ext.lint')`, `setup()`
 with nvim-lint on a markdown buffer (no tools installed: no errors). No
 linter was installed or run. checkmake's upstream args quote the format with
 single quotes, which cmd.exe passes on as-is; if checkmake shows nothing,

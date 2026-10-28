@@ -1,4 +1,4 @@
--- lua/genja/telescope-keymaps.lua with genja-finder's refine keys, driven by real keys
+-- lua/genja/ext/telescope-keymaps.lua with genja-finder's refine keys, driven by real keys
 -- (doc-wip/readme.2026-10-23.telescope-keymaps.md). Needs telescope and plenary in lazy's
 -- data dir; cases skip without them. Fresh child nvim per case.
 
@@ -93,7 +93,7 @@ local T = MiniTest.new_set({
 					end
 					return t
 				end
-				require('genja.telescope-keymaps').open({ modes = { 'n' } })
+				require('genja.ext.telescope-keymaps').open({ modes = { 'n' } })
 			]])
 			settle()
 		end,

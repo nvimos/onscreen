@@ -25,15 +25,15 @@ vim.cmd('source ' .. C .. '/lua/genja/fn.vim')
 
 -- selene: allow(multiple_statements)
 Safeload('genja.hilite', function(m) m.setup() end)
-Safeload 'genja.term' -- terminal cursor; after hilite, reads StatusLine color
+Safeload 'genja.ext.term' -- terminal cursor; after hilite, reads StatusLine color
 Safeload 'genja.auto' -- autocommads
 Safeload 'genja.lazy-plug-spec'
 Safeload 'genja.map-lsp'
 Safeload 'genja.map-telescope'
-Safeload 'genja.ui-select'          -- vim.ui.select in telescope (code actions etc.)
+Safeload 'genja.ext.ui-select'          -- vim.ui.select in telescope (code actions etc.)
 Safeload 'genja.map-convoluted'
 -- selene: allow(multiple_statements)
-Safeload('genja.wrapfold', function(m) m.setup_command() end) -- :WrapFold
+Safeload('genja.ext.wrapfold', function(m) m.setup_command() end) -- :WrapFold
 
 
 

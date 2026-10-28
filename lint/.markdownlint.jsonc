@@ -1,4 +1,4 @@
-// Shared markdownlint rules for lua/genja/lint.lua (markdownlint-cli2 --config).
+// Shared markdownlint rules for lua/genja/ext/lint.lua (markdownlint-cli2 --config).
 // Rules: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
 {
 	"default": true,

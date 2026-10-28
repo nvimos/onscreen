@@ -1,4 +1,4 @@
--- lua/genja/md-abbrev.lua and lua/genja/md-fix.lua. Fresh child nvim per case.
+-- lua/genja/ext/md-abbrev.lua and lua/genja/ext/md-fix.lua. Fresh child nvim per case.
 
 local child = MiniTest.new_child_neovim()
 local eq = MiniTest.expect.equality
@@ -8,8 +8,8 @@ local T = MiniTest.new_set({
 		pre_case = function()
 			child.restart({ '-u', 'tests/minimal_init.lua' })
 			child.lua([[
-				_G.A = require('genja.md-abbrev')
-				_G.F = require('genja.md-fix')
+				_G.A = require('genja.ext.md-abbrev')
+				_G.F = require('genja.ext.md-fix')
 				_G.tmp = vim.fs.normalize(vim.fn.tempname())
 				vim.fn.mkdir(tmp, 'p')
 			]])

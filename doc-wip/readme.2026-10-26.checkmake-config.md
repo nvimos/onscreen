@@ -12,7 +12,7 @@ targets `all`, `clean` and `test`. Most Makefiles here are task runners, so that
 disabled = true
 ```
 
-- `lua/genja/lint.lua` passes it with `--config` when the Makefile's project has no
+- `lua/genja/ext/lint.lua` passes it with `--config` when the Makefile's project has no
   `checkmake.ini` of its own. A project's own `checkmake.ini` wins: checkmake then runs in that
   folder and reads it.
 - The other rules stay on: `maxbodylength` (body over 5 lines), `phonydeclared`,

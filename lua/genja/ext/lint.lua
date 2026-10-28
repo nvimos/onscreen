@@ -6,7 +6,7 @@
 -- so a missing tool stays quiet. File-based linters (stdin = false) skip InsertLeave.
 -- genja-commit lints gitcommit with its own gitlint linter; typos runs there too.
 
-local SRC = 'lua/genja/lint.lua: '
+local SRC = 'lua/genja/ext/lint.lua: '
 
 local M = {}
 

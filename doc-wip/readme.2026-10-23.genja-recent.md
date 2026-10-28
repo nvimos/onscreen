@@ -5,7 +5,7 @@ every `:w` as an edit; the list is sorted by frecency (edits x2, recent use
 weighs more). `<C-F1>` shows the current project's files first.
 
 Files: `plug-wip/genja-recent.nvim/` (recording, data file, score), spec
-`lua/lazyp/new/genja-recent.lua` (VeryLazy), picker `lua/genja/recent.lua`,
+`lua/lazyp/new/genja-recent.lua` (VeryLazy), picker `lua/genja/ext/recent.lua`,
 key in `lua/genja/map-telescope.lua`.
 
 ## Keys

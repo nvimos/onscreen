@@ -1,7 +1,7 @@
 -- Markdown: turn lines into a checklist (`- [ ] `), or back when all are boxes (idea 34).
 -- First caller of f2.add_task: registered per markdown buffer from after/ftplugin/markdown.lua.
 -- Range: the selection when <F2> was pressed in visual mode (vim.b.f2_range), else the cursor line.
-local SRC = 'lua/genja/md-checklist.lua: '
+local SRC = 'lua/genja/ext/md-checklist.lua: '
 
 local M = {}
 

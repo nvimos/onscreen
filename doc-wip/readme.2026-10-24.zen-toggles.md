@@ -13,7 +13,7 @@ Keys in `lua/genja/map-plugin/zenmode.lua` (spec `lua/lazyp/ui/zenmode.lua`).
   (`open()` on an open zen window kept the old one).
 - The size is taken once, at the first z1/z2 after zen was off; z1 -> z2 -> z0 restores that.
 - Maximized: z2 only; z1 after z2 un-maximizes.
-- Diagnostics limit (lua/genja/diag-limit.lua): z1 sets 2, z2 puts the earlier one back, z0 too.
+- Diagnostics limit (lua/genja/ext/diag-limit.lua): z1 sets 2, z2 puts the earlier one back, z0 too.
 
 ## Test (nvim-qt)
 

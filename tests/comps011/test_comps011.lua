@@ -1,4 +1,4 @@
--- Integration tests for genja-completion011 and lua/genja/lint.lua: a child nvim boots the real
+-- Integration tests for genja-completion011 and lua/genja/ext/lint.lua: a child nvim boots the real
 -- config (init.vim), opens a sample from tests/comps011/samples/ (copied to a temp dir) and waits
 -- for a server to attach and report, for cmp to offer server items, for a linter to report.
 --   make test D=comps011 G=<group> in tests/   groups: mason lsp ready cmp lint fast slow gather,
@@ -285,7 +285,7 @@ for _, c in ipairs(CMP) do
 end
 -- }}}
 
--- {{{ lint: each linter of lua/genja/lint.lua reports on its sample
+-- {{{ lint: each linter of lua/genja/ext/lint.lua reports on its sample
 
 ---@type { name: string, sample: string, file: string, cmd: string, source: string, write?: fun(dir: string), timeout?: integer, slow?: integer, needs?: string, needs_fix?: string }[]
 local LINT = {

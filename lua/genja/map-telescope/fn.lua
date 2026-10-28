@@ -36,10 +36,10 @@ function M.oldfiles()
 end
 
 -- recent files (genja-recent, frecency), this project first
-function M.recent() require('genja.recent').open() end
+function M.recent() require('genja.ext.recent').open() end
 
 -- keymaps with the refine keys and <M-r>/<M-R> desc group rotation
-function M.keymaps() require('genja.telescope-keymaps').open() end
+function M.keymaps() require('genja.ext.telescope-keymaps').open() end
 
 function M.context_picker()
 	vim.b.f2_range = nil -- a range only comes from visual <F2>
@@ -57,6 +57,6 @@ function M.context_picker_visual()
 	vim.b.f2_range = { first, last }
 	require('genja.f2').open()
 end
-function M.action_menu() require('genja.actions').open() end
+function M.action_menu() require('genja.ext.actions').open() end
 
 return M

@@ -1,4 +1,4 @@
--- lua/genja/messages.lua (:Messages, F2 source) and lua/genja/messages-capture.lua.
+-- lua/genja/ext/messages.lua (:Messages, F2 source) and lua/genja/ext/messages-capture.lua.
 -- Errors are real: a Lua file in a temp dir raises one, so :messages holds a real traceback.
 
 local child = MiniTest.new_child_neovim()
@@ -10,7 +10,7 @@ local T = MiniTest.new_set({
 			child.restart({ '-u', 'tests/minimal_init.lua' })
 			child.lua([[
 				vim.cmd('runtime plugin/messages.lua')
-				_G.M = require('genja.messages')
+				_G.M = require('genja.ext.messages')
 				_G.tmp = vim.fs.normalize(vim.fn.tempname())
 				vim.fn.mkdir(tmp, 'p')
 				_G.bad = tmp .. '/bad.lua'
@@ -35,8 +35,8 @@ T['locations: Lua path:line from a real error'] = function()
 end
 
 T['locations: shortened traceback paths are found in the runtimepath'] = function()
-	local file = child.lua([[return M.resolve('...ocal/nvim/lua/genja/messages.lua')]])
-	eq(vim.endswith(file, '/lua/genja/messages.lua'), true)
+	local file = child.lua([[return M.resolve('...ocal/nvim/lua/genja/ext/messages.lua')]])
+	eq(vim.endswith(file, '/lua/genja/ext/messages.lua'), true)
 	eq(child.lua([[return M.resolve('...nowhere/lua/genja/nope.lua')]]), vim.NIL)
 end
 
@@ -126,7 +126,7 @@ end
 
 T['capture: off until enable(), records WARN with the call site'] = function()
 	local got = child.lua([[
-		local C = require('genja.messages-capture')
+		local C = require('genja.ext.messages-capture')
 		local f = tmp .. '/warn.lua'
 		vim.fn.writefile({ 'vim.notify("careful", vim.log.levels.WARN)' }, f)
 		vim.cmd('luafile ' .. f)

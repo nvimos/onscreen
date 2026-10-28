@@ -1,12 +1,12 @@
--- Insert-mode abbreviations for markdown buffers, from lua/genja/md-abbrev.txt:
+-- Insert-mode abbreviations for markdown buffers, from lua/genja/ext/md-abbrev.txt:
 -- one `wrong right` pair per line (right may have spaces), `#` starts a comment.
 -- Read when a markdown buffer opens (after/ftplugin/markdown.lua), so edits apply to new buffers.
 
-local SRC = 'lua/genja/md-abbrev.lua: '
+local SRC = 'lua/genja/ext/md-abbrev.lua: '
 
 local M = {}
 
-M.FILE = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua', 'genja', 'md-abbrev.txt')
+M.FILE = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua', 'genja', 'ext', 'md-abbrev.txt')
 
 ---Pairs from `lines`: { wrong, right }; blank and `#` lines skipped.
 ---@param lines string[]

@@ -5,7 +5,7 @@
 
 local M = {}
 
-local ns = vim.api.nvim_create_namespace('genja.intro')
+local ns = vim.api.nvim_create_namespace('genja.ext.intro')
 
 local LOGO_ROWS = 3
 local SEPARATOR = '────────────────────────────────────────────'

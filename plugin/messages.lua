@@ -1,6 +1,6 @@
--- :Messages [-dump|-quick|-loc]: :messages as a jump list (lua/genja/messages.lua).
+-- :Messages [-dump|-quick|-loc]: :messages as a jump list (lua/genja/ext/messages.lua).
 vim.api.nvim_create_user_command('Messages', function(cmd)
-	require('genja.messages').command(cmd.args)
+	require('genja.ext.messages').command(cmd.args)
 end, {
 	nargs = '?',
 	complete = function() return { '-dump', '-quick', '-loc' } end,

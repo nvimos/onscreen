@@ -1,7 +1,7 @@
 # Telescope: usability exploration (spec, open questions) + key footer prototype
 
 **Footer abandoned 2026-10-25:** the footer code, `:TelescopeFooter` and `tests/telescope-footer/`
-were removed. The key help in the results buffer stays, renamed to `lua/genja/telescope-virthelp.lua` (`plugin/telescope-virthelp.lua`).
+were removed. The key help in the results buffer stays, renamed to `lua/genja/ext/telescope-virthelp.lua` (`plugin/telescope-virthelp.lua`).
 Still open: removing telescope's default keys (A) and `<C-/>` for discovery (B1).
 
 From todo-ideas.md "telescope": remove predefined keys except your own, check whether

@@ -1,5 +1,5 @@
 -- Start screen with the :Morning sections (idea 30/31), kept as an alternative to :Morning
--- (lua/genja/morning.lua). Disabled: set enabled = true to try it; it shows when nvim
+-- (lua/genja/ext/morning.lua). Disabled: set enabled = true to try it; it shows when nvim
 -- starts without file arguments, or with :lua MiniStarter.open().
 -- Upstream moved from echasnovski/mini.starter to nvim-mini/mini.starter.
 

@@ -6,15 +6,15 @@ What: three ways to fix markdown mistakes.
 |-----|------|
 | `<leader>mfx` | `:update`, then `typos --write-changes` and `markdownlint-cli2 --fix` on the file; the buffer reloads (view kept) |
 | on `:w` | the same, unless `vim.g.md_fix_on_save = false` |
-| insert mode | abbreviations from `lua/genja/md-abbrev.txt`: `teh` + space -> `the` |
+| insert mode | abbreviations from `lua/genja/ext/md-abbrev.txt`: `teh` + space -> `the` |
 
-Files: `lua/genja/md-fix.lua`, `lua/genja/md-abbrev.lua`, `lua/genja/md-abbrev.txt`,
+Files: `lua/genja/ext/md-fix.lua`, `lua/genja/ext/md-abbrev.lua`, `lua/genja/ext/md-abbrev.txt`,
 set up per buffer in `after/ftplugin/markdown.lua`. Tests: `tests/md/test_md_fix.lua`
 (`make test D=md` in `tests/`). markdownlint: the project's config, else `lint/.markdownlint.jsonc`.
 
 ## Your list
 
-`lua/genja/md-abbrev.txt`: one `wrong right` pair per line, `right` may have spaces,
+`lua/genja/ext/md-abbrev.txt`: one `wrong right` pair per line, `right` may have spaces,
 `#` comments. Read when a markdown buffer opens: `:e` an open one to pick up edits.
 Abbreviations also fire inside code blocks; drop a pair if that bites.
 

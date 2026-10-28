@@ -1,6 +1,6 @@
 # F2 markdown: lines to checklist (idea 34)
 
-`lua/genja/md-checklist.lua`, registered per markdown buffer from
+`lua/genja/ext/md-checklist.lua`, registered per markdown buffer from
 `after/ftplugin/markdown.lua` with `f2.add_task('markdown', …):fn():buffer():add()`,
 the first caller of the f2 task API (#18). Visual `<F2>` is new in
 `lua/genja/map-telescope.lua`; it stores the selected lines in

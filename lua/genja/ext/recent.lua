@@ -2,7 +2,7 @@
 --   <M-a> switches between this project (git root, else :pwd) and all files.
 --   genja-finder's shared keys: <M-f> filter, <M-x> exclude, <M-n> exact, <BS> undo, <F2>/<F3>.
 
-local SRC = 'lua/genja/recent.lua: '
+local SRC = 'lua/genja/ext/recent.lua: '
 
 local M = {}
 

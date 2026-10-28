@@ -3,12 +3,12 @@
 What: more to click for lazy mornings and planning sessions.
 
 Files:
-- `lua/genja/popup-menu.lua` (+ `plugin/popup-menu.lua`): right-click entries
+- `lua/genja/ext/popup-menu.lua` (+ `plugin/popup-menu.lua`): right-click entries
   rebuilt on every `MenuPopup` for the buffer under the click.
 - genja-statusline `clicks` option (`plug-wip/genja-statusline.nvim`), handlers
   in `lua/lazyp/new/genja-statusline.lua`; the statusline now shows the git
   branch (gitsigns) and `E2 W1` counts.
-- `lua/genja/morning.lua` (+ `plugin/morning.lua`): `:Morning`.
+- `lua/genja/ext/morning.lua` (+ `plugin/morning.lua`): `:Morning`.
 - `lua/lazyp/ui/mini-starter.lua`: mini.starter with the same sections,
   `enabled = false`.
 

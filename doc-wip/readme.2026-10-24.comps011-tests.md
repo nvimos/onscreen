@@ -43,7 +43,7 @@ Harness (shared): `tests/helpers/timing.lua`, runner `tests/Makefile`.
 ## First runs on this machine (2026-10-24)
 
 - lint 10/10 (gitleaks: not installed; vale: needs `:ValeSync`). checkmake only after the
-  Windows fix in `lua/genja/lint.lua` (8dd25c3).
+  Windows fix in `lua/genja/ext/lint.lua` (8dd25c3).
 - lsp: jsonls, vimls pass. lua_ls: not installed (see below). bashls: attaches, no diagnostic
   in 12 s. gopls: attaches, no diagnostic in 20 s (no `go` on PATH?). autotools_ls: its venv points
   to a Python 3.13 that is gone. phpactor: attach-only now (it reports no syntax errors).

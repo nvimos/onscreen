@@ -56,7 +56,7 @@ local function zen_off()
 		maximized(false)
 		vim.o.columns = before.columns
 		vim.o.lines = before.lines
-		require('genja.diag-limit').set(before.diag_limit)
+		require('genja.ext.diag-limit').set(before.diag_limit)
 		before = nil
 	end
 end
@@ -69,7 +69,7 @@ local function zen_wide()
 	vim.opt.colorcolumn = '0'
 	gui().GuiWindowFrameless():set(1)
 	maximized(false)
-	require('genja.diag-limit').set(2)
+	require('genja.ext.diag-limit').set(2)
 
 	zen(120, {})
 end
@@ -84,7 +84,7 @@ local function zen_relnum()
 	maximized(true)
 	-- the limit is z1's; coming from z1, put the earlier one back
 	if before then
-		require('genja.diag-limit').set(before.diag_limit)
+		require('genja.ext.diag-limit').set(before.diag_limit)
 	end
 
 	zen(80, {})

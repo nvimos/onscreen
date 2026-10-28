@@ -6,8 +6,8 @@
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   claude one item per running claude terminal (genja-claudefterm): show it
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
---   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/diag-limit.lua)
---   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/messages.lua)
+--   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/ext/diag-limit.lua)
+--   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/ext/messages.lua)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx

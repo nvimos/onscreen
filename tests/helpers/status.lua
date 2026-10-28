@@ -1,5 +1,5 @@
 -- `make status` in tests/: which languages are on, and whether their servers, mason tools and
--- the linters of lua/genja/lint.lua are installed. Runs no tests; nvim with the real config.
+-- the linters of lua/genja/ext/lint.lua are installed. Runs no tests; nvim with the real config.
 dofile('tests/helpers/real-config.lua').prepare()
 
 local installed = require('genja.lsp.installed')
@@ -107,12 +107,12 @@ end
 add_ranked(rows)
 -- }}}
 
--- {{{ linters of lua/genja/lint.lua
+-- {{{ linters of lua/genja/ext/lint.lua
 table.insert(out, '')
-table.insert(out, 'linters (lua/genja/lint.lua; one runs only when its command is found)')
+table.insert(out, 'linters (lua/genja/ext/lint.lua; one runs only when its command is found)')
 table.insert(out, '  found: command on PATH; filetypes: * = every filetype')
 table.insert(out, ('  %-22s %-7s %-19s %s'):format('linter', 'found', 'filetypes', 'command'))
-local genja_lint = require('genja.lint')
+local genja_lint = require('genja.ext.lint')
 local ok_lint, lint = pcall(require, 'lint')
 
 ---A linter's command: nvim-lint's definition, else its name.

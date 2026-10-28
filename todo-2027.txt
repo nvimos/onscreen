@@ -118,5 +118,5 @@ new setup 2027
 
 - [ ] improve: f2 git add
     - detect errors and deal with them
-      lua/genja/popup-menu.lua: git add Makefile 
+      lua/genja/ext/popup-menu.lua: git add Makefile 
       lua/genja/f2/git.lua: warning: in the working copy of 'bootstrap.ps1', LF will be replaced by CRLF the next time Git touches it

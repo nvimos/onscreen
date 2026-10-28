@@ -2,9 +2,9 @@
 --   Sections: Start dirs (genja-startdirs, most used first), Recent (genja-recent, else oldfiles),
 --   Todo (top-level items of todo-ideas.md), Untested (open lines of the newest doc-wip/untested.*.md).
 --   A click or <CR> opens the line's target; q closes. Command in plugin/morning.lua,
---   also in the right-click menu (lua/genja/popup-menu.lua).
+--   also in the right-click menu (lua/genja/ext/popup-menu.lua).
 
-local SRC = 'lua/genja/morning.lua: '
+local SRC = 'lua/genja/ext/morning.lua: '
 
 local M = {}
 

@@ -304,7 +304,7 @@ local function update_hint(buf)
 		return
 	end
 	vim.api.nvim_buf_set_extmark(buf, hint_ns, 0, 0, {
-		virt_text = { { HINT, 'TelescopeResultsTitle' } }, -- same as the key help (lua/genja/telescope-virthelp.lua)
+		virt_text = { { HINT, 'TelescopeResultsTitle' } }, -- same as the key help (lua/genja/ext/telescope-virthelp.lua)
 		virt_text_pos = 'eol',
 	})
 end

@@ -1,7 +1,7 @@
 -- Record errors and warnings as they happen, with a traceback, instead of parsing :messages later.
 -- NOT ACTIVE: nothing requires this file. Try it with
---   :lua require('genja.messages-capture').enable()
--- or keep it on from lua/genja/init.lua. lua/genja/messages.lua is the passive variant in use.
+--   :lua require('genja.ext.messages-capture').enable()
+-- or keep it on from lua/genja/init.lua. lua/genja/ext/messages.lua is the passive variant in use.
 --
 -- What it does: wraps vim.notify (WARN and up, or every level with { all = true }). Each call
 -- is stored with time, level, message, and debug.traceback() at the call site, so even a
@@ -14,7 +14,7 @@
 --   - "Last error" key: `M.last()` opens the newest entry's call site. A <F2> item could do the same.
 --   - Find the noisy plugin: `M.count_by_source()` groups entries by the file that called notify;
 --     a plugin that warns 40 times on startup shows up at the top.
---   - Startup audit: enable() first thing in init.lua, then :lua =require('genja.messages-capture').entries()
+--   - Startup audit: enable() first thing in init.lua, then :lua =require('genja.ext.messages-capture').entries()
 --     after VeryLazy to see what complained while loading (lazy's own messages included).
 --   - Bug reports: `M.dump()` writes the entries with tracebacks to a scratch buffer to paste.
 --   - Tests: tests can enable it in a child nvim and assert "no WARN or ERROR" after a scenario.
@@ -26,7 +26,7 @@
 -- How others do it
 --   Vim / Neovim
 --   - `:messages`, `:messages clear`, 'messagesopt' (nvim 0.11: history size, hit-enter);
---     `:redir`/`execute('messages')` to capture: what lua/genja/messages.lua does.
+--     `:redir`/`execute('messages')` to capture: what lua/genja/ext/messages.lua does.
 --   - `v:errmsg` (last error), `v:exception`/`v:throwpoint` in try/catch: point-in-time only.
 --   - noice.nvim: replaces the message UI (ext_messages) and keeps a history,
 --     `:Noice history` / `:Noice errors`, with filters and telescope.
@@ -45,7 +45,7 @@
 --     ("red exclamation") collect stack traces with links to the plugin source.
 --   - Sublime Text: the console (Ctrl+`) keeps plugin tracebacks with file:line.
 
-local SRC = 'lua/genja/messages-capture.lua: '
+local SRC = 'lua/genja/ext/messages-capture.lua: '
 
 local M = {}
 
@@ -71,7 +71,7 @@ local function call_site(trace)
 	for path, lnum in trace:gmatch('\n%s*(%S-%.lua):(%d+):') do
 		local p = vim.fs.normalize(path)
 		if not p:find('/runtime/lua/vim/', 1, true) and not p:find('messages%-capture%.lua$') then
-			local found = require('genja.messages').resolve(p)
+			local found = require('genja.ext.messages').resolve(p)
 			if found then
 				return found, tonumber(lnum)
 			end
@@ -146,7 +146,7 @@ function M.last()
 	for i = #entries, 1, -1 do
 		local e = entries[i]
 		if e.file then
-			require('genja.messages').open({ filename = e.file, lnum = e.lnum, text = e.msg })
+			require('genja.ext.messages').open({ filename = e.file, lnum = e.lnum, text = e.msg })
 			return
 		end
 	end

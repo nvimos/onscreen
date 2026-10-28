@@ -1,6 +1,6 @@
 -- Wrap lines in fold markers with a title: `-- {{{ title` … `-- }}}`.
 -- Port of WrapFold from vimrc.almalinux.vim (idea 29b). Keys in map-zero.lua (Folds).
-local SRC = 'lua/genja/wrapfold.lua: '
+local SRC = 'lua/genja/ext/wrapfold.lua: '
 
 local M = {}
 

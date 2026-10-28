@@ -3,7 +3,7 @@
 --   <M-0>          cycle the left/top share of the split: 50 → 30 → 70 → 60 (percent)
 --   <leader>wr     resize mode (which-key loop over <leader>W…): h j k l = 0, <Esc> leaves
 -- smart-splits.nvim is an alternative, spec disabled: lua/lazyp/new/smart-splits.lua.
-local SRC = 'lua/genja/winsize.lua: '
+local SRC = 'lua/genja/ext/winsize.lua: '
 
 local M = {}
 

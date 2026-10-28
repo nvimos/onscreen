@@ -1,10 +1,10 @@
 -- Markdown fixers: typos and markdownlint-cli2 rewrite the file, then the buffer reloads.
 --   <leader>mfx   fix this buffer now (after/ftplugin/markdown.lua)
 --   on save       the same after every :w, unless vim.g.md_fix_on_save = false
--- markdownlint uses the project's config, else the shared lint/.markdownlint.jsonc (as lua/genja/lint.lua).
+-- markdownlint uses the project's config, else the shared lint/.markdownlint.jsonc (as lua/genja/ext/lint.lua).
 -- A fixer that isn't installed is skipped (mason: :MasonToolsInstall).
 
-local SRC = 'lua/genja/md-fix.lua: '
+local SRC = 'lua/genja/ext/md-fix.lua: '
 
 local M = {}
 

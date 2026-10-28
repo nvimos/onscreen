@@ -3,7 +3,7 @@
 What: telescope's keymaps picker with genja-finder's refine keys and a key
 that shows one description group at a time (`Git:`, `LSP:`, `Fold:` ...).
 
-Files: `lua/genja/telescope-keymaps.lua`, keys in `lua/genja/map-telescope.lua`
+Files: `lua/genja/ext/telescope-keymaps.lua`, keys in `lua/genja/map-telescope.lua`
 (function in `map-telescope/fn.lua`).
 
 ## Keys

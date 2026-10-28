@@ -24,7 +24,7 @@ tested yet (2026-10-18).
 - `lua/lazyp/new/genja-oily.lua`: loader spec. It loads the first time oil
   needs it, like genja-finder.
 - `lua/lazyp/explorer/oil.lua`: oil's hidden-file check and `<LocalLeader>M`
-  call genja-oily. The `g.` menu entry in `lua/genja/actions.lua` does the same.
+  call genja-oily. The `g.` menu entry in `lua/genja/ext/actions.lua` does the same.
 - `lua/genja/fn-oil.lua`: the old `.oily` code is gone, replaced by a
   one-line pointer.
 - Pointers elsewhere:

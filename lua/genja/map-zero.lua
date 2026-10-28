@@ -36,8 +36,8 @@ km(n, '<C-right>',      cmd [[wincmd l]],   nosi 'Window: right')
 km(n, '<C-w>1',         cmd [[only]]..'zz', nosi 'Window: only') -- center on line
 km(n, '<c-w><s-right>', '<c-w>L',           nosi 'Window: move left')
 km(n, '<c-w><s-left>',  '<c-w>R',           nosi 'Window: move left')
--- sizes in big steps, share cycle, resize mode (lua/genja/winsize.lua)
-local function ws() return require('genja.winsize') end
+-- sizes in big steps, share cycle, resize mode (lua/genja/ext/winsize.lua)
+local function ws() return require('genja.ext.winsize') end
 km(n, '<M-=>',      function() ws().resize(1) end,  nosi 'Window: grow (big step)')
 km(n, '<M-->',      function() ws().resize(-1) end, nosi 'Window: shrink (big step)')
 km(n, '<M-0>',      function() ws().cycle() end,    nosi 'Window: split share 50/30/70/60')
@@ -64,8 +64,8 @@ km('n', '<leader>t=', cmd [[tabmove +1]], nosi 'Tab: move →')
 -- {{{ Toggles
 km('n', '<leader>tw', function() vim.o.wrap = ! vim.o.wrap end, nosi 'Toggle: wrap')
 km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle: number')
--- ~ swaps true/false, on/off, +/-, </> … under the cursor, else plain ~ (lua/genja/tilde.lua)
-km('n', '~', function() require('genja.tilde').toggle() end, nosi 'Toggle: switch word or case')
+-- ~ swaps true/false, on/off, +/-, </> … under the cursor, else plain ~ (lua/genja/ext/tilde.lua)
+km('n', '~', function() require('genja.ext.tilde').toggle() end, nosi 'Toggle: switch word or case')
 km('n', '<M-~>', '~', nosi 'Toggle: case (plain ~)')
 -- }}}
 
@@ -81,9 +81,9 @@ km(nx, 'zC',     'zC', nosi 'Fold: x close recursively')
 
 km(n, 'zf',      'zf', nosi 'Fold: create (operator)')
 -- visual zf asks for a title and writes {{{ title / }}} markers; empty title: built-in
-km('x', 'zf', function() require('genja.wrapfold').visual() end, nosi 'Fold: create with title markers')
-km(n, '<leader>wwf', function() require('genja.wrapfold').paragraph() end, nosi 'Fold: wrap paragraph in title markers')
-km('x', '<leader>wwf', function() require('genja.wrapfold').visual() end, nosi 'Fold: wrap selection in title markers')
+km('x', 'zf', function() require('genja.ext.wrapfold').visual() end, nosi 'Fold: create with title markers')
+km(n, '<leader>wwf', function() require('genja.ext.wrapfold').paragraph() end, nosi 'Fold: wrap paragraph in title markers')
+km('x', '<leader>wwf', function() require('genja.ext.wrapfold').visual() end, nosi 'Fold: wrap selection in title markers')
 km(n, 'zF',      'zF', nosi 'Fold: create for N lines')
 
 km(nx, 'zd',     'zd', nosi 'Fold: delete')

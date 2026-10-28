@@ -5,7 +5,7 @@ the first 3 hints (by line, then column, LSP and linters together) get virtual t
 and an underline. The rest still exist: `]d`, the loclist, floats and `vim.diagnostic.get()`
 see all of them.
 
-Files: `lua/genja/diag-limit.lua` (wraps nvim's `virtual_text`, `signs`, `underline` handlers),
+Files: `lua/genja/ext/diag-limit.lua` (wraps nvim's `virtual_text`, `signs`, `underline` handlers),
 `plugin/diag-limit.lua` (setup, key), F2 source `lua/genja/f2/diag.lua`.
 Tests: `tests/diag-limit/test_diag_limit.lua` (`make test D=diag-limit` in `tests/`).
 

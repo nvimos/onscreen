@@ -54,7 +54,7 @@ vim.opt.shortmess = 'fnxlmS'
 -- 'S' -- no search count [1/5]
 
 ---@diagnostic disable-next-line: param-type-mismatch
-vim.opt.shortmess:append('IF') -- no intro screen (charity nag); genja/intro.lua draws one without it
+vim.opt.shortmess:append('IF') -- no intro screen (charity nag); genja/ext/intro.lua draws one without it
 -- }}}
 
 -- {{{ modeline

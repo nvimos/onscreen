@@ -1,4 +1,4 @@
-# selene (lua linter) for this config, run by lua/genja/lint.lua; std in vim.yml
+# selene (lua linter) for this config, run by lua/genja/ext/lint.lua; std in vim.yml
 std = "vim"
 
 

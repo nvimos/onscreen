@@ -1,4 +1,4 @@
--- <F2> source, group `diag`: when the diagnostics limit (lua/genja/diag-limit.lua)
+-- <F2> source, group `diag`: when the diagnostics limit (lua/genja/ext/diag-limit.lua)
 -- hides some in this buffer, one item that shows them all here; after that, one that
 -- hides the excess again.
 
@@ -8,7 +8,7 @@ local M = {}
 ---@param done fun(tasks: genja.f2.Task[])
 function M.collect(ctx, done)
 	local items = {}
-	local limit = require('genja.diag-limit')
+	local limit = require('genja.ext.diag-limit')
 	local hidden = limit.hidden(ctx.bufnr)
 	if hidden > 0 then
 		table.insert(items, {

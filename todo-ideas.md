@@ -41,7 +41,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] first wave (decided 2026-10-23): markdownlint-cli2, typos (markdown, gitcommit), yamllint,
       ansible-lint (WSL, like phpactor), selene, checkmake, phpcs, actionlint
     - install: mason-tool-installer (all but ansible-lint)
-    - lua/genja/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md (b5383bd)
+    - lua/genja/ext/lint.lua; untested, doc-wip/readme.2026-10-23.lint-first-wave.md (b5383bd)
   - later: hadolint, vale, ruff, gitleaks, editorconfig-checker, vint
   - [x] second wave (decided 2026-10-24): hadolint, ruff (only without the ruff LSP),
       editorconfig-checker (any filetype, below a .editorconfig), vint
@@ -104,7 +104,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - i want to check if the built in <c-/> can be used to discover functionality
   - maybe i need to think about and experiment with a more elaborate layout
   - [-] a footer for relevant keymaps with descriptions thats always on
-  - key help table (key | m | description) in the empty results buffer (lua/genja/telescope-virthelp.lua); untested
+  - key help table (key | m | description) in the empty results buffer (lua/genja/ext/telescope-virthelp.lua); untested
   - a custom preview-like component with hand-picked keys and leave <c-/> as is
   - [x] 2026-10-24: prototype footer (lua/genja/telescope-footer.lua, :TelescopeFooter) + spec with 6 questions:
     doc-wip/readme.2026-10-24.telescope-explore.md; untested (9829d55)

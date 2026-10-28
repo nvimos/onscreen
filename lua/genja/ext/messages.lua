@@ -4,10 +4,10 @@
 --   :Messages -loc      append them to this window's location list, open it
 --   <F2>                one item per location, newest first, at most 10 (lua/genja/f2/collect/messages.lua)
 -- Reads :messages when asked; nothing runs in the background. The recording variant
--- (wraps vim.notify, off by default) is lua/genja/messages-capture.lua.
+-- (wraps vim.notify, off by default) is lua/genja/ext/messages-capture.lua.
 -- Command: plugin/messages.lua. Tests: tests/messages/.
 
-local SRC = 'lua/genja/messages.lua: '
+local SRC = 'lua/genja/ext/messages.lua: '
 
 local M = {}
 

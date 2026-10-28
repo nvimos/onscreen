@@ -1,5 +1,5 @@
 -- smart-splits.nvim: resize/move across splits, also into wezterm/kitty/tmux panes (idea 28).
--- not used: 2026-10 — lua/genja/winsize.lua covers resizing for now; enable to compare.
+-- not used: 2026-10 — lua/genja/ext/winsize.lua covers resizing for now; enable to compare.
 -- Keys: <M-h/j/k/l> resize (normal mode; free there), <leader>wR its own resize mode.
 
 ---@class SmartSplitsOpts

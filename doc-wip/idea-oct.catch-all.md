@@ -4,7 +4,7 @@ Status: implemented, untested (2026-10-17).
 
 ## #12 vim.ui.select in telescope
 
-- File: `lua/genja/ui-select.lua`, loaded from `lua/genja/init.lua`
+- File: `lua/genja/ext/ui-select.lua`, loaded from `lua/genja/init.lua`
 - Every `vim.ui.select` call opens a telescope dropdown
   - code actions
   - overseer's template list (`:OverseerRun`)
@@ -14,7 +14,7 @@ Status: implemented, untested (2026-10-17).
 
 ## #17 action menu
 
-- File: `lua/genja/actions.lua`
+- File: `lua/genja/ext/actions.lua`
 - Keys (in `lua/genja/map-telescope.lua`)
   - `g.`
   - `<LocalLeader>/` (`,/`)

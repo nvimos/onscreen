@@ -1,5 +1,5 @@
 -- Recent files (idea 35): plug-wip/genja-recent.nvim records views and edits, ranks by frecency.
--- Picker: lua/genja/recent.lua, <C-F1> (lua/genja/map-telescope.lua); oldfiles stays on <leader>jo.
+-- Picker: lua/genja/ext/recent.lua, <C-F1> (lua/genja/map-telescope.lua); oldfiles stays on <leader>jo.
 
 ---@type LazySpec
 return {

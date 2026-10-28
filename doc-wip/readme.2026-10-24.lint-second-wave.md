@@ -1,6 +1,6 @@
 # nvim-lint second wave (idea 14e)
 
-`lua/genja/lint.lua` gained four linters (vint disabled since, see below); mason-tool-installer installs them with the others.
+`lua/genja/ext/lint.lua` gained four linters (vint disabled since, see below); mason-tool-installer installs them with the others.
 
 | Linter | Filetype | Runs on | Note |
 |---|---|---|---|

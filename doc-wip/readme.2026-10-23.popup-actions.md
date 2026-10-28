@@ -2,7 +2,7 @@
 
 `lua/genja/fn.vim` adds `Actions (g.)` to the mouse popup menu (`PopUp`),
 next to `ToggleWrap`. It opens the same picker as `g.` /
-`<LocalLeader>/` (`lua/genja/actions.lua`).
+`<LocalLeader>/` (`lua/genja/ext/actions.lua`).
 
 New actions in the menu: `source this file` (lua and vim buffers) and
 `claude (floaterm)` (`:ClaudeFterm`).

@@ -1,7 +1,7 @@
 -- Markdown: preview the buffer's file with glow in a new terminal window; any key closes it.
 -- <F2> task, registered per markdown buffer from after/ftplugin/markdown.lua.
 -- Windows only for now; the other branch only says so.
-local SRC = 'lua/genja/md-glow.lua: '
+local SRC = 'lua/genja/ext/md-glow.lua: '
 
 local M = {}
 

@@ -64,7 +64,7 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 
 ## 28. window sizes (S)
 
-- `lua/genja/winsize.lua`: `<M-=>`/`<M-->` grow/shrink by percent or fixed
+- `lua/genja/ext/winsize.lua`: `<M-=>`/`<M-->` grow/shrink by percent or fixed
   steps, `<M-0>` cycles 50/50 → 30/70 → 70/30 → 60/40 in a vertical
   two-window split.
 - `<leader>wr` resize mode as a which-key loop (`hydra`), `h/j/k/l`, `=`, `0`.
@@ -79,7 +79,7 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - b. visual `zf` asks for a title and writes `{{{ title` / `}}}` markers
   with `commentstring`; `:WrapFold`, `<leader>wwf` paragraph (alma's
   `WrapFold`). Alma's copies get a "duplicated" comment.
-- Outcome: 29b (9bae096) `lua/genja/wrapfold.lua`; 29a (4f73a32) `lua/genja/tilde.lua`, also left/right, up/down, min/max, first/last; dial (3b309f8). Alma copies marked "duplicated". Guides: `readme.2026-10-23.wrapfold.md`, `readme.2026-10-23.tilde-dial.md`.
+- Outcome: 29b (9bae096) `lua/genja/ext/wrapfold.lua`; 29a (4f73a32) `lua/genja/ext/tilde.lua`, also left/right, up/down, min/max, first/last; dial (3b309f8). Alma copies marked "duplicated". Guides: `readme.2026-10-23.wrapfold.md`, `readme.2026-10-23.tilde-dial.md`.
 
 ## 32. tabline: resizing nvim-qt activates the right-most tab (M)
 
@@ -95,7 +95,7 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 
 - First caller of `f2.add_tasks`: a markdown task that prefixes the
   selected lines with `- [ ] ` (keeps indent, skips existing boxes).
-- Outcome (554f5ad): `lua/genja/md-checklist.lua`, per markdown buffer from `after/ftplugin/markdown.lua`; visual `<F2>` stores `vim.b.f2_range`; all boxed -> boxes removed. Guide: `readme.2026-10-23.md-checklist.md`.
+- Outcome (554f5ad): `lua/genja/ext/md-checklist.lua`, per markdown buffer from `after/ftplugin/markdown.lua`; visual `<F2>` stores `vim.b.f2_range`; all boxed -> boxes removed. Guide: `readme.2026-10-23.md-checklist.md`.
 
 ## 36. startdirs plugin (M)
 
@@ -126,7 +126,7 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   WSL like phpactor), selene (lua), checkmake (make), phpcs (php),
   actionlint (`.github/workflows/*.yml`). mason-tool-installer installs
   all but ansible-lint. None were on PATH; mason has phpcs already.
-- Outcome (b5383bd): first wave as specced, `lua/genja/lint.lua`, tools in
+- Outcome (b5383bd): first wave as specced, `lua/genja/ext/lint.lua`, tools in
   the mason-tool-installer list. Untested.
 - Second wave (608ad0f, 2026-10-24): hadolint (dockerfile), ruff (python,
   skipped while the ruff LSP is attached), editorconfig-checker (`M.any`,

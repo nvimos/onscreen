@@ -6,7 +6,7 @@
 --                      F2 "hide excess" clears it again)
 -- Keys and setup: plugin/diag-limit.lua. Zen z1 sets the limit to 2 (lua/genja/map-plugin/zenmode.lua).
 
-local SRC = 'lua/genja/diag-limit.lua: '
+local SRC = 'lua/genja/ext/diag-limit.lua: '
 
 local M = {}
 

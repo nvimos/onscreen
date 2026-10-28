@@ -1,2 +1,2 @@
--- Right-click menu entries per filetype, plus Morning (lua/genja/popup-menu.lua).
-require('genja.popup-menu').setup()
+-- Right-click menu entries per filetype, plus Morning (lua/genja/ext/popup-menu.lua).
+require('genja.ext.popup-menu').setup()
