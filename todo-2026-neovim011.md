@@ -32,7 +32,8 @@
 - [x] look for an alternative shortcut-hint plugin
   - testing out legendary
   - [x] improve sorting and grouping of which-key
-  - [ ] make an automated test ui/which-groups
+  - [x] make an automated test ui/which-groups
+    - [x] tests/ui/test_which_groups.lua, both ways: empty groups, <leader> prefixes without a group (2026-10-29)
     - tests that all defined key groups appear with a prefix
     - warn if not, not failure. list the missing groups
   - which-key feels clunky
