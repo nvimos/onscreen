@@ -35,7 +35,7 @@ are the first word-like runs of the buffer, non-ASCII removed.
 ## Try it
 
 1. `:e ~/foo.txt`, type something, don't save.
-2. `:enew`, type `hello there world`, `:DumpMessages` or any other scratch text.
+2. `:enew`, type `hello there world`.
 3. `:qa`: the picker lists `foo.txt` and `[No Name N] hello-there-world`.
 4. On `foo.txt` press `<M-x>`: it's reset, the picker reopens with one entry.
 5. On the no-name entry press `<M-w>`: the cmdline shows
