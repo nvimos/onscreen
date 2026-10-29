@@ -1,0 +1,2 @@
+- [x] doc-wip: consultant rate notes (2026-10-29)
+    - [x] doc-wip/readme.2026-10-29.consultant-rate.md
