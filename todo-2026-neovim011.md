@@ -24,14 +24,18 @@
 -[x] indexed file search: integrate everything search index
     - [x] use it per default if it's installed, fallback to fzf or whatever
 
--[ ] look for an alternative shortcut-hint plugin
-    - or maybe improve sorting and grouping of which-key
-    - which binds follow space, g, ` (leader, localleader)
-        - which-key feels clunky
+- [x] look for an alternative shortcut-hint plugin
+  - testing out legendary
+  - [x] improve sorting and grouping of which-key
+  - [ ] make an automated test ui/which-groups
+    - tests that all defined key groups appear with a prefix
+    - warn if not, not failure. list the missing groups
+  - which-key feels clunky
+    - maybe look into a different layout mode
 
--[ ] maybe: cook up a way to or look into disabling languages automatically
-    - or only enable them when needed
-    - or only enable them when configured through a local settings file
+-[x] only enable / install needed languages with a conservative set of defaults
+    - [x] on-demand with :EnableLang -on -off -save
+    - [x] per-environment with local settings file
 
 -[x] migrate lsp, cmp config to neovim 0.11+ api
     - [x] ask claude to rewrite based on existing files
@@ -45,19 +49,20 @@
     -[x] undo require(lspconfig).«lang».setup()
     -[x] migrate to vim.lsp.config and vim.lsp.enable
     -[x] fix: no completion menu while typing (cmp.setup() was never called)
-        - genja-completion011 spec ran genja-statusline's setup
-        - entry point is require('genja.comps'), not main = 'genja'
--[ ] evaluate completion engines other than nvim-cmp
+-[x] evaluate completion engines other than nvim-cmp
     (notes: plug-wip/genja-completion011.nvim/README.md, "Alternatives to nvim-cmp")
-    -[ ] built-in: vim.lsp.completion.enable({ autotrigger = true }) / 'autocomplete'
+    -[x] built-in: vim.lsp.completion.enable({ autotrigger = true }) / 'autocomplete'
         - is LSP-only enough? what about buffer words, paths, cmdline?
-    -[ ] blink.cmp
-        - port lua/genja/completion/* features
-        - compare speed and menu feel with nvim-cmp
-
+        - no it's not enough, maybe for some kind of minimalist setup
+    -[x] blink.cmp
+        - [x] port lua/genja/completion/* features
+        - [x] compare speed and menu feel with nvim-cmp
+          - some kinks with selection. mainly works fine
+            can'd describe the issue yet. feels a bit off
+            but works faster and it's more powerful
 
 -[n] bootstrap core plugins with neovim
-    -[ ] lazy disables pack/ loading (vim.pkg.add)
+    -[x] lazy disables pack/ loading (vim.pkg.add)
         - ~/.local/share/nvim/site/pack/core/opt/ (Linux/macOS) (or under $XDG_DATA_HOME/nvim)
         - %LOCALAPPDATA%\nvim-data\site\pack\core\opt\ (Windows)
     -[x] plugin manager: stick with lazy
@@ -80,16 +85,26 @@
             -[ ] one for map-convoluted
             -[ ] one for map-*
             -[ ] add them to Mylunsj
-    - consider
-        - exclude or include defaults
-            - [ ] done for folds
-            - toggle builtin keymaps?
-              (in the cheatsheet, or the search ui)
-                - must be manually redeclared. prob not worth it for all
+    - consider exclude or include defaults
+      - [x] done for folds to define the descriptions
+      - toggle builtin keymaps?
+        (in the cheatsheet, or the search ui)
+          - must be manually redeclared. prob not worth it for all
 
 -[x] open a browser and paste a query to perplexity
-    -[ ] tidy plugin and move somewhere
-    -[ ] same for gemini
+    -[ ] move into plug-wip/genja-paste-ai.nvim
+    -[ ] add providers
+      - [ ] add gemini
+      - [ ] add manus
+      - [ ] add chatgpt
+      - [ ] add grok
+      - gonna clutter ui if add them in the same way as the perplexity eff-two item and keybinds
+      - should be a toggle-provider on the fly kind of config, via eff-two
+        - provide user func :PasteSearch [-provider name] [-save]
+          - set active provider for runtime session
+          - optionally persist choice in plugin-spec setup function (clever / simple lua pattern)
+      - the feature / module should be «paste to ai-search in browser», using {{provider}}
+
 
 ## prep / clean
 
