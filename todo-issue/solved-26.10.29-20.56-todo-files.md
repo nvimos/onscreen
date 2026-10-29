@@ -1,0 +1,6 @@
+- [x] todo: todo files to markdown, test results moved to todo-done (2026-10-29)
+    - [x] todo-2026-neovim011.txt, todo-2027.txt -> .md
+    - [x] todo-test/check-features.md -> todo-done/2026-check-features.md, F3 items done
+    - [x] todo-test/testink-now.md -> todo-done/tested-2026-10-29.md; new todo-test/testink-now.md with open follow-ups
+    - [x] doc-wip/untested.2026-10-24.md: results of 2026-10-29
+    - [ ] CLAUDE.md still names todo-2026-neovim011.txt and todo-2027.txt

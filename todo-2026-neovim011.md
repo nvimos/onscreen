@@ -1,0 +1,100 @@
+# Clean and update for neovim 0.11+
+
+## new setup 2026
+
+-[n] extract Mylunsj into a separate plugin
+
+
+-[ ] ai, llm, code generation
+    -[ ] integrate at leas one from online, free tier
+    -[ ] integrate ollama
+        - (maybe) via cli
+        - (maybe) via http api
+        - (maybe) via local sock
+    -[ ] integrate at least one
+        - maybe hack some round-robin, auto retry util
+        - maybe delegate to cli tools
+    -[ ] auto-code-completion suggestions
+        - copilot
+        - gemini
+    -[ ] chatbot
+        - ask random questions
+        - ask about current file
+
+-[x] indexed file search: integrate everything search index
+    - [x] use it per default if it's installed, fallback to fzf or whatever
+
+-[ ] look for an alternative shortcut-hint plugin
+    - or maybe improve sorting and grouping of which-key
+    - which binds follow space, g, ` (leader, localleader)
+        - which-key feels clunky
+
+-[ ] maybe: cook up a way to or look into disabling languages automatically
+    - or only enable them when needed
+    - or only enable them when configured through a local settings file
+
+-[x] migrate lsp, cmp config to neovim 0.11+ api
+    - [x] ask claude to rewrite based on existing files
+    - [x] make it modular or feature-per-file
+    - [x] put essential functionality into separate files
+        -[x] :help completion
+        -[x] :commands completion
+        -[x] lua lsp
+        -[x] shell lsp
+        -[ ] how to extract into minimal config?
+    -[x] undo require(lspconfig).«lang».setup()
+    -[x] migrate to vim.lsp.config and vim.lsp.enable
+    -[x] fix: no completion menu while typing (cmp.setup() was never called)
+        - genja-completion011 spec ran genja-statusline's setup
+        - entry point is require('genja.comps'), not main = 'genja'
+-[ ] evaluate completion engines other than nvim-cmp
+    (notes: plug-wip/genja-completion011.nvim/README.md, "Alternatives to nvim-cmp")
+    -[ ] built-in: vim.lsp.completion.enable({ autotrigger = true }) / 'autocomplete'
+        - is LSP-only enough? what about buffer words, paths, cmdline?
+    -[ ] blink.cmp
+        - port lua/genja/completion/* features
+        - compare speed and menu feel with nvim-cmp
+
+
+-[n] bootstrap core plugins with neovim
+    -[ ] lazy disables pack/ loading (vim.pkg.add)
+        - ~/.local/share/nvim/site/pack/core/opt/ (Linux/macOS) (or under $XDG_DATA_HOME/nvim)
+        - %LOCALAPPDATA%\nvim-data\site\pack\core\opt\ (Windows)
+    -[x] plugin manager: stick with lazy
+    -[x] move bootstrap to lua/lazy-boot.vim
+
+-[x] look into generating a cheat-sheet from existing keys
+    - ideally some logical patterns and rearrangement ideas should emerge
+        - which key groups help with that
+            - the ui is easier to read too
+    -[x] should be a reference at a glance
+    -[x] sudormrfbin/cheatsheet.nvim
+        - no. the ui / interface sucked. abandon effort
+        - abdul keymaps is much better. works as a modal with search
+        - maybe save as custom help files -> cheatsheet.txt
+        -[n] move the :CheatsheetGenerate snippet to lazy setup
+        -[n] make the telescope ui first column wider
+        -[n] adjust the script for more granular groups (first column)
+        -[n] look into generating several cheatsheets
+            -[ ] one for lsp
+            -[ ] one for map-convoluted
+            -[ ] one for map-*
+            -[ ] add them to Mylunsj
+    - consider
+        - exclude or include defaults
+            - [ ] done for folds
+            - toggle builtin keymaps?
+              (in the cheatsheet, or the search ui)
+                - must be manually redeclared. prob not worth it for all
+
+-[x] open a browser and paste a query to perplexity
+    -[ ] tidy plugin and move somewhere
+    -[ ] same for gemini
+
+## prep / clean
+
+-[x] factor out statusline stuff into a separate plugin
+    - [x] move old files
+    - [ ] set up github repo
+    - [ ] delete from home-nvim repo
+

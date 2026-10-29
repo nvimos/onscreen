@@ -1,101 +1,64 @@
 # Open tests (from todo-issue/)
 
-## From this session
+Passed ones: todo-done/tested-2026-10-29.md.
 
-- Lint
-    1. restart nvim
-    2. open the buffer that gave the warning
-    3. :messages names the linter
-  - result
-        lua/genja/lint.lua: linter gitleaks exited with code: 1
-- Aerial
-    1. with `<leader>oO`
-    2. the float is barely see-through.
-- Gitsigns
-    1. in a tracked .md file, `<leader>mGs` shows signs
-    2. press it again
-    3. they're gone.
-- F2
-    1. in a markdown file
-    2. the labels start in one column.
-- Terminal cursor
-    1. in :terminal insert mode, a steady orange bar
-    2. :TermCursorShape block switches it.
+## Follow up
+
+- Lint: gitleaks fails
+    - result 2026-10-29: `lua/genja/lint.lua: linter gitleaks exited with code: 1`
+    - nvim-lint already passes `--exit-code=0`, so 1 is a gitleaks error, not a leak found.
+      Hint: run the linter's command by hand on that buffer
+      (`gitleaks stdin --report-format=json --report-path=- --exit-code=0 <file>` with the file on stdin).
+    - merged: "Lint: find which file makes the named linter fail".
+- Zen in nvim-qt: z0 doesn't restore the window size
+    1. z1: zen opens, diagnostics limit drops to 2 (seven-errors.lua)
+       - result: yes
+    2. z2: zen closes and reopens maximized.
+    3. z1 again: reopens, not maximized.
+    4. z0: the window size and the limit of 3 come back.
+       - result: window size remained maxed
+    - merged decisions: should z0 stay closed instead of reopening at width 80?
+      does setting &columns/&lines resize the nvim-qt window?
+    - steps 2-3 have no result yet.
+- Claude window: /exit brings forward some old buffer
+    1. :ClaudeFterm as the only window, /exit: no E444 (works)
+    2. in a split, /exit closes it (works)
+    - follow-up: the window left behind shows an old buffer, not the one before claude.
+
+## Not tested yet
+
 - Terminal paste
     1. in pwsh, `<S-Insert>` with two lines
     2. pastes them without running each line.
-- PwshFterm
-    1. :PwshFterm opens a float
-    2. exit closes it.
-- Mason
-    1. make mason-luals
-    2. make mason.
-- ToggleDiagnostics
-    1. open a lua file with warnings
-    2. :ToggleDiagnostics twice.
-
-## From earlier sessions
-
-- Diagnostics limit
-    1. `<F2>` show all
-    2. `<F2>` hide excess
-    3. goes back to 3.
-- Lint setup
+- Lint setup (doc-wip/readme.2026-10-24.lint-vale-gitleaks.md, first run)
     1. :MasonToolsInstall
     2. :ValeSync
-    3. the guide's samples.
-- Markdown fixes
-    1. the  in a .md file
-    2. :w fixes #Heading.
-- Messages
-    1. :luafile a failing file
-    2. :Messages
-    3. `<CR>`
-    4. also :Messages -quick.
-- Telescope footer
-    1. `<leader>jM`
-    2. `<F1>`
-    3. `<C-F1>`.
-- zenmode, in nvim-qt:
-    1. in nvim-qt
-    2. z1: zen opens and the diagnostics limit drops to 2. Use seven-errors.lua to see it.
-      - result: yes
-    3. z2: zen closes and reopens maximized.
-    4. z1 again: reopens, not maximized.
-    5. z0: the window size and the limit of 3 come back.
-      - result: window size remained maxed
+    3. open the guide's sample files, each shows its linter's warnings.
+    - same as the open lint items in doc-wip/untested.2026-10-23.md and untested.2026-10-24.md.
+- Telescope key help (lua/genja/ext/telescope-virthelp.lua)
+    - the "footer" prototype was dropped 2026-10-25; its successor shows
+      `key | m | description` in the empty results area.
+    1. `<leader>jM`, `<F1>`, `<C-F1>`: each picker opens with the key help
+    2. typing a query replaces it with results.
 
-- comps011 tests
-    1. make test D=comps011 G=gather
-    2. make timings.
-- Claude window
-    1. :ClaudeFterm as the only window
-    2. /exit
-    3. should leave no E444
-    4. in a split, /exit closes it.
-- Cmdline
-    1. :e `<Tab>`
-    2. `<C-j>`/`<C-k>`
-    3. `<Up>` gives the previous command.
-- Older items
-  - F2 make targets
-  - glow on a path with spaces or '
-  - oil git add with `<M-a>`
-  - search colors
-  - g? in oil
-  - `<leader>w`
-  - / wsp / wsT
-  - /close-issues with staged files
-- Untested lists
-  - doc-wip/untested.2026-10-23.md still has 31 unchecked items
-  - untested.2026-10-24.md has 7
-  - many overlap with the items above.
+## Auto tests to write
+
+- From "Older items" (passed by hand 2026-10-29):
+    - glow command for a path with spaces or `'` (quoting only)
+    - oil `<M-a>` git add: index has the file after the key
+    - `<leader>w` / wsp / wsT window commands: window count and layout
+    - g? in oil: help float opens
+- From doc-wip/untested.2026-10-23.md, pure-logic items first:
+    - tilde.lua: `~` swaps true/false, +/-, </>
+    - md-checklist: visual `<F2>` makes a task list
+    - wrapfold: `:WrapFold` puts fold markers with a title
+    - genja-startdirs add/remove (text file round trip)
+- Not worth automating: voice typing, nvim-qt resize, mouse clicks, colours.
 
 ## Other open items
 
 ### Fixes and checks
 
-- Lint: find which file makes the named linter fail.
 - comps011
   - reinstall lua-language-server (half-installed)
     and autotools-language-server
@@ -124,9 +87,6 @@
 
 - Telescope: answer the 6 spec questions.
 - Markdown: filetype settings (linebreak, spell, list continuation).
-- Zen
-  - should z0 stay closed instead of reopening at width 80?
-  - does setting &columns/&lines resize the nvim-qt window?
 - #39
   - session marker enabled:false toggle
   - !! markers in txt files

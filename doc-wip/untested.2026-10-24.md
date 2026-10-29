@@ -17,16 +17,24 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
 
 - [x] outline keys: <leader>oo / <leader>oO, <Esc> closes the nav float (lua/genja/map-plugin/aerial.lua) -> doc-wip/readme.2026-10-24.aerial-outline-keys.md
     - ok (2026-10-25); then nav float winblend 5: untested
-- [ ] gitsigns off in markdown, <leader>mGs toggles per buffer (lua/genja/map-plugin/gitsigns.lua) -> doc-wip/readme.2026-10-24.gitsigns-skip-ft.md
+    - 2026-10-29: winblend ok (todo-done/tested-2026-10-29.md)
+- [x] gitsigns off in markdown, <leader>mGs toggles per buffer (lua/genja/map-plugin/gitsigns.lua) -> doc-wip/readme.2026-10-24.gitsigns-skip-ft.md
     - failed 2026-10-25: <leader>mGs didn't attach; fixed (attach check), retest
+    - 2026-10-29: retest ok
 - [x] f2 item names: <F2> in markdown, with a claude running, in nvim-qt (lua/genja/f2/picker.lua) -> doc-wip/readme.2026-10-24.f2-item-names.md
     - ok (2026-10-25); then `group  label` with groups of 6 chars or less, right-aligned: untested
+    - 2026-10-29: labels in one column, ok
 - [ ] lint: gitleaks on any file, vale on markdown after :ValeSync (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-10-24.lint-vale-gitleaks.md
 - [x] diagnostics limit: 3 per severity, <leader>tt3, <F2> show all (lua/genja/ext/diag-limit.lua) -> doc-wip/readme.2026-10-24.diag-limit.md
     - ok (2026-10-25); then <F2> hide excess after show all: untested
+    - 2026-10-29: covered by tests/ui/test_diagnostics-limit.lua
 - [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md
-- [ ] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/ext/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
-- [ ] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/ext/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
+    - 2026-10-29: z1 limit 2 ok; z0 left the window maximized, follow-up in todo-test/testink-now.md
+- [x] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/ext/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
+    - 2026-10-29: fix on :w ok
+- [x] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/ext/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
+    - 2026-10-29: ok
 - [-] telescope key footer (prototype): abandoned 2026-10-25, removed; <leader>jM, <F1>, <C-F1>; :TelescopeFooter (lua/genja/telescope-footer.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
 - [ ] telescope key help in the empty results (key | m | description): <leader>jM, <F1>, <C-F1> (lua/genja/ext/telescope-virthelp.lua) -> doc-wip/readme.2026-10-24.telescope-explore.md
-- [ ] comps011 tests: make test D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md
+- [x] comps011 tests: make test D=comps011 G=gather, then make timings (tests/comps011/) -> doc-wip/readme.2026-10-24.comps011-tests.md
+    - 2026-10-29: ok
