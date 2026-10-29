@@ -1,0 +1,2 @@
+- [x] todo: todo-ideas.md links the renamed .md todo files (2026-10-29)
+    - [x] todo-ideas.md: todo-2027.md, todo-2026-neovim011.md

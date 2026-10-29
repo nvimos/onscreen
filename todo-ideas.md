@@ -9,11 +9,11 @@ squash ideas details and estimations
 
 future work (need to limit the neovim-2026 project)
 
-    ./todo-2027.txt
+    ./todo-2027.md
 
 migration from 0.9 to 0.11 (the file that started it all)
 
-    ./todo-2026-neovim011.txt
+    ./todo-2026-neovim011.md
 
 ## ideas october
 
