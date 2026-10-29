@@ -1,0 +1,4 @@
+- [x] todo: todo-2026-neovim011.md items closed (2026-10-29)
+    - [x] ai block closed as done in the code; cheatsheet leftovers marked [n]
+    - [x] minimal config: note to try a bare WSL and Termux; statusline repo moved to todo-2027.md
+    - [x] committed in be705cf, b3f4ca5
