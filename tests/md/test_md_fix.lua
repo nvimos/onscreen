@@ -63,6 +63,53 @@ T['fix: missing tools are left out'] = function()
 	]]), {})
 end
 
+T['keys: key notation gets backticks, adjacent keys share one span'] = function()
+	local got = child.lua([[return {
+		F.escape_keys_line('<M-v> toggles; <Esc> cancels'),
+		F.escape_keys_line('also in the <leader>pC / <M-?> popup'),
+		F.escape_keys_line('complete with <C-x><C-o>, <F5>, <2-LeftMouse>'),
+	}]])
+	eq(got, {
+		'`<M-v>` toggles; `<Esc>` cancels',
+		'also in the `<leader>pC` / `<M-?>` popup',
+		'complete with `<C-x><C-o>`, `<F5>`, `<2-LeftMouse>`',
+	})
+end
+
+T['keys: code spans, html and links are left alone'] = function()
+	local got = child.lua([[return {
+		F.escape_keys_line('`:map <C-x> foo` and <br> and <https://x.org> and <mic>'),
+		F.escape_keys_line('`<C-x>` already done'),
+	}]])
+	eq(got, {
+		'`:map <C-x> foo` and <br> and <https://x.org> and <mic>',
+		'`<C-x>` already done',
+	})
+end
+
+T['keys: file pass skips fenced and indented code blocks, not nested list items'] = function()
+	local got = child.lua([[
+		local f = tmp .. '/k.md'
+		vim.fn.writefile({
+			'Title',
+			'',
+			'    <C-w>T  code block',
+			'',
+			'```',
+			'<C-x> in a fence',
+			'```',
+			'- item <Esc>',
+			'    - nested <M-v>',
+		}, f)
+		F.escape_keys(f)
+		return vim.fn.readfile(f)
+	]])
+	eq(got[3], '    <C-w>T  code block')
+	eq(got[6], '<C-x> in a fence')
+	eq(got[8], '- item `<Esc>`')
+	eq(got[9], '    - nested `<M-v>`')
+end
+
 T['fix: typos rewrites the file, the buffer reloads'] = function()
 	-- mason's bin is not on PATH in the bare child
 	local bin = vim.fn.stdpath('data') .. '/mason/bin'

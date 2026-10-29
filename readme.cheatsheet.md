@@ -183,6 +183,7 @@ Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/m
                left/right up/down min/max first/last; chars + -  < >; case kept; else plain ~
     <M-~>      plain ~ (case)
     <leader>ts spelling on/off (map-zero.lua)
+    <leader>tm markdown fix on save on/off, :ToggleMarkdownFix (plugin/md-fix.lua)
     <C-a> <C-x>      dial: numbers, hex, dates, times, semver, weekdays, months, &&/||, bool
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats

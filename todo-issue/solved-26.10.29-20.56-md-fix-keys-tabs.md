@@ -1,0 +1,6 @@
+- [x] markdown: md-fix expands tabs, backticks vim keys, toggle (2026-10-29)
+    - [x] lua/genja/ext/md-fix.lua: expand_tabs(), escape_keys(), toggle()
+    - [x] plugin/md-fix.lua: <leader>tm, :ToggleMarkdownFix
+    - [x] tests/md/test_md_fix.lua: key escape cases
+    - [x] lua/genja/readme.md, readme.cheatsheet.md
+    - [ ] test: :w on a file with tab-indented lists and <C-x> in prose; <leader>tm turns it off
