@@ -37,6 +37,7 @@
     - warn if not, not failure. list the missing groups
   - which-key feels clunky
     - maybe look into a different layout mode
+    - [x] preset helix; modern and a narrower classic commented out (2026-10-29)
 
 -[x] only enable / install needed languages with a conservative set of defaults
     - [x] on-demand with :EnableLang -on -off -save

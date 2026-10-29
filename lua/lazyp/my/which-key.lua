@@ -24,7 +24,11 @@ return {
 		---@type wk.Opts
 		---@type wk.Opts
 		opts = {
-			-- preset = "helix",
+			-- one narrow column, bottom right, one key per line (default: classic)
+			preset = 'helix',
+			-- to try instead of helix:
+			-- preset = 'modern', -- centred float with a border, several columns
+			-- preset = 'classic', layout = { width = { min = 20, max = 40 }, spacing = 2 }, -- narrower columns
 			-- keep ':' mappings (map-zero.lua's :w<CR>) out of the tree, so ':' never
 			-- becomes a which-key trigger and opens the cmdline as usual
 			filter = function(mapping)
