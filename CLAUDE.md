@@ -56,7 +56,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Files and formatting
 
 - Unix newlines (LF) everywhere; only `desktop.ini` is CRLF (`.gitattributes`, `.editorconfig`). Don't mention line endings in replies.
-- Tabs, single quotes.
+- Spaces (4), single quotes (`.editorconfig` `indent_style = space`, since 39fd23c); older files still have tabs, converted as they are reformatted.
 - Readable Lua over clever Lua: plain assignments and `if` blocks.
     - A short, non-nested two-way `(x and y or z)` is fine, wrapped in parentheses; anything longer or nested is an `if` block.
 - Shared helpers between plug-wip plugins live in `plug-wip/genja-util.nvim`.
