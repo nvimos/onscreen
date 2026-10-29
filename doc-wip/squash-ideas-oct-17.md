@@ -27,12 +27,17 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
 
-## Open, ranked (auto-todo-20261026-2311)
+## Open, ranked (auto-todo-20261029-2307)
 
 Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easiest first.
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
+| -   | `<leader>;` dropbar letters jwfasrzxc: done in code (c8b9934) | 0 | ~1k  |
+| -   | telescope exploration: close, preview component dropped    | 0   | ~1k    |
+| -   | unsaved buffers picker on `:qa` / `s:` (E37/E162)          | 0   | ~15k   |
+| -   | netrw.nvim: pros and cons (skipped this round)             | 1   | ~4k    |
+| -   | ghost text: llm.nvim / ollama / qwen                       | spec | -     |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 | 14e | vint: revisit (Linux/WSL or a fork)                        | spec | -     |
 
