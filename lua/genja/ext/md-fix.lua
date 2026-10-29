@@ -96,7 +96,7 @@ function M.expand_tabs(file)
 	end
 end
 
--- Vim key notation (:h key-notation), lower case. Ported from md-fix.vim-keys-escape.vim.
+-- Vim key notation (:h key-notation), lower case.
 local NAMED_KEYS = {
 	nul = true, bs = true, tab = true, nl = true, ff = true, cr = true, ['return'] = true, enter = true,
 	esc = true, space = true, lt = true, bslash = true, bar = true, del = true, csi = true, xcsi = true,
