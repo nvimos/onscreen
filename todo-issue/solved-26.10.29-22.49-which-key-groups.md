@@ -2,4 +2,4 @@
     - [x] lua/lazyp/my/which-key.lua: win col 2, row 0.5 (helix preset)
     - [x] groups <leader>A: A= bb fml jb jj T; <leader>g is Env, URLs, git commit (was <leader>cG)
     - [x] test: <leader> shows the popup left, centred vertically (looks better, 2026-10-29)
-    - [ ] test: new group names show
+    - [x] test: new group names show (works, 2026-10-30)

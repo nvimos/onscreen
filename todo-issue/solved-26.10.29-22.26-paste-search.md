@@ -4,4 +4,4 @@
     - [x] -save / <M-s>: lua/genja/local/paste-ai.lua (gitignored)
     - [x] headless check: commands, keys, URLs, clipboard, <F2> label
     - [x] committed in 80b9277
-    - [ ] test: <F2> picker, <M-s> saves, restart keeps the provider
+    - [x] test: <F2> picker, <M-s> saves, restart keeps the provider (works, 2026-10-30)

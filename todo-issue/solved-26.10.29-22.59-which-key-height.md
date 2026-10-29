@@ -1,3 +1,3 @@
 - [x] which-key: fixed popup height so the centred box stops jumping (2026-10-29)
     - [x] lua/lazyp/my/which-key.lua: win.height min = max = 0.75
-    - [ ] test: <leader> then a group key: the box keeps its edges
+    - [x] test: <leader> then a group key: the box keeps its edges (works, 2026-10-30)

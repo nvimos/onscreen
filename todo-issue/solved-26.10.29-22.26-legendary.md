@@ -3,4 +3,4 @@
     - [x] lua/genja/map-plugin/legendary.lua: <leader>jl
     - [x] lua/telescope/_extensions/mylunsj.lua: Legendary item; window 106 x 20 (a third over 80 x 15)
     - [x] committed in 14a73da
-    - [ ] test: <leader>jl lists keymaps and commands; mylunsj opens bigger and lists Legendary
+    - [x] test: <leader>jl lists keymaps and commands; mylunsj lists Legendary (works, 2026-10-30)

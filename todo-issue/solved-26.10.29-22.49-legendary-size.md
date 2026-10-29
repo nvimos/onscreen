@@ -2,4 +2,4 @@
     - [x] lua/genja/ext/ui-select.lua: SIZES per vim.ui.select kind, legendary.nvim 104 x 20
     - [x] lua/telescope/_extensions/mylunsj.lua: 106 x 20 override removed
     - [x] test: <leader>jl opens the bigger dropdown, big enough (2026-10-29)
-    - [ ] test: mylunsj opens at 80 x 15
+    - [x] test: mylunsj opens at 80 x 15 (works, 2026-10-30)
