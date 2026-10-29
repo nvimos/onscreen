@@ -7,7 +7,7 @@ see all of them.
 
 Files: `lua/genja/ext/diag-limit.lua` (wraps nvim's `virtual_text`, `signs`, `underline` handlers),
 `plugin/diag-limit.lua` (setup, key), F2 source `lua/genja/f2/diag.lua`.
-Tests: `tests/diag-limit/test_diag_limit.lua` (`make test D=diag-limit` in `tests/`).
+Tests: `tests/ui/test_diagnostics-limit.lua` (`make test D=ui` in `tests/`).
 
 ## Keys and settings
 

@@ -61,7 +61,7 @@ mappings and funcs for them
      ext/popup-menu.lua - right-click entries per filetype (markdown, oil, LSP), Perplexity on a selection, Morning; on MenuPopup
      ext/perplexity.lua - Perplexity search of a string or the visual selection (plugin/perplexity-search.lua, right-click)
      ext/recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
-     ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/diag-limit/)
+     ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/ui/test_diagnostics-limit.lua)
      ext/lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync); editorconfig-checker and gitleaks on all)
      ext/telescope-virthelp.lua - prototype: key help table in the empty results of every picker (plugin/telescope-virthelp.lua); the footer was removed
      ext/telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)

@@ -1,0 +1,4 @@
+- [x] tests: diag-limit test moved to tests/ui/ (2026-10-29)
+    - [x] tests/ui/test_diagnostics-limit.lua (was tests/diag-limit/test_diag_limit.lua)
+    - [x] doc-wip/readme.2026-10-24.diag-limit.md, lua/genja/readme.md: new path, `make test D=ui`
+    - [ ] test: `make test D=ui` in tests/
