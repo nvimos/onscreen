@@ -1,6 +1,11 @@
 -- vim.ui.select in a telescope dropdown (idea #12): code actions and every other
 -- vim.ui.select caller. Telescope is required only when a selection is shown.
 
+-- Dropdown size per vim.ui.select `kind`; others keep the dropdown's 80 x 15.
+local SIZES = {
+	['legendary.nvim'] = { width = 104, height = 20 }, -- 30% bigger
+}
+
 ---Show `items` in a telescope dropdown and pass the pick to `on_choice`.
 ---@generic T
 ---@param items T[] items to choose from
@@ -62,6 +67,11 @@ local function select(items, opts, on_choice)
 	end
 
 	local theme = require('telescope.themes').get_dropdown()
+	local size = SIZES[opts.kind or '']
+	if size then
+		theme.layout_config.width = function(_, max_columns) return math.min(max_columns, size.width) end
+		theme.layout_config.height = function(_, _, max_lines) return math.min(max_lines, size.height) end
+	end
 	local finder = require('telescope.finders').new_table({ results = items, entry_maker = make_entry })
 	local sorter = require('telescope.config').values.generic_sorter({})
 

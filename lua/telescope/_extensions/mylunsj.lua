@@ -78,9 +78,6 @@ function M.show_picker()
 	opts.layout_strategy = drop.layout_strategy
 	opts.layout_config = drop.layout_config
 	opts.layout_config.anchor = "NW"
-	-- dropdown is 80 x 15; a third bigger each way
-	opts.layout_config.width = function(_, max_columns) return math.min(max_columns, 106) end
-	opts.layout_config.height = function(_, _, max_lines) return math.min(max_lines, 20) end
 	pickers.new(opts, {}):find()
 end
 
