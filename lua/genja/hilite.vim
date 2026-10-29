@@ -93,10 +93,26 @@ hi ErrorMsg guifg=#ff99c8
 hi ErrorMsg guibg=NONE
 hi ErrorMsg gui=bold
 
-" Diagnosticz
+" Diagnosticz {{{
 
-hi DiagnosticInfo guifg=#666666 guibg=NONE 
-hi DiagnosticUnderlineInfo guisp=#553333
+
+hi DiagnosticError guifg=#b844b0 ctermfg=1 gui=NONE
+hi DiagnosticWarn  guifg=#7e4c6c ctermfg=3 gui=NONE
+hi DiagnosticInfo  guifg=#6a5864 ctermfg=4 guibg=NONE gui=NONE
+hi DiagnosticHint  guifg=#969696 ctermfg=7 gui=NONE
+hi DiagnosticOk    guifg=#90ee90 ctermfg=10 gui=NONE
+
+hi DiagnosticUnderlineError guisp=#ff0000 gui=underline cterm=underline
+hi DiagnosticUnderlineWarn  guisp=#83792a gui=underline cterm=underline
+hi DiagnosticUnderlineInfo  guisp=#553333 gui=underline cterm=underline
+hi DiagnosticUnderlineHint  guisp=#d3d3d3 gui=underline cterm=underline
+hi DiagnosticUnderlineOk    guisp=#90ee90 gui=underline cterm=underline
+
+" }}}
+
+hi DiagnosticDeprecated guisp=#ff0000 gui=strikethrough cterm=strikethrough
+hi! link DiagnosticUnnecessary Comment
+
 
 " OilDir -> Directory
 hi Directory guifg=#ffd76a

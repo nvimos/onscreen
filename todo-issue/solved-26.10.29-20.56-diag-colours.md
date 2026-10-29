@@ -1,0 +1,3 @@
+- [x] hilite: diagnostic colours per severity (2026-10-29)
+    - [x] lua/genja/hilite.vim: Diagnostic{Error,Warn,Info,Hint,Ok} colours, underline colours, Deprecated, Unnecessary
+    - [ ] test: a buffer with errors, warnings and hints reads well
