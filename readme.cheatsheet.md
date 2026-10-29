@@ -57,7 +57,8 @@ Paste search (plug-wip/genja-paste-ai.nvim, lua/lazyp/new/genja-paste-ai.lua, ke
 
     <leader>pl  <leader>pw  <leader>py   search the line / word / last yank with the current provider
     <leader>ps   (visual) search the selection; also right-click on a selection
-    :PasteSearch [-provider name] [-save] [query]   no query: current line; :'<,'>PasteSearch: selection; aliases :Xty :Pplx
+    :PasteSearch [-provider name] [-save] [query]   no query: current line; :'<,'>PasteSearch: selection; alias :Wot
+    :Google, :Perplexity, :Xty [query]   always that provider, current one unchanged
     <F2> lookup  paste search provider (current): <CR> switch for the session, <M-s> switch and save
                  providers: perplexity, chatgpt, grok (query in the URL); gemini, manus (query copied, paste it)
 

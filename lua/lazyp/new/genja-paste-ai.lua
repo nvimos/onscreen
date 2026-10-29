@@ -31,7 +31,7 @@ end
 ---@type LazySpec
 return {
 	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-paste-ai.nvim',
-	cmd = { 'PasteSearch', 'Xty', 'Pplx' },
+	cmd = { 'PasteSearch', 'Wot', 'Google', 'Perplexity', 'Xty' },
 	keys = Maps:keys(),
 
 	---@type genja-paste-ai.Opts

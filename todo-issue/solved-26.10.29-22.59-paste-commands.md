@@ -1,0 +1,7 @@
+- [x] paste-ai: :Google, :Perplexity, :Xty always use their provider; :Wot alias; :Pplx removed (2026-10-29)
+    - [x] plug-wip/genja-paste-ai.nvim/plugin/genja-paste-ai.lua: define_fixed(); :Wot same as :PasteSearch; :Pplx gone
+    - [x] lua/genja-paste-ai/init.lua: search(q, name) for one search, command(cmd, fixed) without flags
+    - [x] lua/lazyp/new/genja-paste-ai.lua: cmd list
+    - [x] readme.cheatsheet.md, CLAUDE.md, plugin CLAUDE.md: command lists
+    - [x] test: :Google and :Perplexity open their provider (works, 2026-10-29)
+    - [ ] test: :Xty, :Wot; current provider unchanged after :Google; :Pplx is unknown

@@ -3,5 +3,6 @@
     - [x] init.lua: ai providers claude, copilot, google-ai; `ai = true` on all ai providers
     - [x] pick(): `(ai) ` prefix, entries sorted by display text, filter on display text
     - [x] plug-wip/genja-paste-ai.nvim/CLAUDE.md: provider list, picker mark
-    - [ ] test: <F2> paste search provider: (ai) entries grouped, sorted; typing `ai` filters
-    - [ ] test: :PasteSearch -provider yandex hello, then claude, google-ai, kagi
+    - [x] test: <F2> paste search provider: (ai) entries grouped, sorted; typing `ai` filters (works, 2026-10-29)
+    - [x] test: :PasteSearch -provider works (2026-10-29)
+    - [ ] test: each new provider once (yandex, claude, google-ai, kagi, ...)

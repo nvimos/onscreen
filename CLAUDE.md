@@ -28,7 +28,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - @plug-wip/genja-commit.nvim/CLAUDE.md: commit popup (oil), gitcommit lint, message generation.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
 - @plug-wip/genja-finder.nvim/CLAUDE.md: live grep and live find pickers.
-- @plug-wip/genja-paste-ai.nvim/CLAUDE.md: paste search in the browser, one current provider: `:PasteSearch` (`:Xty`, `:Pplx`), `<leader>pl/pw/py/ps`, `<F2>` lookup.
+- @plug-wip/genja-paste-ai.nvim/CLAUDE.md: paste search in the browser, one current provider: `:PasteSearch` (`:Wot`; fixed `:Google`, `:Perplexity`, `:Xty`), `<leader>pl/pw/py/ps`, `<F2>` lookup.
 - @plug-wip/genja-oily.nvim/CLAUDE.md: hide oil entries listed in the nearest `.oily` up the tree.
 - @plug-wip/genja-startdirs.nvim/CLAUDE.md: start dirs list (text file + spec), oil add/remove, jumps, ranking.
 - @plug-wip/genja-recent.nvim/CLAUDE.md: recent files with own rules, frecency ranking; picker on `<C-F1>`.
