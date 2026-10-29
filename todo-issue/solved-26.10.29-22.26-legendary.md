@@ -1,0 +1,6 @@
+- [x] plugins: legendary.nvim from the 0king fork, in mylunsj (2026-10-29)
+    - [x] lua/lazyp/new/legendary.lua: fork 0king/legendary.nvim, original mrjones2014 (archived 2025-04); lazy_nvim extension, no frecency
+    - [x] lua/genja/map-plugin/legendary.lua: <leader>jl
+    - [x] lua/telescope/_extensions/mylunsj.lua: Legendary item; window 106 x 20 (a third over 80 x 15)
+    - [x] committed in 14a73da
+    - [ ] test: <leader>jl lists keymaps and commands; mylunsj opens bigger and lists Legendary
