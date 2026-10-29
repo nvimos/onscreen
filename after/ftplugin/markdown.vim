@@ -25,6 +25,21 @@ setlocal colorcolumn=+1
 setlocal wrap linebreak
 " wrapped list items line up under the item text
 setlocal breakindent breakindentopt=list:-1
+" formatlistpat: wrapped lines (and gq) line up after the list marker.
+" Vim takes the first branch that matches, so checkbox items come before plain ones.
+let s:indent   = '^\s*'
+let s:bullet   = '[-*+]\s\+'
+let s:number   = '\d\+[.)]\s\+'
+let s:checkbox = '\[[ xX]\]\s\+'
+" footnote `[^1]: `, wrapped lines indented 4 (from the runtime ftplugin)
+let s:footnote = '^\[^\ze[^\]]\+\]:\&^.\{4\}'
+let &l:formatlistpat = join([
+	\ s:indent .. s:bullet .. s:checkbox,
+	\ s:indent .. s:number .. s:checkbox,
+	\ s:indent .. s:bullet,
+	\ s:indent .. s:number,
+	\ s:footnote,
+	\ ], '\|')
 
 " Spaces, 2 per level: markdownlint MD007 (list indent 2) and MD010 (no hard tabs);
 " tabstop 4 is the CommonMark tab width, for files that do contain tabs.
