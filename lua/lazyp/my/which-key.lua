@@ -27,7 +27,8 @@ return {
 			-- one narrow column, bottom right, one key per line (default: classic)
 			preset = 'helix',
 			-- left edge, 2 columns in; centred vertically (a fraction is relative to the free space)
-			win = { col = 2, row = 0.5 },
+			-- fixed height: a centred box that resizes per group jumps at both edges
+			win = { col = 2, row = 0.5, height = { min = 0.75, max = 0.75 } },
 			-- to try instead of helix:
 			-- preset = 'modern', -- centred float with a border, several columns
 			-- preset = 'classic', layout = { width = { min = 20, max = 40 }, spacing = 2 }, -- narrower columns
