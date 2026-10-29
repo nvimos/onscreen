@@ -1,4 +1,4 @@
 - [x] claudefterm: -ax starts claude with --ax-screen-reader (2026-10-29)
     - [x] plug-wip/genja-claudefterm.nvim/lua/genja-claudefterm/init.lua: SHORT_FLAGS, -ax in completion
     - [x] committed in 0db2b57
-    - [ ] test: :ClaudeFterm -ax with no claude running
+    - [x] test: :ClaudeFterm -ax with no claude running (works, 2026-10-29)
