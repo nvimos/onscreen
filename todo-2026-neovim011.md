@@ -5,21 +5,26 @@
 -[n] extract Mylunsj into a separate plugin
 
 
--[ ] ai, llm, code generation
-    -[ ] integrate at leas one from online, free tier
-    -[ ] integrate ollama
+-[x] ai, llm, code generation (closed 2026-10-29: done in the code)
+    -[x] integrate at leas one from online, free tier
+        - gemini via genja-ask (plug-wip/genja-ask.nvim, backends/cli.lua)
+    -[x] integrate ollama
+        - gen.nvim (lua/lazyp/langs-comps/gen.lua), ollama http api
         - (maybe) via cli
         - (maybe) via http api
         - (maybe) via local sock
-    -[ ] integrate at least one
+    -[x] integrate at least one
         - maybe hack some round-robin, auto retry util
         - maybe delegate to cli tools
-    -[ ] auto-code-completion suggestions
+        - genja-ask: claude -p, claudefterm, gemini, copilot, aichat
+    -[x] auto-code-completion suggestions
         - copilot
         - gemini
-    -[ ] chatbot
+        - copilot.vim (lua/lazyp/langs-comps/copilot.lua)
+    -[x] chatbot
         - ask random questions
         - ask about current file
+        - genja-ask popup (<M-?>), codecompanion chat
 
 -[x] indexed file search: integrate everything search index
     - [x] use it per default if it's installed, fallback to fzf or whatever
@@ -46,6 +51,8 @@
         -[x] lua lsp
         -[x] shell lsp
         -[ ] how to extract into minimal config?
+            - first figure out what the minimal config is:
+              try it in a bare WSL and in a Termux environment (not now)
     -[x] undo require(lspconfig).«lang».setup()
     -[x] migrate to vim.lsp.config and vim.lsp.enable
     -[x] fix: no completion menu while typing (cmp.setup() was never called)
@@ -81,10 +88,10 @@
         -[n] make the telescope ui first column wider
         -[n] adjust the script for more granular groups (first column)
         -[n] look into generating several cheatsheets
-            -[ ] one for lsp
-            -[ ] one for map-convoluted
-            -[ ] one for map-*
-            -[ ] add them to Mylunsj
+            -[n] one for lsp
+            -[n] one for map-convoluted
+            -[n] one for map-*
+            -[n] add them to Mylunsj
     - consider exclude or include defaults
       - [x] done for folds to define the descriptions
       - toggle builtin keymaps?
@@ -112,4 +119,5 @@
     - [x] move old files
     - [ ] set up github repo
     - [ ] delete from home-nvim repo
+    - not publishing yet: todo-2027.md, repos for the plug-wip plugins
 
