@@ -26,6 +26,8 @@ return {
 		opts = {
 			-- one narrow column, bottom right, one key per line (default: classic)
 			preset = 'helix',
+			-- left edge, 2 columns in; centred vertically (a fraction is relative to the free space)
+			win = { col = 2, row = 0.5 },
 			-- to try instead of helix:
 			-- preset = 'modern', -- centred float with a border, several columns
 			-- preset = 'classic', layout = { width = { min = 20, max = 40 }, spacing = 2 }, -- narrower columns
@@ -44,8 +46,11 @@ return {
 				{ '<leader>j.',       group = 'Cd…' },
 				{ '<leader>j/',       group = 'Find' },
 				{ '<leader>A',        group = 'Edit: alignment' },
+				{ '<leader>A:',       group = 'Align: on :' },
+				{ '<leader>A=',       group = 'Align: on =' },
 				{ '<leader>a',        group = 'AI: companion' },
 				{ '<leader>b',        group = 'Buffer: alternate' },
+				{ '<leader>bb',       group = 'Buffer: rotate' },
 				{ '<leader>c',        group = 'Code: lsp' },
 				{ '<leader>cA',       group = 'Code: php' },
 				{ '<leader>cW',       group = 'Code: workspace' },
@@ -55,12 +60,14 @@ return {
 				{ '<leader>e',        group = 'Edit: dirs, files' },
 				{ '<leader>f',        group = 'Find: telescope' },
 				{ '<leader>fm',       group = 'Fun: automaton' },
-				-- { '<leader>g',        group = 'Go: env' },
-				{ '<leader>cG',        group = 'Go: env' },
+				{ '<leader>fml',      group = 'Fun: automaton animations' },
+				{ '<leader>g',        group = 'Env, URLs, git commit' },
 				{ '<leader>gE',       group = 'Env: ecolog' },
 				{ '<leader>h',        group = 'Git: hunk, blame, diff, quickfix' },
 				{ '<leader>i',        group = 'Insert: chars, date, colour' },
 				{ '<leader>j',        group = 'Jump: pickers, cd, start dirs' },
+				{ '<leader>jb',       group = 'Jump: telescope builtins' },
+				{ '<leader>jj',       group = 'Jump: quickfix, loclist, grep, find' },
 				{ '<leader>m',        group = 'UI: panels, git, claude, gui' },
 				{ '<leader>mG',       group = 'UI: git log, commit, signs' },
 				{ '<leader>mf',       group = 'Markdown: fix' },
@@ -71,6 +78,7 @@ return {
 				{ '<leader>r',        group = 'Code: format' },
 				{ '<leader>s',        group = 'Dirs: start dirs' },
 				{ '<leader><space>s', group = 'Spell: check, add' },
+				{ '<leader>T',        group = 'Test: neotest' },
 				{ '<leader>t',        group = 'Tab: move, toggle' },
 				{ '<leader>tt',       group = 'Toggle: diag, hints, diag limit' },
 				{ '<leader>w',        group = 'Text: wrap, trim; window resize' },
