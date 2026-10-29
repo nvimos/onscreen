@@ -151,6 +151,4 @@ migration from 0.9 to 0.11 (the file that started it all)
     - if the triggering action was to save a session and exit, that should be done
     - if the triggering action was quit, that should be done
 
-- [x] <leader>; - set follow up actions to jwfasrzxc instead of abc...
-
 - [ ] consider pros and cons of adding  <https://github.com/prichrd/netrw.nvim>

@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | `<leader>;` dropbar letters jwfasrzxc: done in code (c8b9934) | 0 | ~1k  |
 | -   | telescope exploration: close, preview component dropped    | 0   | ~1k    |
 | -   | unsaved buffers picker on `:qa` / `s:` (E37/E162)          | 0   | ~15k   |
 | -   | netrw.nvim: pros and cons (skipped this round)             | 1   | ~4k    |
