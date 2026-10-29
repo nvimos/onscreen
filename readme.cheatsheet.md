@@ -259,6 +259,15 @@ Diagnostics limit (lua/genja/ext/diag-limit.lua, key in plugin/diag-limit.lua)
     <F2>         diagnostics: show all (N hidden), this buffer only
     vim.g.diag_limit = n   b:diag_limit = n   (0: all; zen <leader>z1 sets 2)
 
+Unsaved buffers (lua/genja/ext/unsaved.lua, command in plugin/unsaved.lua, abbreviations in lua/genja/abbreviations.vim)
+
+    :qa  jj  s:      with modified buffers: picker first, quit / save session when the list is empty
+    :qa!             drops them as usual
+    :Unsaved [cmd]   the picker, then cmd; <Esc> cancels cmd
+    <M-w>            file: write; no file: `:w ~/tmp/bufw-<week>-<3 words>.txt` on the cmdline
+    <M-x>            file: reset to disk (:edit!); no file: wipe
+    <CR>             go to the buffer, cmd not run
+
 Messages (lua/genja/ext/messages.lua, command in plugin/messages.lua)
 
     :Messages / :Messages -dump   :messages in a scratch buffer; <CR> opens file:line, q closes

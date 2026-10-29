@@ -15,7 +15,8 @@ cnoreabbrev j:     source ~/tmp/viss
 " <SID>: a script-local function can't be called by name from the cmdline
 " mksession(): :mksession! that keeps idle shell terminals (lua/genja/ext/term.lua);
 " v:lua, not :lua, so `| qa` isn't read as Lua
-cnoreabbrev s:     call <SID>SessionSweepOperations() \| call v:lua.require'genja.ext.term'.mksession('~/tmp/viss') \| qa
+" s: goes through :Unsaved, so modified buffers get a picker first (lua/genja/ext/unsaved.lua)
+cnoreabbrev s:     Unsaved call <SID>SessionSweepOperations() \| call v:lua.require'genja.ext.term'.mksession('~/tmp/viss') \| qa
 cnoreabbrev save:  call <SID>SessionSweepOperations() \| call v:lua.require'genja.ext.term'.mksession('~/tmp/viss')
 
 
@@ -26,7 +27,9 @@ cnoreabbrev te:  tabedit %:p:h
 cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
 
-cnoreabbrev jj qa
+" a bare :qa (and jj) asks about modified buffers instead of E37/E162; :qa! still drops them
+cnoreabbrev <expr> qa (getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'Unsaved qa' : 'qa'
+cnoreabbrev jj Unsaved qa
 cnoreabbrev g q
 
 cnoreabbrev helf vert help

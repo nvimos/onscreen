@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | unsaved buffers picker on `:qa` / `s:` (E37/E162)          | 0   | ~15k   |
 | -   | netrw.nvim: pros and cons (skipped this round)             | 1   | ~4k    |
 | -   | ghost text: llm.nvim / ollama / qwen                       | spec | -     |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |

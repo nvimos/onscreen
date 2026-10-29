@@ -162,3 +162,4 @@ Notes moved from the summary:
 | -   | F2 git: `staged (N files)`, `<CR>` unstages, cached diff preview | S | 2026-10-26 | untested (2026-10-26) |
 | -   | `<leader>;` dropbar crumb letters jwfasrzxc | XS | c8b9934 | untested (closed 2026-10-29) |
 | -   | telescope exploration: closed, preview component dropped | XS | 2026-10-29 | key help, default keys untested (closed 2026-10-29) |
+| -   | unsaved buffers picker: `:Unsaved [cmd]`, `:qa`, `jj`, `s:` | S | 2026-10-29 | untested (2026-10-29) |
