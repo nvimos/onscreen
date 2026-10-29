@@ -1,0 +1,4 @@
+- [x] docs: CLAUDE.md names the todo files by their .md names (2026-10-29)
+    - [x] CLAUDE.md: todo-2026-neovim011.md, todo-2027.md
+    - [x] plug-wip/genja-statusline.nvim/CLAUDE.md: todo-2026-neovim011.md
+    - [ ] todo-ideas.md "related files" still names the .txt files
