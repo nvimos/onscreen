@@ -58,7 +58,8 @@ mappings and funcs for them
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
      ext/morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
-     ext/popup-menu.lua - right-click entries per filetype (markdown, oil, LSP) + Morning, on MenuPopup
+     ext/popup-menu.lua - right-click entries per filetype (markdown, oil, LSP), Perplexity on a selection, Morning; on MenuPopup
+     ext/perplexity.lua - Perplexity search of a string or the visual selection (plugin/perplexity-search.lua, right-click)
      ext/recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
      ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/diag-limit/)
      ext/lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync); editorconfig-checker and gitleaks on all)

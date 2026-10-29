@@ -1,0 +1,6 @@
+- [x] perplexity: search moved to a module, right-click on a selection (2026-10-29)
+    - [x] lua/genja/ext/perplexity.lua: search(), selection()
+    - [x] plugin/perplexity-search.lua: keys and :Pplx use the module
+    - [x] lua/genja/ext/popup-menu.lua: visual-only entries (vnoremenu), Perplexity: selection
+    - [x] lua/genja/readme.md, readme.cheatsheet.md
+    - [ ] test: select text, right-click, Perplexity: selection opens the browser

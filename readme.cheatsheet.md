@@ -96,6 +96,7 @@ Mouse (lua/genja/ext/popup-menu.lua, lua/genja/ext/morning.lua, genja-statusline
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
                   LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless
+                  visual selection: Perplexity search (lua/genja/ext/perplexity.lua)
     statusline    click file name -> oil   branch -> Neogit   E/W counts -> location list
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds
