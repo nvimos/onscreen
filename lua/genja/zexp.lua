@@ -2,6 +2,7 @@
 
 
 
+
 -- vim.g.genja_log_level = 'trace' -- vim.env.GENJA_LOG
 -- Log = require('genja.log').log
 --
@@ -318,7 +319,6 @@
 -- }) do
 -- 	print('addHandler '..e)
 -- end
-
 
 
 local function async_fs_stat(path, timeout_ms, callback)
