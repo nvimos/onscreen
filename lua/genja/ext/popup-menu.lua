@@ -4,7 +4,7 @@
 --   markdown:   toggle checkbox, open link, F2 menu
 --   oil:        git add (entry under the cursor), open in tab
 --   LSP buffer: code action, rename, references
---   visual:     Perplexity search of the selection
+--   visual:     paste search of the selection, current provider (genja-paste-ai)
 -- The fixed entries (ToggleWrap, Actions (g.)) stay in lua/genja/fn.vim.
 -- Loaded from plugin/popup-menu.lua.
 
@@ -79,7 +79,7 @@ local function entries()
 		table.insert(list, { label = 'LSP: rename', run = function() require('genja.ext.rename-inline').rename() end })
 		table.insert(list, { label = 'LSP: references', run = function() vim.lsp.buf.references() end })
 	end
-	table.insert(list, { label = 'Perplexity: selection', visual = true, run = function() require('genja.ext.perplexity').selection() end })
+	table.insert(list, { label = 'Lookup: paste search selection', visual = true, run = function() require('genja-paste-ai').selection() end })
 	table.insert(list, { label = 'Morning', run = function() require('genja.ext.morning').open() end })
 	if vim.fn.has('gui_running') == 1 and vim.fn.exists('*GuiWindowFrameless') == 1 then
 		table.insert(list, { label = 'frameless', run = function() require('genja.ui.gui-func-state').GuiWindowFrameless():advance() end })

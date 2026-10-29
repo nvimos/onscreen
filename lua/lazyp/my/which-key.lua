@@ -67,7 +67,7 @@ return {
 				{ '<leader>mQ',       group = 'GUI: nvim-qt toggles' },
 				{ '<leader>mx',       group = 'UI: Close' },
 				{ '<leader>o',        group = 'Outline: sidebar, nav' },
-				{ '<leader>p',        group = 'AI: claude, pplx' },
+				{ '<leader>p',        group = 'AI: claude; Lookup: paste search' },
 				{ '<leader>r',        group = 'Code: format' },
 				{ '<leader>s',        group = 'Dirs: start dirs' },
 				{ '<leader><space>s', group = 'Spell: check, add' },

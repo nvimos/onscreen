@@ -11,3 +11,4 @@ lua/lazyp/maybe/*
 
 # /doc-wip/*
 /lua/genja/ui/gui-func-state/gui-report.txt
+/lua/genja/local/paste-ai.lua

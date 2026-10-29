@@ -53,6 +53,14 @@ URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
     <leader>gx   same picker, all URLs in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy
 
+Paste search (plug-wip/genja-paste-ai.nvim, lua/lazyp/new/genja-paste-ai.lua, keys in lua/genja/map-plugin/genja-paste-ai.lua)
+
+    <leader>pl  <leader>pw  <leader>py   search the line / word / last yank with the current provider
+    <leader>ps   (visual) search the selection; also right-click on a selection
+    :PasteSearch [-provider name] [-save] [query]   no query: current line; :'<,'>PasteSearch: selection; aliases :Xty :Pplx
+    <F2> lookup  paste search provider (current): <CR> switch for the session, <M-s> switch and save
+                 providers: perplexity, chatgpt, grok (query in the URL); gemini, manus (query copied, paste it)
+
 Legend (legendary.nvim fork 0king/legendary.nvim, lua/lazyp/new/legendary.lua, keys in lua/genja/map-plugin/legendary.lua)
 
     <leader>jl   pick from keymaps, commands, autocmds; <CR> runs it   :Legendary [keymaps|commands|autocmds|functions]
@@ -109,7 +117,7 @@ Mouse (lua/genja/ext/popup-menu.lua, lua/genja/ext/morning.lua, genja-statusline
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
                   LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless
-                  visual selection: Perplexity search (lua/genja/ext/perplexity.lua)
+                  visual selection: paste search, current provider (plug-wip/genja-paste-ai.nvim)
     statusline    click file name -> oil   branch -> Neogit   E/W counts -> location list
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds
