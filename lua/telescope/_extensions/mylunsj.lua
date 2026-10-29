@@ -40,6 +40,7 @@ M.init = function()
 
 	M.add_item('Lazygit', require('telescope._extensions.mylunsj.toggleterm-lazygit').run_lazygit)
 	M.add_item('Neogit', function() vim.cmd('Neogit') end)
+	M.just_run('Legendary', 'Legendary: keymaps, commands, autocmds')
 	M.add_item('andy.bat', M.run_andy)
 	M.add_item('GuiFuncs', function() require('telescope._extensions.mylunsj.gui-funcs').show_picker() end)
 
@@ -77,6 +78,9 @@ function M.show_picker()
 	opts.layout_strategy = drop.layout_strategy
 	opts.layout_config = drop.layout_config
 	opts.layout_config.anchor = "NW"
+	-- dropdown is 80 x 15; a third bigger each way
+	opts.layout_config.width = function(_, max_columns) return math.min(max_columns, 106) end
+	opts.layout_config.height = function(_, _, max_lines) return math.min(max_lines, 20) end
 	pickers.new(opts, {}):find()
 end
 

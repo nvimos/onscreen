@@ -53,6 +53,10 @@ URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
     <leader>gx   same picker, all URLs in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy
 
+Legend (legendary.nvim fork 0king/legendary.nvim, lua/lazyp/new/legendary.lua, keys in lua/genja/map-plugin/legendary.lua)
+
+    <leader>jl   pick from keymaps, commands, autocmds; <CR> runs it   :Legendary [keymaps|commands|autocmds|functions]
+
 Colours (ccc.nvim, lua/lazyp/new/ccc.lua, keys in lua/genja/map-plugin/ccc.lua)
 
     <leader>ic   pick a colour: edits the one under the cursor, else inserts   :CccPick
