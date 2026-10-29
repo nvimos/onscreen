@@ -1,0 +1,7 @@
+- [x] terminal: mode on enter, window keys, float toggle, sessions with idle shells (2026-10-29)
+    - [x] lua/genja/ext/term.lua: startinsert on enter, toggle_float(), jump_out(), mksession() keeping idle shells
+    - [x] lua/genja/map-zero.lua: terminal-mode keys (<C-Up>, <C-q>, <M-`>, <C-`>, <M-arrows>, …)
+    - [x] lua/genja/abbreviations.vim: s: and save: call mksession(); lua/genja/opt.lua comment
+    - [x] readme.cheatsheet.md: Terminal mode section
+    - [ ] test: <C-`> toggles the generic floaterm; <M-`> leaves a terminal
+    - [ ] test: save: with an idle shell and a running claude, then :source ~/tmp/viss

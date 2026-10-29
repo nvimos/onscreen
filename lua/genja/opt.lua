@@ -87,7 +87,7 @@ vim.o.showtabline = 2 -- 0: never -- 1: iff >= 2 tabs -- 2: always
 
 -- ui, layout, behavior {{{
 
-vim.opt.sessionoptions:remove('terminal') -- dont save terminals in sessions (prefer to restart apps manually e.g. claudefterm)
+vim.opt.sessionoptions:remove('terminal') -- dont save terminals in sessions (prefer to restart apps manually e.g. claudefterm); s:/save: keep idle shells (lua/genja/ext/term.lua mksession)
 
 vim.o.laststatus = 3 -- only one status line even with several windows
 

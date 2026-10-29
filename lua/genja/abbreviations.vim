@@ -13,8 +13,10 @@ endfunction
 
 cnoreabbrev j:     source ~/tmp/viss
 " <SID>: a script-local function can't be called by name from the cmdline
-cnoreabbrev s:     call <SID>SessionSweepOperations() \| mksession! ~/tmp/viss \| qa
-cnoreabbrev save:  call <SID>SessionSweepOperations() \| mksession! ~/tmp/viss
+" mksession(): :mksession! that keeps idle shell terminals (lua/genja/ext/term.lua);
+" v:lua, not :lua, so `| qa` isn't read as Lua
+cnoreabbrev s:     call <SID>SessionSweepOperations() \| call v:lua.require'genja.ext.term'.mksession('~/tmp/viss') \| qa
+cnoreabbrev save:  call <SID>SessionSweepOperations() \| call v:lua.require'genja.ext.term'.mksession('~/tmp/viss')
 
 
 cnoreabbrev e.   edit %:p:h

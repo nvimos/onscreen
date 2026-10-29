@@ -61,6 +61,28 @@ km('n', '<leader>t-', cmd [[tabmove -1]], nosi 'Tab: move ←')
 km('n', '<leader>t=', cmd [[tabmove +1]], nosi 'Tab: move →')
 -- }}}
 
+-- Terminal {{{
+-- Global, so every terminal gets them; the claude buffer sets its own on top (genja-claudefterm).
+-- These take over the shell's <C-j> (newline), <C-Left>/<C-Right> (word moves).
+-- Entering a terminal window starts terminal mode (lua/genja/ext/term.lua).
+local t = { 't' }
+local function term() return require('genja.ext.term') end
+km(t, '<C-Up>',    [[<C-\><C-n>]],           nosi 'Terminal: normal mode')
+km(t, '<C-q>',     cmd [[wincmd p]],         nosi 'Terminal: back to previous window')
+km(t, '<C-j>',     cmd [[wincmd p]],         nosi 'Terminal: back to previous window')
+km(t, '<C-Space>', cmd [[wincmd p]],         nosi 'Terminal: back to previous window')
+km(t, '<C-Left>',  cmd [[wincmd h]],         nosi 'Terminal: window left')
+km(t, '<C-Right>', cmd [[tabnext]],          nosi 'Terminal: tab next')
+km(t, '<M-`>', function() term().jump_out() end, nosi 'Terminal: out to previous window, else next or new tab')
+km({ 'n', 'i', 't' }, '<C-`>', function() term().toggle_float() end, nosi 'Terminal: toggle generic floaterm')
+km(t, '<M-Left>',  cmd [[wincmd h]],         nosi 'Terminal: window left')
+km(t, '<M-Down>',  cmd [[wincmd j]],         nosi 'Terminal: window down')
+km(t, '<M-Up>',    cmd [[wincmd k]],         nosi 'Terminal: window up')
+km(t, '<M-Right>', cmd [[wincmd l]],         nosi 'Terminal: window right')
+km(t, '<M-]>',     cmd [[tabnext]],          nosi 'Terminal: tab next')
+km(t, '<M-[>',     cmd [[tabprev]],          nosi 'Terminal: tab prev')
+-- }}}
+
 -- {{{ Toggles
 km('n', '<leader>tw', function() vim.o.wrap = ! vim.o.wrap end, nosi 'Toggle: wrap')
 km('n', '<leader>tn', function() vim.o.number = ! vim.o.number end, nosi 'Toggle: number')

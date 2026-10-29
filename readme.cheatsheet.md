@@ -11,6 +11,15 @@ Terminal cursor (lua/genja/ext/term.lua)
 
     :TermCursorShape block | bar   steady cursor in the StatusLine orange while typing in a terminal
 
+Terminal mode (lua/genja/map-zero.lua; entering a terminal window starts terminal mode, lua/genja/ext/term.lua)
+
+    <C-Up>  normal mode            <C-q>  <C-j>  <C-Space>  back to previous window
+    <C-Left>  window left          <C-Right>  next tab
+    <M-Left> <M-Down> <M-Up> <M-Right>  window left / down / up / right
+    <M-]>  <M-[>  next / previous tab
+    <M-`>  out: previous window in the tab, else next tab, else a new tab
+    <C-`>  toggle the generic floaterm (n, i, t; created on first use)
+
 Indent text objects (vim-indent-object, loads on VeryLazy)
 
     ii  lines at the same indent              vii  cii  dii  yii

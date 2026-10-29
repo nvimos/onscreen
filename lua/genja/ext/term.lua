@@ -1,4 +1,5 @@
--- Terminal-mode cursor: no blink, bar or block, in the StatusLine color. Terminal windows: scrolloff 0.
+-- Terminal-mode cursor: no blink, bar or block, in the StatusLine color. Terminal windows: scrolloff 0,
+-- terminal mode on enter. Leave a terminal, toggle a floaterm, save sessions with idle shells.
 local SRC = 'lua/genja/ext/term.lua: '
 
 local M = {}
@@ -56,6 +57,164 @@ vim.api.nvim_create_autocmd({ 'TermOpen', 'BufWinEnter' }, {
 	end,
 	desc = 'Terminal windows: scrolloff 0, no view jumps while the app redraws',
 })
+
+-- Entering a terminal window starts terminal mode, so jumping in needs no `i`.
+-- Only while the job runs: a finished job's buffer would close on the first key.
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+	group = vim.api.nvim_create_augroup('genja_term_insert', { clear = true }),
+	callback = function(ev)
+		if vim.bo[ev.buf].buftype ~= 'terminal' then
+			return
+		end
+		local chan = vim.bo[ev.buf].channel
+		if chan > 0 and vim.fn.jobwait({ chan }, 0)[1] == -1 then
+			vim.cmd.startinsert()
+		end
+	end,
+	desc = 'Terminal windows: terminal mode on enter',
+})
+
+local FLOAT_NAME = 'generic'
+
+-- Toggle one floaterm named FLOAT_NAME; create it on first use.
+-- :FloatermToggle with an unknown name only errors, so look for its buffer first.
+function M.toggle_float()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].floaterm_name == FLOAT_NAME then
+			vim.cmd('FloatermToggle ' .. FLOAT_NAME)
+			return
+		end
+	end
+	vim.cmd('FloatermNew --name=' .. FLOAT_NAME)
+end
+
+-- Leave the window: to the previous window in the tab, else the next tab, else a new tab.
+function M.jump_out()
+	local cur = vim.api.nvim_get_current_win()
+	local others = 0
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if win ~= cur and vim.api.nvim_win_get_config(win).relative == '' then
+			others = others + 1
+		end
+	end
+	if others > 0 then
+		local prev = vim.fn.win_getid(vim.fn.winnr('#'))
+		if prev ~= 0 and prev ~= cur then
+			vim.api.nvim_set_current_win(prev)
+		else
+			vim.cmd.wincmd('w')
+		end
+		return
+	end
+	if #vim.api.nvim_list_tabpages() > 1 then
+		vim.cmd.tabnext()
+	else
+		vim.cmd.tabnew()
+	end
+end
+
+-- Program name of a command line: first word (or quoted path), no dir, no .exe, lowercase.
+---@param cmdline string
+---@return string
+local function exe_name(cmdline)
+	local s = vim.trim(cmdline)
+	local exe = s:match('^"([^"]+)"') or s:match('^(%S+)') or ''
+	return vim.fn.fnamemodify(exe, ':t:r'):lower()
+end
+
+-- nvim's own process list; works on every OS below, until one needs its own check.
+---@param pid integer
+---@return boolean|nil
+local function api_has_children(pid)
+	local ok, children = pcall(vim.api.nvim_get_proc_children, pid)
+	if not ok then
+		return nil
+	end
+	return #children > 0
+end
+
+-- Does pid have child processes? One branch per OS: only tested on Windows 11; the others use
+-- the same API untested and may need their own check (e.g. pgrep -P, ps), so each has a slot.
+-- nil: unknown, the terminal counts as busy.
+---@param pid integer
+---@return boolean|nil
+local function has_children(pid)
+	local sysname = vim.uv.os_uname().sysname
+	if sysname == 'Windows_NT' then
+		return api_has_children(pid)
+	elseif sysname == 'Linux' then
+		return api_has_children(pid)
+	elseif sysname == 'Darwin' then
+		return api_has_children(pid)
+	elseif sysname:match('BSD$') then
+		return api_has_children(pid)
+	end
+	return nil
+end
+
+-- A terminal running 'shell' with no child process: safe to save, its restart loses nothing.
+---@param buf integer
+---@return boolean
+local function is_idle_shell(buf)
+	local chan = vim.bo[buf].channel
+	if chan <= 0 or vim.fn.jobwait({ chan }, 0)[1] ~= -1 then
+		return false
+	end
+	-- name: term://{cwd}//{pid}:{cmd}
+	local cmd = vim.api.nvim_buf_get_name(buf):match('^term://.-//%d+:(.*)$')
+	if cmd == nil or exe_name(cmd) ~= exe_name(vim.o.shell) then
+		return false
+	end
+	return has_children(vim.fn.jobpid(chan)) == false
+end
+
+-- :mksession! that keeps idle shell terminals; they come back as new shells in their start dir.
+-- Other terminals: their windows show a blank buffer while saving (layout stays), then get it back.
+---@param path string session file
+function M.mksession(path)
+	local swapped = {} ---@type table<integer, integer> window -> terminal buffer
+	local unlisted = {} ---@type integer[]
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.bo[buf].buftype == 'terminal' and not is_idle_shell(buf) then
+			for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+				if vim.api.nvim_win_get_config(win).relative == '' then
+					swapped[win] = buf
+				end
+			end
+			if vim.bo[buf].buflisted then
+				table.insert(unlisted, buf)
+			end
+		end
+	end
+
+	local blank = vim.api.nvim_create_buf(false, true)
+	local ssop = vim.o.sessionoptions
+	local ei = vim.o.eventignore
+	-- no autocmds: floaterm's BufHidden hook would close the window
+	vim.o.eventignore = 'all'
+	for win in pairs(swapped) do
+		vim.api.nvim_win_set_buf(win, blank)
+	end
+	for _, buf in ipairs(unlisted) do
+		vim.bo[buf].buflisted = false
+	end
+	vim.opt.sessionoptions:append('terminal')
+
+	local ok, err = pcall(vim.cmd.mksession, { vim.fn.expand(path), bang = true })
+
+	vim.o.sessionoptions = ssop
+	for win, buf in pairs(swapped) do
+		vim.api.nvim_win_set_buf(win, buf)
+	end
+	for _, buf in ipairs(unlisted) do
+		vim.bo[buf].buflisted = true
+	end
+	vim.o.eventignore = ei
+	vim.api.nvim_buf_delete(blank, { force = true })
+	if not ok then
+		vim.notify(SRC .. 'mksession failed: ' .. tostring(err), vim.log.levels.ERROR)
+	end
+end
 
 vim.api.nvim_create_user_command('TermCursorShape', function(args)
 	M.set_shape(args.args)
