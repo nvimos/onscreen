@@ -1,0 +1,5 @@
+- [x] plugins: ccc.nvim colour picker and highlighter (2026-10-29)
+    - [x] lua/lazyp/new/ccc.lua: spec, highlight on open in vim, lua, css, scss; <Left>/<Right> in the picker
+    - [x] lua/genja/map-plugin/ccc.lua: <leader>ic pick, <leader>tc highlight toggle
+    - [x] lua/lazyp/my/which-key.lua: <leader>i group widened; readme.cheatsheet.md: Colours section
+    - [ ] test: <leader>ic on a hex colour edits it, elsewhere inserts; <leader>tc in a markdown file

@@ -44,6 +44,13 @@ URLs (urlview.nvim, lua/genja/map-plugin/urlview.lua)
     <leader>gx   same picker, all URLs in the buffer      [u  ]u   previous / next URL
     :UrlView buffer | lazy
 
+Colours (ccc.nvim, lua/lazyp/new/ccc.lua, keys in lua/genja/map-plugin/ccc.lua)
+
+    <leader>ic   pick a colour: edits the one under the cursor, else inserts   :CccPick
+                 in the picker: j/k bar, h/l or <Left>/<Right> -/+1, s/d -/+5, 0-9 set 0-90%, i RGB/HSL bars, o output format, <CR> apply, q quit
+    <leader>tc   paint colours in the buffer on/off (on by default in vim, lua, css, scss)   :CccHighlighterToggle
+    :CccConvert  cycle the colour under the cursor: hex -> rgb() -> hsl()
+
 Floaterm commands (lua/genja/auto-alias.vim; :ClaudeFterm from plug-wip/genja-claudefterm.nvim)
 
     :LazygitFterm  :BashFterm  :PythonFterm  :RangerFterm  :ClaudeFterm

@@ -55,7 +55,7 @@ return {
 				{ '<leader>cG',        group = 'Go: env' },
 				{ '<leader>gE',       group = 'Env: ecolog' },
 				{ '<leader>h',        group = 'Git: hunk, blame, diff, quickfix' },
-				{ '<leader>i',        group = 'Insert: chars' },
+				{ '<leader>i',        group = 'Insert: chars, date, colour' },
 				{ '<leader>j',        group = 'Jump: pickers, cd, start dirs' },
 				{ '<leader>m',        group = 'UI: panels, git, claude, gui' },
 				{ '<leader>mG',       group = 'UI: git log, commit, signs' },
