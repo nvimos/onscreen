@@ -1,0 +1,5 @@
+- [x] diagnostics: virtual text in one column per paragraph (2026-10-29)
+    - [x] lua/genja/ext/diag-align.lua: wraps virtual_text, moves marks to virt_text_win_col
+    - [x] plugin/diag-align.lua: setup, before diag-limit
+    - [x] lua/genja/readme.md
+    - [ ] test: a paragraph with several diagnostics shows them in one column; vim.g.diag_align = false
