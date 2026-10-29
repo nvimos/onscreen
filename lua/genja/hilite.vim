@@ -103,3 +103,6 @@ hi Directory guifg=#ffd76a
 hi Directory guifg=#ffe9a9
 hi Directory guifg=#ffe087
 
+" Markdown links: dim underline; lunaperche's Underlined has no colour, so only sp changes.
+hi @markup.link     guifg=NONE gui=underline guisp=#4a4a4a cterm=underline
+hi @markup.link.url guifg=NONE gui=underline guisp=#4a4a4a cterm=underline

@@ -1,0 +1,4 @@
+- [x] hilite: dimmer underline on markdown links (2026-10-29)
+    - [x] lua/genja/hilite.vim: `@markup.link`, `@markup.link.url` underline with `guisp=#4a4a4a`, no fg (lunaperche's Underlined has none)
+    - [ ] test: open a markdown file, check links show a faint grey underline; `:Inspect` on a link
+    - [ ] test: `@markup.link.label` keeps its colour and the dim underline
