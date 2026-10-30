@@ -6,7 +6,7 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] telescope key help: open a picker, type until no result: key table in the results (lua/genja/ext/telescope-virthelp.lua) -> todo-done/ideas-53-telescope-explore.md
 - [ ] telescope default keys: uncomment one in after/plugin/telescope-after.lua, check it's off (A1) -> doc-wip/readme.2026-10-26.telescope-default-keys.md
 - [x] unsaved picker: layout, key help height, <M-x>, <M-w>, E13 (tested by hand; auto: make D=unsaved) -> doc-wip/readme.2026-10-29.unsaved-picker.md
-- [ ] unsaved picker with s:: picker, then session saved to ~/tmp/viss (lua/genja/abbreviations.vim) -> doc-wip/readme.2026-10-29.unsaved-picker.md
+- [x] unsaved picker with s:: picker, then session saved to ~/tmp/viss (tested by hand 2026-10-30)
 - [ ] paste search: :Xty and :Wot; current provider unchanged after :Google (plug-wip/genja-paste-ai.nvim/plugin/genja-paste-ai.lua) -> todo-issue/solved-26.10.29-22.59-paste-commands.md
 - [ ] paste search providers: each new one once, yandex, claude, google-ai, kagi … (plug-wip/genja-paste-ai.nvim/lua/genja-paste-ai/init.lua) -> todo-issue/solved-26.10.29-22.49-paste-providers.md
 - [x] which-key height: <leader> then a group key, the box keeps its edges (lua/lazyp/my/which-key.lua) -> todo-issue/solved-26.10.29-22.59-which-key-height.md (works, 2026-10-30)

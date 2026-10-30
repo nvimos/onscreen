@@ -6,5 +6,5 @@
     - [x] lua/genja/abbreviations.vim: bare :q and :x go through :Unsaved
     - [x] tests/unsaved/test_unsaved.lua: 22 cases, make D=unsaved passes
     - [x] doc-wip/readme.2026-10-29.unsaved-picker.md, untested list, readme.cheatsheet.md, lua/genja/readme.md
-    - [ ] test: s: with modified buffers: picker, then session saved to ~/tmp/viss
-    - [ ] cnoreabbrev g q turns :let g:x into :let q:x (lua/genja/abbreviations.vim); maybe an <expr> like q
+    - [x] test: s: with modified buffers: picker, then session saved to ~/tmp/viss (works, 2026-10-30)
+    - [x] cnoreabbrev g q turned :let g:x into :let q:x: now a cmdline <CR> map, g alone = :Unsaved q (2026-10-30)

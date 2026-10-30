@@ -1,0 +1,6 @@
+- [x] abbrev: g alone quits through :Unsaved; :g/pat/, :g! and :let g:x work again (2026-10-30)
+    - [x] lua/genja/abbreviations.vim: cnoreabbrev g q replaced by a cmdline <CR> map, only for a bare `g`
+    - [x] the map sends <C-]> before <CR>: a mapped <CR> doesn't expand abbreviations (qa, jj, s:)
+    - [x] tests/unsaved/test_unsaved.lua: g, :g/drop/d, :g!/xyz/d, jj, s: expansion; make D=unsaved passes (25)
+    - [x] readme.cheatsheet.md: Unsaved section
+    - [x] test: s: with modified buffers saves the session (by hand, 2026-10-30)

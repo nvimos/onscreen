@@ -262,7 +262,7 @@ Diagnostics limit (lua/genja/ext/diag-limit.lua, key in plugin/diag-limit.lua)
 Unsaved buffers (lua/genja/ext/unsaved.lua, command in plugin/unsaved.lua, abbreviations in lua/genja/abbreviations.vim)
 
     :qa  jj  s:      with modified buffers: picker first, quit / save session when the list is empty
-    :q  :x           the same, from the last window only (:x writes the current file itself)
+    :q  :x  g        the same, from the last window only (:x writes the current file itself; :g/pat/ is still :global)
     :qa!             drops them as usual
     :Unsaved [cmd]   the picker, then cmd; <Esc> cancels cmd
     <M-w>            file: write; no file: `:w ~/tmp/bufw-<week>-<3 words>.txt` on the cmdline

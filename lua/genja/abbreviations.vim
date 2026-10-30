@@ -32,7 +32,10 @@ cnoreabbrev <expr> qa (getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'Unsaved
 cnoreabbrev <expr> q  (getcmdtype() ==# ':' && getcmdline() ==# 'q')  ? 'Unsaved q'  : 'q'
 cnoreabbrev <expr> x  (getcmdtype() ==# ':' && getcmdline() ==# 'x')  ? 'Unsaved x'  : 'x'
 cnoreabbrev jj Unsaved qa
-cnoreabbrev g q
+" g alone quits like :q (through :Unsaved). A <CR> map, not an abbreviation: an abbreviation
+" also fires on `/` and `!`, so :g/pat/ and :g! would turn into a quit.
+" <C-]> first: a mapped <CR> doesn't expand abbreviations (qa, jj, s: …), <C-]> does
+cnoremap <expr> <CR> (getcmdtype() ==# ':' && getcmdline() ==# 'g') ? '<C-u>Unsaved q<CR>' : '<C-]><CR>'
 
 cnoreabbrev helf vert help
 cnoreabbrev helv vert help

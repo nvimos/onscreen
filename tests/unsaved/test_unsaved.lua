@@ -300,4 +300,30 @@ T['abbreviations: q inside a longer command line stays q'] = case(function()
 	eq(child.b.t, 'q')
 end)
 
+T['g alone quits like :q, through :Unsaved'] = case(function()
+	keys(':g<CR>')
+	eq(ran(), { 'q' })
+	child.lua([[modify_file()]])
+	keys(':g<CR>')
+	eq(picker_open(), true)
+end)
+
+T['jj and s: still expand when <CR> runs them'] = case(function()
+	keys(':jj<CR>')
+	eq(ran(), { 'qa' })
+	-- s: would save a session; check the expanded line only
+	keys(':s:<C-]>')
+	eq(vim.startswith(child.fn.getcmdline(), 'Unsaved call <SNR>'), true)
+	keys('<Esc>')
+end)
+
+T[':g/pat/ and :g! stay :global'] = case(function()
+	child.lua([[vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'keep', 'drop', 'keep' })]])
+	keys(':g/drop/d<CR>')
+	eq(child.lua([[return vim.api.nvim_buf_get_lines(0, 0, -1, false)]]), { 'keep', 'keep' })
+	keys(':g!/xyz/d<CR>')
+	eq(child.lua([[return vim.api.nvim_buf_get_lines(0, 0, -1, false)]]), { '' })
+	eq(ran(), {})
+end)
+
 return T
