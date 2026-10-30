@@ -10,6 +10,8 @@ abbreviations in `lua/genja/abbreviations.vim`.
 ## Commands
 
 - `:qa`, `jj`: picker if anything is modified, then `qa`.
+- `:q`, `:x`: the same, from the last window only; elsewhere they close the
+  window as before. `:x` leaves the current file out (it writes it itself).
 - `s:`: picker, then the usual session sweep, `mksession ~/tmp/viss`, `qa`.
 - `:qa!`: drops everything as before (no picker).
 - `:Unsaved [cmd]`: the picker, then `cmd` (any Ex command, `|` allowed). No
@@ -21,7 +23,7 @@ Nothing modified: `cmd` runs at once.
 
 | key     | file buffer                 | no-file buffer                                      |
 |---------|-----------------------------|-----------------------------------------------------|
-| `<M-w>` | `:write`                    | `:w ~/tmp/bufw-<week>-<3 words>.txt` on the cmdline |
+| `<M-w>` | `:write`; E13 asks to overwrite | `:w ~/tmp/bufw-<week>-<3 words>.txt` on the cmdline |
 | `<M-x>` | reset to disk (`:edit!`)    | wipe the buffer                                     |
 | `<CR>`  | go to the buffer, no `cmd`  | same                                                |
 | `<Esc>` | close, `cmd` cancelled      | same                                                |
@@ -31,6 +33,10 @@ buffer `<M-w>` shows the buffer and leaves the `:w` line for editing: Enter
 writes and the picker comes back; `<Esc>` leaves it there (run `:qa` again).
 `~/tmp` is created when missing. Week is the ISO week (`%V`); the three words
 are the first word-like runs of the buffer, non-ASCII removed.
+
+## Tests
+
+`make D=unsaved` in `tests/` (22 cases: keys, E13, `:q`/`:x`, abbreviations).
 
 ## Try it
 

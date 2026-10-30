@@ -27,8 +27,10 @@ cnoreabbrev te:  tabedit %:p:h
 cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
 
-" a bare :qa (and jj) asks about modified buffers instead of E37/E162; :qa! still drops them
+" a bare :qa, :q, :x (and jj) ask about modified buffers instead of E37/E162; :qa! still drops them
 cnoreabbrev <expr> qa (getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'Unsaved qa' : 'qa'
+cnoreabbrev <expr> q  (getcmdtype() ==# ':' && getcmdline() ==# 'q')  ? 'Unsaved q'  : 'q'
+cnoreabbrev <expr> x  (getcmdtype() ==# ':' && getcmdline() ==# 'x')  ? 'Unsaved x'  : 'x'
 cnoreabbrev jj Unsaved qa
 cnoreabbrev g q
 
