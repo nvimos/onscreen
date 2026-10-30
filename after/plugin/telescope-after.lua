@@ -289,6 +289,7 @@ require('telescope').setup {
 -- {{{ key hint in the prompt
 -- Telescope has no footer, so the hint is virtual text after the prompt prefix, shown while the
 -- prompt is empty (like a placeholder). The right edge holds telescope's result counter.
+-- A picker can set its own: vim.b[prompt_bufnr].telescope_hint = '…' in attach_mappings.
 local HINT = 'mark Tab · send <M-l/q> · appeng <M-L/Q> · keys <C-/>'
 local hint_ns = vim.api.nvim_create_namespace('genja_telescope_hint')
 
@@ -304,7 +305,7 @@ local function update_hint(buf)
 		return
 	end
 	vim.api.nvim_buf_set_extmark(buf, hint_ns, 0, 0, {
-		virt_text = { { HINT, 'TelescopeResultsTitle' } }, -- same as the key help (lua/genja/ext/telescope-virthelp.lua)
+		virt_text = { { vim.b[buf].telescope_hint or HINT, 'TelescopeResultsTitle' } }, -- same as the key help (lua/genja/ext/telescope-virthelp.lua)
 		virt_text_pos = 'eol',
 	})
 end
