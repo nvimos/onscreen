@@ -1,0 +1,5 @@
+- [x] messages: :Messages -yank puts all of :messages into the clipboard (2026-10-30)
+    - [x] lua/genja/ext/messages.lua: M.yank(); plugin/messages.lua: completion, desc
+    - [x] readme.cheatsheet.md: Messages section
+    - [x] tests/messages/test_messages.lua: -yank case; make D=messages passes (11)
+    - [x] test: :Messages -yank used by hand for the unsaved E13 trace

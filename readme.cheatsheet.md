@@ -273,6 +273,7 @@ Messages (lua/genja/ext/messages.lua, command in plugin/messages.lua)
     :Messages / :Messages -dump   :messages in a scratch buffer; <CR> opens file:line, q closes
     :Messages -quick              append the file:line locations to the quickfix list
     :Messages -loc                append them to this window's location list
+    :Messages -yank               all of :messages to the clipboard
     <F2> > messages: <file>:<n>   newest 10 locations from :messages
 
 Languages on the fly (plug-wip/genja-completion011.nvim, lua/genja/lsp/init.lua; F2 item in lua/genja/f2/collect/lang.lua)

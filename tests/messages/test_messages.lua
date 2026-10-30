@@ -141,4 +141,18 @@ T['capture: off until enable(), records WARN with the call site'] = function()
 	eq(got, { 0, 1, 'careful', true, 1 })
 end
 
+T[':Messages -yank puts all of :messages into the + register'] = function()
+	local got = child.lua([[
+		fail()
+		vim.api.nvim_echo({ { 'second line' } }, true, {})
+		local reg = {}
+		vim.fn.setreg = function(name, text) reg[name] = text end
+		local before = M.lines()
+		vim.cmd('Messages -yank')
+		return { reg['+'], before }
+	]])
+	eq(got[1], table.concat(got[2], '\n'))
+	eq(vim.endswith(got[1], 'second line'), true)
+end
+
 return T

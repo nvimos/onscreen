@@ -2,6 +2,7 @@
 --   :Messages [-dump]   :messages in a scratch buffer (current window); <CR> jumps, q closes
 --   :Messages -quick    append the locations to the quickfix list, open it
 --   :Messages -loc      append them to this window's location list, open it
+--   :Messages -yank     all of :messages to the clipboard (+)
 --   <F2>                one item per location, newest first, at most 10 (lua/genja/f2/collect/messages.lua)
 -- Reads :messages when asked; nothing runs in the background. The recording variant
 -- (wraps vim.notify, off by default) is lua/genja/ext/messages-capture.lua.
@@ -154,7 +155,14 @@ function M.to_list(loc_list)
 	end
 end
 
----:Messages [-dump|-quick|-loc]
+---:Messages -yank: all of :messages into the + register.
+function M.yank()
+	local lines = M.lines()
+	vim.fn.setreg('+', table.concat(lines, '\n'))
+	vim.notify(SRC .. #lines .. ' message lines yanked to the clipboard')
+end
+
+---:Messages [-dump|-quick|-loc|-yank]
 ---@param args string
 function M.command(args)
 	local arg = vim.trim(args)
@@ -164,8 +172,10 @@ function M.command(args)
 		M.to_list(false)
 	elseif arg == '-loc' or arg == '-location' then
 		M.to_list(true)
+	elseif arg == '-yank' then
+		M.yank()
 	else
-		vim.notify(SRC .. 'unknown argument ' .. arg .. ' (-dump, -quick, -loc)', vim.log.levels.WARN)
+		vim.notify(SRC .. 'unknown argument ' .. arg .. ' (-dump, -quick, -loc, -yank)', vim.log.levels.WARN)
 	end
 end
 
