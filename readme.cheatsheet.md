@@ -5,7 +5,7 @@ Always forget
 
 Paste (lua/genja/map-zero.lua)
 
-    <S-Insert>  clipboard ("+) in insert, cmdline and terminal mode
+    <S-Insert>  clipboard ("+) in insert, cmdline and terminal mode (pwsh terminals: PSReadLine's <C-v>, so lines don't run)
 
 Terminal cursor (lua/genja/ext/term.lua)
 

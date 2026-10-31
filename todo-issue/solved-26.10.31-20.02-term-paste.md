@@ -1,0 +1,4 @@
+- [x] term: <S-Insert> ran each pasted line in pwsh (2026-10-31)
+    - [x] cause: PSReadLine gets no bracketed paste through ConPTY
+    - [x] lua/genja/map-zero.lua: pwsh/powershell terminals get <C-v> (PSReadLine's paste), others nvim_paste
+    - [x] test: two lines pasted in pwsh, nothing runs; bash floaterm still pastes

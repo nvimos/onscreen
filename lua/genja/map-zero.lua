@@ -162,8 +162,20 @@ km('n', '', '<C-e>', { silent = true, noremap = true, desc = 'Scroll: extra lin
 -- Yank & Paste {{{
 -- Paste from clipboard ("+ register) in insert mode
 km(ic, '<S-Insert>', '<c-r>+', nosi 'Paste: clipboard (<c-r>+)')
--- nvim_paste sends the text to the job as a bracketed paste, so shells don't run each line
+-- Is the terminal buffer running pwsh/powershell? (bufname term://<cwd>//<pid>:<cmd>)
+local function term_is_pwsh(buf)
+	local prog = vim.api.nvim_buf_get_name(buf):match('^term://.-//%d+:(.*)$') or ''
+	prog = prog:lower()
+	return prog:find('pwsh', 1, true) ~= nil or prog:find('powershell', 1, true) ~= nil
+end
+-- nvim_paste sends the text to the job as a bracketed paste, so shells don't run each line.
+-- PSReadLine gets no bracketed paste through ConPTY (each line ran), so pwsh gets <C-v>:
+-- PSReadLine's own paste reads the clipboard and runs nothing.
 km('t', '<S-Insert>', function()
+	if term_is_pwsh(0) then
+		vim.api.nvim_chan_send(vim.bo.channel, '\22')
+		return
+	end
 	vim.api.nvim_paste(vim.fn.getreg('+'), true, -1)
 end, nosi 'Paste: clipboard into terminal')
 km(n,  '<leader>yf', '"%p',    nosi 'Paste: filename  ("%p)')
