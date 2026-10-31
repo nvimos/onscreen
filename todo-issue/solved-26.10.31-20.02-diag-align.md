@@ -1,0 +1,6 @@
+- [x] diagnostics: switch the one-column alignment (2026-10-31)
+    - [x] lua/genja/ext/diag-align.lua: M.enabled(), M.toggle() moves the marks of every buffer
+    - [x] <leader>tta in plugin/diag-align.lua; <F2> diag item `align: ...` (lua/genja/f2/collect/diag.lua)
+    - [x] tests/ui/test_diag_align.lua: columns, off, toggle, key, F2; limit tests ignore the align item
+    - [x] cheatsheet, which-key <leader>tt label, f2/init.lua comment
+    - [x] test: `make test D=ui` passes

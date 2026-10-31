@@ -2,11 +2,14 @@
 -- right after the paragraph's longest line, instead of after each line's own end.
 -- Wraps the built-in virtual_text handler, then moves its extmarks to virt_text_win_col.
 --   vim.g.diag_align   false: plain end-of-line placement
+--   M.toggle()         switch it and move the marks of every buffer (<leader>tta, <F2> diag)
 -- Setup: plugin/diag-align.lua. Works under the diag limit wrapper (lua/genja/ext/diag-limit.lua).
 --
 -- A paragraph whose longest line is wider than the window keeps end-of-line placement:
 -- a fixed column past the window edge would hide the text.
 -- Edits move the marks with the text but not the column; the next diagnostics refresh fixes it.
+
+local SRC = 'lua/genja/ext/diag-align.lua: '
 
 local M = {}
 
@@ -139,6 +142,26 @@ function M.align(bufnr)
 				vim.api.nvim_buf_set_extmark(bufnr, vt_ns, row, 0, new)
 			end
 		end
+	end
+end
+
+---Is alignment on?
+---@return boolean
+function M.enabled()
+	return vim.g.diag_align ~= false
+end
+
+---Switch alignment on/off and move the existing marks of every loaded buffer;
+---no diagnostics refresh is needed (align() also moves aligned marks back to eol).
+function M.toggle()
+	vim.g.diag_align = not M.enabled()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		M.align(buf)
+	end
+	if M.enabled() then
+		vim.notify(SRC .. 'one column per paragraph')
+	else
+		vim.notify(SRC .. 'at the end of each line')
 	end
 end
 

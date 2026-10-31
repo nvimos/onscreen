@@ -266,6 +266,12 @@ Diagnostics limit (lua/genja/ext/diag-limit.lua, key in plugin/diag-limit.lua)
     <F2>         diagnostics: show all (N hidden), this buffer only
     vim.g.diag_limit = n   b:diag_limit = n   (0: all; zen <leader>z1 sets 2)
 
+Diagnostics align (lua/genja/ext/diag-align.lua, key in plugin/diag-align.lua)
+
+    <leader>tta  virtual text in one column per paragraph / at each line's end; default on
+    <F2>         diagnostics: align: ... (with diagnostics in the buffer)
+    vim.g.diag_align = false   end of line
+
 Unsaved buffers (lua/genja/ext/unsaved.lua, command in plugin/unsaved.lua, abbreviations in lua/genja/abbreviations.vim)
 
     :qa  jj  s:      with modified buffers: picker first, quit / save session when the list is empty

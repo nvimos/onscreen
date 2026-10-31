@@ -81,7 +81,7 @@ return {
 				{ '<leader><space>s', group = 'Spell: check, add' },
 				{ '<leader>T',        group = 'Test: neotest' },
 				{ '<leader>t',        group = 'Tab: move, toggle' },
-				{ '<leader>tt',       group = 'Toggle: diag, hints, diag limit' },
+				{ '<leader>tt',       group = 'Toggle: diag, hints, diag limit, align' },
 				{ '<leader>w',        group = 'Text: wrap, trim; window resize' },
 				{ '<leader>W',        group = 'Resize: window (loop: <leader>wr)' },
 				{ '<leader>ws',       group = 'Text: strip' },

@@ -1,6 +1,7 @@
 -- <F2> source, group `diag`: when the diagnostics limit (lua/genja/ext/diag-limit.lua)
 -- hides some in this buffer, one item that shows them all here; after that, one that
--- hides the excess again.
+-- hides the excess again. With diagnostics in the buffer: switch the virtual text column
+-- (lua/genja/ext/diag-align.lua).
 
 local M = {}
 
@@ -28,6 +29,14 @@ function M.collect(ctx, done)
 				limit.hide_excess(ctx.bufnr)
 			end,
 		})
+	end
+	if #vim.diagnostic.get(ctx.bufnr) > 0 then
+		local align = require('genja.ext.diag-align')
+		local label = 'align: one column per paragraph'
+		if align.enabled() then
+			label = 'align: at the end of each line'
+		end
+		table.insert(items, { group = 'diag', label = label, action = align.toggle })
 	end
 	done(items)
 end

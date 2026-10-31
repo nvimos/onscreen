@@ -6,7 +6,8 @@
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   claude one item per running claude terminal (genja-claudefterm): show it
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
---   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/ext/diag-limit.lua)
+--   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/ext/diag-limit.lua);
+--          `align: ...` switches the virtual text column (lua/genja/ext/diag-align.lua)
 --   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/ext/messages.lua)
 --   lsp    `EnableLang <lang>` when the buffer's language is off (genja-completion011)
 --   lookup `paste search provider (<current>)`: switch the provider (genja-paste-ai)
