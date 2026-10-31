@@ -95,6 +95,12 @@ return {
 
 		},
 
+		config = function(_, opts)
+			require('oil').setup(opts)
+			-- oil sets loaded_netrw, which stops netrw's autoload (E117 netrw#Lexplore);
+			-- :e <dir> stays with oil, since oil clears netrw's FileExplorer autocmds
+			vim.g.loaded_netrw = nil
+		end,
 
 		init = function()
 			-- arg-1 is a dir -> load oil

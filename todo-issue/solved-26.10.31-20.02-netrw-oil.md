@@ -1,0 +1,4 @@
+- [x] explorer: :Lexplore gave E117 netrw#Lexplore (2026-10-31)
+    - [x] cause: oil's default_file_explorer sets g:loaded_netrw, netrw's autoload stops at its guard
+    - [x] lua/lazyp/explorer/oil.lua: config() clears g:loaded_netrw after setup; :e <dir> stays with oil
+    - [x] test: :Lexplore shows netrw.nvim icons, :e . opens oil
