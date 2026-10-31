@@ -70,6 +70,10 @@ migration from 0.9 to 0.11 (the file that started it all)
     (n->c, c->n …); its per-keymap wrapper create_tracker() is never called (checked 2026-10-31)
   - plugins checked 2026-10-31, none fits: keystats.nvim (counts, needs cargo), stalker.nvim (motions only),
     tobira.nvim (teaching), vim-stats (Vim, Ex commands)
-  - idea: vim.on_key() in a small module, match typed keys against nvim_get_keymap() by lhs,
-    count per mode:lhs (+ desc), save to stdpath('state') json on VimLeavePre, :KeyStats picker sorted by count
-  - or: finish create_tracker() in the abdul-keymaps fork and feed :KeymapsStats
+  - decided 2026-10-31: do both
+  - [ ] finish create_tracker in the abdul-keymaps fork (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua),
+        so :KeymapsStats counts keymaps, not mode changes
+  - [ ] build your own, no need for json. keep it lua-native
+    - vim.on_key(), match typed keys against nvim_get_keymap() by lhs, count per mode:lhs (+ desc)
+    - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
+    - :KeyStats picker sorted by count
