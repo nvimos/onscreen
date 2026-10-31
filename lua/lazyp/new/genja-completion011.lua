@@ -54,6 +54,7 @@ return {
                 'dictionary',
                 'buffer',
                 'lazydev',
+                'minuet', -- lua/genja/completion/minuet.lua (config side), after 'keymaps'
                 'cmdline',
                 'appearance'
             },

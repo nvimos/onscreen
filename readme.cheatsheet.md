@@ -155,6 +155,19 @@ Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
     normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
     :Copilot setup | status | enable | disable | panel | signout
 
+Minuet, local ghost text + blink source (lua/genja/map-plugin/minuet.lua; needs ollama serve)
+
+    starts off: <leader>am ghost text in this buffer   <leader>aM blink auto-complete
+    insert:  <M-y>  ask minuet in the blink menu (works while auto-complete is off)
+             <M-A>  accept           <M-a>  accept line     <M-z>  accept n lines
+             <M-.>  next             <M-,>  previous        <M-e>  dismiss
+    :Minuet virtualtext toggle | blink toggle | change_model
+
+llm.nvim, local ghost text via llm-ls (lua/genja/map-plugin/llm.lua; :MasonInstall llm-ls, ollama serve)
+
+    starts off: <leader>al auto-suggest toggle    :LLMSuggestion asks once
+    insert:  <M-;>  accept           <M-'>  dismiss
+
 Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-git.lua)
 
     <leader>mg  Neogit status       <leader>mGl Neogit log

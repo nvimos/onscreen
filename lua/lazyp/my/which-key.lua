@@ -49,7 +49,7 @@ return {
 				{ '<leader>A',        group = 'Edit: alignment' },
 				{ '<leader>A:',       group = 'Align: on :' },
 				{ '<leader>A=',       group = 'Align: on =' },
-				{ '<leader>a',        group = 'AI: companion' },
+				{ '<leader>a',        group = 'AI: companion, copilot, minuet, llm' },
 				{ '<leader>b',        group = 'Buffer: alternate' },
 				{ '<leader>bb',       group = 'Buffer: rotate' },
 				{ '<leader>c',        group = 'Code: lsp' },

@@ -165,3 +165,4 @@ Notes moved from the summary:
 | -   | unsaved buffers picker: `:Unsaved [cmd]`, `:qa`, `jj`, `s:` | S | 2026-10-29 | untested (2026-10-29) |
 | 14e | vint moved to todo-2027.md; #14e closed (todo-done/ideas-14e-nvim-lint-linters.md) | XS | 2026-10-31 | n/a, nothing to try |
 | -   | netrw.nvim: icons via nvim-web-devicons, `ft = 'netrw'` | XS | 2026-10-31 | untested (2026-10-31) |
+| -   | ghost text: minuet-ai.nvim (ghost text + blink `<M-y>`) and llm.nvim (llm-ls via mason), ollama qwen3.5:0.8b | M | 2026-10-31 | untested (2026-10-31) |

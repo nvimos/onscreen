@@ -33,9 +33,9 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | ghost text: minuet-ai.nvim + llm.nvim, ollama qwen3.5:0.8b | 0   | ~35k   |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 
+Closed in auto-todo-20261031-0527: vint (to todo-2027), netrw.nvim, ghost text (minuet + llm.nvim).
 Closed in auto-todo-20261029-2307: unsaved picker, `<leader>;` letters, telescope exploration.
 Closed in auto-todo-20261026-2311: #48 (tested), checkmake minphony, popup submit keys,
 telescope default keys + `<C-/>` descs, #39 marker toggle, F2 git staged.
