@@ -21,10 +21,6 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
 
 ## Follow up
 
-- Completion: two cmdline cases fail (auto run 2026-10-30 03:47, stdpath('state')/genja-tests/failed.json)
-  - completion/<C-j> / <C-k> walk the open menu
-  - completion/<Down> / <Up> walk the open menu
-  - rerun: `make failed` in tests/; <Down>/<Up> in the menu is "being tried out" (genja-completion011 CLAUDE.md)
 - Lint: gitleaks fails
   - result 2026-10-29: `lua/genja/lint.lua: linter gitleaks exited with code: 1`
   - nvim-lint already passes `--exit-code=0`, so 1 is a gitleaks error, not a leak found.
