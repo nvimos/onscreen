@@ -16,7 +16,7 @@ km({ 'v' }, '<leader>r2', ':PrettierFragment<cr>', nosi 'Prettier (frag)')
 
 -- {{{ genja-completion011: lsp check
 -- global, not in LspAttach: it has to work when no server is attached
-km({ 'n' }, '<leader>ch', '<Plug>CheckHealthLspSimple', nosi 'LSP: check server is attached')
+km({ 'n' }, '<leader>ch', '<Plug>CheckHealthSimpleLsp', nosi 'LSP: check server is attached')
 -- }}}
 
 -- {{{ LSP float (hover, signature, diagnostic): <Esc> closes, <C-f>/<C-b> scroll
