@@ -144,6 +144,7 @@ Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/
     <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)
             nothing preselected: the first <Tab> inserts item 1 (:term<Tab> -> :terminal)
     <M-j>   next item                     <M-k>    previous item
+    <M-f>   previous item (as <M-k>)      <M-w>    first item     <M-s>  3 items down
     <Down>  history; after a walk: next   <Up>     history; after a walk: previous
     <M-x>   close the menu (as <C-e>)
     <C-BS>  delete word backwards (as <C-w>; lua/genja/map-zero.lua)

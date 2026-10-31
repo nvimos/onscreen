@@ -1,0 +1,5 @@
+- [x] completion: more cmdline menu keys (2026-10-31)
+    - [x] <M-f> previous (the other way from <M-j>), <M-w> first item, <M-s> 3 items down (completion/cmdline.lua)
+    - [x] all three are walk keys: <Up>/<Down> walk the menu after them
+    - [x] <M-w> uses blink's list.select(1); blink has no command for the first item
+    - [x] readme.cheatsheet.md, genja-completion011 CLAUDE.md
