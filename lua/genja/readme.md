@@ -40,6 +40,7 @@ custom funcs
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
      ext/hi-inspect.lua - :HiInspect (plugin/hi-inspect.lua): highlight groups under the cursor in a split, with link chains and final colours; q closes
+     ext/secrets.lua - LocalOrEnv(name): API key from the gitignored local/secrets.lua, else the environment
      ext/ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
      ext/md-checklist.lua - <F2> in markdown: lines to a checklist and back
      ext/tilde.lua - ~ toggles true/false, on/off, +/- … under the cursor
