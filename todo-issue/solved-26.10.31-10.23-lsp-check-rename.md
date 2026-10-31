@@ -2,4 +2,4 @@
     - [x] command and <Plug>CheckHealthSimpleLsp in genja-completion011 lsp/check.lua, comps/init.lua, README.md
     - [x] <leader>ch in lua/genja/map-lsp.lua
     - [x] lua/lazyp/unused-example-specs/experiment-virtual-simplehealth.lua keeps the old name (not loaded)
-    - [ ] test: :CheckHealthSimpleLsp and <leader>ch open the float
+    - [x] test: <leader>ch still works

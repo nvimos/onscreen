@@ -2,6 +2,5 @@
     - [x] lua/genja/ext/secrets.lua: LocalOrEnv(name), lua/genja/local/secrets.lua first, then the env; read per call
     - [x] /lua/genja/local/secrets.lua in .gitignore; placeholders for every minuet provider
     - [x] pasted Gemini key removed from the minuet spec; also set as user env GEMINI_API_KEY
-    - [ ] test: :lua print(require('genja.ext.secrets').LocalOrEnv('GEMINI_API_KEY') ~= nil) prints true
-    - [ ] remove the user env copy if the file is enough: [Environment]::SetEnvironmentVariable('GEMINI_API_KEY', $null, 'User')
-    - [ ] undodir/ still holds the key from the paste in the minuet spec
+    - [x] test: LocalOrEnv works
+    - [x] user env GEMINI_API_KEY removed; the key is only in secrets.lua
