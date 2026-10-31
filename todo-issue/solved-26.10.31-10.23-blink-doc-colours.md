@@ -1,0 +1,4 @@
+- [x] hilite: blink.cmp documentation popup colours (2026-10-31)
+    - [x] BlinkCmpDoc and BlinkCmpDocBorder in lua/genja/hilite.vim, Vimscript form of the pasted Lua
+    - [x] set again on ColorScheme (augroup genja_hilite_blink_doc)
+    - [ ] test: :colorscheme default, then :hi BlinkCmpDoc still shows guibg=#1e1e2e

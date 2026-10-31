@@ -122,3 +122,14 @@ hi Directory guifg=#ffe087
 " Markdown links: dim underline; lunaperche's Underlined has no colour, so only sp changes.
 hi @markup.link     guifg=NONE gui=underline guisp=#4a4a4a cterm=underline
 hi @markup.link.url guifg=NONE gui=underline guisp=#4a4a4a cterm=underline
+
+" blink.cmp documentation popup; set again after each colorscheme, which clears it
+function! s:BlinkDoc() abort
+    hi BlinkCmpDoc       guibg=#1e1e2e guifg=#cdd6f4
+    hi BlinkCmpDocBorder guibg=#1e1e2e guifg=#89b4fa
+endfunction
+call s:BlinkDoc()
+augroup genja_hilite_blink_doc
+    autocmd!
+    autocmd ColorScheme * call s:BlinkDoc()
+augroup END
