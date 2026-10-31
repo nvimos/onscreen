@@ -118,7 +118,7 @@ Mouse (lua/genja/ext/popup-menu.lua, lua/genja/ext/morning.lua, genja-statusline
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
                   LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless
-                  visual selection: paste search, current provider (plug-wip/genja-paste-ai.nvim)
+                  visual selection: paste search, current provider or "with provider" (picker, then search) (plug-wip/genja-paste-ai.nvim)
     statusline    click file name -> oil   branch -> Neogit   E/W counts -> location list
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds

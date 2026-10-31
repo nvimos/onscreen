@@ -1,0 +1,4 @@
+- [x] paste-ai: right-click search with a picked provider (2026-10-31)
+    - [x] lua/genja/ext/popup-menu.lua: visual-only entry "Lookup: paste search with provider"
+    - [x] plug-wip/genja-paste-ai.nvim: selection_pick(); CLAUDE.md
+    - [x] test: picker opens, search runs; entry missing in normal mode
