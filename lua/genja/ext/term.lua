@@ -220,6 +220,27 @@ local function has_children(pid)
 	return nil
 end
 
+-- The shell's own pid: `:terminal pwsh` runs through 'shell' (cmd.exe /c, bash -c), so the job
+-- can be that wrapper with the shell as its only child, which made every shell look busy.
+---@param pid integer job pid
+---@param name string shell exe name, as exe_name() gives it
+---@return integer
+local function shell_pid(pid, name)
+	local ok, proc = pcall(vim.api.nvim_get_proc, pid)
+	if ok and proc and exe_name(proc.name) == name then
+		return pid
+	end
+	local ok_children, children = pcall(vim.api.nvim_get_proc_children, pid)
+	if not ok_children or #children ~= 1 then
+		return pid
+	end
+	local ok_child, child = pcall(vim.api.nvim_get_proc, children[1])
+	if ok_child and child and exe_name(child.name) == name then
+		return children[1]
+	end
+	return pid
+end
+
 -- A terminal running 'shell' with no child process: safe to save, its restart loses nothing.
 ---@param buf integer
 ---@return boolean
@@ -237,7 +258,7 @@ local function is_idle_shell(buf)
 	if name ~= exe_name(vim.o.shell) and name ~= M.term_shell() then
 		return false
 	end
-	return has_children(vim.fn.jobpid(chan)) == false
+	return has_children(shell_pid(vim.fn.jobpid(chan), name)) == false
 end
 
 -- :mksession! that keeps idle shell terminals; they come back as new shells in their start dir.

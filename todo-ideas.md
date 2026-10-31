@@ -128,3 +128,7 @@ migration from 0.9 to 0.11 (the file that started it all)
     - vim.on_key(), match typed keys against nvim_get_keymap() by lhs, count per mode:lhs (+ desc)
     - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
     - :KeyStats picker sorted by count
+
+- [ ] sessions: a saved shell comes back in its current dir, not the one it was started in (later, asked 2026-10-31)
+  - lua/genja/ext/term.lua mksession: the term:// name keeps the start dir
+  - which other terminals to save (e.g. `:terminal ssh a22`: reconnects on restore): needs more thought; only idle shells for now

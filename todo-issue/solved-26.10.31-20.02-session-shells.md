@@ -1,0 +1,6 @@
+- [x] sessions: save: dropped idle shells (2026-10-31)
+    - [x] cause: :terminal pwsh runs through 'shell', the job is the wrapper and pwsh its child, so every shell looked busy
+    - [x] lua/genja/ext/term.lua: shell_pid() looks through a one-child wrapper
+    - [x] headless: idle shell saved, busy one not; without the fix none
+    - [x] test: shell comes back in its start dir after :source ~/tmp/viss
+    - [ ] restore the shell's current dir; which other terminals to save (todo-ideas.md)
