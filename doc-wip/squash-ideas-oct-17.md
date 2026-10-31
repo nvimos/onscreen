@@ -27,17 +27,18 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
 
-## Open, ranked (auto-todo-20261029-2307)
+## Open, ranked (auto-todo-20261031)
 
 Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easiest first.
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | netrw.nvim: pros and cons (skipped this round)             | 1   | ~4k    |
-| -   | ghost text: llm.nvim / ollama / qwen                       | spec | -     |
+| -   | vint: move to todo-2027.md                                 | 0   | ~1k    |
+| -   | netrw.nvim: icons from nvim-web-devicons, `ft = 'netrw'`   | 0   | ~4k    |
+| -   | ghost text: minuet-ai.nvim + llm.nvim, ollama qwen3.5:0.8b | 0   | ~35k   |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
-| 14e | vint: revisit (Linux/WSL or a fork)                        | spec | -     |
 
+Closed in auto-todo-20261029-2307: unsaved picker, `<leader>;` letters, telescope exploration.
 Closed in auto-todo-20261026-2311: #48 (tested), checkmake minphony, popup submit keys,
 telescope default keys + `<C-/>` descs, #39 marker toggle, F2 git staged.
 Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),

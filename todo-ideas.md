@@ -105,5 +105,9 @@ migration from 0.9 to 0.11 (the file that started it all)
     - which parts (in my current config) do i have to rip out to get it.
     - i think im using copilot.vim already
   - set up the fastest/smallest qwen as a blink source in addition
+  - decided 2026-10-31 (auto-todo): nothing to rip out, copilot.vim stays (gitcommit, <leader>at)
+    - [ ] minuet-ai.nvim: ollama qwen3.5:0.8b, ghost text + blink source (manual <M-y>), off by default
+    - [ ] llm.nvim: ollama qwen3.5:0.8b via llm-ls, auto-suggest off, <M-;> accept
 
 - [ ] consider pros and cons of adding  <https://github.com/prichrd/netrw.nvim>
+  - decided 2026-10-31: add it, icons from nvim-web-devicons (like oil), loads on ft netrw
