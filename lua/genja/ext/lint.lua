@@ -270,6 +270,8 @@ end
 ---On Windows nvim-lint runs every linter as `cmd.exe /C <cmd>`, so its exit-code warning
 ---names cmd.exe. Wrap lint.lint: uv.spawn is swapped during the (synchronous) spawn, the exit
 ---code is reported here with the linter's name, and nvim-lint's callback gets 0.
+---A run that nvim-lint cancelled (the buffer was linted again before it finished) is killed and
+---exits 1 on Windows; that is not a failure and is not reported.
 ---@param lint table require('lint')
 local function name_failed_linters(lint)
 	local lint_orig = lint.lint
@@ -279,11 +281,15 @@ local function name_failed_linters(lint)
 		end
 		local uv = vim.uv
 		local spawn = uv.spawn
+		local proc = nil ---@type table|nil nvim-lint's LintProc, set once lint_orig returns
 		uv.spawn = function(cmd, spawn_opts, on_exit)
 			return spawn(cmd, spawn_opts, function(code, signal)
 				if code ~= 0 then
 					local name = linter.name or tostring(linter.cmd)
 					vim.schedule(function()
+						if proc and proc.cancelled then
+							return
+						end
 						vim.notify(SRC .. 'linter ' .. name .. ' exited with code: ' .. code, vim.log.levels.WARN)
 					end)
 				end
@@ -291,6 +297,9 @@ local function name_failed_linters(lint)
 			end)
 		end
 		local ok, result = pcall(lint_orig, linter, opts)
+		if ok and type(result) == 'table' then
+			proc = result
+		end
 		uv.spawn = spawn
 		if not ok then
 			error(result, 0)

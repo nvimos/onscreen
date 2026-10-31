@@ -32,6 +32,13 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
       (`gitleaks stdin --report-format=json --report-path=- --exit-code=0 <file>` with the file on stdin).
   - merged: "Lint: find which file makes the named linter fail".
   - auto 2026-10-30: `lint gitleaks` passes on the sample secret.txt; the file that failed is still unknown
+  - 2026-10-31: cause found. gitleaks itself exits 0 (8.30.1, also with leaks). Linting a buffer again
+    cancels the run still going; nvim-lint kills it and the killed cmd.exe exits 1. At startup the
+    first buffer is linted twice (BufReadPost and setup()), and gitleaks is the slowest linter.
+    lua/genja/ext/lint.lua no longer reports cancelled runs. Headless: 5 double lints, 10 warnings
+    before, 0 after. Test: `make test D=comps011 G=relint` in tests/.
+    1. open ws/foo.sh: no exit-code warning
+    - result:
 - Zen in nvim-qt: z0 doesn't restore the window size
     1. z1: zen opens, diagnostics limit drops to 2 (seven-errors.lua)
        - result: yes

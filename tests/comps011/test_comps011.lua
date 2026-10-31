@@ -305,6 +305,14 @@ end
 -- {{{ lint: each linter of lua/genja/ext/lint.lua reports on its sample
 
 ---@type { name: string, sample: string, file: string, cmd: string, source: string, write?: fun(dir: string), timeout?: integer, slow?: integer, needs?: string, needs_fix?: string }[]
+---Write secret.txt with a GitHub-token-shaped string, built here: a token committed to the repo
+---would trip secret scanners.
+---@param dir string
+local function write_token_file(dir)
+	local token = 'gh' .. 'p_' .. '8Zx2Lq9Wv4Tn6Yb1' .. 'Kc3Md5Rf7Hs0Jp2Ga4Ue'
+	vim.fn.writefile({ 'github_token = "' .. token .. '"' }, dir .. '/secret.txt')
+end
+
 local LINT = {
 	{ name = 'markdownlint-cli2', sample = 'lint-markdownlint', file = 'x.md', cmd = 'markdownlint-cli2', source = 'markdownlint' },
 	{ name = 'typos', sample = 'lint-typos', file = 'x.md', cmd = 'typos', source = 'typos' },
@@ -318,11 +326,7 @@ local LINT = {
 	{ name = 'editorconfig-checker', sample = 'lint-editorconfig', file = 'x.lua', cmd = 'editorconfig-checker', source = 'editorconfig' },
 	{
 		name = 'gitleaks', sample = 'lint-typos', file = 'secret.txt', cmd = 'gitleaks', source = 'gitleaks',
-		-- built here: a token-shaped string committed to the repo would trip secret scanners
-		write = function(dir)
-			local token = 'gh' .. 'p_' .. '8Zx2Lq9Wv4Tn6Yb1' .. 'Kc3Md5Rf7Hs0Jp2Ga4Ue'
-			vim.fn.writefile({ 'github_token = "' .. token .. '"' }, dir .. '/secret.txt')
-		end,
+		write = write_token_file,
 	},
 	{
 		name = 'vale', sample = 'lint-vale', file = 'x.md', cmd = 'vale', source = 'vale',
@@ -359,6 +363,51 @@ for _, c in ipairs(LINT) do
 		end
 	end)
 end
+
+-- Linting a buffer again cancels the run still going; nvim-lint kills it, and on Windows the killed
+-- cmd.exe exits 1. lua/genja/ext/lint.lua must not report that as "linter gitleaks exited with code: 1"
+-- (seen at startup: BufReadPost and setup() both lint the first buffer).
+T['lint: relint cancels without a warning'] = S:case({ name = 'lint relint cancel', groups = { 'lint', 'gitleaks', 'relint' }, requires = { cmd = 'gitleaks' } }, function(ctx)
+	boot()
+	if child.lua('return vim.fn.executable("gitleaks")') == 0 then
+		MiniTest.skip('gitleaks not installed')
+	end
+	local dir = copy_sample('lint-typos')
+	write_token_file(dir)
+	local has_leak = [[
+		(function()
+			for _, d in ipairs(vim.diagnostic.get(0)) do
+				if tostring(d.source or ''):lower():find('gitleaks', 1, true) then return true end
+			end
+			return false
+		end)()
+	]]
+	-- first the startup lint, so lint.lua is loaded and nothing else is still running
+	if not open_and_wait(dir .. '/secret.txt', has_leak, ctx.timeout) then
+		error('gitleaks: no diagnostic after opening secret.txt')
+	end
+	child.lua([[
+		_G.genja_test_notes = {}
+		local notify = vim.notify
+		vim.notify = function(msg, ...)
+			table.insert(_G.genja_test_notes, tostring(msg))
+			return notify(msg, ...)
+		end
+		vim.diagnostic.reset(nil, 0)
+		local L = require('genja.ext.lint')
+		L.lint(0, 'BufWritePost')
+		L.lint(0, 'BufWritePost') -- cancels the first gitleaks run
+	]])
+	-- the second run still reports, so the cancel did not stop linting
+	if not H.wait(function() return child.lua('return ' .. has_leak) end, ctx.timeout) then
+		error('gitleaks: no diagnostic after linting twice')
+	end
+	vim.uv.sleep(500) -- the warning is sent with vim.schedule
+	local notes = child.lua([[
+		return vim.tbl_filter(function(m) return m:find('exited with code', 1, true) ~= nil end, _G.genja_test_notes)
+	]])
+	eq(notes, {})
+end)
 -- }}}
 
 return T
