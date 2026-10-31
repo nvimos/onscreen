@@ -1,0 +1,6 @@
+- [x] genja-commit: commit message in a split instead of a float (2026-10-31)
+    - [x] opts.window = 'split' (default) | 'float' (plug-wip/genja-commit.nvim/lua/genja-commit/config.lua)
+    - [x] popup.lua: botright split, winfixheight, title and <M-g> status in its winbar; stays open on leave, WinClosed keeps the draft
+    - [x] README, CLAUDE.md, lua/lazyp/new/genja-commit.lua window = 'split'
+    - [ ] test: <leader>mGc opens the bottom split with winbar hints
+    - [ ] test: leave and come back: still open; q/<Esc> close, reopen keeps the draft; <C-s> commits

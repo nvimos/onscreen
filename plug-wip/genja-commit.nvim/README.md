@@ -35,6 +35,7 @@ from the staged diff.
 	dir = '.../genja-commit.nvim',
 	ft = 'gitcommit',
 	opts = {
+		window = 'split',     -- or 'float': the commit message window
 		keys = { commit = { '<C-CR>', '<M-CR>', '<C-s>' }, fill = '<M-u>', abort = { '<Esc>', 'q' }, generate = '<M-g>', cancel = '<C-c>' },
 		lint = { title_max = 65, body_max = 72, debounce = 300, install_gitlint = true },
 		generate = {

@@ -13,6 +13,7 @@ return {
 
 	---@type genja-commit.Opts
 	opts = {
+		window = 'split', -- or 'float'
 		lint = { title_max = 65, body_max = 72 },
 		generate = {
 			order = { 'claude', 'copilot', 'gemini', 'aichat' },

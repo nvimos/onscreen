@@ -13,7 +13,7 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 
 - `init.lua`: `setup(opts)`, `open(dir)`, `attach(buf)` (FileType gitcommit).
 - `config.lua`: defaults and types; `popup.lua`, `lint.lua`, `generate.lua`, `git.lua`.
-- The popup float comes from `genja-util.float` (`plug-wip/genja-util.nvim`, a spec dependency).
+- The popup float comes from `genja-util.float` (`plug-wip/genja-util.nvim`, a spec dependency); the split is opened in `popup.lua`.
 - The plugin must not require `genja.*`; the config passes `on_commit` (oil-git refresh). (inferred: same rule as genja-oily)
 - Keys are buffer-local and set from `opts.keys`, so there is no `map-plugin/` file. (inferred)
 - Hint: nothing here was run or tested yet (2026-10-22).
@@ -24,7 +24,10 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 - `<C-CR>`, `<M-CR>` and `<C-s>` commit (`<C-CR>` does not reach nvim through Windows Terminal; Alt+Enter there must be unbound from fullscreen), `<CR>` is a newline, `<Esc>` in insert goes to normal, `<Esc>`/`q` in normal aborts.
 - `<M-u>` inserts `update: <first file>` (was `<C-CR>`); other staged files go in the body.
 - `<C-CR>` with ERROR diagnostics asks once (`confirm()`); warnings don't ask.
-- Leaving the window closes it (WinLeave), as before; an empty message aborts.
+- `window = 'split'` (default since 2026-10-31: the float was awkward to use) or `'float'`.
+- Split: `botright` across the bottom, `winfixheight`, title in a window-local winbar; it stays open when you leave it; closing it any way keeps the draft (WinClosed).
+- Float: leaving the window closes it (WinLeave), as before.
+- An empty message aborts.
 - Buffer is named after `git rev-parse --path-format=absolute --git-path COMMIT_EDITMSG` with `buftype=acwrite`; `:w` writes that file.
 - Before `:w` text is kept in memory per repo (key: the COMMIT_EDITMSG path); after `:w` the in-memory copy is dropped.
 - Reopening refills from the newer of draft and file ("newest wins").

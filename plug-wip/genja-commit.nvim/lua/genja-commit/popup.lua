@@ -1,4 +1,4 @@
--- Commit message popup.
+-- Commit message popup: a split at the bottom (default) or a centred float (opts.window).
 -- The buffer is named after the repo's COMMIT_EDITMSG (buftype=acwrite): :w writes it.
 -- Unsaved text is kept in memory per repo; reopening refills from the newer of the
 -- two. A successful commit empties both.
@@ -18,8 +18,28 @@ local SRC = 'genja-commit/popup.lua: '
 ---@type table<string, genja-commit.Draft> key: COMMIT_EDITMSG path, or the dir without one
 local drafts = {}
 
----@type table<integer, { win: integer, title: string }> open popups by buffer
+---@type table<integer, { win: integer, title: string, split: boolean }> open popups by buffer
 local popups = {}
+
+---Winbar text: '%' is a statusline item, so escape it.
+---@param text string
+local function winbar_text(text)
+	return ' ' .. text:gsub('%%', '%%%%')
+end
+
+---Open buf in a split across the bottom; the title goes in its winbar.
+---@param buf integer
+---@param height integer
+---@param title string
+---@return integer win
+local function open_split(buf, height, title)
+	vim.cmd(('botright %dsplit'):format(height))
+	local win = vim.api.nvim_get_current_win()
+	vim.api.nvim_win_set_buf(win, buf)
+	vim.wo[win].winfixheight = true
+	vim.wo[win].winbar = winbar_text(title)
+	return win
+end
 
 ---@param lines string[]
 local function is_blank(lines)
@@ -110,12 +130,16 @@ local function title_for(keys)
 		table.concat(key_list(keys.commit), '/'), keys.fill, keys.generate, keys.abort[1] or 'q')
 end
 
----Show a status in the popup's title; nil restores it. No-op for other buffers.
+---Show a status in the popup's title (winbar in a split); nil restores it. No-op for other buffers.
 ---@param buf integer
 ---@param text? string
 function M.set_status(buf, text)
 	local popup = popups[buf]
 	if not popup or not vim.api.nvim_win_is_valid(popup.win) then
+		return
+	end
+	if popup.split then
+		vim.wo[popup.win].winbar = winbar_text(text or popup.title)
 		return
 	end
 	vim.api.nvim_win_set_config(popup.win, { title = ' ' .. (text or popup.title) .. ' ', title_pos = 'center' })
@@ -138,6 +162,7 @@ function M.open(dir)
 	end
 
 	local keys = config.get().keys
+	local split = config.get().window == 'split'
 	local path = git.msg_path(dir)
 	local key = path or dir
 	local lines = initial_lines(key, path, dir)
@@ -162,12 +187,18 @@ function M.open(dir)
 	-- exclude the border, so leave 2 for it plus a little margin on small screens
 	local needed = math.max(#files + 1, 6, (lines and #lines or 0)) -- summary, blank, body
 	local title = title_for(keys)
-	local win = float.open(buf, {
-		width = math.min(80, vim.o.columns - 4),
-		height = math.min(needed, 15, vim.o.lines - vim.o.cmdheight - 4),
-		title = title,
-	})
-	popups[buf] = { win = win, title = title }
+	local height = math.min(needed, 15, vim.o.lines - vim.o.cmdheight - 4)
+	local win
+	if split then
+		win = open_split(buf, height, title)
+	else
+		win = float.open(buf, {
+			width = math.min(80, vim.o.columns - 4),
+			height = height,
+			title = title,
+		})
+	end
+	popups[buf] = { win = win, title = title, split = split }
 	-- after the window: the FileType autocmd (lint, <M-g>) sees the popup's dir
 	vim.bo[buf].filetype = 'gitcommit'
 
@@ -244,16 +275,29 @@ function M.open(dir)
 	for _, lhs in ipairs(keys.abort) do
 		vim.keymap.set('n', lhs, close, o 'Commit: abort')
 	end
-	-- leaving the popup closes it; the draft is read now, the window closed later
-	-- (no window closing inside WinLeave)
-	vim.api.nvim_create_autocmd('WinLeave', {
-		buffer = buf,
-		once = true,
-		callback = function()
-			save_draft()
-			vim.schedule(close)
-		end,
-	})
+	if split then
+		-- a split stays open while you look elsewhere; :q or <C-w>c still keeps the draft
+		vim.api.nvim_create_autocmd('WinClosed', {
+			pattern = tostring(win),
+			once = true,
+			callback = function()
+				save_draft()
+				closed = true
+				popups[buf] = nil
+			end,
+		})
+	else
+		-- leaving the float closes it; the draft is read now, the window closed later
+		-- (no window closing inside WinLeave)
+		vim.api.nvim_create_autocmd('WinLeave', {
+			buffer = buf,
+			once = true,
+			callback = function()
+				save_draft()
+				vim.schedule(close)
+			end,
+		})
+	end
 	-- end of the summary line, so a restored draft can be continued
 	vim.api.nvim_win_set_cursor(win, { 1, 0 })
 	vim.cmd.startinsert({ bang = true })

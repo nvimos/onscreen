@@ -38,7 +38,10 @@
 ---@field gemini genja-commit.GeminiOpts
 ---@field aichat genja-commit.AichatOpts
 
+---@alias genja-commit.Window 'split'|'float'
+
 ---@class genja-commit.Opts
+---@field window? genja-commit.Window commit message window: a split at the bottom, or a centred float
 ---@field keys? genja-commit.Keys
 ---@field lint? genja-commit.LintOpts
 ---@field generate? genja-commit.GenerateOpts
@@ -49,6 +52,7 @@
 
 ---Opts after merging with the defaults: every field set.
 ---@class genja-commit.Config
+---@field window genja-commit.Window
 ---@field keys genja-commit.Keys
 ---@field lint genja-commit.LintOpts
 ---@field generate genja-commit.GenerateOpts
@@ -61,6 +65,7 @@ local M = {}
 
 ---@type genja-commit.Config
 local defaults = {
+	window = 'split', -- the float was awkward to use (2026-10-31)
 	keys = {
 		commit = { '<C-CR>', '<M-CR>', '<C-s>' },
 		fill = '<M-u>',
