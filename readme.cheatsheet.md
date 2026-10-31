@@ -149,14 +149,7 @@ Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/
     <M-x>   close the menu (as <C-e>)
     <C-BS>  delete word backwards (as <C-w>; lua/genja/map-zero.lua)
 
-Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
-
-    starts disabled to save credits: <leader>at or :Copilot enable
-    insert:  <M-f>  accept           <M-w>  accept word     <M-j>  accept line
-             <M-]>  next             <M-[>  previous        <C-]>  dismiss
-             <M-\>  suggest now      (<Tab> stays with blink)
-    normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
-    :Copilot setup | status | enable | disable | panel | signout
+Copilot, disabled 2026-10-31: minuet won (spec in lua/lazyp/unused/copilot.lua, keys commented out in lua/genja/map-plugin/copilot.lua)
 
 Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; Codestral by default, keys in lua/genja/local/secrets.lua)
 
@@ -167,10 +160,7 @@ Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; Codestral by
     :Minuet virtualtext toggle | blink toggle | change_model
     :CheckHealthSimpleMinuet  provider, model, key set or not, ollama server, test request (lua/genja/ext/minuet-status.lua)
 
-llm.nvim, local ghost text via llm-ls (lua/genja/map-plugin/llm.lua; :MasonInstall llm-ls, ollama serve)
-
-    starts off: <leader>al auto-suggest toggle    :LLMSuggestion asks once
-    insert:  <M-;>  accept           <M-'>  dismiss
+llm.nvim, disabled 2026-10-31: no ghost text on nvim 0.13 (spec in lua/lazyp/unused-failed/llm.lua, keys commented out in lua/genja/map-plugin/llm.lua)
 
 Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-git.lua)
 

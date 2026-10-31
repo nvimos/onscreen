@@ -1,0 +1,6 @@
+- [x] ai: shelve llm.nvim and copilot.vim (2026-10-31)
+    - [x] llm.nvim: no ghost text on nvim 0.13; tried mason llm-ls, qwen2.5-coder, PR #124 branch (header of lua/lazyp/unused-failed/llm.lua)
+    - [x] copilot.vim: minuet won the comparison; spec in lua/lazyp/unused/copilot.lua
+    - [x] keys commented out: lua/genja/map-plugin/llm.lua, lua/genja/map-plugin/copilot.lua
+    - [x] readme.cheatsheet.md one line each; which-key <leader>a group 'AI: companion, minuet'
+    - [x] moves committed earlier: 18ed193

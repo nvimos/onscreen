@@ -1,8 +1,13 @@
+-- not used: 2026-10
+-- Shelved 2026-10-31: minuet won the ghost-text comparison (lua/lazyp/langs-comps/minuet.lua).
+-- copilot.vim worked; gitcommit ghost text goes with it. The copilot CLI backends in
+-- genja-ask and genja-commit don't use this plugin.
+-- Keys (commented out) are in lua/genja/map-plugin/copilot.lua.
+--
 -- GitHub Copilot ghost-text suggestions. First run: :Copilot setup (signs in via browser).
 -- Needs Node.js on PATH (minimum version: copilot.vim README; :Copilot status warns).
 -- <Tab> stays with blink.cmp
 --
--- Keys and mappings are defined in lua/genja/map-plugin/copilot.lua.
 -- Off by default to conserve credits: only the filetypes below load and enable it;
 -- <leader>at turns it on for the rest ('*').
 
