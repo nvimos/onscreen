@@ -54,7 +54,11 @@ Apply these without asking; mention them once in the overview so the user can ov
    - commit (no Claude attribution, one commit per feature);
    - print a progress line: `done <n>/<total>, ~<k>k tokens left, next: #<id> <idea>`. No minute estimates.
 7. **Untested list.** `doc-wip/untested.<yyyy-mm-dd>.md`: one checklist line per feature: `- [ ] <feature>: <key or command to try> (<file>) -> doc-wip/readme.<...>.md`. Include earlier features already marked untested in `todo-ideas.md` and the squash files. Order it so one feature can be tried per question in the later guided session.
-8. **Run log.** Append one row to `~/.claude/skills/auto-todo/runs.md` (the skill's folder, not the project): date, project, project type, languages / frameworks, items built, items closed, questions asked, estimated tokens, question time, build time (from the session start, the tag and the commit times). Read it in step 2 only as a loose reference for similar projects; don't turn it into minute estimates.
+8. **Run log.** Add one row to `runs.md` next to this SKILL.md (`.claude/skills/nvim-auto-todo/runs.md`): date, project, project type, languages / frameworks, items built, items closed, questions asked, estimated tokens, question time, build time (from the session start, the tag and the commit times). Insert it above the two summary rows, which stay last; then recompute them over all runs:
+   - **total**: sums of built, closed, questions, tokens, question time, build time.
+   - **avg per built item**: the totals of questions, tokens, question time and build time divided by the total built; closed left empty.
+
+   Read it in step 2 only as a loose reference for similar projects; don't turn it into minute estimates.
 
 ## Rules
 
