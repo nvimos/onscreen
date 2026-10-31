@@ -21,7 +21,11 @@ migration from 0.9 to 0.11 (the file that started it all)
   - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
   - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing
   - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
-  - copilot ghost text in commit buffers, accept with <M-f>
+  - copilot ghost text in commit buffers, accept with <M-f> (copilot.vim moved to lua/lazyp/unused/ 2026-10-31: minuet won)
+  - [~] gitcommit buffers: get commit-message help back without copilot.vim
+    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua) (untested)
+    - [ ] claude -p as a minuet provider: minuet only has HTTP backends; its `claude` provider needs ANTHROPIC_API_KEY
+    - [ ] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
   - opt-in Conventional Commits mode; cmp offers types, scopes, footers
   - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
