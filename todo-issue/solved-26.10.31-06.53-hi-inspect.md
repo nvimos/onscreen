@@ -1,0 +1,5 @@
+- [x] ui: :HiInspect shows highlight groups under the cursor in a split (2026-10-31)
+    - [x] lua/genja/ext/hi-inspect.lua: treesitter, semantic tokens, syntax, extmarks from vim.inspect_pos(), link chains, final colours, names drawn in their own colours
+    - [x] plugin/hi-inspect.lua: :HiInspect; q closes the split
+    - [x] lua/genja/readme.md entry
+    - [ ] test: :HiInspect on a Lua keyword shows the @keyword chain and colours; again reuses the split

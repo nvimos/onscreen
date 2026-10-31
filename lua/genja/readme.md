@@ -39,6 +39,7 @@ custom funcs
      ext/md-abbrev.lua, ext/md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)
+     ext/hi-inspect.lua - :HiInspect (plugin/hi-inspect.lua): highlight groups under the cursor in a split, with link chains and final colours; q closes
      ext/ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
      ext/md-checklist.lua - <F2> in markdown: lines to a checklist and back
      ext/tilde.lua - ~ toggles true/false, on/off, +/- … under the cursor
