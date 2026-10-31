@@ -163,3 +163,4 @@ Notes moved from the summary:
 | -   | `<leader>;` dropbar crumb letters jwfasrzxc | XS | c8b9934 | untested (closed 2026-10-29) |
 | -   | telescope exploration: closed, preview component dropped | XS | 2026-10-29 | key help, default keys untested (closed 2026-10-29) |
 | -   | unsaved buffers picker: `:Unsaved [cmd]`, `:qa`, `jj`, `s:` | S | 2026-10-29 | untested (2026-10-29) |
+| 14e | vint moved to todo-2027.md; #14e closed (todo-done/ideas-14e-nvim-lint-linters.md) | XS | 2026-10-31 | n/a, nothing to try |
