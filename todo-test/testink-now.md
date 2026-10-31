@@ -1,15 +1,37 @@
 # Open tests (from todo-issue/)
 
-Passed ones: todo-done/tested-2026-10-29.md.
+Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
+
+## Session 2026-10-31 (one feature per question)
+
+1. Terminal paste
+2. Markdown links
+3. Colours (ccc)
+4. Paste search on a selection
+5. Terminal keys
+6. Sessions keep idle shells
+7. md-fix on save
+8. Markdown list wrap
+9. Diagnostics (diag-align, colours)
+10. Telescope key help
+11. netrw.nvim icons (doc-wip/readme.2026-10-31.netrw-nvim.md)
+12. Lint setup, first run (needs :MasonToolsInstall, :ValeSync)
+13. Ghost text: minuet, llm.nvim (needs ollama serve; doc-wip/readme.2026-10-31.ghost-text-minuet-llm.md)
+
 
 ## Follow up
 
+- Completion: two cmdline cases fail (auto run 2026-10-30 03:47, stdpath('state')/genja-tests/failed.json)
+  - completion/<C-j> / <C-k> walk the open menu
+  - completion/<Down> / <Up> walk the open menu
+  - rerun: `make failed` in tests/; <Down>/<Up> in the menu is "being tried out" (genja-completion011 CLAUDE.md)
 - Lint: gitleaks fails
   - result 2026-10-29: `lua/genja/lint.lua: linter gitleaks exited with code: 1`
   - nvim-lint already passes `--exit-code=0`, so 1 is a gitleaks error, not a leak found.
       Hint: run the linter's command by hand on that buffer
       (`gitleaks stdin --report-format=json --report-path=- --exit-code=0 <file>` with the file on stdin).
   - merged: "Lint: find which file makes the named linter fail".
+  - auto 2026-10-30: `lint gitleaks` passes on the sample secret.txt; the file that failed is still unknown
 - Zen in nvim-qt: z0 doesn't restore the window size
     1. z1: zen opens, diagnostics limit drops to 2 (seven-errors.lua)
        - result: yes
@@ -50,8 +72,8 @@ Passed ones: todo-done/tested-2026-10-29.md.
     2. `<leader>tc` in a markdown file paints colours; again turns it off.
   - result:
 
-- Perplexity on a selection (lua/genja/ext/perplexity.lua)
-    1. select text, right-click, "Perplexity: selection"
+- Paste search on a selection (lua/genja/ext/popup-menu.lua, plug-wip/genja-paste-ai.nvim)
+    1. select text, right-click, "Lookup: paste search selection"
     2. the browser opens the search; the entry isn't in the normal-mode menu.
   - result:
 
@@ -67,6 +89,7 @@ Passed ones: todo-done/tested-2026-10-29.md.
   - result:
 
 - md-fix on save (lua/genja/ext/md-fix.lua)
+  - auto: md/keys cases pass (backticks); tabs and <leader>tm are only by hand
     1. `:w` on a file with tab-indented lists and `<C-x>` in prose: tabs become spaces, the key gets backticks
     2. `<leader>tm` turns it off, `:w` leaves the file alone.
   - result:
@@ -77,6 +100,7 @@ Passed ones: todo-done/tested-2026-10-29.md.
 
 - Diagnostics
     1. `make test D=ui` in tests/
+       - result 2026-10-31: passes (auto run 2026-10-30), but it covers the limit, not diag-align
     2. a paragraph with several diagnostics shows them in one column (lua/genja/ext/diag-align.lua)
     3. `:let g:diag_align = v:false`, refresh: back to line end
     4. errors, warnings and hints read well with the new colours (lua/genja/hilite.vim).
@@ -103,28 +127,9 @@ Passed ones: todo-done/tested-2026-10-29.md.
 
 ### Fixes and checks
 
-- comps011
-  - reinstall lua-language-server (half-installed)
-    and autotools-language-server
-  - bashls and gopls attach without diagnostics,
-    so check that go is on PATH.
-
-- claudefterm tests
-  - several FloatermKills in a row sometimes crash the headless test nvim.
-
 - Ask-popup guide
   - readme.2026-10-23.ask-popup.md still points to lua/genja/ask.lua,
     which moved to plug-wip/genja-ask.nvim.
-
-- Typos
-  - a " Diagnosticz comment (hint: ignore this one)
-  - Stardirs → Startdirs
-
-- Skill paths
-  - CLAUDE.md still names .claude/skills/close-issues/
-  - nvim-auto-todo step 8 writes to ~/.claude/skills/auto-todo/runs.md
-    - merge file from old locattion
-    - update instructions
 
 - close-issues skill
   - use `git commit -- <paths>` when no file is split by hunk
@@ -134,12 +139,7 @@ Passed ones: todo-done/tested-2026-10-29.md.
 
 ### Decisions
 
-- Telescope: answer the 6 spec questions.
 - Markdown: filetype settings (linebreak, spell, list continuation).
-
-- #39
-  - session marker enabled:false toggle
-  - !! markers in txt files
 
 - #48
   - hollow box cursor
@@ -150,5 +150,4 @@ Passed ones: todo-done/tested-2026-10-29.md.
 - nvim-lint
   - report the exit-code message and the checkmake quoting upstream.
 
-- vint: revisit on Linux/WSL or a fork.
 - glow on Linux: pick a terminal.
