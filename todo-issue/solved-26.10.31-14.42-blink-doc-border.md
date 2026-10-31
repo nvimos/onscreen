@@ -1,0 +1,5 @@
+- [x] completion: explain the doc window's winblend and border (2026-10-31)
+    - [x] comments on `winblend`, `border` and the scrollbar gutter in plug-wip/genja-completion011.nvim/lua/genja/completion/appearance.lua
+    - [x] doc window border `'rounded'` -> `'shadow'` (by hand)
+    - [ ] test: open a completion with docs, check the shadow frame and that the thumb shows without a gutter
+    - [ ] comment still says `╭─╮ frame`; plugin CLAUDE.md says "a rounded frame": update if shadow stays
