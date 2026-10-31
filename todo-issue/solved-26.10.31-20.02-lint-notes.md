@@ -1,0 +1,3 @@
+- [x] lint: vale and gitleaks checked by hand (2026-10-31)
+    - [x] doc-wip/readme.2026-10-24.lint-vale-gitleaks.md: GitHub token sample; the AWS one doesn't match gitleaks' rule
+    - [x] todo-ideas.md: <leader>ttt toggles every diagnostic source, :ValeSync runs by itself

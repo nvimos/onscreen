@@ -129,6 +129,13 @@ migration from 0.9 to 0.11 (the file that started it all)
     - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
     - :KeyStats picker sorted by count
 
+- [ ] diagnostics: <leader>ttt disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
+  - today: lua/genja/map-lsp.lua toggle_diagnostics, `vim.diagnostic.enable(not vim.diagnostic.is_enabled())`
+  - check that every source goes away and comes back, also in buffers opened while off
+
+- [ ] lint: :ValeSync runs by itself when the shared styles are missing (asked 2026-10-31)
+  - today vale is skipped until :ValeSync (lua/genja/ext/lint.lua prepare_vale), no hint that it's off
+
 - [ ] sessions: a saved shell comes back in its current dir, not the one it was started in (later, asked 2026-10-31)
   - lua/genja/ext/term.lua mksession: the term:// name keeps the start dir
   - which other terminals to save (e.g. `:terminal ssh a22`: reconnects on restore): needs more thought; only idle shells for now

@@ -25,8 +25,9 @@ mason-tool-installer installs both (`M.mason`).
 1. A `.md` file outside any project with a `.vale.ini`: write `This is very very easy.`,
    `:w` -> write-good / Microsoft hints (`:lua =vim.diagnostic.get(0)`, source `vale`).
 2. Before `:ValeSync` (or with `stdpath('data')/vale` removed): no vale diagnostics, no error.
-3. Any file with `aws_secret_access_key = "AKIAIOSFODNN7EXAMPLE1234"` (or a GitHub token
-   `ghp_` + 36 letters/digits) -> a gitleaks diagnostic.
+3. Any file with a GitHub token, `ghp_` + 36 letters/digits, e.g.
+   `github_token = "ghp_a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8"`, `:w` -> a gitleaks diagnostic (rule `github-pat`).
+   (The AWS sample `AKIAIOSFODNN7EXAMPLE1234` does not match gitleaks' AWS rule: checked 2026-10-31.)
 4. A project with its own `.vale.ini`: its rules apply, not the shared ones.
 
 Checked by Claude: loadfile of `lint.lua`. vale and gitleaks not installed or run.
