@@ -27,18 +27,17 @@ cnoreabbrev te:  tabedit %:p:h
 cnoreabbrev et: tabedit %:p:h
 cnoreabbrev ee: edit %:p:h
 
+
 " a bare :qa, :q, :x (and jj) ask about modified buffers instead of E37/E162; :qa! still drops them
 cnoreabbrev <expr> qa (getcmdtype() ==# ':' && getcmdline() ==# 'qa') ? 'Unsaved qa' : 'qa'
 cnoreabbrev <expr> q  (getcmdtype() ==# ':' && getcmdline() ==# 'q')  ? 'Unsaved q'  : 'q'
 cnoreabbrev <expr> x  (getcmdtype() ==# ':' && getcmdline() ==# 'x')  ? 'Unsaved x'  : 'x'
 cnoreabbrev jj Unsaved qa
-" g alone quits like :q (through :Unsaved). A <CR> map, not an abbreviation: an abbreviation
-" also fires on `/` and `!`, so :g/pat/ and :g! would turn into a quit.
-" <C-]> first: a mapped <CR> doesn't expand abbreviations (qa, jj, s: …), <C-]> does
-" A bare :terminal (also :vert term, :tab te) opens pwsh on Windows, bash on Linux (lua/genja/ext/term.lua)
+
+" g (typo) to quit. :terminal opens pwsh
 cnoremap <expr> <CR> getcmdtype() !=# ':' ? '<C-]><CR>'
-	\ : getcmdline() ==# 'g' ? '<C-u>Unsaved q<CR>'
-	\ : v:lua.require'genja.ext.term'.cmdline_cr()
+    \ : getcmdline() ==# 'g' ? '<C-u>Unsaved q<CR>'
+    \ : v:lua.require'genja.ext.term'.cmdline_cr()
 
 cnoreabbrev helf vert help
 cnoreabbrev helv vert help
