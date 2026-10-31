@@ -1,0 +1,2 @@
+- [x] tidy: blank lines (2026-10-31)
+    - [x] lua/genja/init.lua, lua/genja/zexp.lua, genja-completion011 cmdline.lua

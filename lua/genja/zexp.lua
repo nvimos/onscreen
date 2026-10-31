@@ -2,7 +2,6 @@
 
 
 
-
 -- vim.g.genja_log_level = 'trace' -- vim.env.GENJA_LOG
 -- Log = require('genja.log').log
 --

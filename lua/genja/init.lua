@@ -9,8 +9,8 @@ vim.g.maplocalleader = ','
 -- -- new gui module
 -- -- if vim.fn.has('nvim-0.13') == 1 then require('vim._core.ui2').enable({}) end ui2 ships with nvim 0.12
 
-
 local Safeload = require('genja.api').Safeload
+
 
 Safeload 'genja.env'
 Safeload 'genja.map-zero'           -- stable early maps, if config breaks
