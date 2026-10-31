@@ -25,8 +25,23 @@ T['nvim-cmp is not loaded'] = function()
 	eq(child.lua('return package.loaded.cmp == nil and package.loaded.cmp_nvim_lsp == nil'), true)
 end
 
-T['default sources: lsp, path, buffer'] = function()
-	eq(child.lua('return require("blink.cmp.config").sources.default'), { 'lsp', 'path', 'buffer' })
+T['default sources: lsp, path, buffer, minuet'] = function()
+	-- minuet (lua/genja/completion/minuet.lua) is listed but only answers <M-y> until :Minuet blink toggle
+	eq(child.lua('return require("blink.cmp.config").sources.default'), { 'lsp', 'path', 'buffer', 'minuet' })
+end
+
+T['minuet stays out of a normal request, answers <M-y>'] = function()
+	eq(child.lua([[
+		local provider = require('blink.cmp.config').sources.providers.minuet
+		local trigger = require('blink.cmp.completion.trigger')
+		local saved = trigger.context
+		trigger.context = { providers = { 'lsp', 'path', 'buffer', 'minuet' } }
+		local normal = provider.enabled()
+		trigger.context = { providers = { 'minuet' } }
+		local alone = provider.enabled()
+		trigger.context = saved
+		return { normal, alone }
+	]]), { false, true })
 end
 
 T['LSP capabilities ask for snippets'] = function()

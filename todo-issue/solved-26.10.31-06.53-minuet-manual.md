@@ -1,0 +1,6 @@
+- [x] completion: minuet answers only <M-y>, not every manual trigger (2026-10-31)
+    - [x] provider enabled() checks blink's trigger context for minuet alone, else minuet's blink auto-complete (lua/genja/completion/minuet.lua)
+    - [x] <Tab>'s show() no longer waits on ollama
+    - [x] tests/completion/test_setup.lua: default sources include minuet; enabled() false for a normal request, true for <M-y>
+    - [ ] test: <Tab> in insert mode shows no minuet items; <M-y> does (needs ollama serve)
+    - [ ] test: :Minuet blink toggle, then minuet items appear while typing
