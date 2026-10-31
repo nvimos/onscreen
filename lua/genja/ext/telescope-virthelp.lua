@@ -233,9 +233,10 @@ function M.help_attach(bufnr)
 	vim.api.nvim_create_autocmd('ModeChanged', {
 		buffer = bufnr,
 		callback = function()
-			-- redraw only while shown
+			-- redraw while shown, or while it would be: the first draw can run before insert
+			-- mode starts and find nothing to show for normal mode
 			local marks = vim.api.nvim_buf_get_extmarks(picker.results_bufnr, help_ns, 0, -1, { limit = 1 })
-			if #marks > 0 then
+			if #marks > 0 or (picker:_get_prompt() == '' and not has_results()) then
 				help_show(picker, bufnr)
 			end
 		end,

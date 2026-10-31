@@ -1,0 +1,4 @@
+- [x] telescope: key help missing in insert mode for pickers without normal-mode maps (2026-10-31)
+    - [x] lua/genja/ext/telescope-virthelp.lua: ModeChanged also draws while the prompt is empty and there are no results
+    - [x] tests/telescope-keymaps/test_virthelp.lua: empty table picker, help visible, columns aligned; fails without the fix
+    - [x] test: `make test D=telescope-keymaps G=virthelp` passes
