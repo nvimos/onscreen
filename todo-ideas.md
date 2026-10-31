@@ -23,8 +23,11 @@ migration from 0.9 to 0.11 (the file that started it all)
   - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
   - copilot ghost text in commit buffers, accept with <M-f> (copilot.vim moved to lua/lazyp/unused/ 2026-10-31: minuet won)
   - [~] gitcommit buffers: get commit-message help back without copilot.vim
-    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua) (untested)
-    - [ ] claude -p as a minuet provider: minuet only has HTTP backends; its `claude` provider needs ANTHROPIC_API_KEY
+    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua); tested 2026-10-31
+    - [ ] minuet in gitcommit suggests random text: it only sees the commit buffer, not the staged changes;
+          feed it `git diff --cached` (e.g. a gitcommit-only prompt or context in minuet's provider options)
+    - [ ] claude -p as a minuet provider: minuet only has HTTP backends; a custom backend would start the CLI per request (slow)
+    - [ ] minuet `claude` provider (Anthropic API): not an option now (no API key); block commented out in minuet.lua
     - [ ] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
   - opt-in Conventional Commits mode; cmp offers types, scopes, footers
   - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c

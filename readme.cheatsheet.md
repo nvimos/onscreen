@@ -153,7 +153,7 @@ Copilot, disabled 2026-10-31: minuet won (spec in lua/lazyp/unused/copilot.lua, 
 
 Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; Codestral by default, keys in lua/genja/local/secrets.lua)
 
-    starts off: <leader>am ghost text in this buffer   <leader>aM blink auto-complete
+    on in gitcommit, else off: <leader>am ghost text in this buffer   <leader>aM blink auto-complete
     insert:  <M-y>  ask minuet in the blink menu (works while auto-complete is off)
              <M-A>  accept           <M-a>  accept line     <M-z>  accept n lines
              <M-.>  next             <M-,>  previous        <M-e>  dismiss

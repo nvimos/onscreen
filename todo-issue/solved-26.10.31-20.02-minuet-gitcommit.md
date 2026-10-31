@@ -1,0 +1,6 @@
+- [x] minuet: ghost text takes over gitcommit buffers (2026-10-31)
+    - [x] lua/lazyp/langs-comps/minuet.lua: ft = 'gitcommit', auto_trigger_ft = { 'gitcommit' }
+    - [x] claude provider block commented out (no API key for now)
+    - [x] genja-commit CLAUDE.md: Ghost text section replaces Copilot
+    - [x] test: commit buffer shows ghost text without <leader>am, <M-A> accepts
+    - [ ] suggestions ignore the staged diff (todo-ideas.md #14)

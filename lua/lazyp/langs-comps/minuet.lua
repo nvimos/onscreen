@@ -4,7 +4,7 @@
 -- Ollama needs `ollama serve` and `ollama pull qwen2.5-coder:0.5b`; switch for a session with
 --   :Minuet change_model openai_fim_compatible:qwen2.5-coder:0.5b
 -- :CheckHealthSimpleMinuet shows which provider is on and whether it can answer.
--- Off by default, like copilot.vim:
+-- Ghost text is on in gitcommit buffers (took over from copilot.vim, 2026-10-31); off elsewhere:
 --   ghost text: <leader>am in the buffer (:Minuet virtualtext toggle)
 --   blink: the source only answers <M-y>; <leader>aM turns on auto-complete
 -- The blink source is added by lua/genja/completion/minuet.lua (feature 'minuet'
@@ -47,6 +47,7 @@ return {
 
     'milanglacier/minuet-ai.nvim',
     cmd = 'Minuet',
+    ft = 'gitcommit', -- loads for commit buffers, so auto_trigger_ft below can turn ghost text on
     keys = Maps:keys(),
     opts = {
         provider = 'codestral', -- since 2026-10-31; free key in CODESTRAL_API_KEY
@@ -74,14 +75,15 @@ return {
             -- One completion here is roughly 1K tokens in and up to 256 out, so about $0.0002 each.
             -- Free options: ollama (local, private, openai_fim_compatible below) or Gemini's free tier
             -- (AI Studio key, rate-limited; Google may use the prompts on the free tier).
-            claude = {
-                api_key = secret('ANTHROPIC_API_KEY'),
-                model = 'claude-haiku-5-5',
-                optional = {
-                    -- Haiku 5.5 thinks by default (effort medium); low keeps completions fast and cheap
-                    output_config = { effort = 'low' },
-                },
-            },
+            -- No API key for now (2026-10-31); maybe later.
+            -- claude = {
+            --     api_key = secret('ANTHROPIC_API_KEY'),
+            --     model = 'claude-haiku-5-5',
+            --     optional = {
+            --         -- Haiku 5.5 thinks by default (effort medium); low keeps completions fast and cheap
+            --         output_config = { effort = 'low' },
+            --     },
+            -- },
             -- Codestral (Mistral): fill-in-the-middle code model, two keys:
             --   MISTRAL_API_KEY    paid La Plateforme key (https://console.mistral.ai/api-keys), api.mistral.ai
             --   CODESTRAL_API_KEY  free personal key (console.mistral.ai, Codestral section; rate-limited),
@@ -136,8 +138,8 @@ return {
             },
         },
         virtualtext = {
-            auto_trigger_ft = {}, -- off everywhere until <leader>am
-            -- copilot.vim holds <M-f> <M-w> <M-j> <M-[> <M-]> <C-]>
+            auto_trigger_ft = { 'gitcommit' }, -- elsewhere off until <leader>am
+            -- keys picked while copilot.vim held <M-f> <M-w> <M-j> <M-[> <M-]> <C-]> (now in lua/lazyp/unused/)
             keymap = {
                 accept = '<M-A>',
                 accept_line = '<M-a>',

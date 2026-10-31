@@ -76,11 +76,9 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 - Completion for types, scopes and footers is the `gitcommit` source in genja-completion011.nvim.
 - Completion is on in the popup again: commit moved to `<C-CR>`, which blink.cmp doesn't map; `<CR>` accepts blink's preselected item while the menu is open.
 
-## Copilot
+## Ghost text
 
-- Ghost text in gitcommit buffers, accept with `<M-f>` (config's copilot keymaps); off elsewhere.
-- copilot.vim checks `g:copilot_enabled` before any `b:` setting, so a global `:Copilot disable` can't be undone per buffer. (inferred: autoload/copilot.vim `copilot#Enabled`)
-- The config's spec (`lua/lazyp/langs-comps/copilot.lua`) no longer runs `:Copilot disable`: `g:copilot_filetypes` has `'*' = false` and `gitcommit = true`.
-- Copilot stays unloaded until a gitcommit buffer opens (`ft`), `:Copilot` or its keys.
-- `<leader>at` flips `'*'` (all other filetypes); gitcommit stays on.
+- minuet gives ghost text in gitcommit buffers (config's `lua/lazyp/langs-comps/minuet.lua`, `ft` + `auto_trigger_ft`), `<M-A>` accepts; since 2026-10-31.
+- copilot.vim moved to the config's `lua/lazyp/unused/copilot.lua` (minuet won).
+- minuet only sees the buffer, not the staged diff, so its suggestions are random; todo #14 in the config's `todo-ideas.md`.
 - `attach()` still sets `b:copilot_enabled = true` (opt `copilot`), for other setups. (inferred)
