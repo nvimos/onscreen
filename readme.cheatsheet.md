@@ -142,6 +142,7 @@ Telescope keymaps (lua/genja/ext/telescope-keymaps.lua, keys in map-telescope.lu
 Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; : / ?)
 
     <Tab>   next item (opens the menu)    <S-Tab>  previous item (opens the menu)
+            nothing preselected: the first <Tab> inserts item 1 (:term<Tab> -> :terminal)
     <C-j>   next item                     <C-k>    previous item
     <Down>  next item; no menu: history   <Up>     previous item; no menu: history
     <M-x>   close the menu (as <C-e>)

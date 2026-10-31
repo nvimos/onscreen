@@ -1,0 +1,10 @@
+- [x] completion: cmdline <Up>/<Down> are history as in plain Vim; no preselect (2026-10-31)
+    - [x] <Up>/<Down> recall history even with the menu open; they walk it only after <Tab>, <S-Tab>, <C-j> or <C-k> (completion/cmdline.lua)
+    - [x] vim.on_key resets the walk on any other key, CmdlineEnter on a new command line
+    - [x] nothing preselected: the first <Tab> inserts item 1, :term<Tab> gives :terminal
+    - [x] config.cmdline typed as blink.cmp.CmdlineConfigPartial
+    - [x] tests/completion/test_cmdline.lua: walk helper, <Tab> inserts item 1, history cases (prefix, <C-p>/<C-n>, / search)
+    - [x] notes in genja-completion011 CLAUDE.md and readme.cheatsheet.md
+    - [ ] test: :term<Tab> gives :terminal; :ec<Up> recalls history with the menu open; <C-j> then <Down> walks the menu
+    - [ ] test: `make test D=completion` in tests/
+    - [ ] lua_ls warns inject-field on config.cmdline and blink.cmp.CmdlineConfigPartial undefined (no blink library in this workspace)

@@ -52,25 +52,56 @@ T[': help topics'] = function()
 	check(Helpers.has_match(cmd_items(), '^cmdline:nvim_buf_get_lines'))
 end
 
+---Type a menu key and wait until the selection moved. After an item is inserted blink redraws the
+---menu; a key typed during that redraw finds no menu and falls back (<C-k> starts a digraph).
+---@param key string
+---@return integer|nil selected index after the move
+local function walk(key)
+	local before = C.selected()
+	child.type_keys(key)
+	local now = require('helpers.timing').wait(function()
+		local idx = C.selected()
+		return idx ~= before and idx or nil
+	end, 1500)
+	-- the index moves first; then the item is inserted and the menu redrawn: wait until the line holds
+	local line = child.fn.getcmdline()
+	require('helpers.timing').wait(function()
+		vim.uv.sleep(100)
+		local same = child.fn.getcmdline() == line and child.lua('return require("blink.cmp").is_menu_visible()')
+		line = child.fn.getcmdline()
+		return same
+	end, 1500)
+	return now
+end
+
 T['<C-j> / <C-k> walk the open menu'] = function()
 	child.type_keys(':', 'ec')
 	cmd_items()
-	-- the menu and its first selection come a moment after the items
-	local first = require('helpers.timing').wait(C.selected, 3000)
-	child.type_keys('<C-j>')
-	check(C.selected() ~= first, 'selection did not move')
-	child.type_keys('<C-k>')
-	eq(C.selected(), first)
+	-- nothing is preselected: the first <C-j> selects item 1
+	eq(C.wait_menu(), true)
+	eq(C.selected(), nil)
+	eq(walk('<C-j>'), 1)
+	eq(walk('<C-j>'), 2)
+	eq(walk('<C-k>'), 1)
 end
 
-T['<Down> / <Up> walk the open menu'] = function()
+T['<Tab> on the open menu inserts the first item'] = function()
+	child.type_keys(':', 'term')
+	local items = cmd_items()
+	eq(C.wait_menu(), true)
+	local first = items[1]:gsub('^cmdline:', '')
+	eq(walk('<Tab>'), 1)
+	eq(child.fn.getcmdline(), first)
+end
+
+T['<C-j>, then <Down> / <Up> walk the open menu'] = function()
 	child.type_keys(':', 'ec')
 	cmd_items()
-	local first = require('helpers.timing').wait(C.selected, 3000)
-	child.type_keys('<Down>')
-	check(C.selected() ~= first, 'selection did not move')
-	child.type_keys('<Up>')
-	eq(C.selected(), first)
+	eq(C.wait_menu(), true)
+	local second = walk('<C-j>')
+	check(second ~= nil, '<C-j> did not move')
+	check(walk('<Down>') ~= nil, '<Down> did not move')
+	eq(walk('<Up>'), second)
 end
 
 T['<Up> without a menu: history'] = function()
@@ -78,6 +109,81 @@ T['<Up> without a menu: history'] = function()
 	child.type_keys(':', '<Up>')
 	eq(child.fn.getcmdline(), 'let g:hist_probe = 1')
 end
+
+-- {{{ history: <Up>/<Down> must behave as in plain Vim, menu or not
+
+---Fresh history for `type` (':' or '/') with `entries`, oldest first.
+---@param type string
+---@param entries string[]
+local function history(type, entries)
+	child.fn.histdel(type)
+	for _, entry in ipairs(entries) do
+		child.fn.histadd(type, entry)
+	end
+end
+
+---Type `key`, give blink time to react (the menu may open on the recalled line), then the cmdline.
+---@param key string
+---@return string
+local function after(key)
+	child.type_keys(key)
+	vim.uv.sleep(300)
+	return child.fn.getcmdline()
+end
+
+T['history: <Up> <Up> <Down> <Down> walk back, forward, then the empty line'] = function()
+	history(':', { 'let g:h1 = 1', 'let g:h2 = 2' })
+	child.type_keys(':')
+	eq(after('<Up>'), 'let g:h2 = 2')
+	eq(after('<Up>'), 'let g:h1 = 1')
+	eq(after('<Down>'), 'let g:h2 = 2')
+	eq(after('<Down>'), '')
+end
+
+T['history: <Up> after a prefix recalls only matching entries, though the menu is open'] = function()
+	history(':', { 'echo "one"', 'let g:y = 1' })
+	child.type_keys(':', 'ec')
+	cmd_items()
+	eq(C.wait_menu(), true)
+	eq(after('<Up>'), 'echo "one"')
+end
+
+T['history: <Down> on the newest line keeps what was typed'] = function()
+	history(':', { 'let g:h1 = 1' })
+	child.type_keys(':', 'let g:typed')
+	eq(after('<Down>'), 'let g:typed')
+end
+
+T['history: a typed key after a menu walk makes <Up> history again'] = function()
+	history(':', { 'echo "one"' })
+	child.type_keys(':', 'ec')
+	cmd_items()
+	eq(C.wait_menu(), true)
+	walk('<C-j>')
+	walk('<C-k>')
+	-- the walk inserted an item; back to the prefix by typing, then history
+	child.type_keys('<C-u>', 'ec')
+	cmd_items()
+	eq(after('<Up>'), 'echo "one"')
+end
+
+T['history: <C-p> / <C-n> walk it too'] = function()
+	history(':', { 'let g:h1 = 1', 'let g:h2 = 2' })
+	child.type_keys(':')
+	eq(after('<C-p>'), 'let g:h2 = 2')
+	eq(after('<C-p>'), 'let g:h1 = 1')
+	eq(after('<C-n>'), 'let g:h2 = 2')
+end
+
+T['history: / search recalls earlier searches'] = function()
+	history('/', { 'zebrafish', 'quokka' })
+	C.scratch('conf', '', { 'zebrafish quokka', '' })
+	C.esc()
+	child.type_keys('/')
+	eq(after('<Up>'), 'quokka')
+	eq(after('<Up>'), 'zebrafish')
+end
+-- }}}
 
 T['/ search: buffer words'] = function()
 	C.scratch('conf', '', { 'zebrafish one', '' })
