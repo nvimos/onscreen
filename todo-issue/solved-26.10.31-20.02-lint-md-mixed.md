@@ -1,0 +1,3 @@
+- [x] tests: markdownlint, gitleaks and vale on one markdown file (2026-10-31)
+    - [x] tests/comps011/test_comps011.lua `lint: markdown mixed`, sample tests/comps011/samples/lint-md-mixed/
+    - [ ] test: `make test D=comps011 G=md-mixed`

@@ -451,6 +451,46 @@ T['lint: relint cancels without a warning'] = S:case({ name = 'lint relint cance
 	]])
 	eq(notes, {})
 end)
+
+-- One markdown file that markdownlint, gitleaks and vale all flag: the by_ft and the `any`
+-- linters of lua/genja/ext/lint.lua run together on the same buffer.
+local MIXED = { 'markdownlint-cli2', 'gitleaks', 'vale' }
+local VALE_STYLES = vim.fs.joinpath(vim.fn.stdpath('data'), 'vale', 'styles', 'Microsoft')
+T['lint: markdown mixed (markdownlint, gitleaks, vale)'] = S:case({ name = 'lint md-mixed', groups = { 'lint', 'md-mixed', 'gitleaks', 'vale' }, requires = { cmd = 'vale', path = VALE_STYLES, path_fix = 'run :ValeSync' } }, function(ctx)
+	if not vim.uv.fs_stat(VALE_STYLES) then
+		MiniTest.skip('vale: run :ValeSync')
+	end
+	boot()
+	for _, cmd in ipairs(MIXED) do
+		if child.lua('return vim.fn.executable(...)', { cmd }) == 0 then
+			MiniTest.skip(cmd .. ' not installed')
+		end
+	end
+	local dir = copy_sample('lint-md-mixed')
+	-- token built at run time, as in write_token_file
+	local token = 'gh' .. 'p_' .. '8Zx2Lq9Wv4Tn6Yb1' .. 'Kc3Md5Rf7Hs0Jp2Ga4Ue'
+	vim.fn.writefile({ '', 'github_token = "' .. token .. '"' }, dir .. '/x.md', 'a')
+	local check = [[
+		(function()
+			local seen = {}
+			for _, d in ipairs(vim.diagnostic.get(0)) do
+				seen[tostring(d.source or ''):lower()] = true
+			end
+			for _, want in ipairs({ 'markdownlint', 'gitleaks', 'vale' }) do
+				local found = false
+				for src in pairs(seen) do
+					if src:find(want, 1, true) then found = true end
+				end
+				if not found then return false end
+			end
+			return true
+		end)()
+	]]
+	if not open_and_wait(dir .. '/x.md', check, ctx.timeout) then
+		local seen = child.lua([[return vim.tbl_map(function(d) return tostring(d.source) .. ': ' .. d.message end, vim.diagnostic.get(0))]])
+		error(('md-mixed: not all of markdownlint, gitleaks, vale reported within %d ms; got %s'):format(ctx.timeout, vim.inspect(seen)))
+	end
+end)
 -- }}}
 
 return T
