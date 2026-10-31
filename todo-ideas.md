@@ -63,3 +63,13 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] lua_ls: GENJA_LUA_NO_LIB=1 skips libraries, set by tests/Makefile (53642d0)
   - [x] :checkhealth genja.lsp: servers not installed, broken Python venvs, mason launchers (96b7910)
   - [x] bashls: mason's shellcheck.exe path on Windows (0bdc719); claudefterm kill() crash (0b46cfa)
+
+- [ ] custom keymap logger: count which keys/binds I use more than others
+  - legendary only counts palette picks (frecency needs sqlite.lua, off in lua/lazyp/new/legendary.lua)
+  - plug-wip/abdul-keymaps.nvim has track_usage + :KeymapsStats, but it only records mode changes
+    (n->c, c->n …); its per-keymap wrapper create_tracker() is never called (checked 2026-10-31)
+  - plugins checked 2026-10-31, none fits: keystats.nvim (counts, needs cargo), stalker.nvim (motions only),
+    tobira.nvim (teaching), vim-stats (Vim, Ex commands)
+  - idea: vim.on_key() in a small module, match typed keys against nvim_get_keymap() by lhs,
+    count per mode:lhs (+ desc), save to stdpath('state') json on VimLeavePre, :KeyStats picker sorted by count
+  - or: finish create_tracker() in the abdul-keymaps fork and feed :KeymapsStats
