@@ -17,7 +17,7 @@ return function(config)
         name = 'minuet',
         module = 'minuet.blink',
         async = true,
-        timeout_ms = 14000, -- gemini's worst case with one retry (curl_args in lua/lazyp/langs-comps/minuet.lua)
+        timeout_ms = 6000, -- minuet's request_timeout * 1000 (lua/lazyp/langs-comps/minuet.lua)
         score_offset = 50, -- README value: above buffer words
         -- <Tab>'s show() is a manual trigger too, and minuet answers every manual one; so it only
         -- runs for <M-y>, or for everything after :Minuet blink toggle (<leader>aM)

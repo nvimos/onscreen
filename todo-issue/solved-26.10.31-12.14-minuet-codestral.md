@@ -1,0 +1,5 @@
+- [x] minuet: Codestral by default, curl retry removed (2026-10-31)
+    - [x] provider = 'codestral' (free key in CODESTRAL_API_KEY); ollama and gemini commented out (lua/lazyp/langs-comps/minuet.lua)
+    - [x] CURL_ARGS, curl_args() and curl_extra_args removed; request_timeout 6 s, blink timeout_ms back to 6000
+    - [x] doc-wip/readme.minuet-providers.md, readme.cheatsheet.md, genja-completion011 CLAUDE.md say Codestral by default
+    - [x] gemini model gemini-3.5-flash-lite, gemini-3.8-flash kept commented

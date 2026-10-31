@@ -158,7 +158,7 @@ Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
     normal:  <leader>ap  panel (10 suggestions)   <leader>at  toggle   <leader>as  status
     :Copilot setup | status | enable | disable | panel | signout
 
-Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; ollama by default, keys in lua/genja/local/secrets.lua)
+Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; Codestral by default, keys in lua/genja/local/secrets.lua)
 
     starts off: <leader>am ghost text in this buffer   <leader>aM blink auto-complete
     insert:  <M-y>  ask minuet in the blink menu (works while auto-complete is off)

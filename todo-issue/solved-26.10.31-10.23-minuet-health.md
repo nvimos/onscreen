@@ -4,5 +4,5 @@
     - [x] fixed test request (def add(a, b): return a| -> + b) through minuet's backend; PASS/FAIL and ms in the float
     - [x] error answers: the API's code and message, caught from minuet's notify during the request
     - [x] lua/genja/readme.md and readme.cheatsheet.md
-    - [ ] test: :CheckHealthSimpleMinuet with ollama running gives PASS, with it stopped FAIL
-    - [ ] test: a wrong key shows the API's error message on the answer line
+    - [x] test: :CheckHealthSimpleMinuet with ollama running gives PASS, with it stopped FAIL
+    - [x] test: a wrong key shows the API's error message on the answer line (more or less, ok for now)

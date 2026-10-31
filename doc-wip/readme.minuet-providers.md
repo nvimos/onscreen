@@ -37,10 +37,8 @@ One completion here is roughly 1K tokens in and up to 256 out (`context_window =
 - No key gives `403 PERMISSION_DENIED ... unregistered callers`.
 - Thinking: 2.5 models take `thinkingBudget = 0` (off); 3.x take `thinkingLevel`.
   `gemini-3.8-flash` rejects `'minimal'` (`400 Thinking level MINIMAL is not supported`); `'low'` is set.
-- Retry: `curl --retry 1 --retry-delay 1` (timeout, 408, 429, 5xx; not 403). With `request_timeout = 6`
-  the worst case is 13 s; blink's `timeout_ms = 14000` (`lua/genja/completion/minuet.lua`).
-- Unclear: what curl's retry does with a streamed answer cut off by a timeout; set `stream = false` if
-  completions come out garbled.
+- No retry: a curl `--retry 1` was tried and removed (2026-10-31). `request_timeout = 6`, blink's
+  `timeout_ms = 6000` (`lua/genja/completion/minuet.lua`).
 - Key test:
   `curl.exe -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" -H "x-goog-api-key: $env:GEMINI_API_KEY" -H 'Content-Type: application/json' -d '{\"contents\":[{\"parts\":[{\"text\":\"say hi\"}]}]}'`
 

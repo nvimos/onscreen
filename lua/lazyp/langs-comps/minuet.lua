@@ -1,4 +1,4 @@
--- minuet-ai.nvim: ghost text and a blink.cmp source; ollama by default, other providers below (keys in secrets.lua).
+-- minuet-ai.nvim: ghost text and a blink.cmp source; Codestral by default, other providers below (keys in secrets.lua).
 -- Gemini needs GEMINI_API_KEY (https://aistudio.google.com/apikey) in the gitignored
 -- lua/genja/local/secrets.lua, else in the environment (lua/genja/ext/secrets.lua); curl on PATH.
 -- Ollama needs `ollama serve` and `ollama pull qwen2.5-coder:0.5b`; switch for a session with
@@ -16,8 +16,10 @@ local Maps = require('genja.map-plugin')
 
 -- A model with fill-in-the-middle: qwen3.5 (gen.lua's) gets 400 "does not support insert".
 local MODEL = 'qwen2.5-coder:0.5b'
+
 -- thinking as low as the model allows, below (README: it adds latency and little for completion)
-local GEMINI_MODEL = 'gemini-3.8-flash'
+-- local GEMINI_MODEL = 'gemini-3.8-flash'
+local GEMINI_MODEL = 'gemini-3.5-flash-lite'
 
 ---API key getter for minuet's api_key: lua/genja/local/secrets.lua, else the env (lua/genja/ext/secrets.lua).
 ---A function, so minuet reads the key per request and an edited secrets.lua needs no restart.
@@ -40,32 +42,18 @@ local function mistral_key()
     return secrets.LocalOrEnv('MISTRAL_API_KEY') or secrets.LocalOrEnv('CODESTRAL_API_KEY')
 end
 
--- Retry per provider; minuet has none. curl's --retry repeats a timeout, 408, 429 or 5xx (not a 403)
--- after 1 s; request_timeout (--max-time) is per attempt. Worst case for gemini: 6 + 1 + 6 = 13 s;
--- blink's timeout_ms (lua/genja/completion/minuet.lua) waits that long.
----@type table<string, string[]>
-local CURL_ARGS = {
-    gemini = { '--retry', '1', '--retry-delay', '1' },
-}
-
----@return string[]
-local function curl_args()
-    local provider = require('minuet').config.provider
-    return CURL_ARGS[provider] or {}
-end
-
 ---@type LazySpec
 return {
     'milanglacier/minuet-ai.nvim',
     cmd = 'Minuet',
     keys = Maps:keys(),
     opts = {
-        provider = 'openai_fim_compatible', -- ollama, before 2026-10-31
+        provider = 'codestral', -- since 2026-10-31; free key in CODESTRAL_API_KEY
+        -- provider = 'openai_fim_compatible', -- ollama, before 2026-10-31
         -- provider = 'gemini',
         n_completions = 1, -- one request per completion: local models are slow
         context_window = 512, -- README: start small for local models
-        request_timeout = 6, -- seconds, every provider; curl --max-time
-        curl_extra_args = curl_args,
+        request_timeout = 6, -- seconds, every provider; curl --max-time; blink's timeout_ms matches it
         provider_options = {
             gemini = {
                 api_key = secret('GEMINI_API_KEY'),
