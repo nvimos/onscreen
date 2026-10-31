@@ -1,0 +1,4 @@
+- [x] completion: cmdline menu stays shut on one-char commands (2026-10-31)
+    - [x] menu.auto_show is a function: false for a one-char `:` line (:w, :q), so the menu doesn't flash (completion/cmdline.lua)
+    - [x] the `:w<CR>` normal map in lua/genja/map-zero.lua is commented out; it made `:` wait timeoutlen
+    - [ ] test: `:w<CR>` writes without the menu flashing; `:` opens the cmdline at once

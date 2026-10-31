@@ -264,9 +264,10 @@ km('n', '!', ':<up><home><c-right>!<cr>') -- repeat last command with a bang
 -- Write, Quit {{{
 km("n", "<leader>zz", '<cmd>write<cr>', { desc = 'Vim: write', silent = true })
 -- :w<CR> without the command line, so cmp's cmdline popup can't flash.
--- ':' now waits for the next key (timeoutlen) before the cmdline opens;
+-- Off since 2026-10-31: ':' waited for the next key (timeoutlen) before the cmdline opened;
+-- blink's menu now skips one-char command lines instead (genja-completion011 completion/cmdline.lua).
 -- which-key skips ':' mappings (filter in lazyp/my/which-key.lua), else it would claim ':'.
-km('n', ':w<cr>', '<cmd>write<cr>', { desc = 'Vim: write (no cmdline, no completion popup)' })
+-- km('n', ':w<cr>', '<cmd>write<cr>', { desc = 'Vim: write (no cmdline, no completion popup)' })
 km("n", "<leader>zZ", '<cmd>x<cr>', { desc = 'Vim: write, quit', silent = true })
 -- }}}
 
