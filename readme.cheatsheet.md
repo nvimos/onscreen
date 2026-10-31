@@ -164,6 +164,7 @@ Minuet, ghost text + blink source (lua/genja/map-plugin/minuet.lua; ollama by de
              <M-A>  accept           <M-a>  accept line     <M-z>  accept n lines
              <M-.>  next             <M-,>  previous        <M-e>  dismiss
     :Minuet virtualtext toggle | blink toggle | change_model
+    :CheckHealthSimpleMinuet  provider, model, key set or not, ollama server, test request (lua/genja/ext/minuet-status.lua)
 
 llm.nvim, local ghost text via llm-ls (lua/genja/map-plugin/llm.lua; :MasonInstall llm-ls, ollama serve)
 
