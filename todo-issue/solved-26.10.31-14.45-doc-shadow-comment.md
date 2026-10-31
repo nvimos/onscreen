@@ -1,0 +1,6 @@
+- [x] completion: doc window comment and docs for the shadow border (2026-10-31)
+    - [x] border comment describes `'shadow'` (FloatShadow, not FloatBorder) in plug-wip/genja-completion011.nvim/lua/genja/completion/appearance.lua
+    - [x] plugin CLAUDE.md: rounded frame dropped from the menu colours bullet
+    - [x] ticked test and follow-up in todo-issue/solved-26.10.31-14.42-blink-doc-border.md
+    - [x] test: doc window UI checked by hand
+    - [ ] BlinkCmpDocBorder and the FloatBorder mapping are unused with shadow: drop or keep for 'rounded'
