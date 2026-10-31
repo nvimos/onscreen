@@ -1,0 +1,7 @@
+- [x] tests: llm dir, minuet <M-y> completes a shebang (2026-10-31)
+    - [x] tests/llm/samples/foo.sh (from ws/foo.sh) and tests/llm/test_minuet.lua; S:case timeout 6 s, slow 2 s, group minuet
+    - [x] copy in a temp dir, `#!` + <M-y>, first minuet item accepted; env sh/bash ok, /bin/sh|bash a note, else fail
+    - [x] the sample is checked unchanged; the buffer is wiped without saving
+    - [x] fixes: child.lua nil arrives as vim.NIL (truthy), so the poll returns false; wait 300 ms after A so blink's own trigger does not replace <M-y>
+    - [x] CLAUDE.md Tests: S:case in any dir, what timeout and cutoff do, MiniTest.add_note, the vim.NIL hint
+    - [x] test: `make test D=llm G=minuet` passes twice, about 1.6 s; Codestral gives #!/bin/sh (note)

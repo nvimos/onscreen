@@ -155,7 +155,11 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - `tests/Makefile` runs mini.test through pwsh; `make help` lists targets and variables.
 - Timings: every case is timed, its weighted average (newest run 30%) kept in `stdpath('state')/genja-tests/timings.json` (throw-away; `make timings` shows it). Code and details: header of `tests/helpers/timing.lua`.
-    - comps011 cases use `S:case()`: groups, a timeout, a slow cutoff, `requires` (what it skips without). Other dirs' cases are timed by `adopt()` with the default timeout (12 s) and cutoff (3 s), no groups.
+    - comps011 and llm cases use `S:case()`: groups, a timeout, a slow cutoff, `requires` (what it skips without). Other dirs' cases are timed by `adopt()` with the default timeout (12 s) and cutoff (3 s), no groups.
+        - Any dir can: `local S = require('helpers.timing').suite('<dir>')`, then `T[name] = S:case({ name, groups, timeout, slow }, function(ctx) ... end)`; `ctx.timeout` is the case's timeout for its wait loops (`H.wait(check, ms)`). Call `H.save()` in `post_once`, as comps011 does.
+        - The timeout only bounds the case's own waits and caps its recorded time; the slow cutoff only sorts it into the slow list. Neither stops a case by itself.
+        - `MiniTest.add_note(msg)` records a warning without failing the case (llm: a `/bin/sh` shebang).
+        - Hint: `nil` returned by `child.lua()` arrives as `vim.NIL`, which is truthy: a `H.wait()` poll would stop at once. Return `false` from the child (tests/llm), or map `vim.NIL` to `nil` (`C.selected()` in tests/helpers/completion.lua).
     - A case is slow when its average is above its cutoff. The default run (`G=` unset) leaves slow cases out and says so after the summary, with the days since the last full `make gather`; `make gather` runs everything; `G=slow` only the slow ones; `make slow` lists them. A skip is not timed; a timeout counts as its timeout.
     - `make plan` estimates from the averages: the selected run, the slow ones left out, and every test of any group (average capped at today's timeout; never timed: the timeout, or "not timed yet" for plain cases).
     - Failures: after each run, `genja-tests/failed.json` (next to the timings) gets the cases that failed and loses the ones that passed or skipped; cases that didn't run keep their last result. `make failed` reruns those, whatever their group, verbose by default.
