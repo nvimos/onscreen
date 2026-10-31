@@ -1,0 +1,4 @@
+- [x] completion: "appearance.lua:57: Buffer is not 'modifiable'" on blink's doc window (2026-10-31)
+    - [x] cause: blink's default renderer sets the doc buffer back to not modifiable before draw() pads it
+    - [x] pad_docs sets modifiable around its edits (genja-completion011 completion/appearance.lua; padding from 08a6f5c)
+    - [ ] test: the doc window of an item with documentation opens framed, padded, without the error
