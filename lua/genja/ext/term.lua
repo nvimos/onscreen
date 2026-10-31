@@ -122,6 +122,74 @@ local function exe_name(cmdline)
 	return vim.fn.fnamemodify(exe, ':t:r'):lower()
 end
 
+-- Shell for a bare :terminal: pwsh on Windows, bash elsewhere; nil when not installed.
+-- 'shell' stays cmd.exe / $SHELL: system(), :!, shellescape() and os.execute callers expect it.
+---@return string|nil
+function M.term_shell()
+	if vim.fn.has('win32') == 1 then
+		if vim.fn.executable('pwsh') == 1 then
+			return 'pwsh'
+		end
+		if vim.fn.executable('powershell') == 1 then
+			return 'powershell'
+		end
+		return nil
+	end
+	if vim.fn.executable('bash') == 1 then
+		return 'bash'
+	end
+	return nil
+end
+
+-- :vert, :tab, :bot … in front of :terminal
+local MODIFIERS = { 'vertical', 'horizontal', 'tab', 'botright', 'topleft', 'aboveleft', 'belowright',
+	'leftabove', 'rightbelow' }
+
+---@param word string
+---@param full string
+---@param min integer shortest accepted abbreviation
+---@return boolean
+local function is_abbrev(word, full, min)
+	return #word >= min and vim.startswith(full, word)
+end
+
+-- Cmdline with term_shell() added when it is a bare :te[rminal] (modifiers allowed); else nil.
+---@param line string
+---@return string|nil
+function M.bare_terminal(line)
+	local words = vim.split(vim.trim(line), '%s+', { trimempty = true })
+	local last = table.remove(words)
+	if last == nil or not is_abbrev(last, 'terminal', 2) then
+		return nil
+	end
+	for _, word in ipairs(words) do
+		local known = false
+		for _, mod in ipairs(MODIFIERS) do
+			if is_abbrev(word, mod, 2) then
+				known = true
+			end
+		end
+		if not known then
+			return nil
+		end
+	end
+	local shell = M.term_shell()
+	if shell == nil then
+		return nil
+	end
+	return vim.trim(line) .. ' ' .. shell
+end
+
+-- Keys for the cmdline <CR> map (lua/genja/abbreviations.vim): a bare :terminal gets term_shell().
+---@return string
+function M.cmdline_cr()
+	local line = M.bare_terminal(vim.fn.getcmdline())
+	if line == nil then
+		return vim.keycode('<C-]><CR>')
+	end
+	return vim.keycode('<C-u>') .. line .. vim.keycode('<CR>')
+end
+
 -- nvim's own process list; works on every OS below, until one needs its own check.
 ---@param pid integer
 ---@return boolean|nil
@@ -162,7 +230,11 @@ local function is_idle_shell(buf)
 	end
 	-- name: term://{cwd}//{pid}:{cmd}
 	local cmd = vim.api.nvim_buf_get_name(buf):match('^term://.-//%d+:(.*)$')
-	if cmd == nil or exe_name(cmd) ~= exe_name(vim.o.shell) then
+	if cmd == nil then
+		return false
+	end
+	local name = exe_name(cmd)
+	if name ~= exe_name(vim.o.shell) and name ~= M.term_shell() then
 		return false
 	end
 	return has_children(vim.fn.jobpid(chan)) == false

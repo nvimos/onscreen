@@ -1,0 +1,12 @@
+- [x] terminal: bare :terminal opens pwsh on Windows, bash on Linux (2026-10-31)
+    - [x] lua/genja/ext/term.lua: term_shell() picks pwsh, else powershell; bash elsewhere
+    - [x] lua/genja/ext/term.lua: bare_terminal(), cmdline_cr() add the shell to :te[rminal], modifiers allowed
+    - [x] lua/genja/abbreviations.vim: cmdline <CR> map calls cmdline_cr() after the bare `g` check
+    - [x] lua/genja/ext/term.lua: is_idle_shell() also counts pwsh/bash terminals, so s:/save: keep them
+    - [x] 'shell' unchanged: oil open, lint, md-glow, system() rely on cmd.exe quoting
+    - [x] lua/genja/readme.md: ext/term.lua line
+    - [ ] test: `:term`, `:vert term`, `:tab te` open pwsh; `:term dir` still runs in cmd
+    - [ ] test: `:g` quits, `:g/x/d` runs; `make test D=unsaved` in tests/
+    - [ ] test: on Linux `:term` opens bash, not zsh
+    - [ ] test: `save:` with an idle pwsh terminal, restore brings it back
+    - [ ] vim.cmd('terminal') and mapped :term still use 'shell'

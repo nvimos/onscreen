@@ -35,7 +35,10 @@ cnoreabbrev jj Unsaved qa
 " g alone quits like :q (through :Unsaved). A <CR> map, not an abbreviation: an abbreviation
 " also fires on `/` and `!`, so :g/pat/ and :g! would turn into a quit.
 " <C-]> first: a mapped <CR> doesn't expand abbreviations (qa, jj, s: …), <C-]> does
-cnoremap <expr> <CR> (getcmdtype() ==# ':' && getcmdline() ==# 'g') ? '<C-u>Unsaved q<CR>' : '<C-]><CR>'
+" A bare :terminal (also :vert term, :tab te) opens pwsh on Windows, bash on Linux (lua/genja/ext/term.lua)
+cnoremap <expr> <CR> getcmdtype() !=# ':' ? '<C-]><CR>'
+	\ : getcmdline() ==# 'g' ? '<C-u>Unsaved q<CR>'
+	\ : v:lua.require'genja.ext.term'.cmdline_cr()
 
 cnoreabbrev helf vert help
 cnoreabbrev helv vert help
