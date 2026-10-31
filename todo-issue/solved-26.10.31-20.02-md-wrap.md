@@ -1,0 +1,5 @@
+- [x] markdown: gq wrapped - [ ] items under the checkbox (2026-10-31)
+    - [x] cause: runtime 'comments' fb:- makes `- ` a leader; with fo+=q gq matched formatlistpat after it
+    - [x] after/ftplugin/markdown.vim: comments-=fb:* fb:- fb:+
+    - [x] tests/md/test_md_wrap.lua: one case per item kind, quotes keep `> `
+    - [x] test: gqq by hand on - [ ], 1. [x], - item, > quote

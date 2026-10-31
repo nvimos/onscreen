@@ -25,6 +25,10 @@ setlocal colorcolumn=+1
 setlocal wrap linebreak
 " wrapped list items line up under the item text
 setlocal breakindent breakindentopt=list:-1
+" The runtime ftplugin makes `- ` `* ` `+ ` comment leaders (fb:); with fo+=q gq matches
+" formatlistpat only after the leader, so `- [ ] ` items wrapped under the checkbox.
+" fo has no r/o, so nothing continues lists through 'comments'; `> ` quotes stay.
+setlocal comments-=fb:* comments-=fb:- comments-=fb:+
 " formatlistpat: wrapped lines (and gq) line up after the list marker.
 " Vim takes the first branch that matches, so checkbox items come before plain ones.
 let s:indent   = '^\s*'
