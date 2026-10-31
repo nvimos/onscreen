@@ -14,7 +14,7 @@
 ##     slow     only cases flagged as slow
 ##     mason warmup lsp ready cmp lint   one area of comps011, slow ones included
 ##     lua_ls typos ...           one case name of comps011
-##   V=1        verbose
+##   V=1 V=2    verbose, more verbose
 ##   GENJA_LUA_NO_LIB=1  lua_ls skips libraries: no lazydev, no workspace.library
 ##
 ## targets:
@@ -65,8 +65,8 @@ list: ## show dirs and groups
 list-sh: ## print a make command for every dir and group
 	@Set-Location $(ROOT); $$env:LIST_MODE = 'sh'; $(NVIM_TEST) -c 'luafile tests/helpers/list-tests.lua' -c 'qa!'
 
-timings: ## show recorded test times
-	Set-Location $(ROOT); nvim --headless --clean -l tests/helpers/show-timings.lua
+timings: ## show recorded test times, slowest last
+	Set-Location $(ROOT); $$env:TEST_VERBOSE = '$(V)'; nvim --headless --clean -l tests/helpers/show-timings.lua
 
 help: ## this help
 	@Get-Content '$(firstword $(MAKEFILE_LIST))' | ForEach-Object { if ($$_ -match '^([a-zA-Z0-9_-]+):.*## (.*)') { '  {0,-10} {1}' -f $$Matches[1], $$Matches[2] } elseif ($$_ -match '^## ?(.*)') { $$Matches[1] } }

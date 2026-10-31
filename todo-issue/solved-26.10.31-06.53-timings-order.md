@@ -1,0 +1,4 @@
+- [x] tests: make timings lists slowest last and hides fast cases (2026-10-31)
+    - [x] tests/helpers/show-timings.lua: ascending order, header under the rows, hidden count
+    - [x] V unset hides cases under 400 ms, V=1 under 50 ms, V=2 shows all (tests/Makefile passes TEST_VERBOSE)
+    - [ ] test: `make timings`, `make timings V=1`, `make timings V=2` in tests/
