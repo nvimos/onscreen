@@ -12,7 +12,7 @@
 ##     gather   every case, slow ones too: refreshes all recorded times
 ##     fast     only cases that have not been flagged as slow
 ##     slow     only cases flagged as slow
-##     mason lsp ready cmp lint   one area of comps011, slow ones included
+##     mason warmup lsp ready cmp lint   one area of comps011, slow ones included
 ##     lua_ls typos ...           one case name of comps011
 ##   V=1        verbose
 ##   GENJA_LUA_NO_LIB=1  lua_ls skips libraries: no lazydev, no workspace.library

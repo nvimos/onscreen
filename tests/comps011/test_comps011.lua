@@ -1,7 +1,7 @@
 -- Integration tests for genja-completion011 and lua/genja/ext/lint.lua: a child nvim boots the real
 -- config (init.vim), opens a sample from tests/comps011/samples/ (copied to a temp dir) and waits
 -- for a server to attach and report, for cmp to offer server items, for a linter to report.
---   make test D=comps011 G=<group> in tests/   groups: mason lsp ready cmp lint fast slow gather,
+--   make test D=comps011 G=<group> in tests/   groups: mason warmup lsp ready cmp lint fast slow gather,
 --   or a case name (lua_ls, typos ...); `make list` shows them all
 -- Timeouts, slow cutoffs and timings: tests/helpers/timing.lua. A server or linter that isn't
 -- enabled or installed skips its case; `mason: servers installed` fails for a server an enabled
@@ -118,6 +118,23 @@ T['mason: servers installed'] = S:case({ name = 'mason servers installed', group
 end)
 -- }}}
 
+-- {{{ warmup: tools whose first run is slow, timed apart from the cases that use them
+
+-- gopls sends no diagnostic before `go list` has loaded the module; the first `go list` in a
+-- new folder took 3-24 s here (cold build cache), a repeat 0.5 s. Runs before `lsp: gopls`.
+T['warmup: go-list'] = S:case({ name = 'warmup go-list', groups = { 'warmup', 'go-list' }, requires = { cmd = 'go' }, timeout = 30000, slow = 12000 }, function(ctx)
+	if vim.fn.executable('go') == 0 then
+		MiniTest.skip('go not installed')
+	end
+	local dir = copy_sample('lsp-go')
+	local r = vim.system({ 'go', 'list', './...' }, { cwd = dir, text = true }):wait(ctx.timeout)
+	if r.code ~= 0 then
+		error(('go list in %s: exit %s: %s'):format(dir, tostring(r.code), vim.trim(r.stderr or '')))
+	end
+	eq(vim.trim(r.stdout), 'sample')
+end)
+-- }}}
+
 -- {{{ LSP: attaches and reports a diagnostic
 
 ---@class genja.tests.LspCase
@@ -138,7 +155,7 @@ local LSP = {
 	-- npm-based: slow to start
 	{ name = 'jsonls', server = 'jsonls', sample = 'lsp-json', file = 'bad.json', cmd = 'vscode-json-language-server', slow = 8000 },
 	{ name = 'vimls', server = 'vimls', sample = 'lsp-vim', file = 'bad.vim', cmd = 'vim-language-server', slow = 6000 },
-	{ name = 'gopls', server = 'gopls', sample = 'lsp-go', file = 'main.go', cmd = 'gopls', timeout = 20000, slow = 8000 },
+	{ name = 'gopls', server = 'gopls', sample = 'lsp-go', file = 'main.go', cmd = 'gopls', timeout = 30000, slow = 12000 },
 	-- phpactor runs inside WSL
 	-- phpactor reports no syntax errors (its diagnostics come from phpstan/php-cs-fixer, see lang/php.lua)
 	{ name = 'phpactor', server = 'phpactor', sample = 'lsp-php', file = 'bad.php', cmd = 'wsl.exe', attach_only = true, timeout = 30000, slow = 15000 },

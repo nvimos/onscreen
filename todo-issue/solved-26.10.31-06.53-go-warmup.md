@@ -1,0 +1,5 @@
+- [x] tests: comps011 gopls timed out on a cold go build cache (2026-10-31)
+    - [x] `warmup: go-list` case runs `go list ./...` on the lsp-go sample before `lsp: gopls` (tests/comps011/test_comps011.lua)
+    - [x] gopls timeout 30 s, slow at 12 s
+    - [x] tests/Makefile help names the warmup group
+    - [ ] test: `make test D=comps011 G=warmup` then `G=gopls` in tests/
