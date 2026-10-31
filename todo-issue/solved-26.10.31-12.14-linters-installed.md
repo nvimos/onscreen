@@ -2,4 +2,4 @@
     - [x] `mason: linters installed` in tests/comps011 (groups mason, linters), like `mason: servers installed`
     - [x] every linter of by_ft and any: its nvim-lint cmd must be executable; names each missing one, fix :MasonToolsInstall
     - [x] before: `make status` only listed them, and `lint: <name>` cases skipped a missing one
-    - [ ] test: `make test D=comps011 G=linters` in tests/
+    - [x] test: `make test D=comps011 G=linters` in tests/ passes
