@@ -152,6 +152,7 @@ km('', '<C-cr>', '<C-d>zz', { noremap = true, silent = true })
 km('', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
 km('', '<PageUp>', '<c-u>zz', { noremap = true, silent = true })
 km('', '<C-bs>', '<C-u>zz', { noremap = true, silent = true })
+km('c', '<C-bs>', '<C-w>', { noremap = true, desc = 'Cmdline: delete word backwards' })
 -- on the jolemak layout Y is where qwerty-P is
 -- on the jolemak layout E is where qwerty-K is
 km('n', '', '<C-y>', { silent = true, noremap = true, desc = 'Scroll: extra lines reverse' })

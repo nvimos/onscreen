@@ -146,6 +146,7 @@ Command-line completion (plug-wip/genja-completion011.nvim/lua/genja/completion/
     <C-j>   next item                     <C-k>    previous item
     <Down>  next item; no menu: history   <Up>     previous item; no menu: history
     <M-x>   close the menu (as <C-e>)
+    <C-BS>  delete word backwards (as <C-w>; lua/genja/map-zero.lua)
 
 Copilot (lua/genja/map-plugin/copilot.lua; first run :Copilot setup)
 

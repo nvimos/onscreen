@@ -1,0 +1,4 @@
+- [x] keymaps: <C-BS> on the command line deletes a word backwards (2026-10-31)
+    - [x] km('c', '<C-bs>', '<C-w>') in lua/genja/map-zero.lua
+    - [x] readme.cheatsheet.md: command-line completion section
+    - [ ] test: `:echo foo bar` then <C-BS> leaves `:echo foo `
