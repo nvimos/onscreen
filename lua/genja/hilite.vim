@@ -108,6 +108,23 @@ hi DiagnosticUnderlineInfo  guisp=#553333 gui=underline cterm=underline
 hi DiagnosticUnderlineHint  guisp=#d3d3d3 gui=underline cterm=underline
 hi DiagnosticUnderlineOk    guisp=#90ee90 gui=underline cterm=underline
 
+
+hi clear DiagnosticVirtualTextError
+hi clear DiagnosticVirtualTextWarn
+hi clear DiagnosticVirtualTextInfo
+hi clear DiagnosticVirtualTextHint
+hi DiagnosticVirtualTextError guifg=#E06C75 guibg=#251c1e ctermbg=Black
+hi DiagnosticVirtualTextWarn  guifg=#E5C07B guibg=#24221c ctermbg=Black
+hi DiagnosticVirtualTextInfo  guifg=#61AFEF guibg=#1c2229 ctermbg=Black
+hi DiagnosticVirtualTextHint  guifg=#98C379 guibg=#1c241e ctermbg=Black
+
+hi DiagnosticVirtualTextError guifg=#E06C75 guibg=NONE ctermbg=Black
+hi DiagnosticVirtualTextWarn  guifg=#E5C07B guibg=NONE ctermbg=Black
+hi DiagnosticVirtualTextInfo  guifg=#61AFEF guibg=NONE ctermbg=Black
+hi DiagnosticVirtualTextHint  guifg=#98C379 guibg=NONE ctermbg=Black
+
+"" NOWORK. todo fixme: hi @nvim.diagnostic.float guifg=orange
+
 " }}}
 
 hi DiagnosticDeprecated guisp=#ff0000 gui=strikethrough cterm=strikethrough
@@ -119,6 +136,7 @@ hi Directory guifg=#ffd76a
 hi Directory guifg=#ffe9a9
 hi Directory guifg=#ffe087
 
-" Markdown links: dim underline; lunaperche's Underlined has no colour, so only sp changes.
-hi @markup.link     guifg=NONE gui=underline guisp=#4a4a4a cterm=underline
-hi @markup.link.url guifg=NONE gui=underline guisp=#4a4a4a cterm=underline
+" Markdown links: soft blue link, muted grey-blue url so long urls recede.
+hi @markup.link     guifg=#61AFEF gui=underline guisp=#4a4a4a ctermfg=75 cterm=underline
+hi @markup.link.url guifg=#5c7083 gui=underline guisp=#4a4a4a ctermfg=66 cterm=underline
+hi @markup.link.label guifg=#ED9455 ctermfg=209

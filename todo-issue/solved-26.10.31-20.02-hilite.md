@@ -1,0 +1,4 @@
+- [x] hilite: diagnostic virtual text and markdown link colours (2026-10-31)
+    - [x] lua/genja/hilite.vim: DiagnosticVirtualText* fg colours, no background
+    - [x] @markup.link blue, .url grey-blue, .label orange
+    - [ ] hi @nvim.diagnostic.float has no effect (note in the file)
