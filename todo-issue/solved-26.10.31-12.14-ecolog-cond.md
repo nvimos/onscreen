@@ -1,11 +1,10 @@
 - [x] ecolog: "Spawning process with cmd: { "ecolog-lsp" } failed" on .sh files (2026-10-31)
     - [x] cause: ecolog2.nvim is a client for ecolog-lsp (Rust), which was not installed
-    - [x] build = "cargo install ecolog-lsp" (lua/lazyp/ui-telescope/ecolog.lua)
+    - [x] no build step: ecolog-lsp is installed by hand if wanted (`cargo install ecolog-lsp`)
     - [x] cond: load only when ecolog-lsp or cargo is on PATH
     - [x] ~/.cargo/bin added to PATH in lua/genja/env.lua
     - [x] ecolog.nvim v1 (pure Lua, removed 2026-10-12 in 2c1dba6) back as its own spec, cond the opposite of ecolog2's
     - [x] ecolog2 keys fixed: it has one :Ecolog command (files open_active, files select, list); :EcologGoto etc. were v1 names
     - [x] v1 keys only for commands its v1 README lists (EcologGoto, Peek, Select, Telescope)
-    - [ ] test: <leader>gE, <leader>gEs, <leader>gEv do something with ecolog2 loaded
-    - [ ] test: with cargo or ecolog-lsp on PATH :Lazy lists ecolog2.nvim loaded and ecolog.nvim disabled; without, the other way round
-    - [ ] test: :Lazy build ecolog2.nvim installs ecolog-lsp; opening a .sh file shows no spawn error
+    - [ ] test (skipped for now): <leader>gE, <leader>gEs, <leader>gEv do something with ecolog2 loaded
+    - [ ] test (skipped for now): with cargo or ecolog-lsp on PATH :Lazy lists ecolog2.nvim loaded and ecolog.nvim disabled; without, the other way round

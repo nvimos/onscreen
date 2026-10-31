@@ -7,11 +7,10 @@ return {
         -- todo: test me 2026
         "ph1losof/ecolog2.nvim",
 
-        -- the plugin is a client for ecolog-lsp (a Rust binary). build and the plugin need
-        -- ~/.cargo/bin on PATH (cargo and ecolog-lsp live there; lua/genja/env.lua adds it)
-        build = "cargo install ecolog-lsp",
-        -- load when ecolog-lsp is installed, or cargo is on PATH so build can install it. Without
-        -- either, opening a .sh file logs "Spawning process with cmd: { "ecolog-lsp" } failed"
+        -- the plugin is a client for ecolog-lsp (a Rust binary, `cargo install ecolog-lsp` by hand);
+        -- it lives in ~/.cargo/bin, which lua/genja/env.lua adds to PATH
+        -- load when ecolog-lsp or cargo is on PATH. Without the server, opening a .sh file logs
+        -- "Spawning process with cmd: { "ecolog-lsp" } failed"
         cond = function()
             return vim.fn.executable("ecolog-lsp") == 1 or vim.fn.executable("cargo") == 1
         end,
