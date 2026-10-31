@@ -1,0 +1,4 @@
+- [x] tidy: whitespace in completion specs and init (2026-10-31)
+    - [x] lua/lazyp/langs-comps/blink-cmp.lua: tabs to 4 spaces
+    - [x] lua/lazyp/langs-comps/minuet.lua: blank lines between providers
+    - [x] lua/genja/init.lua: blank line before Safeload

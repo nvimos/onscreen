@@ -3,8 +3,8 @@
 -- require('genja.comps').setup(); so no opts here.
 ---@type LazySpec
 return {
-	'saghen/blink.cmp',
-	-- a release tag: blink downloads its prebuilt Rust fuzzy matcher for it
-	version = '1.*',
-	lazy = true, -- loaded as a dependency of genja-completion011
+    'saghen/blink.cmp',
+    -- a release tag: blink downloads its prebuilt Rust fuzzy matcher for it
+    version = '1.*',
+    lazy = true, -- loaded as a dependency of genja-completion011
 }

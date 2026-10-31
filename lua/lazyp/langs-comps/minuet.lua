@@ -44,6 +44,7 @@ end
 
 ---@type LazySpec
 return {
+
     'milanglacier/minuet-ai.nvim',
     cmd = 'Minuet',
     keys = Maps:keys(),
@@ -100,11 +101,13 @@ return {
                 },
                 optional = { max_tokens = 256 },
             },
+
             -- OpenAI: paid API only, https://platform.openai.com/api-keys
             openai = {
                 api_key = secret('OPENAI_API_KEY'),
                 model = 'gpt-5.6-luna', -- minuet's default
             },
+
             -- OpenRouter: one key for many models (https://openrouter.ai/keys); models ending in
             -- `:free` cost nothing but are rate-limited. The default below is paid, but cheap.
             openai_compatible = {
@@ -113,6 +116,7 @@ return {
                 end_point = 'https://openrouter.ai/api/v1/chat/completions',
                 model = 'deepseek/deepseek-v4-flash',
             },
+
             -- openai_fim_compatible holds one server at a time: ollama now, DeepSeek commented out.
             -- DeepSeek (https://platform.deepseek.com, prepaid): deepseek-v4-flash about $0.14 per 1M
             -- input tokens and $0.28 per 1M output (2026-09, third-party listings), so about $0.0002 per completion.
