@@ -33,7 +33,6 @@ Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easies
 
 | #   | Idea                                                       | Ask | Tokens |
 |-----|------------------------------------------------------------|-----|--------|
-| -   | netrw.nvim: icons from nvim-web-devicons, `ft = 'netrw'`   | 0   | ~4k    |
 | -   | ghost text: minuet-ai.nvim + llm.nvim, ollama qwen3.5:0.8b | 0   | ~35k   |
 | 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
 
