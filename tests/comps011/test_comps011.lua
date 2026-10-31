@@ -116,6 +116,49 @@ T['mason: servers installed'] = S:case({ name = 'mason servers installed', group
 			.. '\nfix: ' .. fix)
 	end
 end)
+
+-- A linter whose command is missing never runs: lint.lua skips it, and so does its `lint: <name>`
+-- case. List every linter of lua/genja/ext/lint.lua (by_ft and any) whose command is not executable.
+T['mason: linters installed'] = S:case({ name = 'mason linters installed', groups = { 'mason', 'linters' } }, function()
+	boot()
+	local missing = child.lua([[
+		local genja_lint = require('genja.ext.lint')
+		local lint = require('lint')
+		local names, seen = {}, {}
+		local function add(name)
+			if not seen[name] then
+				seen[name] = true
+				table.insert(names, name)
+			end
+		end
+		for _, list in pairs(genja_lint.by_ft) do
+			for _, name in ipairs(list) do add(name) end
+		end
+		for _, name in ipairs(genja_lint.any) do add(name) end
+		table.sort(names)
+		local out = {}
+		for _, name in ipairs(names) do
+			local def = lint.linters[name]
+			if type(def) == 'function' then
+				def = def()
+			end
+			local cmd = type(def) == 'table' and def.cmd or nil
+			if type(cmd) == 'function' then
+				cmd = cmd()
+			end
+			if type(cmd) ~= 'string' then
+				table.insert(out, name .. ': no nvim-lint definition')
+			elseif vim.fn.executable(cmd) == 0 then
+				table.insert(out, name .. ': ' .. cmd .. ' is not executable')
+			end
+		end
+		return out
+	]])
+	if #missing > 0 then
+		error('linters of lua/genja/ext/lint.lua that cannot run:\n  ' .. table.concat(missing, '\n  ')
+			.. '\nfix: :MasonToolsInstall (packages in lint.lua M.mason)')
+	end
+end)
 -- }}}
 
 -- {{{ warmup: tools whose first run is slow, timed apart from the cases that use them
