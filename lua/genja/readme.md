@@ -35,7 +35,7 @@ custom funcs
      ext/md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
      ext/messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
      ext/messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
-     ext/md-fix.lua - markdown fixers: <leader>mfx and on save (tabs to spaces, vim keys in backticks, typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save, toggled by <leader>tm / :ToggleMarkdownFix (plugin/md-fix.lua)
+     ext/md-fix.lua - markdown fixers: <leader>mfx and on save (tabs to spaces, or to tabs when an editorconfig section for markdown says indent_style = tab; vim keys in backticks, typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save, toggled by <leader>tm / :ToggleMarkdownFix (plugin/md-fix.lua)
      ext/md-abbrev.lua, ext/md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)
      fu.lua      - user functions (lua) :UserFunction
      hilite.lua  - colors, ui, syntax (lua)

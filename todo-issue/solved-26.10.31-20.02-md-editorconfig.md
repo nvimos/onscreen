@@ -1,0 +1,6 @@
+- [x] md-fix: heed editorconfig sections for markdown, else spaces (2026-10-31)
+    - [x] lua/genja/ext/md-fix.lua: editorconfig_indent() reads [*.md]-style sections; [*] doesn't count
+    - [x] indent_style = tab: fixers get spaces, then indent_to_tabs() after them (MD010 would undo tabs)
+    - [x] tests/md/test_md_fix.lua: tabs, editorconfig, to-tabs, fix() and a real :w with a stand-in fixer
+    - [x] test: `make test D=md` passes
+    - [ ] markdownlint MD007 (indent 2) may re-indent lists to a width that doesn't fit tab size 4
