@@ -57,12 +57,56 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] floaterm: :PwshFterm (50e4b8a)
   - [x] mason: make mason-luals reinstalls lua-language-server headless (19d67f5)
   - [x] :ToggleDiagnostics for the current buffer (38e3d2d)
+  - [x] f2 diag: hide excess undoes show all (620545d); pickers: matched chars in Visual fg, bold (00b05e5)
+  - [x] genja-finder: <M-Up> rescans in the parent dir (93a8b69); <C-]> opens the entry, a dir entry itself (7bc4759, 31b74cd)
+  - [x] statusline: [Nameless] for unnamed buffers (eddb6e5); telescope key footer dropped, key help kept (5c6e9a7)
+  - [x] md: substitutions wrap vim key notation in backticks (c4d6b26)
+  - [x] commit popup also on <leader>gcm and <leader>C (39dab59); <leader>ei tab-local from stdpath (7b05312)
+  - [x] nvim-qt: nvim-qt.qss stylesheet, dark title bar note in ginit.vim (41e5bb6)
 
 - [x] extras outside the idea list (2026-10-26)
   - [x] tests: pwsh Makefile, per-name groups, timings for every case, make gather/failed/plan/slow/status (8d2d86c)
   - [x] lua_ls: GENJA_LUA_NO_LIB=1 skips libraries, set by tests/Makefile (53642d0)
   - [x] :checkhealth genja.lsp: servers not installed, broken Python venvs, mason launchers (96b7910)
   - [x] bashls: mason's shellcheck.exe path on Windows (0bdc719); claudefterm kill() crash (0b46cfa)
+  - [x] auto-todo round: shared checkmake.ini (9152813), <M-CR>/<C-s> submit popups (776f78a), telescope default keys
+        and <C-/> descs (2f85171), claudefterm marker toggle and !! markers (a5ae869), f2 git staged picker (5e81cdf)
+  - [x] statusline: plain separators in terminals, icons in GUI (487aec2); :Ct for :ClaudeFterm (9073fcb)
+  - [x] guifont JetBrainsMono NFM 12 (ac41882); make mason-make reinstalls autotools_ls (170ba57)
+
+- [x] extras outside the idea list (2026-10-27)
+  - [x] blink.cmp replaces nvim-cmp, own sources on one source builder, blade-nav source (2d6b4bd, 00268c4);
+        tests/completion: sources, keys, cmdline, <CR> (191c6cf, 55c1296)
+  - [x] genja-util: shared centred float and text helpers; plug-wip plugins tidied (b34a1a8, f16695b)
+  - [x] gen.nvim: ollama qwen3.5:0.8b prompt menu on <leader>ai (2bd7b6f)
+
+- [x] extras outside the idea list (2026-10-28)
+  - [x] LSP rename typed in a float over the word: grn, <leader>c2, right-click (527755d)
+  - [x] :EnableLang turns a language on/off for the session, -save writes lsp/local.lua, <F2> offers it (03ce43e)
+  - [x] completion menu colours from StatusLine (e45657e); cmdline <Down>/<Up> walk the menu, history without one (dbd3c64)
+  - [x] terminal windows: scrolloff 0 (db72fa3); :help you page (b7337e9); <leader>ts toggles spelling (fda9e2e)
+  - [x] colorscheme set in init.vim, Gui* settings grouped (6adb2ed); markdownlint MD012 off (ce73378)
+
+- [x] extras outside the idea list (2026-10-29)
+  - [x] ccc.nvim colour picker and highlighter: <leader>ic, <leader>tc (e26d31e)
+  - [x] paste search: right-click on a selection (cbeef81); genja-paste-ai.nvim: :PasteSearch, :Wot,
+        :Google / :Perplexity / :Xty, <F2> lookup, web and ai providers (80b9277, 5e70490, f9854f3)
+  - [x] terminal keys, <C-`> floaterm toggle, sessions keep shells (f4675f6)
+  - [x] md-fix: expand tabs, backtick vim keys, <leader>tm (420d58c; Lua port 893ff63); formatlistpat for checkboxes, footnotes (d69e644)
+  - [x] diag-align: virtual text in one column per paragraph (5b579f9); diagnostic colours per severity (d778534);
+        dim underline on markdown links (42d9f18)
+  - [x] legendary: 0king fork, <leader>jl, in mylunsj (14a73da), bigger dropdown (b366920)
+  - [x] :ClaudeFterm -ax passes --ax-screen-reader (0db2b57)
+  - [x] which-key: helix preset, left-centred, fixed height (da8581b, 5eb0576, a143fca); test groups vs mappings (f7a9970)
+  - [x] unsaved buffers picker before :qa, jj, s: (58316bd)
+
+- [x] extras outside the idea list (2026-10-30)
+  - [x] unsaved picker: layout, E13 overwrite prompt, :q and :x, tests (4ccf5bc)
+  - [x] telescope: per-picker prompt hint via b:telescope_hint (bb164fe); :Messages -yank copies :messages (1270b29)
+  - [x] abbrev: g quits via a <CR> map, :g/pat/ stays :global (a3e07a3)
+
+- [x] extras outside the idea list (2026-10-31)
+  - [x] netrw.nvim icons (c30c591); ghost text: minuet-ai.nvim and llm.nvim on ollama (d7d084f); both in todo-done/
 
 - [ ] custom keymap logger: count which keys/binds I use more than others
   - legendary only counts palette picks (frecency needs sqlite.lua, off in lua/lazyp/new/legendary.lua)

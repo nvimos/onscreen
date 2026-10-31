@@ -78,4 +78,13 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 - Gitsigns: `<leader>mGs` attaches skipped buffers (e9e50f7).
 - f2: groups ≤ 6 chars, `group  label` columns (5edddfa).
 - `:PwshFterm` (50e4b8a); `make mason-luals` (19d67f5); `:ToggleDiagnostics` (38e3d2d).
+- f2 diag hide/show (620545d); picker matches in Visual fg (00b05e5); finder `<M-Up>` parent rescan, `<C-]>` opens entry (93a8b69, 7bc4759, 31b74cd).
+- Statusline `[Nameless]` (eddb6e5), plain separators in terminals (487aec2); md key-notation backticks (c4d6b26); commit popup on `<leader>gcm`, `<leader>C` (39dab59); nvim-qt.qss (41e5bb6); `<leader>ei` (7b05312).
+- auto-todo 2026-10-26 items with hashes: checkmake.ini (9152813), popup submit keys (776f78a), telescope default keys (2f85171), marker toggle (a5ae869), f2 git staged (5e81cdf); `:Ct` (9073fcb); guifont (ac41882); mason-make autotools_ls (170ba57).
+- blink.cmp replaces nvim-cmp, blade-nav source, tests/completion (2d6b4bd, 00268c4, 191c6cf, 55c1296); genja-util float and text helpers (b34a1a8, f16695b); gen.nvim `<leader>ai` (2bd7b6f).
+- LSP rename float (527755d); `:EnableLang` (03ce43e); menu colours (e45657e); cmdline `<Down>`/`<Up>` (dbd3c64); term scrolloff 0 (db72fa3); `:help you` (b7337e9); `<leader>ts` (fda9e2e); GUI colors (6adb2ed); MD012 off (ce73378).
+- ccc `<leader>ic`/`<leader>tc` (e26d31e); paste search right-click and genja-paste-ai.nvim (cbeef81, 80b9277, 5e70490, f9854f3); terminal keys, `` <C-`> `` float (f4675f6); md-fix `<leader>tm` (420d58c, 893ff63); formatlistpat (d69e644); diag-align (5b579f9); diagnostic colours (d778534); md link underline (42d9f18).
+- legendary 0king fork `<leader>jl` (14a73da, b366920); `:ClaudeFterm -ax` (0db2b57); which-key helix, fixed height (da8581b, 5eb0576, a143fca), groups test (f7a9970).
+- Unsaved picker (58316bd, 4ccf5bc); `b:telescope_hint` (bb164fe); `:Messages -yank` (1270b29); abbrev `g` (a3e07a3).
+- netrw.nvim icons (c30c591); ghost text: minuet-ai.nvim and llm.nvim on ollama (d7d084f).
 

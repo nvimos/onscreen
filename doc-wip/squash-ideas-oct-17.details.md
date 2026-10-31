@@ -183,10 +183,34 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - Floaterm (50e4b8a): `:PwshFterm`.
 - Mason (19d67f5): `make mason-luals` reinstalls lua-language-server headless.
 - fu (38e3d2d): `:ToggleDiagnostics` for the current buffer.
+- Pickers (620545d, 00b05e5, 93a8b69, 7bc4759, 31b74cd): f2 diag hide undoes show all; matched chars
+  in Visual fg, bold; genja-finder `<M-Up>` rescans the parent dir, `<C-]>` opens the entry.
+- Statusline (eddb6e5, 487aec2): `[Nameless]` for unnamed buffers; plain separators in terminals.
+- Small (c4d6b26, 39dab59, 41e5bb6, 7b05312, 9073fcb, ac41882, 170ba57): md key-notation backticks;
+  commit popup on `<leader>gcm`, `<leader>C`; nvim-qt.qss; `<leader>ei`; `:Ct`; guifont; mason-make autotools_ls.
+- auto-todo 2026-10-26 (9152813, 776f78a, 2f85171, a5ae869, 5e81cdf): checkmake.ini, popup submit keys,
+  telescope default keys, claudefterm marker toggle, f2 git staged picker.
+- Completion (2d6b4bd, 00268c4, 191c6cf, 55c1296, e45657e, dbd3c64): blink.cmp replaces nvim-cmp, own
+  sources on one builder, blade-nav source, tests/completion; menu colours from StatusLine; cmdline
+  `<Down>`/`<Up>` walk the menu.
+- genja-util (b34a1a8, f16695b): shared centred float and text helpers. gen.nvim (2bd7b6f): `<leader>ai`.
+- LSP (527755d, 03ce43e): rename typed in a float (`grn`, `<leader>c2`); `:EnableLang` per session, `-save`.
+- Misc 2026-10-28 (db72fa3, b7337e9, fda9e2e, 6adb2ed, ce73378): term scrolloff 0; `:help you`;
+  `<leader>ts` spelling; colorscheme in init.vim; markdownlint MD012 off.
+- 2026-10-29 (e26d31e, cbeef81, 80b9277, 5e70490, f9854f3, f4675f6): ccc `<leader>ic`/`<leader>tc`;
+  paste search right-click and genja-paste-ai.nvim (`:PasteSearch`, `:Wot`, `:Google`, `:Perplexity`,
+  `:Xty`, `<F2>`); terminal keys and `` <C-`> `` floaterm toggle.
+- Markdown and diagnostics (420d58c, 893ff63, d69e644, 5b579f9, d778534, 42d9f18): md-fix `<leader>tm`;
+  formatlistpat; diag-align one column per paragraph; colours per severity; dim link underline.
+- UI (14a73da, b366920, 0db2b57, da8581b, 5eb0576, a143fca, f7a9970): legendary 0king fork `<leader>jl`;
+  `:ClaudeFterm -ax`; which-key helix preset, left-centred, fixed height; groups test.
+- Unsaved picker (58316bd, 4ccf5bc); `b:telescope_hint` (bb164fe); `:Messages -yank` (1270b29); abbrev `g` (a3e07a3).
+- netrw.nvim (c30c591): icons from nvim-web-devicons. Ghost text (d7d084f): minuet-ai.nvim
+  (`<leader>am`, blink `<M-y>`) and llm.nvim (`<leader>al`, llm-ls via mason) on ollama qwen3.5.
 
 ## Last scanned commit
 
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    d7c7cf3caf34bc91fcdb17d89f6c6dbd36919211  lint: note the commands to run gitleaks and vale by hand
+    f14feb12e31d9e12b24fba624cafa08ab1010b42  todo: keymap logger, both fork tracker and own Lua-native logger
