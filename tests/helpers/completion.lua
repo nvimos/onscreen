@@ -85,7 +85,12 @@ function M.new(child)
 
 	---@return integer|nil
 	function C.selected()
-		return child.lua('return require("blink.cmp").get_selected_item_idx()')
+		local idx = child.lua('return require("blink.cmp").get_selected_item_idx()')
+		-- nothing selected comes back over RPC as vim.NIL
+		if idx == vim.NIL then
+			return nil
+		end
+		return idx
 	end
 
 	return C

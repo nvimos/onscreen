@@ -53,7 +53,7 @@ T[': help topics'] = function()
 end
 
 ---Type a menu key and wait until the selection moved. After an item is inserted blink redraws the
----menu; a key typed during that redraw finds no menu and falls back (<C-k> starts a digraph).
+---menu; a key typed during that redraw finds no menu and falls back and the key is typed into the line.
 ---@param key string
 ---@return integer|nil selected index after the move
 local function walk(key)
@@ -74,15 +74,15 @@ local function walk(key)
 	return now
 end
 
-T['<C-j> / <C-k> walk the open menu'] = function()
+T['<M-j> / <M-k> walk the open menu'] = function()
 	child.type_keys(':', 'ec')
 	cmd_items()
-	-- nothing is preselected: the first <C-j> selects item 1
+	-- nothing is preselected: the first <M-j> selects item 1
 	eq(C.wait_menu(), true)
 	eq(C.selected(), nil)
-	eq(walk('<C-j>'), 1)
-	eq(walk('<C-j>'), 2)
-	eq(walk('<C-k>'), 1)
+	eq(walk('<M-j>'), 1)
+	eq(walk('<M-j>'), 2)
+	eq(walk('<M-k>'), 1)
 end
 
 T['<Tab> on the open menu inserts the first item'] = function()
@@ -94,12 +94,12 @@ T['<Tab> on the open menu inserts the first item'] = function()
 	eq(child.fn.getcmdline(), first)
 end
 
-T['<C-j>, then <Down> / <Up> walk the open menu'] = function()
+T['<M-j>, then <Down> / <Up> walk the open menu'] = function()
 	child.type_keys(':', 'ec')
 	cmd_items()
 	eq(C.wait_menu(), true)
-	local second = walk('<C-j>')
-	check(second ~= nil, '<C-j> did not move')
+	local second = walk('<M-j>')
+	check(second ~= nil, '<M-j> did not move')
 	check(walk('<Down>') ~= nil, '<Down> did not move')
 	eq(walk('<Up>'), second)
 end
@@ -159,8 +159,8 @@ T['history: a typed key after a menu walk makes <Up> history again'] = function(
 	child.type_keys(':', 'ec')
 	cmd_items()
 	eq(C.wait_menu(), true)
-	walk('<C-j>')
-	walk('<C-k>')
+	walk('<M-j>')
+	walk('<M-k>')
 	-- the walk inserted an item; back to the prefix by typing, then history
 	child.type_keys('<C-u>', 'ec')
 	cmd_items()
