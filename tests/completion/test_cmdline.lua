@@ -192,4 +192,39 @@ T['/ search: buffer words'] = function()
 	check(Helpers.has(cmd_items(), 'buffer:zebrafish'))
 end
 
+-- shell names: shellcmd.lua keeps them in stdpath('state')/genja-completion011/shellcmd.txt
+
+---The shell list file, in the child's state dir.
+---@return string
+local function shell_file()
+	return child.lua_get([[vim.fs.joinpath(vim.fn.stdpath('state'), 'genja-completion011', 'shellcmd.txt')]])
+end
+
+T['shellcmd: PATH change rebuilds the disk list'] = function()
+	local file = shell_file()
+	-- a list made for another PATH, with a name that must go
+	vim.fn.mkdir(vim.fs.dirname(file), 'p')
+	vim.fn.writefile({ 'PATH=/elsewhere', 'zzstalecmd' }, file)
+	child.lua([[vim.env.PATH = vim.env.PATH .. ';C:/zz_genja_probe']])
+	local path = child.lua_get([[vim.env.PATH]])
+	-- a one-char `!` opens no menu, so the first request comes with the second key
+	child.type_keys(':', '!n')
+	require('helpers.timing').wait(function()
+		local lines = vim.fn.readfile(file)
+		return lines[1] == 'PATH=' .. path and #lines > 1
+	end, 8000)
+	local lines = vim.fn.readfile(file)
+	eq(lines[1], 'PATH=' .. path)
+	check(not vim.tbl_contains(lines, 'zzstalecmd'), 'stale name still in the list')
+end
+
+T['shellcmd: :vert term lists shell names'] = function()
+	-- the list written by the case above; wait for it so this case does not depend on a rebuild
+	require('helpers.timing').wait(function()
+		return vim.fn.filereadable(shell_file()) == 1
+	end, 8000)
+	child.type_keys(':', 'vert term ')
+	check(Helpers.has_match(cmd_items(), '^shellcmd:'))
+end
+
 return T

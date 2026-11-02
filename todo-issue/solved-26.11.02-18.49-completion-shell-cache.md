@@ -1,0 +1,9 @@
+- [x] completion: `!` and `:terminal` names come from a disk cache (2026-11-02)
+    - [x] lua/genja/completion/shellcmd.lua: list in stdpath('state')/genja-completion011/shellcmd.txt, first line the PATH it was made for; rebuilt in the background after 3 h or when PATH changes
+    - [x] `:vert term word` and other modifiers before `:terminal` complete too
+    - [x] `:ResetPathCache` deletes the list
+    - [x] source.lua: `only` flag; cmdline.lua sources() picks `shellcmd` after `!` or `:terminal`
+    - [x] tests/completion/test_cmdline.lua: PATH change rebuilds the list; `:vert term` lists shell names (make test D=completion)
+    - [ ] test: `:ResetPathCache` twice: deletes, then "no path cache to delete"
+    - [ ] test: the list rebuilds after 3 h (age check, not covered by a test)
+    - [ ] test: first `!n` after a rebuild shows the menu
