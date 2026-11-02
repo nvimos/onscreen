@@ -16,6 +16,7 @@ Unmarked bullets were stated by user.
 - todo-ideas.md (add new ideas here),
 - todo-2026-neovim011.md
 - todo-2027.md
+- todo-2028.md
 - todo-issue/: issues solved in a session, one checklist file each (`solved-<yy.mm.dd>-<HH.MM>-<topic>.md`), written and committed by `/commit-close-issues` (`.claude/skills/nvim-commit-close-issues/`).
 - todo-done/: finished top-level items from the files above, one item per file, named `ideas-<nn>-<topic>.md` or `<year>-<topic>.txt`.
 

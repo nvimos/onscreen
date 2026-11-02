@@ -10,6 +10,7 @@ squash ideas details and estimations
 future work (need to limit the neovim-2026 project)
 
     ./todo-2027.md
+    ./todo-2028.md
 
 migration from 0.9 to 0.11 (the file that started it all)
 
@@ -24,11 +25,19 @@ migration from 0.9 to 0.11 (the file that started it all)
   - copilot ghost text in commit buffers, accept with <M-f> (copilot.vim moved to lua/lazyp/unused/ 2026-10-31: minuet won)
   - [~] gitcommit buffers: get commit-message help back without copilot.vim
     - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua); tested 2026-10-31
-    - [ ] minuet in gitcommit suggests random text: it only sees the commit buffer, not the staged changes;
+    - [x] minuet in gitcommit suggests random text: it only sees the commit buffer, not the staged changes;
           feed it `git diff --cached` (e.g. a gitcommit-only prompt or context in minuet's provider options)
+      - 2026-11-02: lua/genja/ext/minuet-diff.lua, diff below a scissors line in the FIM suffix / chat context;
+            cached 10 s, cut at 4000 chars; untested
     - [ ] claude -p as a minuet provider: minuet only has HTTP backends; a custom backend would start the CLI per request (slow)
     - [ ] minuet `claude` provider (Anthropic API): not an option now (no API key); block commented out in minuet.lua
-    - [ ] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
+    - [~] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
+      - [x] shared backends, cli and http kinds: plug-wip/genja-util.nvim/lua/genja-util/llm.lua,
+            used by genja-commit <M-g> and genja-ask (2026-11-02)
+      - [x] copilot CLI: prompt piped, no -p (copilot ignores stdin with -p); untested, CLI not installed
+      - [x] ollama backend, end point and model configurable, local by default; own http/cli backends
+            via generate.backends; untested
+      - [ ] "also outside the popup": <M-g> already works in every gitcommit buffer; what else was meant?
   - opt-in Conventional Commits mode; cmp offers types, scopes, footers
   - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
@@ -122,23 +131,24 @@ migration from 0.9 to 0.11 (the file that started it all)
   - plugins checked 2026-10-31, none fits: keystats.nvim (counts, needs cargo), stalker.nvim (motions only),
     tobira.nvim (teaching), vim-stats (Vim, Ex commands)
   - decided 2026-10-31: do both
-  - [ ] finish create_tracker in the abdul-keymaps fork (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua),
+  - [x] finish create_tracker in the abdul-keymaps fork (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua),
         so :KeymapsStats counts keymaps, not mode changes
+    - 2026-11-02: each keymap is wrapped (counts, then runs the original); lazy-loaded and buffer-local
+          ones wrapped as they appear; spec loads on VeryLazy; fork's earlier commits restyled like upstream; untested
   - [ ] build your own, no need for json. keep it lua-native
     - vim.on_key(), match typed keys against nvim_get_keymap() by lhs, count per mode:lhs (+ desc)
     - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
     - :KeyStats picker sorted by count
 
-- [ ] diagnostics: <leader>ttt disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
+- [x] diagnostics: <leader>ttt disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
   - today: lua/genja/map-lsp.lua toggle_diagnostics, `vim.diagnostic.enable(not vim.diagnostic.is_enabled())`
   - check that every source goes away and comes back, also in buffers opened while off
+  - 2026-11-02: already works: enable(false) without a filter covers every namespace and later buffers
+  - [x] zen z1/z2 turn diagnostics off; z0 turns them on again (unless off before zen) with the limit of 3; untested
 
-- [ ] lint: :ValeSync runs by itself when the shared styles are missing (asked 2026-10-31)
+- [x] lint: :ValeSync runs by itself when the shared styles are missing (asked 2026-10-31)
   - today vale is skipped until :ValeSync (lua/genja/ext/lint.lua prepare_vale), no hint that it's off
-
-- [ ] sessions: a saved shell comes back in its current dir, not the one it was started in (later, asked 2026-10-31)
-  - lua/genja/ext/term.lua mksession: the term:// name keeps the start dir
-  - which other terminals to save (e.g. `:terminal ssh a22`: reconnects on restore): needs more thought; only idle shells for now
+  - 2026-11-02: the first lint without styles starts the sync once per session, then lints all buffers again; untested
 
 - [ ] abbrev: /FAIL<CR> searches for "/FAIL<C-]><CR>" (literal text, no search)
   - source: lua/genja/abbreviations.vim:38, the cmdline <CR> map returns the single-quoted string `'<C-]><CR>'` for every cmdtype but `:`; in an <expr> map the <> is typed literally, and the Vim-only `<C-]>` is only needed for `:` abbreviations (a3e07a3, 80c8fa1)
