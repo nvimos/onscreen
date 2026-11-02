@@ -23,7 +23,7 @@ Unmarked bullets were stated by user.
 
 Each has its own CLAUDE.md; read it before changing that plugin.
 
-- @plug-wip/genja-ask.nvim/CLAUDE.md: ask popup (`<M-?>`, `<leader>pc`), backends claude -p, claudefterm, gemini, copilot, aichat.
+- @plug-wip/genja-ask.nvim/CLAUDE.md: ask popup (`<M-?>`, `<leader>pc`), backends claude -p, claudefterm, gemini, copilot, aichat, ollama.
 - @plug-wip/genja-claudefterm.nvim/CLAUDE.md: claude in a floaterm, one per project: `:ClaudeFterm`, session markers, paste context, `send()`.
 - @plug-wip/genja-commit.nvim/CLAUDE.md: commit popup (oil), gitcommit lint, message generation.
 - @plug-wip/genja-completion011.nvim/CLAUDE.md: LSP servers, completion, ft/lang modules, dictionary words.
