@@ -4,7 +4,7 @@
 --   vim.g.diag_limit   number per severity (default 3); 0 or false: show all
 --   b:diag_limit       the same for one buffer, wins over the global one (F2 "show all" sets 0,
 --                      F2 "hide excess" clears it again)
--- Keys and setup: plugin/diag-limit.lua. Zen z1 sets the limit to 2 (lua/genja/map-plugin/zenmode.lua).
+-- Keys and setup: plugin/diag-limit.lua. Zen z0 sets the default limit again (lua/genja/map-plugin/zenmode.lua).
 
 local SRC = 'lua/genja/ext/diag-limit.lua: '
 

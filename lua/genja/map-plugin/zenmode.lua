@@ -1,7 +1,8 @@
 -- Keys for lua/lazyp/ui/zenmode.lua.
---   <leader>z1  width 120, no numbers, frameless; diagnostics limit 2 per severity
---   <leader>z2  width 80, relnum, colorcolumn 4,8,80, frameless + maximized
---   <leader>z0  close; frameless and maximized off, window size and diagnostics limit as before z1/z2
+--   <leader>z1  width 120, no numbers, frameless; diagnostics off
+--   <leader>z2  width 80, relnum, colorcolumn 4,8,80, frameless + maximized; diagnostics off
+--   <leader>z0  close; frameless and maximized off, window size as before z1/z2;
+--               diagnostics back on (unless off before zen) with the default limit of 3
 -- z1 <-> z2 while zen is open: zen closes first, an open zen window would keep its old width.
 
 local function gui()
@@ -9,15 +10,15 @@ local function gui()
 end
 
 ---What z1/z2 changed, saved before the first of them; nil while zen is off.
----@type { columns: integer, lines: integer, diag_limit: any, maximized: boolean }|nil
+---@type { columns: integer, lines: integer, diag_enabled: boolean, maximized: boolean }|nil
 local before = nil
 
----Remember the size and diagnostics limit before the first z1/z2.
+---Remember the size and whether diagnostics are on, before the first z1/z2.
 local function remember()
 	if before then
 		return
 	end
-	before = { columns = vim.o.columns, lines = vim.o.lines, diag_limit = vim.g.diag_limit, maximized = false }
+	before = { columns = vim.o.columns, lines = vim.o.lines, diag_enabled = vim.diagnostic.is_enabled(), maximized = false }
 end
 
 ---Open zen with this width, closing an open zen window first.
@@ -56,7 +57,9 @@ local function zen_off()
 		maximized(false)
 		vim.o.columns = before.columns
 		vim.o.lines = before.lines
-		require('genja.ext.diag-limit').set(before.diag_limit)
+		-- nil: the default limit (3); set() redraws, enable() shows them again
+		require('genja.ext.diag-limit').set(nil)
+		vim.diagnostic.enable(before.diag_enabled)
 		before = nil
 	end
 end
@@ -69,7 +72,7 @@ local function zen_wide()
 	vim.opt.colorcolumn = '0'
 	gui().GuiWindowFrameless():set(1)
 	maximized(false)
-	require('genja.ext.diag-limit').set(2)
+	vim.diagnostic.enable(false)
 
 	zen(120, {})
 end
@@ -82,10 +85,7 @@ local function zen_relnum()
 	vim.opt.colorcolumn = '4,8,80'
 	gui().GuiWindowFrameless():set(1)
 	maximized(true)
-	-- the limit is z1's; coming from z1, put the earlier one back
-	if before then
-		require('genja.ext.diag-limit').set(before.diag_limit)
-	end
+	vim.diagnostic.enable(false)
 
 	zen(80, {})
 end
@@ -96,8 +96,8 @@ return function(Maps)
 
 	Maps:add_keys(spec_name, {
 		{ '<leader>mz', '<cmd>ZenMode<cr>', silent = true, desc = 'UI: toggle zen mode' },
-		{ '<leader>z0', zen_off, desc = 'Zen: off, size as before' },
-		{ '<leader>z1', zen_wide, desc = 'Zen: on, width 120, diag limit 2' },
-		{ '<leader>z2', zen_relnum, desc = 'Zen: on, width 80, relnum, maximized' },
+		{ '<leader>z0', zen_off, desc = 'Zen: off, size as before, diagnostics on' },
+		{ '<leader>z1', zen_wide, desc = 'Zen: on, width 120, no diagnostics' },
+		{ '<leader>z2', zen_relnum, desc = 'Zen: on, width 80, relnum, maximized, no diagnostics' },
 	})
 end

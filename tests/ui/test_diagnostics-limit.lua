@@ -68,7 +68,7 @@ T['the data is not cut: vim.diagnostic.get keeps all'] = function()
 	eq(child.lua([[return #vim.diagnostic.get(buf)]]), 11)
 end
 
-T['limit 2 (zen z1)'] = function()
+T['limit 2'] = function()
 	child.lua([[put(); L.set(2)]])
 	eq(child.lua([[return drawn('virt')]]), { 0, 1, 9, 10 })
 end

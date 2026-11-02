@@ -37,9 +37,9 @@ Breadcrumbs and outline (dropbar, aerial)
 Zen mode (zen-mode.nvim, lua/genja/map-plugin/zenmode.lua)
 
     <leader>mz  toggle zen mode (spec defaults)
-    <leader>z1  zen, width 120, no numbers, diag limit 2
-    <leader>z2  zen, width 80, relnum, colorcolumn 4,8,80, maximized
-    <leader>z0  close zen, framed again, window size and diag limit as before z1/z2
+    <leader>z1  zen, width 120, no numbers, diagnostics off
+    <leader>z2  zen, width 80, relnum, colorcolumn 4,8,80, maximized, diagnostics off
+    <leader>z0  close zen, framed again, window size as before z1/z2, diagnostics on, limit 3
     z1 <-> z2 while zen is open: reopens with the new width
 
 Split padding (plug-wip/genja-splitpad.nvim)
