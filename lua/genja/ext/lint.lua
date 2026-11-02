@@ -107,6 +107,58 @@ local VALE_PROJECT = { '.vale.ini', '_vale.ini' }
 ---nvim-lint's own vale args, before the shared --config is put in front.
 ---@type table|nil
 local vale_args = nil
+---The automatic :ValeSync was started (once per session, also when it failed).
+local vale_auto_synced = false
+
+---Lint every loaded buffer again, e.g. once vale has its styles.
+local function relint_all()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_loaded(buf) then
+			M.lint(buf, 'BufWritePost')
+		end
+	end
+end
+
+---:ValeSync: download the shared config's styles into stdpath('data')/vale/styles.
+---@param on_done fun()|nil called after a successful sync
+local function vale_sync(on_done)
+	if vim.fn.executable('vale') == 0 then
+		vim.notify(SRC .. 'no vale in PATH; :MasonToolsInstall first', vim.log.levels.WARN)
+		return
+	end
+	vim.fn.mkdir(VALE_STYLES, 'p')
+	vim.notify(SRC .. 'vale sync into ' .. VALE_STYLES .. ' …')
+	local env = { VALE_STYLES_PATH = VALE_STYLES }
+	vim.system({ 'vale', '--config', VALE_CONFIG, 'sync' }, { env = env, text = true }, vim.schedule_wrap(function(res)
+		if res.code == 0 then
+			vim.notify(SRC .. 'vale styles synced')
+			if on_done then
+				on_done()
+			end
+		else
+			vim.notify(SRC .. 'vale sync failed: ' .. vim.trim((res.stderr or '') .. (res.stdout or '')), vim.log.levels.ERROR)
+		end
+	end))
+end
+
+---The vale config `buf` lints with: the project's .vale.ini (or _vale.ini), else the shared one.
+---@param buf integer
+---@return string
+function M.vale_config(buf)
+	local project = vim.fs.root(buf, VALE_PROJECT)
+	if project then
+		for _, name in ipairs(VALE_PROJECT) do
+			local path = vim.fs.joinpath(project, name)
+			if vim.uv.fs_stat(path) then
+				return path
+			end
+		end
+	end
+	return VALE_CONFIG
+end
+
+---The markdownlint config: always the shared one (setup() passes it with --config).
+M.MARKDOWNLINT_CONFIG = MARKDOWNLINT_CONFIG
 
 ---Point vale at the project's config, else at the shared one.
 ---@param linter table nvim-lint's vale linter (changed in place before each run)
@@ -123,8 +175,13 @@ local function prepare_vale(linter, buf)
 		linter.env = nil
 		return project
 	end
-	-- the shared config needs its styles; without them vale prints an error, not JSON
+	-- the shared config needs its styles; without them vale prints an error, not JSON.
+	-- Sync them once, then lint again; until then vale skips.
 	if not vim.uv.fs_stat(vim.fs.joinpath(VALE_STYLES, 'Microsoft')) then
+		if not vale_auto_synced then
+			vale_auto_synced = true
+			vim.schedule(function() vale_sync(relint_all) end)
+		end
 		return false
 	end
 	linter.args = vim.list_extend({ '--config', VALE_CONFIG }, vim.deepcopy(vale_args))
@@ -133,23 +190,6 @@ local function prepare_vale(linter, buf)
 	return nil
 end
 
----:ValeSync: download the shared config's styles into stdpath('data')/vale/styles.
-local function vale_sync()
-	if vim.fn.executable('vale') == 0 then
-		vim.notify(SRC .. 'no vale in PATH; :MasonToolsInstall first', vim.log.levels.WARN)
-		return
-	end
-	vim.fn.mkdir(VALE_STYLES, 'p')
-	vim.notify(SRC .. 'vale sync into ' .. VALE_STYLES .. ' …')
-	local env = { VALE_STYLES_PATH = VALE_STYLES }
-	vim.system({ 'vale', '--config', VALE_CONFIG, 'sync' }, { env = env, text = true }, vim.schedule_wrap(function(res)
-		if res.code == 0 then
-			vim.notify(SRC .. 'vale styles synced; markdown buffers lint with them from the next save')
-		else
-			vim.notify(SRC .. 'vale sync failed: ' .. vim.trim((res.stderr or '') .. (res.stdout or '')), vim.log.levels.ERROR)
-		end
-	end))
-end
 -- }}}
 
 ---True for GitHub workflow files (.github/workflows/*.yml).
@@ -377,7 +417,7 @@ function M.setup()
 		vim.notify(SRC .. 'no ' .. MARKDOWNLINT_CONFIG .. '; markdownlint uses its defaults', vim.log.levels.WARN)
 	end
 
-	vim.api.nvim_create_user_command('ValeSync', vale_sync, { desc = 'Lint: download the shared vale styles' })
+	vim.api.nvim_create_user_command('ValeSync', function() vale_sync(relint_all) end, { desc = 'Lint: download the shared vale styles' })
 
 	local checkmake = lint.linters.checkmake
 	if vim.fn.has('win32') == 1 and type(checkmake) == 'table' then

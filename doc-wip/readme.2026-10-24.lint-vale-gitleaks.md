@@ -19,12 +19,13 @@ mason-tool-installer installs both (`M.mason`).
 
 1. `:MasonToolsInstall`, wait, restart nvim.
 2. `:ValeSync`: downloads Microsoft and write-good (a notification says when it's done).
+   Since 2026-11-02 the first markdown buffer without styles starts it by itself, once per session, and lints again when it's done.
 
 ## Test
 
 1. A `.md` file outside any project with a `.vale.ini`: write `This is very very easy.`,
    `:w` -> write-good / Microsoft hints (`:lua =vim.diagnostic.get(0)`, source `vale`).
-2. Before `:ValeSync` (or with `stdpath('data')/vale` removed): no vale diagnostics, no error.
+2. With `stdpath('data')/vale` removed: opening a markdown file starts the sync; vale diagnostics show up after it, no error.
 3. Any file with a GitHub token, `ghp_` + 36 letters/digits, e.g.
    `github_token = "ghp_a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8"`, `:w` -> a gitleaks diagnostic (rule `github-pat`).
    (The AWS sample `AKIAIOSFODNN7EXAMPLE1234` does not match gitleaks' AWS rule: checked 2026-10-31.)
