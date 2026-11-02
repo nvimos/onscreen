@@ -34,7 +34,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - @plug-wip/genja-recent.nvim/CLAUDE.md: recent files with own rules, frecency ranking; picker on `<C-F1>`.
 - @plug-wip/genja-splitpad.nvim/CLAUDE.md: padding column next to the split separator in unfocused windows.
 - @plug-wip/genja-statusline.nvim/CLAUDE.md: statusline, tabline, winbar.
-- @plug-wip/genja-util.nvim/CLAUDE.md: helpers shared by the plug-wip plugins (centred float, uuid, code fence).
+- @plug-wip/genja-util.nvim/CLAUDE.md: helpers shared by the plug-wip plugins (centred float, uuid, code fence, llm backends).
 
 ## Working style
 

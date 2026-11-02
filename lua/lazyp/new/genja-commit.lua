@@ -16,7 +16,7 @@ return {
 		window = 'split', -- or 'float'
 		lint = { title_max = 65, body_max = 72 },
 		generate = {
-			order = { 'claude', 'copilot', 'gemini', 'aichat' },
+			order = { 'claude', 'copilot', 'gemini', 'aichat', 'ollama' },
 			timeout = 60,
 			claude = { model = 'haiku', effort = 'low' },
 			aichat = { role = 'gitcommit' },

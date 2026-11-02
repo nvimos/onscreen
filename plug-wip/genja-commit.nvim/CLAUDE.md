@@ -54,16 +54,19 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 - `<M-g>` in every gitcommit buffer writes a message from the staged diff, inserted at the cursor.
 - Async; `<C-c>` cancels (not `<Esc>`); timeout 60 s, configurable (`generate.timeout`, seconds).
 - Input: built-in prompt (limits from `lint`), last 15 commit subjects, staged diff cut at 20 KB.
-- Backend order configurable, first on PATH wins: `claude` (`-p --tools ""`, model `haiku`, effort `low`), `copilot` (`-p -s --no-ask-user`, `--model` optional), `gemini` (`-p` appended to stdin, `-o text`, `-m` optional), `aichat` (`-S`, `-r gitcommit` if `--list-roles` has it, else no role; `-m` optional).
+- Backend order configurable, first available wins: `claude` (`-p --tools ""`, model `haiku`, effort `low`), `copilot` (`-s --no-ask-user`, no `-p`, `--model` optional), `gemini` (`-p` appended to stdin, `-o text`, `-m` optional), `aichat` (`-S`, `-r gitcommit` if `--list-roles` has it, else no role; `-m` optional), `ollama` (http, local by default).
+- Backends live in `genja-util.nvim/lua/genja-util/llm.lua`, shared with genja-ask: two kinds, `cli` (prompt on stdin) and `http` (OpenAI-compatible chat completions through curl); one interface, `available()` and `run(prompt, opts, on_done)` (2026-11-02).
+- ollama is a backend; end point and model are options (`generate.ollama`), defaulting to the local server.
+- Own backends: `generate.backends[name]`, an http spec (`end_point`, `model`, `api_key`) or a cli spec (`exe`, `args`), named in `order`.
 - `gh copilot` is not a backend: the extension was retired on 2025-10-25 in favour of the standalone `copilot` CLI (needs a paid Copilot plan).
 - The whole prompt goes on stdin: npm `.cmd` shims limit the command line to 8191 chars. (inferred)
 - `exepath()` gives the full path so `.cmd` shims spawn on Windows. (inferred)
 - Repo dir: the popup's dir, else nvim's cwd (git starts the editor in the work tree). (inferred)
-- The copilot backend is untested.
+- The copilot backend is untested; the copilot CLI is not installed here (2026-11-02).
+- The ollama backend is untested.
 - The gemini backend is untested; per its CLI reference, `-p` text is appended to stdin.
-- Backends stay as `if` branches in `command_for()`; a wrapper per CLI only if it gets messy.
 - Flags checked against the docs (2026-10-22), written as if both CLIs were installed.
-- Hint: unverified: whether `copilot -p` also reads piped stdin (docs mention piped input, show no example). If not, the prompt has to move into the `-p` argument (8191-char limit through a `.cmd` shim).
+- copilot gets the prompt piped and no `-p`: its docs say piped input is ignored when `-p` is given (checked 2026-11-02).
 
 ## Conventional Commits
 

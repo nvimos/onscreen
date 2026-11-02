@@ -12,9 +12,10 @@ from the staged diff.
   - lint while typing: [nvim-lint](https://github.com/mfussenegger/nvim-lint) +
     [gitlint](https://jorisroovers.com/gitlint/) when both are there, else
     built-in rules (title length, blank line 2, body line length);
-  - `<M-g>`: write the message with `claude`, `copilot`, `gemini` or `aichat` (first one
-    on PATH, in `generate.order`), inserted at the cursor; `<C-c>` cancels;
-    the copilot and gemini backends are untested;
+  - `<M-g>`: write the message with `claude`, `copilot`, `gemini`, `aichat` (CLIs on PATH)
+    or `ollama` (http, local server by default), the first available one in
+    `generate.order`; inserted at the cursor; `<C-c>` cancels; the copilot, gemini
+    and ollama backends are untested. Backends: `genja-util.nvim/lua/genja-util/llm.lua`;
   - `b:copilot_enabled` for copilot.vim ghost text.
 
 ## Popup keys
@@ -39,7 +40,7 @@ from the staged diff.
 		keys = { commit = { '<C-CR>', '<M-CR>', '<C-s>' }, fill = '<M-u>', abort = { '<Esc>', 'q' }, generate = '<M-g>', cancel = '<C-c>' },
 		lint = { title_max = 65, body_max = 72, debounce = 300, install_gitlint = true },
 		generate = {
-			order = { 'claude', 'copilot', 'gemini', 'aichat' },
+			order = { 'claude', 'copilot', 'gemini', 'aichat', 'ollama' },
 			timeout = 60,     -- seconds
 			diff_max = 20000, -- bytes of staged diff sent
 			subjects = 15,    -- recent subjects sent as style examples
@@ -48,6 +49,13 @@ from the staged diff.
 			copilot = { model = nil },
 			gemini = { model = nil },
 			aichat = { role = 'gitcommit', model = nil },
+			-- http: OpenAI-compatible chat completions; local ollama unless end_point says otherwise
+			ollama = { model = 'qwen3.5:0.8b', end_point = 'http://localhost:11434/v1/chat/completions', api_key = nil },
+			-- own backends, named in order: { end_point, model, api_key } (http) or { exe, args } (cli)
+			backends = {
+				-- openrouter = { end_point = 'https://openrouter.ai/api/v1/chat/completions',
+				--     model = 'deepseek/deepseek-v4-flash', api_key = function() return os.getenv('OPENROUTER_API_KEY') end },
+			},
 		},
 		copilot = true,       -- set b:copilot_enabled in gitcommit buffers
 		conventional = false, -- Conventional Commits mode, see below
@@ -90,15 +98,15 @@ scopes used before after `type(`, and footers (`BREAKING CHANGE:`, `Refs:`,
    draft come back; `<C-CR>` to commit.
 4. `git commit` from a terminal with nvim as the editor: lint, `<M-g>` and
    copilot ghost text (`<M-f>` accepts) work there too.
-5. copilot backend (untested): `<M-g>` sends the prompt on stdin, but the
-   docs don't show `copilot -p` reading stdin. Check it in the repo:
+5. copilot backend (untested): `<M-g>` pipes the prompt with no `-p`; copilot
+   ignores piped input when `-p` is given (docs: "Run Copilot CLI programmatically").
+   Check it in the repo:
 
    ```sh
-   git diff --cached | copilot -p "summarize this diff" -s
+   git diff --cached | copilot -s --no-ask-user
    ```
 
-   If the answer mentions your changes, it works. If not, copilot only sees
-   the `-p` text, and `<M-g>` inserts a useless reply or times out.
+   If the answer mentions your changes, it works.
 6. Conventional Commits mode: `git config genja-commit.conventional true` in
    a repo, reopen the popup, then `<M-g>` (expect `type(scope): description`)
    or type a title without a type (expect an error; `<C-CR>` asks once).

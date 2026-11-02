@@ -27,8 +27,13 @@
 ---@field role? string used when `aichat --list-roles` has it
 ---@field model? string
 
+---@class genja-commit.OllamaOpts
+---@field model? string default genja-util.llm.OLLAMA_MODEL
+---@field end_point? string default the local server, genja-util.llm.OLLAMA_END_POINT
+---@field api_key? string|fun(): string|nil
+
 ---@class genja-commit.GenerateOpts
----@field order string[] first one on PATH is used: 'claude', 'copilot', 'gemini', 'aichat'
+---@field order string[] first available one is used: 'claude', 'copilot', 'gemini', 'aichat', 'ollama', or a key of `backends`
 ---@field timeout integer seconds
 ---@field diff_max integer bytes of staged diff sent
 ---@field subjects integer recent commit subjects sent as style examples
@@ -37,6 +42,8 @@
 ---@field copilot genja-commit.CopilotOpts
 ---@field gemini genja-commit.GeminiOpts
 ---@field aichat genja-commit.AichatOpts
+---@field ollama genja-commit.OllamaOpts
+---@field backends table<string, genja-util.llm.CliSpec|genja-util.llm.HttpSpec> own backends by name, e.g. another http end point
 
 ---@alias genja-commit.Window 'split'|'float'
 
@@ -80,7 +87,7 @@ local defaults = {
 		install_gitlint = true,
 	},
 	generate = {
-		order = { 'claude', 'copilot', 'gemini', 'aichat' },
+		order = { 'claude', 'copilot', 'gemini', 'aichat', 'ollama' },
 		timeout = 60,
 		diff_max = 20000,
 		subjects = 15,
@@ -88,6 +95,8 @@ local defaults = {
 		copilot = {},
 		gemini = {},
 		aichat = { role = 'gitcommit' },
+		ollama = {},
+		backends = {},
 	},
 	copilot = true,
 	conventional = false,

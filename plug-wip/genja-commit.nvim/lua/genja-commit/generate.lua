@@ -1,7 +1,8 @@
 -- Write a commit message from the staged diff with an AI CLI, inserted at the cursor.
--- Backends are tried in opts.generate.order; the first one on PATH runs.
--- The whole prompt goes on stdin: npm .cmd shims cap the command line at 8191 chars.
+-- Backends are tried in opts.generate.order; the first available one runs (CLIs: on PATH;
+-- http ones such as ollama: curl on PATH). Backends: plug-wip/genja-util.nvim/lua/genja-util/llm.lua.
 
+local llm = require('genja-util.llm')
 local config = require('genja-commit.config')
 local git = require('genja-commit.git')
 local popup = require('genja-commit.popup')
@@ -13,66 +14,17 @@ local SRC = 'genja-commit/generate.lua: '
 ---@type table<integer, { job: any, cancelled: boolean }> running jobs (vim.system objects) by buffer
 local running = {}
 
----@param name string
----@return string[]? cmd
-local function command_for(name)
-	local opts = config.get().generate
-	local exe = vim.fn.exepath(name) -- full path: finds .cmd shims on Windows
-	if exe == '' then
-		return nil
-	end
-	local cmd = { exe }
-	if name == 'claude' then
-		vim.list_extend(cmd, { '-p', '--tools', '' }) -- no tools: answer from stdin only
-		if opts.claude.model then
-			vim.list_extend(cmd, { '--model', opts.claude.model })
-		end
-		if opts.claude.effort then
-			vim.list_extend(cmd, { '--effort', opts.claude.effort })
-		end
-	elseif name == 'copilot' then
-		-- untested. -s: response only, no stats; --no-ask-user: never wait for input.
-		-- No --allow-* flags: tools needing permission are refused in -p mode.
-		vim.list_extend(cmd, { '-p', 'Follow the instructions on stdin.', '-s', '--no-ask-user' })
-		if opts.copilot.model then
-			vim.list_extend(cmd, { '--model', opts.copilot.model })
-		end
-	elseif name == 'gemini' then
-		-- untested. -p text is appended to stdin; -o text: plain answer
-		vim.list_extend(cmd, { '-p', 'Follow the instructions above.', '-o', 'text' })
-		if opts.gemini.model then
-			vim.list_extend(cmd, { '-m', opts.gemini.model })
-		end
-	elseif name == 'aichat' then
-		table.insert(cmd, '-S') -- no streaming: one plain answer
-		if opts.aichat.model then
-			vim.list_extend(cmd, { '-m', opts.aichat.model })
-		end
-		local role = opts.aichat.role
-		if role then
-			local roles = vim.system({ exe, '--list-roles' }, { text = true }):wait()
-			local list = vim.split(roles.stdout or '', '\n', { trimempty = true })
-			if roles.code == 0 and vim.list_contains(vim.tbl_map(vim.trim, list), role) then
-				vim.list_extend(cmd, { '-r', role })
-			end
-		end
-	else
-		vim.notify(SRC .. 'unknown generator ' .. name, vim.log.levels.WARN)
-		return nil
-	end
-	return cmd
-end
-
----@return string? name
----@return string[]? cmd
+---Backends tried in generate.order: built-in ones (genja-util/llm.lua) or generate.backends entries.
+---@return genja-util.llm.Backend|nil
 local function pick_backend()
-	for _, name in ipairs(config.get().generate.order) do
-		local cmd = command_for(name)
-		if cmd then
-			return name, cmd
+	local opts = config.get().generate
+	for _, name in ipairs(opts.order) do
+		local backend = llm.named(name, opts[name], opts.backends[name])
+		if backend and backend:available() then
+			return backend
 		end
 	end
-	return nil, nil
+	return nil
 end
 
 ---Extra prompt lines for Conventional Commits mode: the model infers type and scope.
@@ -175,38 +127,29 @@ function M.run(buf)
 		vim.notify(SRC .. (err or 'no input'), vim.log.levels.WARN)
 		return
 	end
-	local name, cmd = pick_backend()
-	if not name or not cmd then
-		vim.notify(SRC .. 'none on PATH: ' .. table.concat(opts.generate.order, ', '), vim.log.levels.WARN)
+	local backend = pick_backend()
+	if not backend then
+		vim.notify(SRC .. 'none available: ' .. table.concat(opts.generate.order, ', '), vim.log.levels.WARN)
 		return
 	end
+	local name = backend.name
 
 	local status = ('generating (%s) · %s cancels'):format(name, opts.keys.cancel)
 	vim.notify(SRC .. status)
 	popup.set_status(buf, status)
 
 	local entry = { cancelled = false }
-	entry.job = vim.system(cmd, {
-		cwd = dir,
-		text = true,
-		stdin = input,
-		timeout = opts.generate.timeout * 1000,
-	}, vim.schedule_wrap(function(res)
+	entry.job = backend:run(input, { cwd = dir, timeout = opts.generate.timeout }, function(err, out)
 		finish(buf)
 		if entry.cancelled then
 			vim.notify(SRC .. name .. ' cancelled')
 			return
 		end
-		if res.code == 124 then -- vim.system's timeout code
-			vim.notify(SRC .. ('%s timed out after %d s'):format(name, opts.generate.timeout), vim.log.levels.WARN)
+		if err then
+			vim.notify(SRC .. name .. ' failed: ' .. err, vim.log.levels.ERROR)
 			return
 		end
-		if res.code ~= 0 then
-			local out = vim.trim((res.stderr or '') .. '\n' .. (res.stdout or ''))
-			vim.notify(SRC .. name .. ' failed: ' .. out, vim.log.levels.ERROR)
-			return
-		end
-		local text = clean(res.stdout or '')
+		local text = clean(out or '')
 		if text == '' then
 			vim.notify(SRC .. name .. ' returned nothing', vim.log.levels.WARN)
 			return
@@ -214,7 +157,11 @@ function M.run(buf)
 		if vim.api.nvim_buf_is_valid(buf) then
 			insert_at_cursor(buf, text)
 		end
-	end))
+	end)
+	if not entry.job then
+		finish(buf)
+		return
+	end
 	running[buf] = entry
 
 	local function cancel()
