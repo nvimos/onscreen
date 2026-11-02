@@ -176,6 +176,8 @@ return {
 
 	},
 	keys = Maps:keys(),
+	-- track_usage wraps keymaps from startup on, not only after the first <leader>?
+	event = 'VeryLazy',
 
 	-- explicit: the dir name (abdul-keymaps.nvim) no longer matches the module name (keymaps)
 	---@param opts KeymapsConfig
