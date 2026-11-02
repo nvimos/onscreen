@@ -86,5 +86,5 @@ code or history: confirm or delete. `Hint:` is a working note for Claude.
 
 - minuet gives ghost text in gitcommit buffers (config's `lua/lazyp/langs-comps/minuet.lua`, `ft` + `auto_trigger_ft`), `<M-A>` accepts; since 2026-10-31.
 - copilot.vim moved to the config's `lua/lazyp/unused/copilot.lua` (minuet won).
-- minuet only sees the buffer, not the staged diff, so its suggestions are random; todo #14 in the config's `todo-ideas.md`.
+- minuet gets the staged diff with each request in gitcommit buffers, below a scissors line like `git commit -v` (config's `lua/genja/ext/minuet-diff.lua`, 2026-11-02); before that its suggestions were random.
 - `attach()` still sets `b:copilot_enabled = true` (opt `copilot`), for other setups. (inferred)

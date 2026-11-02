@@ -69,6 +69,7 @@ mappings and funcs for them
      ext/diag-align.lua - diagnostic virtual text starts in one column per paragraph, after its longest line (vim.g.diag_align = false: end of line; plugin/diag-align.lua)
      ext/lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync, run by itself once when the styles are missing); editorconfig-checker and gitleaks on all)
      ext/lint-silence.lua - <leader>cx in markdown: the markdownlint/vale rule under the cursor off in its config, with a dated comment
+     ext/minuet-diff.lua - minuet in gitcommit buffers: the staged diff goes along with each request (FIM suffix, chat context)
      ext/telescope-virthelp.lua - prototype: key help table in the empty results of every picker (plugin/telescope-virthelp.lua); the footer was removed
      ext/telescope-keymaps.lua - telescope keymaps with refine keys and <M-r> desc group rotation (tests: tests/telescope-keymaps/)
      map-zero.lua       - keymaps, essential that must not fail

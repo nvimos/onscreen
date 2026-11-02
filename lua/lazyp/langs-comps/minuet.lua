@@ -4,7 +4,8 @@
 -- Ollama needs `ollama serve` and `ollama pull qwen2.5-coder:0.5b`; switch for a session with
 --   :Minuet change_model openai_fim_compatible:qwen2.5-coder:0.5b
 -- :CheckHealthSimpleMinuet shows which provider is on and whether it can answer.
--- Ghost text is on in gitcommit buffers (took over from copilot.vim, 2026-10-31); off elsewhere:
+-- Ghost text is on in gitcommit buffers (took over from copilot.vim, 2026-10-31), with the staged
+-- diff sent along (lua/genja/ext/minuet-diff.lua, 2026-11-02); off elsewhere:
 --   ghost text: <leader>am in the buffer (:Minuet virtualtext toggle)
 --   blink: the source only answers <M-y>; <leader>aM turns on auto-complete
 -- The blink source is added by lua/genja/completion/minuet.lua (feature 'minuet'
@@ -153,6 +154,15 @@ return {
         cmp = { enable_auto_complete = false },
     },
     config = function(_, opts)
+        -- gitcommit: the staged diff goes along (lua/genja/ext/minuet-diff.lua); minuet.config
+        -- is only on the rtp now, so the templates are set here and not in opts above
+        local diff = require('genja.ext.minuet-diff')
+        local po = opts.provider_options
+        po.codestral.template = diff.fim_template()
+        po.openai_fim_compatible.template = diff.fim_template()
+        for _, name in ipairs({ 'gemini', 'openai', 'openai_compatible' }) do
+            po[name].chat_input = diff.chat_input()
+        end
         require('minuet').setup(opts)
         Maps:mappings(opts)
     end,
