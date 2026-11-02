@@ -139,3 +139,9 @@ migration from 0.9 to 0.11 (the file that started it all)
 - [ ] sessions: a saved shell comes back in its current dir, not the one it was started in (later, asked 2026-10-31)
   - lua/genja/ext/term.lua mksession: the term:// name keeps the start dir
   - which other terminals to save (e.g. `:terminal ssh a22`: reconnects on restore): needs more thought; only idle shells for now
+
+- [ ] abbrev: /FAIL<CR> searches for "/FAIL<C-]><CR>" (literal text, no search)
+  - source: lua/genja/abbreviations.vim:38, the cmdline <CR> map returns the single-quoted string `'<C-]><CR>'` for every cmdtype but `:`; in an <expr> map the <> is typed literally, and the Vim-only `<C-]>` is only needed for `:` abbreviations (a3e07a3, 80c8fa1)
+  - fix: only `:` gets the <C-]> prefix, other cmdtypes return `"\<CR>"` (double quotes, real key), or no map at all for `/` `?`
+  - test: `/FAIL<CR>`, `?FAIL<CR>`, `:s/a/b/<CR>`, `jj`, `g` still work
+  - 2026-11-02: fixed (abbreviations.vim: `"\<CR>"` for non-`:`); `/FAIL<CR>` tested by hand, the rest of the test list open

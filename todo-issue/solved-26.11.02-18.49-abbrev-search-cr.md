@@ -1,0 +1,4 @@
+- [x] abbrev: `/FAIL<CR>` searched for the text `<C-]><CR>` (2026-11-02)
+    - [x] lua/genja/abbreviations.vim: the cmdline `<CR>` map returns `"\<CR>"` for `/` and `?`; only `:` keeps the `<C-]>` prefix (origin a3e07a3, 80c8fa1)
+    - [x] test: `/FAIL<CR>` searches, by hand (2026-11-02)
+    - [ ] test: `?FAIL<CR>`, `:s/a/b/<CR>`, `jj`, `g` still work

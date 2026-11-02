@@ -35,7 +35,7 @@ cnoreabbrev <expr> x  (getcmdtype() ==# ':' && getcmdline() ==# 'x')  ? 'Unsaved
 cnoreabbrev jj Unsaved qa
 
 " g (typo) to quit. :terminal opens pwsh
-cnoremap <expr> <CR> getcmdtype() !=# ':' ? '<C-]><CR>'
+cnoremap <expr> <CR> getcmdtype() !=# ':' ? "\<CR>"
     \ : getcmdline() ==# 'g' ? '<C-u>Unsaved q<CR>'
     \ : v:lua.require'genja.ext.term'.cmdline_cr()
 
