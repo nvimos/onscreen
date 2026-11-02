@@ -52,7 +52,7 @@ return {
 				{ '<leader>a',        group = 'AI: companion, minuet' },
 				{ '<leader>b',        group = 'Buffer: alternate' },
 				{ '<leader>bb',       group = 'Buffer: rotate' },
-				{ '<leader>c',        group = 'Code: lsp' },
+				{ '<leader>c',        group = 'Code: lsp, lint rule off' },
 				{ '<leader>cA',       group = 'Code: php' },
 				{ '<leader>cW',       group = 'Code: workspace' },
 				{ '<leader>cc',       group = 'Diag: float' },

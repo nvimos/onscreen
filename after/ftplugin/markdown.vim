@@ -9,6 +9,8 @@ EOF
 
 " :map has no desc; which-key shows the rhs instead
 nnoremap <buffer> <leader>mfx <Cmd>call v:lua.require'genja.ext.md-fix'.fix(bufnr(), v:true)<CR>
+" turn off the markdownlint/vale rule under the cursor in its config (lua/genja/ext/lint-silence.lua)
+nnoremap <buffer> <leader>cx <Cmd>lua require('genja.ext.lint-silence').at_cursor()<CR>
 
 " j/k move by screen line through wrapped text; with a count (5j, relative numbers) by real line
 nnoremap <buffer> <expr> j v:count ? 'j' : 'gj'
