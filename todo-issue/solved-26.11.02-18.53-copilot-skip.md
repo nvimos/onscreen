@@ -1,0 +1,3 @@
+- [x] tests: copilot case skips when copilot.vim is not in lazy (2026-11-02)
+    - [x] tests/completion/test_setup.lua: `copilot leaves <Tab> to blink` asks the child's lazy plugin list; skips when `copilot.vim` is missing (its folder stays in lazy's data dir)
+    - [ ] test: `make test D=completion` shows the case as skipped, not failed

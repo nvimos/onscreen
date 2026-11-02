@@ -70,6 +70,10 @@ T['off in the ask popup'] = function()
 end
 
 T['copilot leaves <Tab> to blink'] = function()
+	-- the folder stays in lazy's data dir after the spec is unused, so ask lazy's plugin list
+	if child.lua('return require("lazy.core.config").plugins["copilot.vim"] == nil') then
+		MiniTest.skip('copilot.vim not in lazy')
+	end
 	eq(child.lua('return vim.g.copilot_no_tab_map'), true)
 end
 
