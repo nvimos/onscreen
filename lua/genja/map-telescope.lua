@@ -31,6 +31,7 @@ km('n', '<leader>j/.', tsbuiltin.find_files, nosi 'Telescope: find_files')
 km('n', '<leader>j//', F.find_in_startdirs,  nosi 'Telescope: find in start dirs')
 km('n', '<leader>jd',  F.find_in_startdirs,  nosi 'Telescope: find in start dirs')
 km('n', '<leader>jo',  F.oldfiles,           nosi 'Telescope: oldfiles')
+km('n', '<leader>\'',  F.oldfiles,           nosi 'Telescope: oldfiles')
 km('n', '<leader>js',  F.grep_string,        nosi 'Telescope: grep string')
 
 -- vim help, inspect state
