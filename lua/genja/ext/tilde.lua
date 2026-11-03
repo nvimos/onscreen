@@ -124,10 +124,10 @@ end
 ---@type table<string, string>
 local check_next = {
     [' '] = 'x',
-    ['x'] = 'n',
-    ['n'] = '.',
+    ['x'] = '.',
     ['.'] = '~',
-    ['~'] = ' ',
+    ['~'] = 'n',
+    ['n'] = ' ',
 }
 
 --- Markdown: cycle the `- [ ]` box on this line, cursor anywhere on it.
