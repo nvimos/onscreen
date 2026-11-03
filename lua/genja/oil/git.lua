@@ -29,9 +29,10 @@ local function git_entry_names()
 	return names, last
 end
 
--- top-level names in `dir` with unstaged changes or untracked files;
--- a dir counts when anything under it does. Calls on_done(set) on the main loop.
-local function unstaged_names(dir, on_done)
+-- top-level names in `dir` with git changes; a dir counts when anything under it does.
+-- which = 'unstaged': unstaged changes and untracked files; 'any': also staged (added, deleted,
+-- renamed). Ignored files never count. Calls on_done(set) on the main loop.
+local function changed_names(dir, which, on_done)
 	vim.system({ 'git', 'rev-parse', '--show-prefix' }, { cwd = dir, text = true }, function(prefix_res)
 		if prefix_res.code ~= 0 then
 			return
@@ -51,7 +52,9 @@ local function unstaged_names(dir, on_done)
 				local y = field:sub(2, 2)
 				local path = field:sub(4) -- porcelain paths are relative to the repo root
 				local is_unstaged = y ~= ' ' and y ~= '!' and y ~= ''
-				if is_unstaged and vim.startswith(path, prefix) then
+				local is_staged = x ~= ' ' and x ~= '?' and x ~= '!' and x ~= ''
+				local counts = is_unstaged or (which == 'any' and is_staged)
+				if counts and vim.startswith(path, prefix) then
 					local top = vim.split(path:sub(#prefix + 1), '/', { plain = true })[1]
 					set[top] = true
 				end
@@ -67,7 +70,7 @@ end
 
 -- move the cursor to the next entry below `after_lnum` with unstaged changes, wrapping
 local function jump_to_next_unstaged(buf, dir, after_lnum)
-	unstaged_names(dir, function(set)
+	changed_names(dir, 'unstaged', function(set)
 		if vim.api.nvim_get_current_buf() ~= buf then
 			return -- user left the oil buffer meanwhile
 		end
@@ -167,6 +170,73 @@ local function git_on_entries(args, label, opts)
 			vim.notify(SRC .. label .. ' failed: ' .. vim.trim(res.stderr or ''), vim.log.levels.ERROR)
 		end
 	end))
+end
+
+-- ]c / [c: the count-th entry below (step 1) or above (step -1) with any git change, wrapping
+local function jump_changed(step)
+	local dir = require('oil').get_current_dir()
+	if not dir then
+		return
+	end
+	local buf = vim.api.nvim_get_current_buf()
+	local count = vim.v.count1 -- read now: the jump runs after git answers
+	changed_names(dir, 'any', function(set)
+		if vim.api.nvim_get_current_buf() ~= buf then
+			return -- user left the oil buffer meanwhile
+		end
+		local lines = vim.api.nvim_buf_line_count(buf)
+		local lnum = vim.fn.line('.')
+		local target
+		local left = count
+		for _ = 1, lines do
+			lnum = (lnum - 1 + step) % lines + 1
+			local e = require('oil').get_entry_on_line(buf, lnum)
+			if e and set[e.name] then
+				target = lnum
+				left = left - 1
+				if left == 0 then
+					break
+				end
+			end
+		end
+		if target then
+			vim.cmd("normal! m'") -- jumplist, like ]c in a diff
+			vim.api.nvim_win_set_cursor(0, { target, 0 })
+		end
+	end)
+end
+
+M.next_changed = function() jump_changed(1) end
+M.prev_changed = function() jump_changed(-1) end
+
+-- ,C / ggC: commit only the entry under the cursor as `update: <name>`; other staged changes stay
+-- staged. `add` first, so an untracked file or a dir's new files are in it too.
+M.git_commit_entry = function()
+	local dir = require('oil').get_current_dir()
+	local e = require('oil').get_cursor_entry()
+	if not dir or not e or not e.id or e.name == '..' then
+		return
+	end
+	local name = e.name
+	local msg = 'update: ' .. name
+	vim.system({ 'git', 'add', '--', name }, { cwd = dir, text = true }, function(add)
+		if add.code ~= 0 then
+			vim.schedule(function()
+				vim.notify(SRC .. 'git add failed: ' .. vim.trim(add.stderr or ''), vim.log.levels.ERROR)
+			end)
+			return
+		end
+		local cmd = { 'git', 'commit', '-m', msg, '--', name }
+		vim.system(cmd, { cwd = dir, text = true }, vim.schedule_wrap(function(res)
+			if res.code == 0 then
+				vim.notify(SRC .. 'committed: ' .. msg)
+				M.refresh_oil_git()
+			else
+				local out = vim.trim((res.stderr or '') .. ' ' .. (res.stdout or ''))
+				vim.notify(SRC .. 'git commit failed: ' .. out, vim.log.levels.ERROR)
+			end
+		end))
+	end)
 end
 
 M.git_add = function()

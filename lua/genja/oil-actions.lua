@@ -51,6 +51,9 @@ end }
 O.git_add              = { desc = "Git: add", callback = F.git_add }
 O.git_unstage          = { desc = "Git: unstage (keep changes)", callback = F.git_unstage }
 O.git_commit           = { desc = "Git: commit (message popup)", callback = F.git_commit }
+O.git_commit_entry     = { desc = "Git: commit entry as 'update: <name>'", callback = F.git_commit_entry }
+O.next_changed         = { desc = "Git: next changed entry", callback = F.next_changed }
+O.prev_changed         = { desc = "Git: previous changed entry", callback = F.prev_changed }
 -- }}}
 
 -- {{{ sort the listing

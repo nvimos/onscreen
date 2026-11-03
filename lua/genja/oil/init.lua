@@ -63,6 +63,9 @@ M.toggle_diff_preview            = git_diff_preview.toggle_diff_preview
 M.refresh_oil_git                = git.refresh_oil_git
 M.git_add                        = git.git_add
 M.git_unstage                    = git.git_unstage
+M.git_commit_entry               = git.git_commit_entry
+M.next_changed                   = git.next_changed
+M.prev_changed                   = git.prev_changed
 
 -- git commit popup
 M.git_commit                     = git_commit.git_commit

@@ -168,9 +168,12 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>md  diffview: changes   <leader>mh  file history   <leader>mH  repo history
     <leader>mxd close diffview
     <leader>mGc commit popup (genja-commit; in oil also ggc, <LocalLeader>c)
+                in oil: ggC, <LocalLeader>C commit the entry under the cursor as `update: <name>` (lua/genja/map-oil.lua)
     <leader>mGs git signs on/off in this buffer (markdown starts off: vim.g.gitsigns_skip_ft)
     hunks, only in buffers gitsigns tracks:
     ]c  [c      next / previous hunk (in diff mode: nvim's change jumps)
+                in oil: next / previous changed entry: modified, added, untracked, deleted, staged or not;
+                a dir when anything under it changed; count, wraps (lua/genja/map-oil.lua)
     <leader>hs  stage/unstage hunk (visual: lines)   <leader>hS  stage buffer
     <leader>hr  reset hunk (visual: lines)           <leader>hR  reset buffer
     <leader>hp  preview float    <leader>hi  preview inline   ih  hunk text object

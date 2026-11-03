@@ -1,0 +1,8 @@
+- [x] oil: jump between changed entries, commit one entry (2026-11-03)
+    - [x] `lua/genja/oil/git.lua`: `changed_names()` (was `unstaged_names`), `'any'` also counts staged
+    - [x] `]c` / `[c`: next / previous changed entry, count, wraps, sets the jumplist
+    - [x] `ggC` / `<LocalLeader>C`: `git add` then commit only the entry as `update: <name>`
+    - [x] keys in `lua/genja/map-oil.lua`, actions in `lua/genja/oil-actions.lua`, `lua/genja/oil/init.lua`
+    - [x] `readme.cheatsheet.md`: Git section
+    - [ ] test: `]c`, `3]c`, `[c` in an oil dir with modified, staged and untracked files
+    - [ ] test: `ggC` on a file with other changes staged: those stay staged
