@@ -21,7 +21,8 @@ Markdown
 
 Toggle checkmark
 
-    - on a `- [ ]` line with no switch under the cursor
+    - on a `- [ ]` line with no switch under the cursor,
+      or with the cursor on the list bullet (`-` `+` are not flipped there)
     - cycles the box:
         - blank: open
         - x: done
@@ -158,6 +159,11 @@ function M.toggle()
     local line = vim.api.nvim_get_current_line()
 
     local ch = line:sub(col, col)
+    -- on the list bullet of a `- [ ]` line: cycle the box, don't flip +/-
+    local bullet = chars[ch] and line:find('%S') == col
+    if count == 1 and bullet and toggle_checkbox(row, line) then
+        return
+    end
     if count == 1 and chars[ch] then
         replace(row, col, col, chars[ch])
         return
