@@ -1,0 +1,3 @@
+- [x] hilite: muted diagnostic underline and virtual text colours (2026-11-03)
+    - [x] `lua/genja/hilite.vim`: error/warn underline, virtual text error/warn
+    - [ ] `DiagnosticVirtualTextError` is set twice in a row; drop the first

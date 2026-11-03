@@ -102,8 +102,8 @@ hi DiagnosticInfo  guifg=#6a5864 ctermfg=4 guibg=NONE gui=NONE
 hi DiagnosticHint  guifg=#969696 ctermfg=7 gui=NONE
 hi DiagnosticOk    guifg=#90ee90 ctermfg=10 gui=NONE
 
-hi DiagnosticUnderlineError guisp=#ff0000 gui=underline cterm=underline
-hi DiagnosticUnderlineWarn  guisp=#83792a gui=underline cterm=underline
+hi DiagnosticUnderlineError guisp=#7d3138 gui=underline cterm=underline
+hi DiagnosticUnderlineWarn  guisp=#836c4a gui=underline cterm=underline
 hi DiagnosticUnderlineInfo  guisp=#553333 gui=underline cterm=underline
 hi DiagnosticUnderlineHint  guisp=#d3d3d3 gui=underline cterm=underline
 hi DiagnosticUnderlineOk    guisp=#90ee90 gui=underline cterm=underline
@@ -119,7 +119,8 @@ hi DiagnosticVirtualTextInfo  guifg=#61AFEF guibg=#1c2229 ctermbg=Black
 hi DiagnosticVirtualTextHint  guifg=#98C379 guibg=#1c241e ctermbg=Black
 
 hi DiagnosticVirtualTextError guifg=#E06C75 guibg=NONE ctermbg=Black
-hi DiagnosticVirtualTextWarn  guifg=#E5C07B guibg=NONE ctermbg=Black
+hi DiagnosticVirtualTextError guifg=#825483 guibg=NONE ctermbg=Black
+hi DiagnosticVirtualTextWarn  guifg=#94775c guibg=NONE ctermbg=Black
 hi DiagnosticVirtualTextInfo  guifg=#61AFEF guibg=NONE ctermbg=Black
 hi DiagnosticVirtualTextHint  guifg=#98C379 guibg=NONE ctermbg=Black
 
