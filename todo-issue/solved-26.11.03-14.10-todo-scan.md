@@ -1,0 +1,4 @@
+- [x] todo: scan commits up to 5c637f8 into the idea files (2026-11-03)
+    - [x] `todo-ideas.md`: commit hashes on done items, extras 2026-10-31 to 2026-11-03
+    - [x] `todo-ideas.md`: abbrev `/FAIL<CR>` and shellcmd cache items marked done
+    - [x] `doc-wip/squash-ideas-oct-17.md`, `.details.md`: later commits, last scanned commit

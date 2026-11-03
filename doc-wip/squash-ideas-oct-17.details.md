@@ -42,6 +42,10 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   Conventional Commits mode from git config or commitlint/commitizen files;
   cmp source for types, scopes, footers. Copilot ghost text in commit
   buffers. nvim-lint has its own spec for later linters (14e). Untested.
+- Later (1185287, f3db574): copilot.vim shelved; minuet ghost text on by default in gitcommit. Tested.
+- Later (2b0b316): the message opens in a bottom split by default.
+- Later (170a8ed, f2d5be3): `<M-g>` and genja-ask backends on `genja-util.llm` (cli and http kinds); ollama backend.
+- Later (aa05687): minuet gets the staged diff below a scissors line in gitcommit requests. Untested.
 
 ## 25. telescope refine decorator: `<M-x>` exclude (S)
 
@@ -80,6 +84,7 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   with `commentstring`; `:WrapFold`, `<leader>wwf` paragraph (alma's
   `WrapFold`). Alma's copies get a "duplicated" comment.
 - Outcome: 29b (9bae096) `lua/genja/ext/wrapfold.lua`; 29a (4f73a32) `lua/genja/ext/tilde.lua`, also left/right, up/down, min/max, first/last; dial (3b309f8). Alma copies marked "duplicated". Guides: `readme.2026-10-23.wrapfold.md`, `readme.2026-10-23.tilde-dial.md`.
+- Later (c773959): `~` on a markdown `- [ ]` line with no switch under the cursor cycles the box: blank, x, n, ., ~.
 
 ## 32. tabline: resizing nvim-qt activates the right-most tab (M)
 
@@ -136,6 +141,9 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   project's `.vale.ini` or the shared `lint/.vale.ini`, `:ValeSync`. Untested.
 - Later (8dd25c3): checkmake works on Windows (own `--format` and parser).
 - Later (09cc345): exit-code warnings name the linter instead of `cmd.exe`.
+- Later (cd4a0ab): runs cancelled by a second lint are no longer reported (gitleaks "exited with code: 1").
+- Later (1c67fc5): `:ValeSync` runs once by itself when the shared styles are missing.
+- Later (01f7cda): `<leader>cx` in markdown turns the markdownlint/vale rule under the cursor off.
 
 ## Extras done along the way
 
@@ -207,10 +215,36 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
 - Unsaved picker (58316bd, 4ccf5bc); `b:telescope_hint` (bb164fe); `:Messages -yank` (1270b29); abbrev `g` (a3e07a3).
 - netrw.nvim (c30c591): icons from nvim-web-devicons. Ghost text (d7d084f): minuet-ai.nvim
   (`<leader>am`, blink `<M-y>`) and llm.nvim (`<leader>al`, llm-ls via mason) on ollama qwen3.5.
+- Terminal (80c8fa1, 140ed09, df0a668): bare `:terminal` opens pwsh on Windows, bash on Linux; sessions
+  keep idle shells started under a `'shell'` wrapper; `<S-Insert>` sends `<C-v>` to pwsh terminals.
+- Cmdline (fc6cd99, 8351d8f, aa7cdc5, 9693171, c655f23, abfb666, 82cd9a4): `<Up>`/`<Down>` history until a
+  menu walk, nothing preselected; `<C-BS>` deletes a word; `<M-j>`/`<M-k>` walk, `<M-f>` previous, `<M-w>`
+  first, `<M-s>` 3 down; no menu on one-char commands; shell names for `!` and `:terminal` from a disk
+  cache, `:ResetPathCache`; abbreviation `<CR>` types a real key in `/` and `?`.
+- Minuet (6dead7f, 3e90c60, 6122927, 3e5a645, a300cea, 0c3e3a3): answers only `<M-y>` unless blink
+  auto-complete is on; qwen2.5-coder and all providers, keys from gitignored `local/secrets.lua`;
+  `:CheckHealthSimpleMinuet` sends a fixed test request; Codestral by default; provider guide in doc-wip.
+- UI (17dceca, 7d43221, 29e8c26, 08a6f5c, 7390836): `:HiInspect` highlight groups under the cursor;
+  `:CheckHealthSimpleLsp` (renamed); completion doc window in menu colours, rounded frame, padding.
+- Tests (a3f049a, cd57bdf, ef9867a, ae71dd3, 48936c2, 3d74e10, 9244bc1, 9bebc59): gopls go-list warmup;
+  `make timings` slowest last; mason linters installed; llm dir with minuet `<M-y>`; telescope key help;
+  lint md-mixed; copilot skip; NOTE lines yellow, `NOTE <file> <case>: <msg>`.
+- Plugins (d7842a2, ca842c0, 18ed193, 1185287, e7b8ece): ecolog2 with ecolog-lsp, else ecolog.nvim v1;
+  copilot.vim and llm.nvim shelved, keys commented out; oil leaves `:Lexplore` working.
+- Markdown (58538ea, aeab075, 70a20a1): `gq` wraps checkbox items under the text; md-fix follows
+  editorconfig sections; `]j`/`[j` (`]y`/`[y`) jump to open checkboxes.
+- Diagnostics (27648c7, 698b3a6, 65812bb, 333bf79): diag-align toggle `<leader>tta` and in `<F2>`;
+  virtual text, link and underline colours; zen z1/z2 hide diagnostics, z0 shows them.
+- Small (fa42e84, 06bca1b, 3911a0b, 5c637f8): right-click paste search with a picked provider; keymaps
+  spec on VeryLazy; `:Ct` takes the current window; `<leader>'` oldfiles.
+- Mason (eef2590, 3480b0d): a package folder without `mason-receipt.json` (update cut off by a running
+  server) reinstalls silently when its filetype opens; `make mason` / `mason-luals` kill lua_ls first;
+  lua_ls logs to `stdpath('log')`; `:checkhealth genja.lsp` lists such packages. `update-treesitter` is
+  a prerequisite of `update` / `sync` again.
 
 ## Last scanned commit
 
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    f14feb12e31d9e12b24fba624cafa08ab1010b42  todo: keymap logger, both fork tracker and own Lua-native logger
+    5c637f81cd9e61926ccf5b1cdbd4621ad7729737  telescope: <leader>' opens oldfiles

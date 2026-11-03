@@ -87,4 +87,15 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 - legendary 0king fork `<leader>jl` (14a73da, b366920); `:ClaudeFterm -ax` (0db2b57); which-key helix, fixed height (da8581b, 5eb0576, a143fca), groups test (f7a9970).
 - Unsaved picker (58316bd, 4ccf5bc); `b:telescope_hint` (bb164fe); `:Messages -yank` (1270b29); abbrev `g` (a3e07a3).
 - netrw.nvim icons (c30c591); ghost text: minuet-ai.nvim and llm.nvim on ollama (d7d084f).
+- Terminal: bare `:terminal` opens pwsh/bash (80c8fa1), sessions keep shells under a wrapper (140ed09), `<S-Insert>` to pwsh (df0a668).
+- Cmdline: history until a menu walk, no preselect (fc6cd99); `<C-BS>` (8351d8f); `<M-j>`/`<M-k>` (aa7cdc5); `<M-f>`/`<M-w>`/`<M-s>` (9693171); no menu on one-char commands (c655f23); shell names from a disk cache, `:ResetPathCache` (abfb666); abbrev `<CR>` outside `:` (82cd9a4).
+- Minuet: `<M-y>` only (6dead7f); providers, keys from `local/secrets.lua` (3e90c60, 6122927); `:CheckHealthSimpleMinuet` (3e5a645); Codestral default (a300cea); provider guide (0c3e3a3).
+- `:HiInspect` (17dceca); `:CheckHealthSimpleLsp` (7d43221); completion doc window colours, frame, padding (29e8c26, 08a6f5c, 7390836).
+- Lint: cancelled runs not reported (cd4a0ab); `:ValeSync` on its own (1c67fc5); `<leader>cx` rule off (01f7cda).
+- Tests: go warmup (a3f049a), timings order (cd57bdf), linters installed (ef9867a), llm/minuet (ae71dd3), key help (48936c2), md-mixed (3d74e10), copilot skip (9244bc1), yellow NOTE (9bebc59).
+- ecolog2 or v1 (d7842a2, ca842c0); copilot.vim and llm.nvim shelved (18ed193, 1185287); oil `:Lexplore` (e7b8ece).
+- Markdown: `gq` wraps checkboxes (58538ea); md-fix follows editorconfig (aeab075); `]j`/`[j` open checkboxes (70a20a1); `~` cycles checkbox states (c773959).
+- diag-align `<leader>tta`, `<F2>` (27648c7); paste search with a picked provider (fa42e84); hilite diagnostics and links (698b3a6, 65812bb); zen z1/z2 hide diagnostics (333bf79).
+- keymaps spec on VeryLazy (06bca1b); `:Ct` takes the current window (3911a0b); `<leader>'` oldfiles (5c637f8).
+- Mason: cut-off installs repair on open, `make` kills lua_ls first (eef2590); `update-treesitter` prerequisite again (3480b0d).
 

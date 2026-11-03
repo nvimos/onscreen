@@ -24,21 +24,22 @@ migration from 0.9 to 0.11 (the file that started it all)
   - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
   - copilot ghost text in commit buffers, accept with <M-f> (copilot.vim moved to lua/lazyp/unused/ 2026-10-31: minuet won)
   - [~] gitcommit buffers: get commit-message help back without copilot.vim
-    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua); tested 2026-10-31
+    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua); tested 2026-10-31 (f3db574)
     - [x] minuet in gitcommit suggests random text: it only sees the commit buffer, not the staged changes;
           feed it `git diff --cached` (e.g. a gitcommit-only prompt or context in minuet's provider options)
       - 2026-11-02: lua/genja/ext/minuet-diff.lua, diff below a scissors line in the FIM suffix / chat context;
-            cached 10 s, cut at 4000 chars; untested
+            cached 10 s, cut at 4000 chars; untested (aa05687)
     - [ ] claude -p as a minuet provider: minuet only has HTTP backends; a custom backend would start the CLI per request (slow)
     - [ ] minuet `claude` provider (Anthropic API): not an option now (no API key); block commented out in minuet.lua
     - [~] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
       - [x] shared backends, cli and http kinds: plug-wip/genja-util.nvim/lua/genja-util/llm.lua,
-            used by genja-commit <M-g> and genja-ask (2026-11-02)
+            used by genja-commit <M-g> and genja-ask (2026-11-02) (170a8ed, f2d5be3)
       - [x] copilot CLI: prompt piped, no -p (copilot ignores stdin with -p); untested, CLI not installed
       - [x] ollama backend, end point and model configurable, local by default; own http/cli backends
             via generate.backends; untested
       - [ ] "also outside the popup": <M-g> already works in every gitcommit buffer; what else was meant?
   - opt-in Conventional Commits mode; cmp offers types, scopes, footers
+  - [x] commit message opens in a bottom split by default (2b0b316); untested
   - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
 
 - [x] extras outside the idea list (2026-10-23)
@@ -123,6 +124,38 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 - [x] extras outside the idea list (2026-10-31)
   - [x] netrw.nvim icons (c30c591); ghost text: minuet-ai.nvim and llm.nvim on ollama (d7d084f); both in todo-done/
+  - [x] terminal: bare :terminal opens pwsh on Windows, bash on Linux (80c8fa1); idle shells under a 'shell'
+        wrapper saved in sessions (140ed09); <S-Insert> sends <C-v> to pwsh terminals (df0a668)
+  - [x] cmdline: <Up>/<Down> history until a menu walk, no preselect (fc6cd99); <C-BS> deletes a word (8351d8f);
+        <M-j>/<M-k> walk the menu (aa7cdc5); <M-f> previous, <M-w> first, <M-s> 3 down (9693171);
+        no menu on one-char commands, :w<CR> map dropped (c655f23)
+  - [x] minuet: answers only <M-y> unless blink auto-complete is on (6dead7f); qwen2.5-coder, all providers,
+        keys from gitignored local/secrets.lua (3e90c60, 6122927); :CheckHealthSimpleMinuet (3e5a645);
+        Codestral by default (a300cea); provider guide doc-wip/readme.minuet-providers.md (0c3e3a3)
+  - [x] :HiInspect shows highlight groups under the cursor (17dceca); :CheckHealthLspSimple renamed
+        :CheckHealthSimpleLsp (7d43221)
+  - [x] completion doc window: menu colours, rounded frame, padding (29e8c26, 08a6f5c, 7390836)
+  - [x] lint: runs cancelled by nvim-lint no longer reported as exit code 1 (cd4a0ab)
+  - [x] tests: gopls go-list warmup (a3f049a), make timings slowest last (cd57bdf), mason linters installed (ef9867a),
+        llm dir with minuet <M-y> (ae71dd3), telescope key help (48936c2), lint md-mixed (3d74e10)
+  - [x] ecolog: ecolog2 with ecolog-lsp, else ecolog.nvim v1 (d7842a2, ca842c0)
+  - [x] copilot.vim and llm.nvim shelved, keys commented out (18ed193, 1185287)
+  - [x] oil: :Lexplore works again (e7b8ece); telescope key help in insert mode without n maps (48936c2)
+  - [x] markdown: gq wraps checkbox items under the text (58538ea); md-fix follows editorconfig sections (aeab075)
+  - [x] diag-align toggle on <leader>tta and in <F2> (27648c7); right-click paste search with a picked provider (fa42e84);
+        diagnostic virtual text and link colours (698b3a6)
+
+- [x] extras outside the idea list (2026-11-02)
+  - [x] lint: <leader>cx turns the markdownlint/vale rule under the cursor off (01f7cda)
+  - [x] tests: copilot case skips without copilot.vim in lazy (9244bc1)
+
+- [x] extras outside the idea list (2026-11-03)
+  - [x] :Ct starts claude in the current window (3911a0b)
+  - [x] ~ cycles markdown checkbox states blank x n . ~ (c773959); ]j [j / ]y [y jump to open checkboxes (70a20a1)
+  - [x] tests: yellow NOTE lines, shorter case path (9bebc59)
+  - [x] Makefile.lazy.mk: update-treesitter a prerequisite of update/sync again (3480b0d)
+  - [x] mason: cut-off installs repair themselves on open, make kills lua_ls first, lua_ls logs to stdpath('log') (eef2590)
+  - [x] hilite: muted diagnostic underline and virtual text (65812bb); <leader>' opens oldfiles (5c637f8)
 
 - [ ] custom keymap logger: count which keys/binds I use more than others
   - legendary only counts palette picks (frecency needs sqlite.lua, off in lua/lazyp/new/legendary.lua)
@@ -134,7 +167,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] finish create_tracker in the abdul-keymaps fork (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua),
         so :KeymapsStats counts keymaps, not mode changes
     - 2026-11-02: each keymap is wrapped (counts, then runs the original); lazy-loaded and buffer-local
-          ones wrapped as they appear; spec loads on VeryLazy; fork's earlier commits restyled like upstream; untested
+          ones wrapped as they appear; spec loads on VeryLazy (06bca1b); fork's earlier commits restyled like upstream; untested
   - [ ] build your own, no need for json. keep it lua-native
     - vim.on_key(), match typed keys against nvim_get_keymap() by lhs, count per mode:lhs (+ desc)
     - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
@@ -144,22 +177,22 @@ migration from 0.9 to 0.11 (the file that started it all)
   - today: lua/genja/map-lsp.lua toggle_diagnostics, `vim.diagnostic.enable(not vim.diagnostic.is_enabled())`
   - check that every source goes away and comes back, also in buffers opened while off
   - 2026-11-02: already works: enable(false) without a filter covers every namespace and later buffers
-  - [x] zen z1/z2 turn diagnostics off; z0 turns them on again (unless off before zen) with the limit of 3; untested
+  - [x] zen z1/z2 turn diagnostics off; z0 turns them on again (unless off before zen) with the limit of 3; untested (333bf79)
 
 - [x] lint: :ValeSync runs by itself when the shared styles are missing (asked 2026-10-31)
   - today vale is skipped until :ValeSync (lua/genja/ext/lint.lua prepare_vale), no hint that it's off
-  - 2026-11-02: the first lint without styles starts the sync once per session, then lints all buffers again; untested
+  - 2026-11-02: the first lint without styles starts the sync once per session, then lints all buffers again; untested (1c67fc5)
 
-- [ ] abbrev: /FAIL<CR> searches for "/FAIL<C-]><CR>" (literal text, no search)
+- [x] abbrev: /FAIL<CR> searches for "/FAIL<C-]><CR>" (literal text, no search)
   - source: lua/genja/abbreviations.vim:38, the cmdline <CR> map returns the single-quoted string `'<C-]><CR>'` for every cmdtype but `:`; in an <expr> map the <> is typed literally, and the Vim-only `<C-]>` is only needed for `:` abbreviations (a3e07a3, 80c8fa1)
   - fix: only `:` gets the <C-]> prefix, other cmdtypes return `"\<CR>"` (double quotes, real key), or no map at all for `/` `?`
   - test: `/FAIL<CR>`, `?FAIL<CR>`, `:s/a/b/<CR>`, `jj`, `g` still work
-  - 2026-11-02: fixed (abbreviations.vim: `"\<CR>"` for non-`:`); `/FAIL<CR>` tested by hand, the rest of the test list open
+  - 2026-11-02: fixed (abbreviations.vim: `"\<CR>"` for non-`:`); `/FAIL<CR>` tested by hand, the rest of the test list open (82cd9a4)
 
-- [ ] completion: blink cmdline completion of shell commands (`!cmd`, `:terminal cmd`) is very slow
+- [x] completion: blink cmdline completion of shell commands (`!cmd`, `:terminal cmd`) is very slow
   - today: blink cmdline source in plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; shell names come from getcompletion(..., 'shellcmd') = $PATH scan on every keypress (inferred, not profiled)
   - upstream: blink recipe turns cmdline completion off for `:!` and `:%!` only, because Git Bash or WSL hang (https://cmp.saghen.dev/recipes); feature request to ignore commands in the cmdline source, not resolved in the results (https://github.com/saghen/blink.cmp/issues/1029); Neovim docs: shell command names come from $PATH (:h cmdline-completion)
   - no PATH cache found upstream in Neovim or blink; a cache would be ours
   - try: profile first (time getcompletion('', 'shellcmd') on this PATH); then cache the list in Lua, rebuild on PATH change or after 3 h, serve it from the cmdline source for `!` and `:terminal`; or drop shellcmd for `!` as the recipe does
   - test: `!` then letters, `:terminal ` then letters: menu appears within a keypress
-  - 2026-11-02: written: lua/genja/completion/shellcmd.lua, list in stdpath('state')/genja-completion011/shellcmd.txt, rebuilt after 3 h or on PATH change; `!word`, `:term word` and `:vert term word`; tests/completion/test_cmdline.lua: PATH-change rebuild and `:vert term` pass (make test D=completion); the 3 h age rebuild is untested
+  - 2026-11-02: written: lua/genja/completion/shellcmd.lua, list in stdpath('state')/genja-completion011/shellcmd.txt, rebuilt after 3 h or on PATH change; `!word`, `:term word` and `:vert term word`; tests/completion/test_cmdline.lua: PATH-change rebuild and `:vert term` pass (make test D=completion); the 3 h age rebuild is untested (abfb666); :ResetPathCache deletes the list
