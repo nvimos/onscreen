@@ -95,6 +95,20 @@ T['mason: shims'] = S:case({ name = 'mason shims', groups = { 'mason', 'shims' }
 	end
 end)
 
+-- An update cut off by a running server (Windows file locks) leaves a package folder without
+-- mason-receipt.json; mason still counts it as installed.
+T['mason: receipts'] = S:case({ name = 'mason receipts', groups = { 'mason', 'receipts' } }, function()
+	local receipt = dofile(config .. '/plug-wip/genja-completion011.nvim/lua/genja/lsp/receipt.lua')
+	local broken = {}
+	for _, b in ipairs(receipt.list()) do
+		local staged = (b.staged and ', new version still in mason/staging' or '')
+		table.insert(broken, ('%s: no mason-receipt.json%s, fix: %s'):format(b.name, staged, receipt.fix(b)))
+	end
+	if #broken > 0 then
+		error('mason packages whose install was cut off:\n  ' .. table.concat(broken, '\n  '))
+	end
+end)
+
 -- mason-lspconfig enables a server only once it is installed: a missing one would only show up
 -- as `lsp: <server>` skipping with "not enabled". Needs the child: the list comes from the config.
 T['mason: servers installed'] = S:case({ name = 'mason servers installed', groups = { 'mason', 'servers' } }, function()

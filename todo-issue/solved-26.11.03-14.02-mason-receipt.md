@@ -1,0 +1,10 @@
+- [x] mason: lua-language-server cut off by its own running server (2026-11-03)
+    - [x] cause: a running lua_ls locks its exe and log; the update deletes half the folder, the new one stays in `mason/staging`, no receipt
+    - [x] `Makefile.lazy.mk`: `kill-luals` before `mason` and `mason-luals`
+    - [x] `lang/lua.lua`: lua_ls `--logpath=stdpath('log')/lua_ls`
+    - [x] `lsp/receipt.lua`: package folders without `mason-receipt.json`; `:checkhealth genja.lsp` section
+    - [x] `lsp/init.lua`: on FileType lua, silent `install({ force = true })`, then `vim.lsp.enable()`; only a failure notifies
+    - [x] `tests/comps011`: case `mason: receipts`
+    - [x] repair seen working: reinstalled 13:55:41, lua_ls attached
+    - [ ] test: `make test D=comps011 G=receipts`
+    - [ ] test: `make mason-luals` with nvim open on a lua file
