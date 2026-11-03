@@ -1,0 +1,3 @@
+- [x] claudefterm: `:Ct` behaves as `:Ct -1` (2026-11-03)
+    - [x] `lua/genja/auto-alias.vim`: `command! -nargs=* Ct ClaudeFterm -1 <args>`
+    - [ ] test: `:Ct` in a normal buffer takes the window; `:Ct` again gives the buffer back
