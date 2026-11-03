@@ -1,0 +1,5 @@
+- [x] tests: NOTE of a passing case in yellow, shorter line (2026-11-03)
+    - [x] `tests/helpers/run-tests.lua`: proxy `io.stdout` during the summary, bold green NOTE -> bold yellow
+    - [x] `NOTE <file without tests/> <case>: <message>`
+    - [ ] test: `make test D=llm` in `tests/`
+    - [ ] the `O` progress mark for pass-with-notes is still green

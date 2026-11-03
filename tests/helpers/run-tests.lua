@@ -51,7 +51,27 @@ end
 -- and which cases failed, for `make failed`; then mini.test's summary, the slow line, and quit
 -- with mini.test's exit code (the reporter's own quit would come before the slow line)
 local reporter = MiniTest.gen_reporter.stdout({ group_depth = depth, quit_on_finish = false })
-local finish = reporter.finish
+local stdout_finish = reporter.finish
+
+-- mini.test prints a passing case's note as bold green `NOTE in tests/<file> | <case>: <msg>`;
+-- make it bold yellow `NOTE <file> <case>: <msg>`, shorter on the line.
+-- Its reporter looks up io.stdout on each write, so a proxy for the summary is enough.
+local GREEN_NOTE = '\27%[1;32mNOTE\27%[0m in tests/([^\n]-) | '
+local YELLOW_NOTE = '\27[1;33mNOTE\27[0m %1 '
+local function finish(...)
+    local real = io.stdout
+    io.stdout = {
+        write = function(_, text)
+            return real:write((text:gsub(GREEN_NOTE, YELLOW_NOTE)))
+        end,
+    }
+    local ok, err = pcall(stdout_finish, ...)
+    io.stdout = real
+    if not ok then
+        error(err)
+    end
+end
+
 reporter.finish = function(...)
 	local cases = MiniTest.current.all_cases or {}
 	H.save()
