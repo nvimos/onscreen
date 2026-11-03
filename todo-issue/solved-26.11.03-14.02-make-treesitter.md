@@ -1,0 +1,4 @@
+- [x] Makefile.lazy.mk: `update` / `sync` run `update-treesitter` again (2026-11-03)
+    - [x] 09891f8 moved it behind the `;` into the recipe: run as a missing shell command
+    - [x] prerequisite again: `sync: update-treesitter; ...`
+    - [ ] test: `make -n -f Makefile.lazy.mk sync` lists two nvim lines
