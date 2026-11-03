@@ -12,6 +12,22 @@ nnoremap <buffer> <leader>mfx <Cmd>call v:lua.require'genja.ext.md-fix'.fix(bufn
 " turn off the markdownlint/vale rule under the cursor in its config (lua/genja/ext/lint-silence.lua)
 nnoremap <buffer> <leader>cx <Cmd>lua require('genja.ext.lint-silence').at_cursor()<CR>
 
+" ]j [j (and ]y [y): next / previous open checkbox `- [ ]`; takes a count, sets the jumplist
+function! s:JumpBox(flags) abort
+	normal! m'
+	for _ in range(v:count1)
+		if !search('^\s*- \zs\[ \]', a:flags)
+			break
+		endif
+	endfor
+endfunction
+for s:key in ['j', 'y']
+	execute 'nnoremap <buffer> <silent> ]' .. s:key .. ' <Cmd>call <SID>JumpBox("")<CR>'
+	execute 'nnoremap <buffer> <silent> [' .. s:key .. ' <Cmd>call <SID>JumpBox("b")<CR>'
+	execute 'xnoremap <buffer> <silent> ]' .. s:key .. ' <Cmd>call <SID>JumpBox("")<CR>'
+	execute 'xnoremap <buffer> <silent> [' .. s:key .. ' <Cmd>call <SID>JumpBox("b")<CR>'
+endfor
+
 " j/k move by screen line through wrapped text; with a count (5j, relative numbers) by real line
 nnoremap <buffer> <expr> j v:count ? 'j' : 'gj'
 nnoremap <buffer> <expr> k v:count ? 'k' : 'gk'

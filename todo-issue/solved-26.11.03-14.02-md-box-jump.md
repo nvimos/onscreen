@@ -1,0 +1,4 @@
+- [x] markdown: `]j` `[j` (`]y` `[y`) jump to the next / previous open checkbox (2026-11-03)
+    - [x] `after/ftplugin/markdown.vim`: `s:JumpBox()`, count, jumplist
+    - [x] `readme.cheatsheet.md`: F2 markdown section
+    - [ ] test: `3]j` in a todo file

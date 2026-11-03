@@ -217,6 +217,7 @@ F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from 
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
     <leader>cx   lint rule under the cursor off: markdownlint (lint/.markdownlint.jsonc) or vale ([*.md] of the vale config), after/ftplugin/markdown.vim
     j k          screen line through wrapped text; with a count, real line (after/ftplugin/markdown.vim)
+    ]j [j  ]y [y next / previous open checkbox `- [ ]`, with a count (after/ftplugin/markdown.vim)
     gq           format to 120 columns (textwidth); typing doesn't hard-wrap
     insert mode: abbreviations from lua/genja/ext/md-abbrev.txt (teh -> the …)
 
