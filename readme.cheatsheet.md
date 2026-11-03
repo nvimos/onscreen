@@ -201,6 +201,7 @@ Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/m
 
     ~          swap word under cursor: true/false on/off yes/no enable(d)/disable(d) and/or 0/1
                left/right up/down min/max first/last; chars + -  < >; case kept; else plain ~
+               markdown `- [ ]` line, no switch under cursor: box cycles blank x n . ~
     <M-~>      plain ~ (case)
     <leader>ts spelling on/off (map-zero.lua)
     <leader>tm markdown fix on save on/off, :ToggleMarkdownFix (plugin/md-fix.lua)

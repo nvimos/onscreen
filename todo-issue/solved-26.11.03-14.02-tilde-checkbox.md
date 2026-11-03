@@ -1,0 +1,6 @@
+- [x] tilde: `~` cycles markdown checkbox states (2026-11-03)
+    - [x] `lua/genja/ext/tilde.lua`: `- [ ]` / `1. [ ]` box cycles blank x n . ~
+    - [x] switches under the cursor (words, + - < >) win; box anywhere else on the line
+    - [x] `readme.cheatsheet.md`: `~` line
+    - [ ] test: `~` five times on a `- [ ] item` line, cursor on the text
+    - [ ] `~` on the `-` list marker turns it into `+`; skip that swap on checkbox lines?

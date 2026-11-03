@@ -1,6 +1,41 @@
--- `~` toggles switches under the cursor: true/false, on/off, +/-, </> …; else plain `~`.
--- Port of TildeToggleUnderCursor from vimrc.almalinux.vim (idea 29a). Key in map-zero.lua (Toggles).
--- dial.nvim (<C-a>/<C-x>, lua/lazyp/new/dial.lua) covers numbers, dates and longer cycles.
+--[[
+
+Tilde or ~ toggles switches (value or expression) under the cursor
+or fall back to default ~ behavior if nothing matches, which
+switching the case of a character.
+
+This is a lua port of TildeToggleUnderCursor from vimrc.almalinux.vim.
+
+The key is mapped in map-zero.lua (Toggles).
+
+Flip switches
+
+    - true/false
+    - on/off
+    - 1/0
+    - +/-
+    - </>
+
+
+Markdown
+
+Toggle checkmark
+
+    - on a `- [ ]` line with no switch under the cursor
+    - cycles the box:
+        - blank: open
+        - x: done
+        - n: wont-fix
+        - .: wip
+        - ~: partially-done
+
+
+Alternative / similar ideas:
+
+    - dial.nvim (<C-a>/<C-x>, lua/lazyp/new/dial.lua)
+        - covers numbers, dates and longer cycles.
+
+]]--
 
 local M = {}
 
@@ -18,7 +53,7 @@ local word_pairs = {
 	['left'] = 'right',
 	['up'] = 'down',
 	['min'] = 'max',
-	['first'] = 'last',
+   ['first'] = 'last',
 }
 
 ---@type table<string, string>
@@ -85,6 +120,36 @@ local function replace(row, first, last, text)
 	vim.api.nvim_buf_set_text(0, row - 1, first - 1, row - 1, last, { text })
 end
 
+-- markdown checkbox state -> next state
+---@type table<string, string>
+local check_next = {
+	[' '] = 'x',
+	['x'] = 'n',
+	['n'] = '.',
+	['.'] = '~',
+	['~'] = ' ',
+}
+
+--- Markdown: cycle the `- [ ]` box on this line, cursor anywhere on it.
+---@param row integer 1-based
+---@param line string
+---@return boolean done
+local function toggle_checkbox(row, line)
+	if vim.bo.filetype ~= 'markdown' then
+		return false
+	end
+	local prefix, state = line:match('^(%s*[-*+] %[)(.)%]')
+	if not prefix then
+		prefix, state = line:match('^(%s*%d+[.)] %[)(.)%]')
+	end
+	if not prefix or not check_next[state] then
+		return false
+	end
+	local col = #prefix + 1
+	replace(row, col, col, check_next[state])
+	return true
+end
+
 --- Toggle the switch under the cursor; plain `~` (with count) when there is none.
 function M.toggle()
 	local count = vim.v.count1
@@ -109,6 +174,11 @@ function M.toggle()
 			vim.api.nvim_win_set_cursor(0, { row, first - 1 + #new - 1 })
 			return
 		end
+	end
+
+	-- after the switches: a word or char under the cursor wins over the box
+	if count == 1 and toggle_checkbox(row, line) then
+		return
 	end
 
 	vim.cmd('normal! ' .. count .. '~')
