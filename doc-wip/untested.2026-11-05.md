@@ -6,3 +6,6 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] keymap usage counts: use some keys, then `:KeymapsStats` (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua) -> todo-done/ideas-57-keymap-logger.md
 - [ ] genja-commit untested parts: minuet staged diff, copilot/ollama `<M-g>`, bottom split (plug-wip/genja-commit.nvim) -> todo-done/ideas-14-gitcommit.md
 - [ ] adding a language checklist: read readme.add-a-language.md against Go (readme.add-a-language.md) -> doc-wip/readme.2026-11-05.add-a-language.md
+- [ ] golangci-lint only with a .golangci.* file: examples/go with the sample config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
+- [ ] eslint from the project's node_modules, only with an eslint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
+- [ ] stylelint only with a stylelint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md

@@ -20,6 +20,15 @@ M.by_ft = {
 	lua = { 'selene' },
 	-- make = { 'checkmake' }, -- off by choice (2026-11-05): works, but unwanted; config and parser below stay
 	php = { 'phpcs' },
+	go = { 'golangcilint' },
+	javascript = { 'eslint' },
+	javascriptreact = { 'eslint' },
+	typescript = { 'eslint' },
+	typescriptreact = { 'eslint' },
+	vue = { 'eslint' },
+	css = { 'stylelint' },
+	scss = { 'stylelint' },
+	less = { 'stylelint' },
 	dockerfile = { 'hadolint' },
 	python = { 'ruff' },
 	-- vim = { 'vint' }, -- disabled: crashes on Windows (Vimjas/vint#378, #394); todo-ideas.md 14e
@@ -33,7 +42,8 @@ M.any = { 'editorconfig-checker', 'gitleaks' }
 ---@type string[]
 M.mason = {
 	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'phpcs',
-	'hadolint', 'ruff', 'editorconfig-checker', 'gitleaks', 'vale',
+	'hadolint', 'ruff', 'editorconfig-checker', 'gitleaks', 'vale', 'golangci-lint', 'stylelint',
+	-- eslint has no Mason package: only the project's node_modules/.bin copy runs
 	-- 'vint', -- disabled, see by_ft.vim
 	-- 'checkmake', -- off by choice, see by_ft.make
 }
@@ -44,7 +54,33 @@ local ROOT_MARKERS = {
 	selene = { 'selene.toml' },
 	phpcs = { 'phpcs.xml', '.phpcs.xml', 'phpcs.xml.dist', '.phpcs.xml.dist' },
 	['editorconfig-checker'] = { '.editorconfig' },
+	golangcilint = { '.golangci.yml', '.golangci.yaml', '.golangci.toml', '.golangci.json' },
+	eslint = {
+		'eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', 'eslint.config.ts',
+		'.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.json', '.eslintrc.yml', '.eslintrc.yaml',
+	},
+	stylelint = {
+		'.stylelintrc', '.stylelintrc.json', '.stylelintrc.yml', '.stylelintrc.yaml', '.stylelintrc.js',
+		'.stylelintrc.cjs', '.stylelintrc.mjs', 'stylelint.config.js', 'stylelint.config.cjs', 'stylelint.config.mjs',
+	},
 }
+
+---npm linters: the project's own copy (node_modules/.bin next to its config) matches its config
+---version; else the one on PATH (Mason). nvim-lint's own lookup uses nvim's cwd, not the project.
+local NODE_LOCAL = { eslint = true, stylelint = true }
+
+---Point an npm linter at the project's node_modules/.bin copy when there is one.
+---@param name string
+---@param linter table nvim-lint's linter (changed in place before each run)
+---@param root string the dir with the linter's config
+local function prepare_node(name, linter, root)
+	local bin = vim.fs.joinpath(root, 'node_modules', '.bin', name)
+	if vim.uv.fs_stat(bin) then
+		linter.cmd = bin
+	else
+		linter.cmd = name
+	end
+end
 
 ---Shared checkmake rules (minphony off), used when the project has no checkmake.ini.
 local CHECKMAKE_CONFIG = vim.fs.joinpath(vim.fn.stdpath('config'), 'lint', 'checkmake.ini')
@@ -357,6 +393,14 @@ end
 ---@return boolean run
 ---@return string|nil cwd
 local function should_run(name, linter, buf, event)
+	if linter and NODE_LOCAL[name] then
+		-- the cmd depends on the project, so it is set before the availability check
+		local root = vim.fs.root(buf, ROOT_MARKERS[name])
+		if not root then
+			return false
+		end
+		prepare_node(name, linter, root)
+	end
 	if not linter or not available(linter) then
 		return false
 	end
