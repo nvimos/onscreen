@@ -1,0 +1,4 @@
+- [x] minuet: ghost text on ollama, README note (2026-11-05)
+    - [x] ghost text works with Codestral (the default) and with ollama qwen2.5-coder:0.5b
+    - [x] README.md "Ghost text provider": :Minuet change_provider openai_fim_compatible, cold start past the 6 s timeout
+    - [x] commit 7d0b30c
