@@ -13,3 +13,6 @@ lua/lazyp/maybe/*
 # /doc-wip/*
 /lua/genja/ui/gui-func-state/gui-report.txt
 /lua/genja/local/paste-ai.lua
+
+# plug-wip plugins are their own repos (github.com/tox2ik/<name>); specs load the checkout when present
+/plug-wip/*/

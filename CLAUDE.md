@@ -83,6 +83,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Do only what was asked; list further fixes as suggestions. (inferred)
 - In the main checkout, don't commit unless asked.
 - In a Claude worktree (`.claude/worktrees/<name>`) or a background session, commit finished work without asking; don't merge or push to master.
+- plug-wip plugin repos: commit in the plugin folder like the main checkout (only when asked); pushing to its GitHub repo only when asked.
 - Group commits by feature; no Claude/Co-Authored-By attribution.
 - The tree often has unrelated uncommitted changes; leave them alone.
 - Before patching around a tool's bugs, check upstream issues and check platform support before recommending a tool.
@@ -117,7 +118,9 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Plugins load lazily through `cmd`, `keys` or a late event (`VeryLazy`); a spec without a trigger never loads.
 - Unused specs carry `-- not used: 2026-10`; archived upstreams carry `-- archived: YYYY-MM`. Keep both comments.
 - When an upstream repo is renamed, use the new name and keep the old one in a comment.
-- In-repo plugins live in `plug-wip/` and load with `dir = vim.fn.stdpath('config') .. '/plug-wip/<name>'`.
+- plug-wip plugins live in `plug-wip/<name>`, each its own git repo (github.com/tox2ik/<name>; genja-completion011.nvim is tox2ik/genja-completion.nvim, abdul-keymaps.nvim is the fork tox2ik/keymaps.nvim). The nvim repo ignores `/plug-wip/*/`; commit and push inside the plugin folder.
+    - Specs name the repo and set `dir = Wip.dir('<name>')` (`lua/genja/plug-wip.lua`): the local checkout when present, else lazy clones the repo. A fresh clone of the config gets the plugins from GitHub (`tests/startup` clean clone).
+    - A change across a plugin and the config is two commits, one per repo.
 - Hint: `undodir/`, `state/`, `.claude/` are runtime state; don't edit.
 
 ## Options (opt.lua)
