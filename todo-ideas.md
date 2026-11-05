@@ -266,3 +266,8 @@ migration from 0.9 to 0.11 (the file that started it all)
   - today: codecompanion.nvim chat with Claude Code over ACP (lua/lazyp/langs-comps/codecompanion.lua,
     doc-wip/readme.idea19-companion.md) already works this way; genja-ask popup is one question, one answer;
     minuet covers ghost text. Find out what's missing in codecompanion before building one
+
+- [ ] PHP debugging that works, part of v2026 (2026-11-05)
+  - keep nvim-dap + nvim-dap-ui unless the UI test says otherwise; compare nvim-dap-view
+  - PHP runs in DDEV inside WSL (weasel-ddev): Xdebug networking and pathMappings untested
+  - session, gaps and questions: todo-test/php-debug.md

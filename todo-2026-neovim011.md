@@ -125,3 +125,40 @@
     - [ ] delete from home-nvim repo
     - not publishing yet: todo-2027.md, repos for the plug-wip plugins
 
+
+
+## release v2026
+
+Plan: CLAUDE.md ## Release 2026. Defined 2026-11-05.
+
+v2026 is: neovim 0.11 LSP API, blink.cmp, lazy; the plug-wip plugins (finder, completion,
+statusline, commit, ask, claudefterm, paste-ai, startdirs, recent, oily, splitpad, util,
+abdul-keymaps fork); PHP (phpactor in WSL, frameworks, phpstan/php-cs-fixer/phpcs/pint, pest/phpunit);
+Go (gopls, go.nvim); AI (ask popup, minuet ghost text, codecompanion, paste search);
+the test suite with timings and the startup checks; README, goals, cheatsheet.
+
+- [ ] 1. `make gather` in tests/ passes, slow cases too
+- [x] 2. clean clone starts without warnings, startup below 1 s (tests/startup, f1951ca, 90814fb)
+- [ ] 3. hand tests: todo-test/testink-now.md and the untested items in todo-ideas.md (all, or a must-pass subset: open)
+- [x] 4. zen z0 doesn't restore the window size in nvim-qt: shipped as a known bug (2026-11-05)
+- [ ] 5. docs: READMEs for genja-ask, genja-claudefterm, genja-paste-ai (v2026 or later: open); cheatsheet current
+- [ ] 6. backlog: unfinished items to todo-2027.md (own keymap logger, claude -p minuet provider,
+         statusline github repo, ...)
+- [ ] 7. PHP debugging works in DDEV/WSL, UI chosen: todo-test/php-debug.md
+- [ ] 8. Kubernetes YAML: schemas, component docs as :help / K / popup (next; test project k8s-minikube-ci)
+- [ ] 9. LLM chat: survey first (todo-test/llm-chat-survey.md), then use one or build on genja-ask
+- [ ] 10. zen layouts by task (z1 code only, a digging/debug layout)
+- [ ] 11. aerial sidebar follows the file shown in the source window
+- [ ] 12. PHP gaps: css/scss/twig parsers, CSS/HTML LSP, eslint/stylelint, behat, drupal detection,
+          composer/package.json scripts as tasks, React front end
+- [ ] 13. Go gaps: golangci-lint, gomod/gotmpl parsers, one test runner
+- [ ] 14. C: navigate and explore without a build
+- [ ] 15. adding a language: one documented step (lang module, parser, linter, test runner)
+- [ ] 16. WSL and Docker control from nvim
+- [ ] 17. publish the other plug-wip plugins
+- [ ] 18. release: merge refactor-2026-sept into master, tag v2026, create develop (OneFlow, CLAUDE.md)
+
+Release date: Monday 2026-11-09 was set before items 8-17 were added; open whether it stays.
+
+Known bugs shipped:
+- zen z0 in nvim-qt: window stays maximized-sized (todo-test/testink-now.md, "Zen in nvim-qt")
