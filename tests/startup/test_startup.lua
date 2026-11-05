@@ -140,7 +140,10 @@ local function startup_ms(args, timeout)
     return ms
 end
 
----Median of RUNS startups; fails above LIMIT_MS. The times go into a note either way.
+-- make's V=1 or more: the times go into a note even when the case passes
+local VERBOSE = (tonumber(vim.env.TEST_VERBOSE or '') or 0) >= 1
+
+---Median of RUNS startups; fails above LIMIT_MS, with the times in the error.
 ---@param args string[]
 ---@param timeout integer
 local function check_startup(args, timeout)
@@ -151,7 +154,9 @@ local function check_startup(args, timeout)
     table.sort(times)
     local median = times[math.ceil(RUNS / 2)]
     local runs = table.concat(vim.tbl_map(function(t) return ('%.0f'):format(t) end, times), ', ')
-    MiniTest.add_note(('startup %.0f ms (runs: %s ms)'):format(median, runs))
+    if VERBOSE then
+        MiniTest.add_note(('startup %.0f ms (runs: %s ms)'):format(median, runs))
+    end
     if median >= LIMIT_MS then
         error(('startup %.0f ms, limit %d ms (runs: %s ms)'):format(median, LIMIT_MS, runs), 0)
     end
