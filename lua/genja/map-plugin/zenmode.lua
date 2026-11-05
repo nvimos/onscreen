@@ -33,10 +33,19 @@ local function zen(width, options)
 	zen_mode.open()
 end
 
+-- nvim-qt recreates the window on a frameless change; a maximize call right after it loses the
+-- size to restore (2026-11-05: Frameless(0) | Maximized(0) on one line stays maximized).
+-- So the second of the two calls waits this long.
+local GUI_SETTLE_MS = 150
+
 ---Maximize on (z2) or off (z1, z0); off only when zen turned it on.
 ---@param on boolean
 local function maximized(on)
 	if on then
+		-- z0 within GUI_SETTLE_MS of z2: zen is off already, stay unmaximized.
+		if not before then
+			return
+		end
 		gui().GuiWindowMaximized():set(1)
 		before.maximized = true
 	elseif before and before.maximized then
@@ -52,15 +61,18 @@ local function zen_off()
 	vim.opt.colorcolumn = '0'
 
 	require('zen-mode').close()
-	gui().GuiWindowFrameless():set(0)
 	if before then
+		-- Un-maximize while still frameless, frameless off after: see GUI_SETTLE_MS.
 		maximized(false)
+		vim.defer_fn(function() gui().GuiWindowFrameless():set(0) end, GUI_SETTLE_MS)
 		vim.o.columns = before.columns
 		vim.o.lines = before.lines
 		-- nil: the default limit (3); set() redraws, enable() shows them again
 		require('genja.ext.diag-limit').set(nil)
 		vim.diagnostic.enable(before.diag_enabled)
 		before = nil
+	else
+		gui().GuiWindowFrameless():set(0)
 	end
 end
 
@@ -71,7 +83,7 @@ local function zen_wide()
 	vim.wo.relativenumber = false
 	vim.opt.colorcolumn = '0'
 	gui().GuiWindowFrameless():set(1)
-	maximized(false)
+	vim.defer_fn(function() maximized(false) end, GUI_SETTLE_MS)
 	vim.diagnostic.enable(false)
 
 	zen(120, {})
@@ -84,7 +96,7 @@ local function zen_relnum()
 	vim.wo.relativenumber = true
 	vim.opt.colorcolumn = '4,8,80'
 	gui().GuiWindowFrameless():set(1)
-	maximized(true)
+	vim.defer_fn(function() maximized(true) end, GUI_SETTLE_MS)
 	vim.diagnostic.enable(false)
 
 	zen(80, {})

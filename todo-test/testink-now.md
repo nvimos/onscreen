@@ -49,6 +49,22 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
       &columns/&lines may be ignored by nvim-qt (lua/genja/map-plugin/zenmode.lua zen_off).
   - open questions, zen off, normal-sized window:
     1. `:set columns=80 lines=25`: does the window shrink?
+       - result 2026-11-05: no. nvim-qt ignores &columns/&lines, so zen_off's restore of them does nothing.
+    2. `:call GuiWindowMaximized(1)`, then `:call GuiWindowMaximized(0)`: back to the earlier size?
+       - result 2026-11-05: yes, back to the previous size (without frameless).
+    3. same with `:call GuiWindowFrameless(1)` first: back to the earlier size? (z1/z2 are frameless)
+       - result 2026-11-05: yes, frameless doesn't matter.
+    4. `<leader>z2`, then `<leader>z0` (no z1 between): back to the earlier size?
+       - result 2026-11-05: no. gui-func-state set() always calls GuiWindowMaximized(0), so not a cache.
+         Guess: zen calls Frameless and Maximized back to back; the frameless change recreates the
+         Qt window and the restore size gets lost.
+    5. both on one line: `:call GuiWindowFrameless(1) | call GuiWindowMaximized(1)`, then
+       `:call GuiWindowFrameless(0) | call GuiWindowMaximized(0)`: back to the earlier size?
+       - result 2026-11-05: no, stays maximized. Cause found: back-to-back frameless + maximize.
+  - fix 2026-11-05 (lua/genja/map-plugin/zenmode.lua): the maximize call waits GUI_SETTLE_MS (150)
+    after frameless on (z1, z2); z0 un-maximizes first, frameless off 150 ms later. Not tested.
+    Retest: z2, z0: earlier size back; z1, z2, z1, z0: same.
+  - result 2026-11-05: z2, z0 passes, window back to its previous size. (z1, z2, z1, z0 not run)
     2. `:call GuiWindowMaximized(1)`, then `:call GuiWindowMaximized(0)`: back to the earlier size,
        or still full-screen-sized?
 - Claude window: /exit brings forward some old buffer

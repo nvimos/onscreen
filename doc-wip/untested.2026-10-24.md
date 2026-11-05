@@ -30,6 +30,7 @@ key or command to try, file, guide. Older ones: doc-wip/untested.2026-10-23.md.
     - 2026-10-29: covered by tests/ui/test_diagnostics-limit.lua
 - [ ] zen: z1 <-> z2 reopens, z0 restores size and diag limit, z1 limit 2 (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-10-24.zen-toggles.md
     - 2026-10-29: z1 limit 2 ok; z0 left the window maximized, follow-up in todo-test/testink-now.md
+    - 2026-11-05: z0 fixed (frameless/maximize 150 ms apart), z2 then z0 restores the size
 - [x] markdown: <leader>mfx, fix on :w, abbreviations from md-abbrev.txt (lua/genja/ext/md-fix.lua) -> doc-wip/readme.2026-10-24.md-fix.md
     - 2026-10-29: fix on :w ok
 - [x] :Messages -dump/-quick/-loc, <F2> messages (lua/genja/ext/messages.lua) -> doc-wip/readme.2026-10-24.messages.md
