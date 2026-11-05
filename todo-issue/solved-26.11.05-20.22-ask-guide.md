@@ -1,0 +1,3 @@
+- [x] docs: ask-popup guide paths (2026-11-05)
+    - [x] doc-wip/readme.2026-10-23.ask-popup.md points at plug-wip/genja-ask.nvim and its backends
+    - [x] commit 458366a
