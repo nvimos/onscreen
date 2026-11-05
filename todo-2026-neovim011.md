@@ -156,9 +156,10 @@ the test suite with timings and the startup checks; README, goals, cheatsheet.
 - [ ] 15. adding a language: one documented step (lang module, parser, linter, test runner)
 - [ ] 16. WSL and Docker control from nvim
 - [ ] 17. publish the other plug-wip plugins
-- [ ] 18. release: merge refactor-2026-sept into master, tag v2026, create develop (OneFlow, CLAUDE.md)
+- [ ] 18. release: merge v2026 into master when the checklist is done (2026-11-05: refactor-2026-sept merged
+          into master, branches develop and v2026 made; CLAUDE.md ## Release 2026)
 
-Release date: Monday 2026-11-09 was set before items 8-17 were added; open whether it stays.
+Release date: open (Monday 2026-11-09 was set before items 8-17 were added).
 
 Known bugs shipped:
 - zen z0 in nvim-qt: window stays maximized-sized (todo-test/testink-now.md, "Zen in nvim-qt")

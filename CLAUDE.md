@@ -40,12 +40,12 @@ Unmarked bullets were stated by user.
 
 ## Release 2026
 
-- Wrap up 2026 by the end of Monday 2026-11-09 (Friday and the weekend to finish).
-- After that, keep adding todos and ideas; spare tokens before a session reset go to implementing them.
-- Then close the 2026 branch (today `refactor-2026-sept`) and make it stable: it becomes the new `master`.
-- New ideas go to a separate running branch for 2027. Git flow is too much overhead for a single developer; use an established model, not a home-made one.
-- Proposed (confirm): OneFlow, develop + master variant (Adam Ruka, endoflineblog.com 2017). `master` = latest stable release, tagged (`v2026`); `develop` = running work; short feature branches optional; release = merge `develop` into `master` + tag; fixes to the stable version branch off `master`, merge into `master` (tag `v2026.1`), then `master` into `develop`.
-    - Monday: merge `refactor-2026-sept` into `master`, tag `v2026`, create `develop`; worktree branches and `/prish-merge` then target `develop`.
+- 2026-11-05: `refactor-2026-sept` merged into `master` (fast-forward at ced1985); branches `develop` and `v2026` made from it.
+- `v2026` is the working branch: the release checklist in todo-2026-neovim011.md (## release v2026, 18 items) is done there.
+- `master` = stable. `develop` = running branch for ideas beyond the v2026 checklist.
+- Spare tokens before a session reset go to implementing open todos and ideas.
+- Branch model: based on OneFlow, develop + master variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
+- Open: when v2026 merges back into `master`, and whether worktree branches and `/prish-merge` target `v2026` or `develop` (today: whatever branch the main checkout is on).
 
 ## Ideas and backlog: 
 
