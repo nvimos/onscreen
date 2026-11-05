@@ -1,0 +1,6 @@
+- [x] dap-view: lighter debug UI next to dap-ui (2026-11-05)
+    - [x] lua/lazyp/new/dap-view.lua: igorlfs/nvim-dap-view, opens on Threads, vertical split right of the code
+    - [x] <leader>dv toggles it (lua/genja/map-plugin/dap-view.lua)
+    - [x] compared with dap-ui by hand: both fine, keep both
+    - [x] commit 8f5b8d2
+    - [ ] test: <leader>dv opens right of the code, not below
