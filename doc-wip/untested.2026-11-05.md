@@ -13,3 +13,4 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] <F2> script group: composer.json / package.json scripts, sub-picker runs them (lua/genja/f2/collect/scripts.lua) -> doc-wip/readme.2026-11-05.f2-scripts.md
 - [ ] Behat: :OverseerRun in a .feature file, this feature / this scenario, through ddev in WSL (lua/overseer/template/user/behat.lua) -> doc-wip/readme.2026-11-05.behat.md
 - [ ] Go tests in neotest: <leader>Tr in a TestXxx, <leader>Ts summary (lua/lazyp/langs/php-neotest.lua) -> doc-wip/readme.2026-11-05.neotest-golang.md
+- [ ] Drupal: .module is php inside a Drupal tree, phpactor indexes it, drupal-check on save (genja-completion011 lang/php.lua, ft/drupal.lua; lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.drupal.md

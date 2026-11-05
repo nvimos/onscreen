@@ -19,7 +19,7 @@ M.by_ft = {
 	ansible = { 'ansible_lint_wsl' },
 	lua = { 'selene' },
 	-- make = { 'checkmake' }, -- off by choice (2026-11-05): works, but unwanted; config and parser below stay
-	php = { 'phpcs' },
+	php = { 'phpcs', 'drupal_check' },
 	go = { 'golangcilint' },
 	javascript = { 'eslint' },
 	javascriptreact = { 'eslint' },
@@ -64,6 +64,43 @@ local ROOT_MARKERS = {
 		'.stylelintrc.cjs', '.stylelintrc.mjs', 'stylelint.config.js', 'stylelint.config.cjs', 'stylelint.config.mjs',
 	},
 }
+
+---drupal-check (phpstan with Drupal rules): only where the project has it in vendor/bin.
+---@param buf integer
+---@return string|nil root, string|nil cmd
+local function drupal_check_bin(buf)
+	local name = (vim.fn.has('win32') == 1 and 'drupal-check.bat' or 'drupal-check')
+	for dir in vim.fs.parents(vim.api.nvim_buf_get_name(buf)) do
+		local cmd = vim.fs.joinpath(dir, 'vendor', 'bin', name)
+		if vim.uv.fs_stat(cmd) then
+			return dir, cmd
+		end
+	end
+	return nil, nil
+end
+
+---drupal-check --format=json, phpstan's report: { files = { [path] = { messages = { { message, line } } } } }.
+---@param output string
+---@return vim.Diagnostic[]
+local function parse_drupal_check(output)
+	local ok, data = pcall(vim.json.decode, output)
+	local diagnostics = {}
+	if not ok or type(data) ~= 'table' or type(data.files) ~= 'table' then
+		return diagnostics
+	end
+	for _, file in pairs(data.files) do
+		for _, msg in ipairs(file.messages or {}) do
+			table.insert(diagnostics, {
+				lnum = math.max((msg.line or 1) - 1, 0),
+				col = 0,
+				message = msg.message,
+				source = 'drupal-check',
+				severity = vim.diagnostic.severity.WARN,
+			})
+		end
+	end
+	return diagnostics
+end
 
 ---npm linters: the project's own copy (node_modules/.bin next to its config) matches its config
 ---version; else the one on PATH (Mason). nvim-lint's own lookup uses nvim's cwd, not the project.
@@ -393,6 +430,17 @@ end
 ---@return boolean run
 ---@return string|nil cwd
 local function should_run(name, linter, buf, event)
+	if linter and name == 'drupal_check' then
+		if event == 'InsertLeave' then
+			return false -- reads the saved file
+		end
+		local root, cmd = drupal_check_bin(buf)
+		if not root then
+			return false
+		end
+		linter.cmd = cmd
+		return true, root
+	end
 	if linter and NODE_LOCAL[name] then
 		-- the cmd depends on the project, so it is set before the availability check
 		local root = vim.fs.root(buf, ROOT_MARKERS[name])
@@ -450,6 +498,16 @@ end
 function M.setup()
 	local lint = require('lint')
 	lint.linters.ansible_lint_wsl = ansible_lint_wsl()
+	lint.linters.drupal_check = {
+		name = 'drupal_check',
+		cmd = 'drupal-check', -- set per project in should_run()
+		args = { '--format=json', '--no-progress' },
+		stdin = false,
+		append_fname = true,
+		stream = 'stdout',
+		ignore_exitcode = true,
+		parser = parse_drupal_check,
+	}
 	if vim.fn.has('win32') == 1 then
 		name_failed_linters(lint)
 	end
