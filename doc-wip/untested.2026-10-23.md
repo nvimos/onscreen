@@ -11,6 +11,8 @@ key or command to try, file, guide.
     - 2026-10-24: unit tests, `make test D=claudefterm` in tests/ (tests/claudefterm/, 15 cases, fake claude); "paste starts claude" skips on Windows (headless terminal output goes to the outer console)
     - found: several FloatermKills in a row (kill() with 2+ terminals just started) sometimes crash the headless test nvim on Windows; maybe at :s:/quit too, not seen by hand
 - [ ] linters: :MasonToolsInstall, then a .md / .yaml / workflow / playbook / Makefile with errors (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-10-23.lint-first-wave.md
+    - 2026-11-05: markdownlint MD018 ok; tools all installed except ansible-lint in WSL
+    - 2026-11-05: checkmake works, but turned off by choice (commented out in lua/genja/ext/lint.lua by_ft + mason, and its comps011 case)
 - [ ] recent files: <C-F1> project first, <M-a> all, saved file ranks first (plug-wip/genja-recent.nvim, lua/genja/ext/recent.lua) -> doc-wip/readme.2026-10-23.genja-recent.md
 - [ ] right-click per filetype: markdown checkbox, oil git add, LSP entries, Morning (lua/genja/ext/popup-menu.lua) -> doc-wip/readme.2026-10-23.mouse-morning.md
 - [ ] statusline clicks: file -> oil, branch -> Neogit, E/W -> loclist (genja-statusline clicks) -> doc-wip/readme.2026-10-23.mouse-morning.md

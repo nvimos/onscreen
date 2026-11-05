@@ -18,7 +18,7 @@ M.by_ft = {
 	yaml = { 'yamllint', 'actionlint' },
 	ansible = { 'ansible_lint_wsl' },
 	lua = { 'selene' },
-	make = { 'checkmake' },
+	-- make = { 'checkmake' }, -- off by choice (2026-11-05): works, but unwanted; config and parser below stay
 	php = { 'phpcs' },
 	dockerfile = { 'hadolint' },
 	python = { 'ruff' },
@@ -32,9 +32,10 @@ M.any = { 'editorconfig-checker', 'gitleaks' }
 ---Mason packages for the linters above; ansible-lint runs inside WSL instead.
 ---@type string[]
 M.mason = {
-	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'checkmake', 'phpcs',
+	'markdownlint-cli2', 'typos', 'yamllint', 'actionlint', 'selene', 'phpcs',
 	'hadolint', 'ruff', 'editorconfig-checker', 'gitleaks', 'vale',
 	-- 'vint', -- disabled, see by_ft.vim
+	-- 'checkmake', -- off by choice, see by_ft.make
 }
 
 ---Config files that switch a linter on; the linter runs in the dir that has one.

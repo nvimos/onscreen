@@ -376,7 +376,8 @@ local LINT = {
 	{ name = 'yamllint', sample = 'lint-yamllint', file = 'x.yaml', cmd = 'yamllint', source = 'yamllint' },
 	{ name = 'actionlint', sample = 'lint-actionlint', file = '.github/workflows/ci.yml', cmd = 'actionlint', source = 'actionlint' },
 	{ name = 'selene', sample = 'lint-selene', file = 'x.lua', cmd = 'selene', source = 'selene' },
-	{ name = 'checkmake', sample = 'lint-checkmake', file = 'Makefile', cmd = 'checkmake', source = 'checkmake' },
+	-- checkmake: off by choice (lua/genja/ext/lint.lua by_ft.make); put back with it.
+	-- { name = 'checkmake', sample = 'lint-checkmake', file = 'Makefile', cmd = 'checkmake', source = 'checkmake' },
 	{ name = 'phpcs', sample = 'lint-phpcs', file = 'x.php', cmd = 'phpcs', source = 'phpcs', slow = 5000 },
 	{ name = 'hadolint', sample = 'lint-hadolint', file = 'Dockerfile', cmd = 'hadolint', source = 'hadolint' },
 	{ name = 'ruff', sample = 'lint-ruff', file = 'x.py', cmd = 'ruff', source = 'ruff' },
