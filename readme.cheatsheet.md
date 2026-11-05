@@ -43,6 +43,7 @@ Debug, PHP with Xdebug (nvim-dap, nvim-dap-ui; lua/genja/map-plugin/dap-php.lua)
     <leader>dB  breakpoint with condition   <leader>dp  log point: prints the message ({expr} interpolates), doesn't stop
     :DebugCli <cmd>      ddev exec <cmd> in a terminal split, under the debugger (starts listening when needed)
     :DebugBehat [args]   Behat in DDEV (profile ddev) under the debugger: args, else the current .feature, else all
+    <leader>dv  toggle dap-view, vertical split right of the code (lua/genja/map-plugin/dap-view.lua; winbar letters T B S W R switch sections, g? keys)
     during a session (lua/genja/ext/debug-fkeys.lua): !  flips F1-F8 to debug actions and back to their own maps
     <F1> continue  <F2> step over  <F3> step into  <F4> step out
     <F5> run to cursor  <F6> breakpoint  <F7> hover  <F8> stop
