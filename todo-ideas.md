@@ -18,30 +18,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas october
 
-- [~] 14. gitcommit: plug-wip/genja-commit.nvim (details in its CLAUDE.md) (wip)
-  - commit popup moved out of oil; :w keeps the draft in .git/COMMIT_EDITMSG
-  - lint while typing: nvim-lint + gitlint, built-in Lua rules when Python/gitlint are missing
-  - <M-g> writes the message from the staged diff (claude / copilot / gemini / aichat)
-  - copilot ghost text in commit buffers, accept with <M-f> (copilot.vim moved to lua/lazyp/unused/ 2026-10-31: minuet won)
-  - [~] gitcommit buffers: get commit-message help back without copilot.vim
-    - [x] minuet: ghost text on by default in gitcommit (ft + auto_trigger_ft, lua/lazyp/langs-comps/minuet.lua); tested 2026-10-31 (f3db574)
-    - [x] minuet in gitcommit suggests random text: it only sees the commit buffer, not the staged changes;
-          feed it `git diff --cached` (e.g. a gitcommit-only prompt or context in minuet's provider options)
-      - 2026-11-02: lua/genja/ext/minuet-diff.lua, diff below a scissors line in the FIM suffix / chat context;
-            cached 10 s, cut at 4000 chars; untested (aa05687)
-    - [ ] claude -p as a minuet provider: minuet only has HTTP backends; a custom backend would start the CLI per request (slow)
-    - [ ] minuet `claude` provider (Anthropic API): not an option now (no API key); block commented out in minuet.lua
-    - [~] CLI tools: <M-g> backends (claude -p / copilot / gemini / aichat), also outside the popup
-      - [x] shared backends, cli and http kinds: plug-wip/genja-util.nvim/lua/genja-util/llm.lua,
-            used by genja-commit <M-g> and genja-ask (2026-11-02) (170a8ed, f2d5be3)
-      - [x] copilot CLI: prompt piped, no -p (copilot ignores stdin with -p); untested, CLI not installed
-      - [x] ollama backend, end point and model configurable, local by default; own http/cli backends
-            via generate.backends; untested
-      - [ ] "also outside the popup": <M-g> already works in every gitcommit buffer; what else was meant?
-  - opt-in Conventional Commits mode; cmp offers types, scopes, footers
-  - [x] commit message opens in a bottom split by default (2b0b316); untested
-  - commits: 64baa3b, 3d5dc8c, e02ab60, fdc634c
-
 - [x] extras outside the idea list (2026-10-23)
   - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)
   - [x] map-telescope: helpers in fn.lua; <leader>jj1/jj2 quickfix/loclist, genja grep/find on jjJ/jjj,
@@ -156,22 +132,6 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] Makefile.lazy.mk: update-treesitter a prerequisite of update/sync again (3480b0d)
   - [x] mason: cut-off installs repair themselves on open, make kills lua_ls first, lua_ls logs to stdpath('log') (eef2590)
   - [x] hilite: muted diagnostic underline and virtual text (65812bb); <leader>' opens oldfiles (5c637f8)
-
-- [ ] custom keymap logger: count which keys/binds I use more than others
-  - legendary only counts palette picks (frecency needs sqlite.lua, off in lua/lazyp/new/legendary.lua)
-  - plug-wip/abdul-keymaps.nvim has track_usage + :KeymapsStats, but it only records mode changes
-    (n->c, c->n …); its per-keymap wrapper create_tracker() is never called (checked 2026-10-31)
-  - plugins checked 2026-10-31, none fits: keystats.nvim (counts, needs cargo), stalker.nvim (motions only),
-    tobira.nvim (teaching), vim-stats (Vim, Ex commands)
-  - decided 2026-10-31: do both
-  - [x] finish create_tracker in the abdul-keymaps fork (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua),
-        so :KeymapsStats counts keymaps, not mode changes
-    - 2026-11-02: each keymap is wrapped (counts, then runs the original); lazy-loaded and buffer-local
-          ones wrapped as they appear; spec loads on VeryLazy (06bca1b); fork's earlier commits restyled like upstream; untested
-  - [ ] build your own, no need for json. keep it lua-native
-    - vim.on_key(), match typed keys against nvim_get_keymap() by lhs, count per mode:lhs (+ desc)
-    - store as a Lua file returning a table (loadfile to read), in stdpath('state'), written on VimLeavePre
-    - :KeyStats picker sorted by count
 
 - [x] diagnostics: <leader>ttt disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
   - today: lua/genja/map-lsp.lua toggle_diagnostics, `vim.diagnostic.enable(not vim.diagnostic.is_enabled())`
