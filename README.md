@@ -83,6 +83,20 @@ they're simpler to navigate and simpler to close.
 Personal config in active use. Install from a clean machine and Linux
 support have not been tested yet.
 
+## Ghost text provider
+
+minuet (`lua/lazyp/langs-comps/minuet.lua`) suggests code as gray text; `<leader>am`
+turns it on in a buffer. It uses Codestral by default. To use the local ollama model
+(`qwen2.5-coder:0.5b`) for this session:
+
+```vim
+:Minuet change_provider openai_fim_compatible
+```
+
+`<Tab>` after `change_provider ` lists the other providers. ollama must be running
+(`ollama serve`); the first request after a while loads the model and can run past
+minuet's 6 s timeout ("Request failed"), then the next one is fast.
+
 ## Layout
 
 - `init.vim`: loads lazy.nvim, then the `genja` profile, with a small

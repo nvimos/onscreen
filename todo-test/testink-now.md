@@ -17,6 +17,13 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
 11. netrw.nvim icons (doc-wip/readme.2026-10-31.netrw-nvim.md)
 12. Lint setup, first run (needs :MasonToolsInstall, :ValeSync)
 13. Ghost text: minuet, llm.nvim (needs ollama serve; doc-wip/readme.2026-10-31.ghost-text-minuet-llm.md)
+    - 2026-11-05: llm.nvim already failed, parked in lua/lazyp/unused-failed/llm.lua; minuet <M-y> auto-tested
+      (tests/llm). Left: minuet ghost text by hand (model now qwen2.5-coder:0.5b), compare with copilot.
+    - result 2026-11-05: ghost text appears, <M-A> takes it, <M-e> drops it. But the provider is Codestral
+      (minuet.lua, since 2026-10-31), not ollama: `ollama ps` empty. The guide's ollama setup is out of date.
+    - result 2026-11-05, ollama: `:Minuet change_provider openai_fim_compatible`, ghost text appears
+      (qwen2.5-coder:0.5b). First request failed: model load ran past request_timeout 6 s; then 0.9 s.
+      Noted in README.md "Ghost text provider". Copilot comparison not done.
 
 
 ## Follow up
