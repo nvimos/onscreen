@@ -155,7 +155,8 @@ the test suite with timings and the startup checks; README, goals, cheatsheet.
 - [ ] 14. C: navigate and explore without a build
 - [ ] 15. adding a language: one documented step (lang module, parser, linter, test runner)
 - [ ] 16. WSL and Docker control from nvim
-- [ ] 17. publish the other plug-wip plugins (decided 2026-11-05)
+- [x] 17. publish the other plug-wip plugins (done 2026-11-05: 12 repos on github.com/tox2ik, MIT, READMEs with lazy install;
+          each plug-wip folder is its own checkout, ignored by the nvim repo, 2492965)
           - repos github.com/tox2ik/<folder name>, genja-util.nvim first; history kept with `git subtree split`
           - genja-completion011.nvim keeps its name inside the config (unique, visible); only its repo is
             tox2ik/genja-completion.nvim (spec: name = the folder name, url = the repo)
