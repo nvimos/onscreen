@@ -34,6 +34,21 @@ Breadcrumbs and outline (dropbar, aerial)
     <leader>oo  outline sidebar                  <leader>oO  outline nav float (same as mo / mO)
     <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
 
+Debug, PHP with Xdebug (nvim-dap, nvim-dap-ui; lua/genja/map-plugin/dap-php.lua)
+
+    <leader>db  toggle breakpoint     <leader>dc  start "Listen for Xdebug" / continue
+    <leader>do  step over             <leader>di  step into         <leader>dx  stop
+    <leader>du  toggle dap-ui         <leader>dK  hover the value under the cursor
+    <leader>dl  list breakpoints in quickfix (● set, ○ rejected by the adapter, with its message)
+    <leader>dB  breakpoint with condition   <leader>dp  log point: prints the message ({expr} interpolates), doesn't stop
+    :DebugCli <cmd>      ddev exec <cmd> in a terminal split, under the debugger (starts listening when needed)
+    :DebugBehat [args]   Behat in DDEV (profile ddev) under the debugger: args, else the current .feature, else all
+    during a session (lua/genja/ext/debug-fkeys.lua): !  flips F1-F8 to debug actions and back to their own maps
+    <F1> continue  <F2> step over  <F3> step into  <F4> step out
+    <F5> run to cursor  <F6> breakpoint  <F7> hover  <F8> stop
+    :DdevXdebugHost  point DDEV's Xdebug at this machine's IP, restart, Xdebug on (lua/genja/ext/debug-ddev.lua)
+    :let g:genja_debug_layout = 'split'  dap-ui in the current tab instead of its own; g:genja_debug_auto_open = v:false: only <leader>du
+
 Zen mode (zen-mode.nvim, lua/genja/map-plugin/zenmode.lua)
 
     <leader>mz  toggle zen mode (spec defaults)
