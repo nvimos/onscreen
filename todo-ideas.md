@@ -172,12 +172,6 @@ migration from 0.9 to 0.11 (the file that started it all)
     3. z3 opens the debug UI at once, or on the first stop (as splits)?
     4. z2 today turns diagnostics off; change to diagnostics on with the limit?
 
-- [ ] aerial: outline sidebar on demand, follows the file shown in the source window
-  - open only on the key, not always, not for every file
-  - open a different file in the window it describes: the sidebar reloads for that file, never shows the old one
-  - today: lua/lazyp/ui/aerial.lua, attach_mode = 'global' (should already follow the current window),
-    close_automatic_events = { 'unsupported' }; test if it really follows, also across tabs
-
 - [ ] PHP project out of the box (goal in CLAUDE.md ## Goal, 2026-11-05)
   - examples: Drupal site; Symfony app with a React front end; custom app with Behat
   - gaps add: React side (jsx/tsx, eslint, a JS test runner)
