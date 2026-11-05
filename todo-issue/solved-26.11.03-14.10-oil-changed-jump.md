@@ -4,5 +4,7 @@
     - [x] `ggC` / `<LocalLeader>C`: `git add` then commit only the entry as `update: <name>`
     - [x] keys in `lua/genja/map-oil.lua`, actions in `lua/genja/oil-actions.lua`, `lua/genja/oil/init.lua`
     - [x] `readme.cheatsheet.md`: Git section
-    - [ ] test: `]c`, `3]c`, `[c` in an oil dir with modified, staged and untracked files
+    - [x] test: `]c` in an oil dir (2026-11-03)
+    - [ ] test: `3]c`, `[c`
+    - [x] test: `ggC` commits the entry (2026-11-03)
     - [ ] test: `ggC` on a file with other changes staged: those stay staged
