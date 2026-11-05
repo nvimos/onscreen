@@ -39,5 +39,4 @@ Safeload 'genja.map-convoluted'
 Safeload('genja.ext.wrapfold', function(m) m.setup_command() end) -- :WrapFold
 
 
-
 -- start dirs: plug-wip/genja-startdirs.nvim, list in lua/genja/local/startdirs.txt
