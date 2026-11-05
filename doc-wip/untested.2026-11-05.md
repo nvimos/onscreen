@@ -16,3 +16,28 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] Drupal: .module is php inside a Drupal tree, phpactor indexes it, drupal-check on save (genja-completion011 lang/php.lua, ft/drupal.lua; lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.drupal.md
 - [ ] cssls and html servers: open a .scss and a .html file, completion and K (genja-completion011 lang/css.lua, lang/html.lua) -> doc-wip/readme.2026-11-05.css-html-lsp.md
 - [ ] C without a build: open kilo.c, gd works, no false errors; :CCompileDb (genja-completion011 lang/c_cpp.lua) -> doc-wip/readme.2026-11-05.c-navigate.md
+
+## Q R S T worktree builds (not merged yet: `/prish-merge`, branches PR-zen-z3, PR-wsl-docker, PR-tasks-detach, PR-k8s-yaml)
+
+Guided sessions: todo-test/zen-modes.md, todo-test/wsl-docker.md, todo-test/tasks-long-processes.md, todo-test/k8s-yaml.md.
+
+- [ ] zen z2 limited diagnostics + z0 restore: `<leader>z2` / `<leader>z0` (lua/genja/map-plugin/zenmode.lua) -> doc-wip/readme.2026-11-05.zen-z3.md
+- [ ] zen z3 layout: `<leader>z3` / `<leader>z0` (lua/genja/ext/zen-z3.lua) -> doc-wip/readme.2026-11-05.zen-z3.md
+- [ ] zen z3 debug: dap-ui splits in the z3 tab on the first stop (lua/genja/ext/debug-ui.lua) -> doc-wip/readme.2026-11-05.zen-z3.md
+- [ ] zen z3 tests: `make test D=ui` (tests/ui/test_zen_z3.lua) -> doc-wip/readme.2026-11-05.zen-z3.md
+- [ ] wsl: `<leader>mw` / `:Wsl` picker, `<CR>` `<M-s>` `<M-t>` `<M-o>` `<M-D>` (lua/genja/ext/wsl.lua) -> doc-wip/readme.2026-11-05.wsl-docker.md
+- [ ] wsl: `:WslFterm <name>` floaterm, completion, reuse (plugin/wsl.lua) -> doc-wip/readme.2026-11-05.wsl-docker.md
+- [ ] docker: `<leader>mD` / `:Docker` picker, missing-docker warning, `vim.g.genja_docker_cmd` (lua/genja/ext/docker.lua) -> doc-wip/readme.2026-11-05.wsl-docker.md
+- [ ] docker: `<CR>` live logs tab, `<M-e>` shell, `<M-r>`/`<M-s>`/`<M-d>` (lua/genja/ext/docker.lua) -> doc-wip/readme.2026-11-05.wsl-docker.md
+- [ ] f2: `<F2>` compose up -d / down / logs -f (lua/genja/f2/collect/compose.lua) -> doc-wip/readme.2026-11-05.wsl-docker.md
+- [ ] tasks output buffer + exit line: `<F2>` scripts, `<leader>ul`, `:messages` (lua/genja/tasks/outbuf.lua, lua/overseer/component/genja_exit_line.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] tasks statusline count, red on failure: `⏵N` (lua/genja/tasks/status.lua, lua/lazyp/new/genja-statusline.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] tasks picker: `:Tasks` / `<leader>uu` `<M-r> <M-s> <M-d> <M-i> <M-x>` (lua/genja/tasks/picker.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] tasks detach log mode, reattach after restart: `<F2>` `<M-d>`, name patterns, `:Tasks` `<CR>`/`<M-s>` (lua/genja/tasks/detach.lua, lua/overseer/strategy/genja_detach.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] tasks psmux mode: `<M-i>`, attach in floaterm (lua/genja/tasks/detach.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] :Unsaved lists running attached tasks: `:qa` `<M-w>` leave / `<M-x>` stop (lua/genja/ext/unsaved.lua) -> doc-wip/readme.2026-11-05.tasks-detach.md
+- [ ] yamlls + SchemaStore: `:EnableLang yaml` (plug-wip/genja-completion011.nvim/lua/genja/lang/yaml.lua) -> doc-wip/readme.2026-11-05.k8s-yaml.md
+- [ ] yaml-companion schema per kind, Tekton/Gateway matcher: `<leader>cy` (lua/lazyp/new/yaml-companion.lua) -> doc-wip/readme.2026-11-05.k8s-yaml.md
+- [ ] Kubernetes help files: `:K8sHelpBuild`, `:help k8s-index` (lua/genja/ext/k8s-help.lua) -> doc-wip/readme.2026-11-05.k8s-yaml.md
+- [ ] field help at cursor: `gK` in YAML (lua/genja/map-plugin/yaml-companion.lua) -> doc-wip/readme.2026-11-05.k8s-yaml.md
+- [ ] Kubernetes version override: `k8s.version` in local.lua (plug-wip/genja-completion011.nvim/lua/genja/lsp/config.lua) -> doc-wip/readme.2026-11-05.k8s-yaml.md
