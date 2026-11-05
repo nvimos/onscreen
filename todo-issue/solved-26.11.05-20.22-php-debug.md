@@ -1,0 +1,15 @@
+- [x] dap: PHP debugging with DDEV in WSL, guided test session (2026-11-05)
+    - [x] test session todo-test/php-debug.md: 6 setup answers, 8 steps; stops at breakpoints in norway4u
+    - [x] cause of no stop: host.docker.internal doesn't resolve with WSL mirrored networking; Windows LAN IP works
+    - [x] lua/genja/ext/debug-ddev.lua: <leader>dc warns on a wrong xdebug_ide_location, :DdevXdebugHost sets it
+    - [x] :DebugCli, :DebugBehat run in the container under the debugger (lua/genja/ext/debug-ddev.lua)
+    - [x] lua/genja/ext/debug-ui.lua: dap-ui on the first stop, own tab or splits (g:genja_debug_layout, g:genja_debug_auto_open)
+    - [x] lua/genja/ext/debug-fkeys.lua: ! flips F1-F8 to debug actions and back
+    - [x] keys <leader>dK hover, <leader>dl list, <leader>dB condition, <leader>dp log point; signs (lua/genja/map-plugin/dap-php.lua)
+    - [x] zen modes z1-z3 decided, z3 questions parked (todo-ideas.md)
+    - [x] commits 17e6c2b, 983ec13
+    - [ ] test: the 7 steps under "Implemented 2026-11-05" in todo-test/php-debug.md
+    - [ ] test: :DebugCli php -v, :DebugBehat on a .feature
+    - [ ] test: <leader>dB, <leader>dp, <leader>dl
+    - [ ] hollow ○ breakpoints and continue skipping breakpoints: diagnose with <leader>dl
+    - [ ] z3 with debug splits (questions in todo-ideas.md "zen modes")
