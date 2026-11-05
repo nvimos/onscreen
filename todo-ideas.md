@@ -202,6 +202,15 @@ migration from 0.9 to 0.11 (the file that started it all)
   - z2 (or a new key): digging, debugging, jumping around code: sidebars (aerial), dropbar and the like shown
   - today: lua/genja/map-plugin/zenmode.lua, z1 width 120, z2 width 80 + relnum + maximized, z0 off; both hide diagnostics
   - open: keep z1/z2 as they are and add z3 for the debug layout, or redefine z2?
+  - decided 2026-11-05 (todo-test/php-debug.md): z1 reading and prose (usable for anything);
+    z2 some UI: limited diagnostics, max-width line; z3 UI heavy, debug panes as splits in the z3 view
+    (not a separate tab; outside z3 the debug tab default stays).
+  - open questions 2026-11-05 (parked by user): zen-mode's float hides other windows, so z3 can't
+    hold debug splits beside it.
+    1. z3 = no zen float, maximized, number + relnum, colorcolumn, all diagnostics, debug UI as splits in the current tab?
+    2. z3 debug UI: dap-ui or dap-view?
+    3. z3 opens the debug UI at once, or on the first stop (as splits)?
+    4. z2 today turns diagnostics off; change to diagnostics on with the limit?
 
 - [ ] aerial: outline sidebar on demand, follows the file shown in the source window
   - open only on the key, not always, not for every file
