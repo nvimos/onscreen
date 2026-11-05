@@ -166,3 +166,24 @@ Notes moved from the summary:
 | 14e | vint moved to todo-2027.md; #14e closed (todo-done/ideas-14e-nvim-lint-linters.md) | XS | 2026-10-31 | n/a, nothing to try |
 | -   | netrw.nvim: icons via nvim-web-devicons, `ft = 'netrw'` | XS | 2026-10-31 | untested (2026-10-31) |
 | -   | ghost text: minuet-ai.nvim (ghost text + blink `<M-y>`) and llm.nvim (llm-ls via mason), ollama qwen3.5:0.8b | M | 2026-10-31 | untested (2026-10-31) |
+
+## Done in auto-todo-20261105-2109 (all untested; doc-wip/untested.2026-11-05.md)
+
+| #   | Idea (from todo-ideas.md)                       | Decision 2026-11-05 | Ask | Tokens |
+|-----|-------------------------------------------------|---------------------|-----|--------|
+| A   | #14 `claude -p` as minuet provider              | close: CLI start too slow for ghost text; todo-2027: cheap prepaid models (DeepSeek, Qwen) | 0 | ~1k |
+| B   | #14 minuet `claude` provider (API key)          | into the todo-2027 prepaid-models item, one provider to compare                     | 0    | ~1k    |
+| C   | keymap logger: build your own                   | close: the keymaps fork counts usage; `:KeymapsStats` on the untested list          | 0    | ~1k    |
+| K   | #14 "also outside the popup"                    | close: `<M-g>` works in every gitcommit buffer                                       | 0    | ~1k    |
+| D   | Go: parsers gomod, gosum, gotmpl                | add                                                                                 | 0    | ~2k    |
+| E   | PHP: web parsers                                | add css, scss, twig, jsdoc, regex                                                   | 0    | ~2k    |
+| F   | adding a language: one documented step          | README section from completion011's CLAUDE.md                                        | 0    | ~5k    |
+| G   | Go: golangci-lint                               | only with a .golangci.{yml,yaml,toml}; sample `.golangci.toml` in examples/go/       | 0    | ~5k    |
+| H   | PHP: eslint, stylelint                          | only with a project config; node_modules/.bin first, else Mason                      | 0    | ~5k    |
+| J   | aerial follows the file (`<leader>` keys)       | check headless, fix if needed, tests/ui case                                         | 0    | ~6k    |
+| N   | composer/npm scripts as tasks                   | overseer npm + composer templates, in `:OverseerRun` and `<F2>` (own composer template if none) | 0 | ~8k |
+| O   | Behat runner                                    | overseer template: `ddev exec` with .ddev/, else host; feature file or scenario at cursor | 0 | ~8k |
+| M   | Go test runner                                  | neotest-golang (same keys as PHP); go.nvim `:GoTest*` kept                           | 0    | ~9k    |
+| I   | Drupal                                          | detect core/lib/Drupal.php (root, web/, docroot/); .module .inc .install .theme .profile .engine -> php; drupal-check linter when in vendor/bin | 0 | ~10k |
+| L   | CSS, HTML servers                               | lang modules css (cssls) and html, off by default, on in local.lua                   | 0    | ~10k   |
+| P   | C without compile_commands.json                 | clangd fallback flags (-I. -Iinclude -Isrc), diagnostics off without a database; `:CCompileDb` (bear / cmake) | 0 | ~10k |

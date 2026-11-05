@@ -181,20 +181,21 @@ migration from 0.9 to 0.11 (the file that started it all)
     overseer php_test template, emmet, typescript lang module, treesitter html/php/phpdoc/blade/js/ts/json/yaml
   - gaps (from a grep, not tested): no treesitter css/scss/twig; no CSS or HTML LSP, no eslint/stylelint/biome;
     no twig (Symfony, Drupal); no Behat runner; Drupal not detected; composer.json / package.json scripts not offered as tasks (check overseer)
+  - [x] auto-todo 2026-11-05 (guides doc-wip/readme.2026-11-05.*.md, all untested):
+        parsers css scss twig jsdoc regex (9a8aa25, need a C compiler: winget install LLVM.LLVM);
+        cssls + html lang modules (c18994b, 0ed9ee4); eslint + stylelint with a project config (e7bad3d);
+        Drupal: phpactor indexes .module etc., ft mapping, drupal-check (236948c, dbc21f8);
+        <F2> composer/npm scripts (bac05c1); Behat overseer template via ddev in WSL (23d563c)
+  - [ ] React side: a JS test runner (vitest / jest through neotest), not decided yet
 
 - [ ] Go project out of the box, same feel as PHP (after PHP, 2026-11-05)
   - have: gopls (plug-wip/genja-completion011.nvim/lua/genja/lang/go.lua: go.work roots, organize imports + format on save,
     code lenses on <leader>cl), go.nvim with dap (lua/lazyp/langs/go.lua), treesitter go
   - gaps (from a grep, not tested): golangci-lint not in lua/genja/ext/lint.lua; treesitter gomod/gosum/gotmpl;
     templ, sql, proto, Dockerfile parsers; tests through neotest-golang or go.nvim (decide one)
-
-- [ ] C projects: navigate and explore, not develop (2026-11-05)
-  - have: clangd (lang/c_cpp.lua), needs compile_commands.json or compile_flags.txt
-  - open: what works without a build (no compile_commands): treesitter, tags, grep; generate compile_commands (bear, cmake)?
-
-- [ ] plug in a new language (e.g. Flutter/Dart later) without shipping every language (2026-11-05)
-  - today: one lang module per language (lang/*.lua), :EnableLang, lsp/local.lua
-  - open: is adding a lang module + treesitter parser + linter + test runner one documented step? a template/guide for it
+  - [x] auto-todo 2026-11-05 (untested): parsers gomod gosum gotmpl (9a8aa25); golangci-lint only with a
+        .golangci.* file, sample examples/go/.golangci.toml (e7bad3d); neotest-golang, go.nvim's :GoTest* kept (1037aa2)
+  - [ ] parsers templ, sql, proto, dockerfile: not decided yet
 
 - [ ] nvim as the interface to the OS for coding work: shell, terminal, pwsh, Git Bash, git (2026-11-05)
   - today: floaterm commands (:PwshFterm, :BashFterm, :LazygitFterm), toggleterm, :terminal pwsh/bash, Neogit, mini.git

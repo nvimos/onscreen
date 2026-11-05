@@ -149,11 +149,11 @@ the test suite with timings and the startup checks; README, goals, cheatsheet.
 - [ ] 9. LLM chat: survey first (todo-test/llm-chat-survey.md), then use one or build on genja-ask
 - [ ] 10. zen layouts by task (z1 code only, a digging/debug layout)
 - [ ] 11. aerial sidebar follows the file shown in the source window
-- [ ] 12. PHP gaps: css/scss/twig parsers, CSS/HTML LSP, eslint/stylelint, behat, drupal detection,
+- [~] 12. PHP gaps (auto-todo 2026-11-05 did all but a JS test runner, untested): css/scss/twig parsers, CSS/HTML LSP, eslint/stylelint, behat, drupal detection,
           composer/package.json scripts as tasks, React front end
-- [ ] 13. Go gaps: golangci-lint, gomod/gotmpl parsers, one test runner
-- [ ] 14. C: navigate and explore without a build
-- [ ] 15. adding a language: one documented step (lang module, parser, linter, test runner)
+- [x] 13. Go gaps: golangci-lint, gomod/gotmpl parsers, one test runner (auto-todo 2026-11-05, untested)
+- [x] 14. C: navigate and explore without a build (f702825, untested)
+- [x] 15. adding a language: one documented step (readme.add-a-language.md, 7b69862)
 - [ ] 16. WSL and Docker control from nvim
 - [x] 17. publish the other plug-wip plugins (done 2026-11-05: 12 repos on github.com/tox2ik, MIT, READMEs with lazy install;
           each plug-wip folder is its own checkout, ignored by the nvim repo, 2492965)

@@ -12,5 +12,6 @@ One row per run, added in step 8 above the two summary rows. Times are local, me
 | 2026-10-29 | nvim config (genja)    | editor config | Lua, Neovim 0.11+, lazy.nvim, which-key, telescope, mini.test, F2 picker; Windows; scope: todo-2026-neovim011.md only | 3     | 4      | 10        | ~60k        | ~33 min (21:38–22:11, incl. the :ClaudeFterm -ax detour) | ~4 min (22:12–22:16, commit times) |
 | 2026-10-29 | nvim config (genja) | editor config + in-repo plugins | Lua, Vim script, telescope, which-key, abbreviations | 1 (unsaved picker) | 2 (<leader>; letters, telescope exploration) | 3 (of 6 planned; spec items skipped by request) | ~18k | ~7 min (23:00-23:07) | ~3 min (23:07-23:10) |
 | 2026-10-31 | nvim config (genja) | editor config + in-repo plugins | Lua, lazy.nvim, blink.cmp, ollama, mason | 2 (netrw.nvim, minuet + llm.nvim) | 2 (vint to todo-2027, #14e) | 5 (4 planned + 1 pros/cons) | ~45k | ~20 min (~10 min on 2026-10-30 from 18:18, ~10 min on 2026-10-31 to 05:26) | ~6 min (05:26-05:32) |
-| **total (8 runs)** | | | | **39** | **23** | **89** | **~581k** | **~239 min** | **~108 min** |
-| **avg per built item** | | | | | | **2.3** | **~15k** | **~6.1 min** | **~2.8 min** |
+| 2026-11-05 | nvim config (genja) | editor config + plug-wip plugin repos | Lua, treesitter, nvim-lint, overseer, neotest, LSP (cssls, html, clangd, phpactor), PHP/Drupal/Behat/DDEV, Go | 12 (D E F G H I J L M N O P) | 4 (A B C K) | 15 | ~150k | ~38 min (20:31-21:09) | ~19 min (21:09-21:28, commit times) |
+| **total (9 runs)** | | | | **51** | **27** | **104** | **~731k** | **~277 min** | **~127 min** |
+| **avg per built item** | | | | | | **2.0** | **~14k** | **~5.4 min** | **~2.5 min** |
