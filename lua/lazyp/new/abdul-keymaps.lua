@@ -1,9 +1,18 @@
 local Maps = require('genja.map-plugin')
 
+-- The local checkout (its own repo, ignored here) when present; a fresh clone gets the published fork.
+local DIR = vim.fn.stdpath('config') .. '/plug-wip/abdul-keymaps.nvim'
+local dir = nil
+if vim.uv.fs_stat(DIR) then
+	dir = DIR
+end
+
 ---@type LazySpec
 return {
-	-- "abdul-hamid-achik/keymaps.nvim",
-	dir = vim.fn.stdpath('config') .. '/plug-wip/abdul-keymaps.nvim',
+	'tox2ik/keymaps.nvim', -- fork of abdul-hamid-achik/keymaps.nvim
+	branch = 'genja-desc-builtins', -- the fork's main stays upstream's
+	name = 'abdul-keymaps.nvim',
+	dir = dir,
 	dependencies = {
 		"nvim-telescope/telescope.nvim", -- optional, for fuzzy finding
 	},
