@@ -1,0 +1,6 @@
+- [x] lint: checkmake off by choice, first-wave linters checked (2026-11-05)
+    - [x] markdownlint MD018 shows; all mason linters installed, ansible-lint missing in WSL
+    - [x] checkmake commented out in lua/genja/ext/lint.lua (by_ft.make, mason list); config and parser kept
+    - [x] its case commented out in tests/comps011/test_comps011.lua
+    - [x] commit fdbf5e3
+    - [ ] :MasonUninstall checkmake (still installed)
