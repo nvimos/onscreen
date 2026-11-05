@@ -173,9 +173,7 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
 
 ### Fixes and checks
 
-- Ask-popup guide
-  - readme.2026-10-23.ask-popup.md still points to lua/genja/ask.lua,
-    which moved to plug-wip/genja-ask.nvim.
+- Ask-popup guide: paths fixed 2026-11-05 (plug-wip/genja-ask.nvim).
 
 - close-issues skill
   - use `git commit -- <paths>` when no file is split by hunk

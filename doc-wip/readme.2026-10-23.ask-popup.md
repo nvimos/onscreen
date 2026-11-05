@@ -3,11 +3,12 @@
 What: one quick question from anywhere, a short plain-text answer in the
 same float. Several targets; claude-p is your pwsh `claude-p` in Lua.
 
-Files: `lua/genja/ask.lua` (popup, sessions, log), backends in
-`lua/genja/ask/backends/` (`claude_p.lua`, `floaterm.lua`, `cli.lua` for
-gemini/copilot/aichat), key `<M-?>` in `plugin/ask.lua`, `<leader>pc` in
-`plugin/claude-fterm.lua`. The old popup in `claude.lua` is gone;
-`claude.lua` keeps `send()` for the floaterm target.
+Files (moved 2026-11 into the plugin `plug-wip/genja-ask.nvim`, spec
+`lua/lazyp/new/genja-ask.lua`): `lua/genja-ask/init.lua` (popup, sessions, log),
+backends in `lua/genja-ask/backends/` (`claude_p.lua`, `claudefterm.lua`, `cli.lua`
+for gemini/copilot/aichat), key `<M-?>` in the config's `plugin/ask.lua`, `<leader>pc`
+in `plugin/claude-fterm.lua`. The floaterm target's `send()` lives in
+`plug-wip/genja-claudefterm.nvim`.
 
 ## Keys
 
