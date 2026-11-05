@@ -1,9 +1,12 @@
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-finder.nvim',
+	'tox2ik/genja-finder.nvim',
+	dir = Wip.dir('genja-finder.nvim'),
 	dependencies = {
 		'nvim-telescope/telescope.nvim',
-		{ dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' },
+		{ 'tox2ik/genja-util.nvim', dir = Wip.dir('genja-util.nvim') },
 	},
 	-- lazy (default), no trigger: loads on the first require('genja-finder'),
 	-- i.e. <F1> / <S-F1> / <leader>jj from genja/map-telescope.lua

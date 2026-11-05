@@ -38,9 +38,12 @@ local clicks = {
 	end,
 }
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-statusline.nvim',
+	'tox2ik/genja-statusline.nvim',
+	dir = Wip.dir('genja-statusline.nvim'),
 
 	---@type genja-statusline.Opts
 	opts = {

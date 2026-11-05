@@ -1,10 +1,13 @@
 -- Claude Code in a floaterm, one per project (idea 19): plug-wip/genja-claudefterm.nvim.
 -- Keys: plugin/claude-fterm.lua; genja-ask's claudefterm target calls send().
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-claudefterm.nvim',
-	dependencies = { { dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' } },
+	'tox2ik/genja-claudefterm.nvim',
+	dir = Wip.dir('genja-claudefterm.nvim'),
+	dependencies = { { 'tox2ik/genja-util.nvim', dir = Wip.dir('genja-util.nvim') } },
 	cmd = 'ClaudeFterm', -- the keys and genja-ask load it through require('genja-claudefterm')
 
 	opts = {

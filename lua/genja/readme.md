@@ -14,6 +14,7 @@ init / boot
      init.lua    - Safeload the rest, mapleader, colorscheme, font(?)
      local/      - per-machine files, gitignored: startdirs.txt (plug-wip/genja-startdirs.nvim); example next to it
      lazy-spec.lua - pluginspec imports and array
+     plug-wip.lua - Wip.dir(folder): a plug-wip spec loads the local checkout when present, else its tox2ik/<repo> on GitHub
 
 config
 

@@ -5,9 +5,12 @@
 local SRC = 'lua/lazyp/new/genja-startdirs.lua: '
 local Maps = require('genja.map-plugin')
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-startdirs.nvim',
+	'tox2ik/genja-startdirs.nvim',
+	dir = Wip.dir('genja-startdirs.nvim'),
 	keys = Maps:keys(),
 	cmd = { 'StartdirsEdit', 'StartdirsAdd', 'StartdirsRemove', 'Mydirs' },
 	-- also loads on the first require('genja-startdirs')

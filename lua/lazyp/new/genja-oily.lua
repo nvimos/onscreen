@@ -1,6 +1,9 @@
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-oily.nvim',
+	'tox2ik/genja-oily.nvim',
+	dir = Wip.dir('genja-oily.nvim'),
 	dependencies = { 'stevearc/oil.nvim' },
 	-- lazy (default), no trigger: loads on the first require('genja-oily'),
 	-- i.e. oil's is_hidden_file and <LocalLeader>M in lua/lazyp/explorer/oil.lua

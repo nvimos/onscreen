@@ -1,8 +1,11 @@
 local Maps = require('genja.map-plugin')
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-splitpad.nvim',
+	'tox2ik/genja-splitpad.nvim',
+	dir = Wip.dir('genja-splitpad.nvim'),
 	event = 'VeryLazy',
 	enabled = false,
 	keys = Maps:keys(),

@@ -1,6 +1,10 @@
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-    dir = vim.fn.stdpath('config') .. '/plug-wip/genja-completion011.nvim/',
+    'tox2ik/genja-completion.nvim',
+    name = 'genja-completion011.nvim', -- the repo's name is shorter
+    dir = Wip.dir('genja-completion011.nvim'),
 
     -- MasonInstall: headless `make mason-luals` runs before VeryLazy fires.
     cmd = { 'Mason', 'MasonInstall' },

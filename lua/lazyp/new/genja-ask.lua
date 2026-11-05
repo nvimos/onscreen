@@ -1,9 +1,12 @@
 -- Ask popup (idea 16): plug-wip/genja-ask.nvim. Keys: <M-?> (plugin/ask.lua), <leader>pc (plugin/claude-fterm.lua).
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-ask.nvim',
-	dependencies = { { dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' } },
+	'tox2ik/genja-ask.nvim',
+	dir = Wip.dir('genja-ask.nvim'),
+	dependencies = { { 'tox2ik/genja-util.nvim', dir = Wip.dir('genja-util.nvim') } },
 	-- lazy (default), no trigger: loads on the first require('genja-ask'), i.e. <M-?> / <leader>pc
 
 	---@type genja-ask.Opts

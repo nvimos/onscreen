@@ -155,7 +155,12 @@ the test suite with timings and the startup checks; README, goals, cheatsheet.
 - [ ] 14. C: navigate and explore without a build
 - [ ] 15. adding a language: one documented step (lang module, parser, linter, test runner)
 - [ ] 16. WSL and Docker control from nvim
-- [ ] 17. publish the other plug-wip plugins
+- [ ] 17. publish the other plug-wip plugins (decided 2026-11-05)
+          - repos github.com/tox2ik/<folder name>, genja-util.nvim first; history kept with `git subtree split`
+          - genja-completion011.nvim keeps its name inside the config (unique, visible); only its repo is
+            tox2ik/genja-completion.nvim (spec: name = the folder name, url = the repo)
+          - specs: local plug-wip dir when present, else the GitHub repo (as abdul-keymaps)
+          - gh 2.103.3 installed (winget); needs `gh auth login` before repos can be created
 - [ ] 18. release: merge v2026 into master when the checklist is done (2026-11-05: refactor-2026-sept merged
           into master, branches develop and v2026 made; CLAUDE.md ## Release 2026)
 

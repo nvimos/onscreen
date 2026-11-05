@@ -28,9 +28,12 @@ local function save_provider(name)
 	}, LOCAL_FILE)
 end
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-paste-ai.nvim',
+	'tox2ik/genja-paste-ai.nvim',
+	dir = Wip.dir('genja-paste-ai.nvim'),
 	cmd = { 'PasteSearch', 'Wot', 'Google', 'Perplexity', 'Xty' },
 	keys = Maps:keys(),
 

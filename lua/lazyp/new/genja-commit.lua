@@ -3,10 +3,13 @@
 
 local Maps = require('genja.map-plugin')
 
+local Wip = require('genja.plug-wip')
+
 ---@type LazySpec
 return {
-	dir = vim.fn.stdpath('config') .. '/plug-wip/genja-commit.nvim',
-	dependencies = { { dir = vim.fn.stdpath('config') .. '/plug-wip/genja-util.nvim' } },
+	'tox2ik/genja-commit.nvim',
+	dir = Wip.dir('genja-commit.nvim'),
+	dependencies = { { 'tox2ik/genja-util.nvim', dir = Wip.dir('genja-util.nvim') } },
 	-- also loads on require('genja-commit') from lua/genja/oil/git-commit.lua
 	ft = 'gitcommit',
 	keys = Maps:keys(),
