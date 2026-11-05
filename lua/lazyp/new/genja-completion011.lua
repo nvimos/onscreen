@@ -37,6 +37,8 @@ return {
                 sshconfig  = true,
                 c_cpp      = false,
                 typescript = false,
+                css        = false,
+                html       = false,
             },
 
             mason = { ui = { border = 'double' } }, -- for require('mason').setup()

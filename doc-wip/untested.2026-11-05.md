@@ -14,3 +14,4 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] Behat: :OverseerRun in a .feature file, this feature / this scenario, through ddev in WSL (lua/overseer/template/user/behat.lua) -> doc-wip/readme.2026-11-05.behat.md
 - [ ] Go tests in neotest: <leader>Tr in a TestXxx, <leader>Ts summary (lua/lazyp/langs/php-neotest.lua) -> doc-wip/readme.2026-11-05.neotest-golang.md
 - [ ] Drupal: .module is php inside a Drupal tree, phpactor indexes it, drupal-check on save (genja-completion011 lang/php.lua, ft/drupal.lua; lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.drupal.md
+- [ ] cssls and html servers: open a .scss and a .html file, completion and K (genja-completion011 lang/css.lua, lang/html.lua) -> doc-wip/readme.2026-11-05.css-html-lsp.md
