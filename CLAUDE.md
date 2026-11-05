@@ -11,6 +11,42 @@ Unmarked bullets were stated by user.
 `Hint:` is a working note for Claude.
 `(inferred)` marks Claude's reading of the code or history: confirm or delete.
 
+## Goal
+
+- An alternative to the nvim distributions: some are bloated, others too small; genja aims to be a ready-to-go setup in between.
+- The distributions tried were either too slow and too far from the Vim feel, or good starting points without well-integrated coding workflows built on LSP.
+- Slow and un-Vim-like meant: animated notifications and sliding messages inside the nvim UI (a desktop paradigm that doesn't fit nvim), and typing input that lagged; much clunkier than Vim. Vim's responsiveness is the bar.
+- File trees (NERDTree, used for years) have their place, but a sidebar eats screen space better used for text; no distracting UI elements. Oil (a buffer you edit) fits instead.
+- Oil fits the file navigation needs well.
+- Not an IDE-looking nvim. The current setup is the user's own take on a clean Vi-like experience and is enough as it is; not a Vi clone, don't strip features toward Vi.
+- Floats on demand are fine. which-key as configured (left side, vertical list, category prefixes in `desc`) is not disruptive; keep it.
+- Sidebars (aerial) only on demand, never always or for every file.
+- Capable underneath, plain on the surface: features are found by digging, as in Vim itself. Not ideal, but preferred.
+- Startup below 1 s, ideally.
+- Work session: start nvim in the working folder, open a bunch of tabs; splits only when needed. Tabs are preferred: simpler to navigate and close.
+- Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box genja should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. Years of PHP work grow habits and tooling; the config should fit that project, not take 3 days of setup.
+- Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; genja aims to.
+- PHP first ("good enough PHP", user has ideas); then the same feel for Go projects.
+- C: navigate and explore C projects (user is not a C/C++ developer).
+- New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects; including everything is pointless.
+- nvim is the interface to the OS for coding work: shell, terminal, PowerShell, Git Bash, git; simple tasks shouldn't need leaving nvim. Windows lacks a good setup otherwise (user came from Linux).
+- Control WSL instances and Docker containers from nvim.
+- Kubernetes YAML, before 2027: completion and lookup while writing manifests, no browsing the spec. Values depend on the components in use (router, ingress, autoscaler); their docs get pulled into stdpath('data') and shown through familiar interfaces: generated `:help` files, `K` hover, popups. Integrated, not a separate tool. Next to implement (start before 2027), after cleanup, alongside the LLM chat survey (`todo-test/llm-chat-survey.md`). The user is learning Kubernetes; test project `~/es/k8s-minikube-ci` in its own WSL distro `minikube` (AlmaLinux 10, bash Makefile), Windows pwsh wrapper `C:/Users/jazzo/es/k8s-minikube-ci` (CI in Minikube, Tekton).
+- LLM chat in a buffer, browser-chat style: ask, the answer is appended, follow-ups below it, all in one buffer (input buffer optional); questions fold automatically, responses by hand. Any provider. Likely extends the genja-ask popup. minuet already covers ghost text. Still an idea, to be fleshed out.
+- Before building a feature, survey what others have built. Use theirs only if its interface fits the user's mental model; don't adapt to someone else's vision. Otherwise build our own and take the ideas that work from theirs.
+- So: no animated or sliding UI messages; keep input instant, startup fast and the Vim feel intact; make the LSP coding workflows (completion, diagnostics, lint, tests, git, AI) work together out of the box.
+- Not a contest: no claim to be better than other distributions.
+- `README.md` explains this to readers; keep it in line with this section.
+
+## Release 2026
+
+- Wrap up 2026 by the end of Monday 2026-11-09 (Friday and the weekend to finish).
+- After that, keep adding todos and ideas; spare tokens before a session reset go to implementing them.
+- Then close the 2026 branch (today `refactor-2026-sept`) and make it stable: it becomes the new `master`.
+- New ideas go to a separate running branch for 2027. Git flow is too much overhead for a single developer; use an established model, not a home-made one.
+- Proposed (confirm): OneFlow, develop + master variant (Adam Ruka, endoflineblog.com 2017). `master` = latest stable release, tagged (`v2026`); `develop` = running work; short feature branches optional; release = merge `develop` into `master` + tag; fixes to the stable version branch off `master`, merge into `master` (tag `v2026.1`), then `master` into `develop`.
+    - Monday: merge `refactor-2026-sept` into `master`, tag `v2026`, create `develop`; worktree branches and `/prish-merge` then target `develop`.
+
 ## Ideas and backlog: 
 
 - todo-ideas.md (add new ideas here),

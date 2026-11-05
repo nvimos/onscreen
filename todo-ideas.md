@@ -196,3 +196,73 @@ migration from 0.9 to 0.11 (the file that started it all)
   - try: profile first (time getcompletion('', 'shellcmd') on this PATH); then cache the list in Lua, rebuild on PATH change or after 3 h, serve it from the cmdline source for `!` and `:terminal`; or drop shellcmd for `!` as the recipe does
   - test: `!` then letters, `:terminal ` then letters: menu appears within a keypress
   - 2026-11-02: written: lua/genja/completion/shellcmd.lua, list in stdpath('state')/genja-completion011/shellcmd.txt, rebuilt after 3 h or on PATH change; `!word`, `:term word` and `:vert term word`; tests/completion/test_cmdline.lua: PATH-change rebuild and `:vert term` pass (make test D=completion); the 3 h age rebuild is untested (abfb666); :ResetPathCache deletes the list
+
+- [ ] zen modes: switch between layouts by task (not thought through yet, 2026-11-05)
+  - z1: only the code
+  - z2 (or a new key): digging, debugging, jumping around code: sidebars (aerial), dropbar and the like shown
+  - today: lua/genja/map-plugin/zenmode.lua, z1 width 120, z2 width 80 + relnum + maximized, z0 off; both hide diagnostics
+  - open: keep z1/z2 as they are and add z3 for the debug layout, or redefine z2?
+
+- [ ] aerial: outline sidebar on demand, follows the file shown in the source window
+  - open only on the key, not always, not for every file
+  - open a different file in the window it describes: the sidebar reloads for that file, never shows the old one
+  - today: lua/lazyp/ui/aerial.lua, attach_mode = 'global' (should already follow the current window),
+    close_automatic_events = { 'unsupported' }; test if it really follows, also across tabs
+
+- [ ] PHP project out of the box (goal in CLAUDE.md ## Goal, 2026-11-05)
+  - examples: Drupal site; Symfony app with a React front end; custom app with Behat
+  - gaps add: React side (jsx/tsx, eslint, a JS test runner)
+  - have: phpactor in WSL (completion, diagnostics, refactors), framework detection WordPress/Laravel/Symfony,
+    phpstan/php-cs-fixer/phpcs/pint from vendor/bin (plug-wip/genja-completion011.nvim/lua/genja/lang/php.lua),
+    laravel-ls + blade-nav (lua/lazyp/langs/php-laravel.lua), neotest pest/phpunit (php-neotest.lua),
+    overseer php_test template, emmet, typescript lang module, treesitter html/php/phpdoc/blade/js/ts/json/yaml
+  - gaps (from a grep, not tested): no treesitter css/scss/twig; no CSS or HTML LSP, no eslint/stylelint/biome;
+    no twig (Symfony, Drupal); no Behat runner; Drupal not detected; composer.json / package.json scripts not offered as tasks (check overseer)
+
+- [ ] Go project out of the box, same feel as PHP (after PHP, 2026-11-05)
+  - have: gopls (plug-wip/genja-completion011.nvim/lua/genja/lang/go.lua: go.work roots, organize imports + format on save,
+    code lenses on <leader>cl), go.nvim with dap (lua/lazyp/langs/go.lua), treesitter go
+  - gaps (from a grep, not tested): golangci-lint not in lua/genja/ext/lint.lua; treesitter gomod/gosum/gotmpl;
+    templ, sql, proto, Dockerfile parsers; tests through neotest-golang or go.nvim (decide one)
+
+- [ ] C projects: navigate and explore, not develop (2026-11-05)
+  - have: clangd (lang/c_cpp.lua), needs compile_commands.json or compile_flags.txt
+  - open: what works without a build (no compile_commands): treesitter, tags, grep; generate compile_commands (bear, cmake)?
+
+- [ ] plug in a new language (e.g. Flutter/Dart later) without shipping every language (2026-11-05)
+  - today: one lang module per language (lang/*.lua), :EnableLang, lsp/local.lua
+  - open: is adding a lang module + treesitter parser + linter + test runner one documented step? a template/guide for it
+
+- [ ] nvim as the interface to the OS for coding work: shell, terminal, pwsh, Git Bash, git (2026-11-05)
+  - today: floaterm commands (:PwshFterm, :BashFterm, :LazygitFterm), toggleterm, :terminal pwsh/bash, Neogit, mini.git
+  - open: which simple tasks still make you leave nvim?
+
+- [ ] control WSL instances and Docker containers from nvim (2026-11-05)
+  - today: only phpactor's wsl.exe calls (lang/php.lua); nothing for listing/starting/stopping distros or containers
+  - ideas: picker for `wsl -l -v` (start, terminate, shell into, set default with confirmation);
+    picker for docker ps/images/compose (logs, exec shell, restart); check existing plugins first
+
+- [ ] Kubernetes YAML: write manifests with the spec at hand, started before 2027, alongside the LLM chat survey (2026-11-05)
+  - test project: ~/es/k8s-minikube-ci in its own WSL distro minikube (AlmaLinux 10; written in alma first, copied by make seed), Windows wrapper C:/Users/jazzo/es/k8s-minikube-ci (Minikube + Tekton CI; phases add git server, ingress, autoscaling;
+  - the distro is disposable: source, configs and CI state live on the host, synced in (to do in the project)
+    each component is one whose docs genja should fetch); nothing run yet, minikube/kubectl/docker not installed
+  - options while writing a manifest, look things up from inside the editor, no browsing the spec
+  - values depend on the components in use (router X, ingress Y, autoscaler Z): pull their docs into
+    stdpath('data') and show them through familiar interfaces: generated :help files (a help subfolder,
+    maybe per project), K hover, or a popup
+  - today: no yamlls, no schemas (grep: only old/unused specs); lua/genja/ft/yaml.lua maps yml -> yaml.ansible
+  - ideas: yamlls + schemastore + kubernetes schemas (CRD schemas per component, e.g. datreeio/CRDs-catalog);
+    helm/kustomize files; docs fetched per component into stdpath('data'), turned into vim help; check existing plugins first
+
+- [ ] LLM chat in a buffer, like the browser chat (2026-11-05; an idea, to be fleshed out)
+  - open a buffer, ask; it thinks, appends the answer; type a follow-up below it, the next answer is appended; one running conversation
+  - maybe a separate input buffer (simpler), but questions and answers live in the chat buffer
+  - folds: questions close automatically as folds; responses can be closed by hand when needed
+  - likely an extension of the genja-ask popup (plug-wip/genja-ask.nvim)
+  - survey session, test steps and questions: todo-test/llm-chat-survey.md
+  - first: survey existing chat plugins (codecompanion, avante, gp.nvim, parrot, others); use one only if its interface fits
+    the mental model above; otherwise build our own and take the ideas that work (what to do, what to avoid)
+  - any provider, not tied to ChatGPT
+  - today: codecompanion.nvim chat with Claude Code over ACP (lua/lazyp/langs-comps/codecompanion.lua,
+    doc-wip/readme.idea19-companion.md) already works this way; genja-ask popup is one question, one answer;
+    minuet covers ghost text. Find out what's missing in codecompanion before building one
