@@ -27,13 +27,35 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
 
-## Open, ranked (auto-todo-20261031)
+## Open, ranked (auto-todo-20261105)
 
-Ask = questions (asked this round, so 0 left), Tokens = rough cost. Built easiest first.
+Ask = questions left (A–P asked 2026-11-05 20:31–21:09, so 0), Tokens = rough cost.
+Built easiest first. Q–T: questions in a later session (answer 15a).
 
-| #   | Idea                                                       | Ask | Tokens |
-|-----|------------------------------------------------------------|-----|--------|
-| 14  | genja-commit: try it (untested list)                       | 0 (you test) | 0 |
+| #   | Idea (from todo-ideas.md)                       | Decision 2026-11-05                                                                 | Ask  | Tokens |
+|-----|-------------------------------------------------|-------------------------------------------------------------------------------------|------|--------|
+| A   | #14 `claude -p` as minuet provider              | close: CLI start too slow for ghost text; todo-2027: cheap prepaid models (DeepSeek, Qwen) | 0 | ~1k |
+| B   | #14 minuet `claude` provider (API key)          | into the todo-2027 prepaid-models item, one provider to compare                     | 0    | ~1k    |
+| C   | keymap logger: build your own                   | close: the keymaps fork counts usage; `:KeymapsStats` on the untested list          | 0    | ~1k    |
+| K   | #14 "also outside the popup"                    | close: `<M-g>` works in every gitcommit buffer                                       | 0    | ~1k    |
+| D   | Go: parsers gomod, gosum, gotmpl                | add                                                                                 | 0    | ~2k    |
+| E   | PHP: web parsers                                | add css, scss, twig, jsdoc, regex                                                   | 0    | ~2k    |
+| F   | adding a language: one documented step          | README section from completion011's CLAUDE.md                                        | 0    | ~5k    |
+| G   | Go: golangci-lint                               | only with a .golangci.{yml,yaml,toml}; sample `.golangci.toml` in examples/go/       | 0    | ~5k    |
+| H   | PHP: eslint, stylelint                          | only with a project config; node_modules/.bin first, else Mason                      | 0    | ~5k    |
+| J   | aerial follows the file (`<leader>` keys)       | check headless, fix if needed, tests/ui case                                         | 0    | ~6k    |
+| N   | composer/npm scripts as tasks                   | overseer npm + composer templates, in `:OverseerRun` and `<F2>` (own composer template if none) | 0 | ~8k |
+| O   | Behat runner                                    | overseer template: `ddev exec` with .ddev/, else host; feature file or scenario at cursor | 0 | ~8k |
+| M   | Go test runner                                  | neotest-golang (same keys as PHP); go.nvim `:GoTest*` kept                           | 0    | ~9k    |
+| I   | Drupal                                          | detect core/lib/Drupal.php (root, web/, docroot/); .module .inc .install .theme .profile .engine -> php; drupal-check linter when in vendor/bin | 0 | ~10k |
+| L   | CSS, HTML servers                               | lang modules css (cssls) and html, off by default, on in local.lua                   | 0    | ~10k   |
+| P   | C without compile_commands.json                 | clangd fallback flags (-I. -Iinclude -Isrc), diagnostics off without a database; `:CCompileDb` (bear / cmake) | 0 | ~10k |
+| Q   | WSL and Docker control                          | later session                                                                        | spec | ~20k   |
+| R   | Kubernetes YAML                                 | later session, first of Q–T                                                          | spec | ~25k   |
+| S   | zen modes by task                               | later session                                                                        | spec | ~10k   |
+| T   | nvim as the interface to the OS                 | later session                                                                        | spec | ?      |
+
+Not in this round: LLM chat (survey later, todo-test/llm-chat-survey.md), PHP debugging (own session).
 
 Closed in auto-todo-20261031-0527: vint (to todo-2027), netrw.nvim, ghost text (minuet + llm.nvim).
 Closed in auto-todo-20261029-2307: unsaved picker, `<leader>;` letters, telescope exploration.
