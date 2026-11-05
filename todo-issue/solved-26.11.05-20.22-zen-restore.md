@@ -1,0 +1,6 @@
+- [x] zen: z0 left the nvim-qt window maximized (2026-11-05)
+    - [x] by hand: nvim-qt ignores &columns/&lines; GuiWindowMaximized(0) restores, unless right after a frameless change
+    - [x] lua/genja/map-plugin/zenmode.lua: maximize waits GUI_SETTLE_MS (150) after frameless; z0 un-maximizes first
+    - [x] test: z2 then z0 restores the size (2026-11-05)
+    - [x] commit 98aa8a4
+    - [ ] test: z1, z2, z1, z0
