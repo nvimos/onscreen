@@ -32,6 +32,7 @@
   "mru.vim": { "branch": "master", "commit": "9f25db66393a6467fae0ac04ae6565e8471023c3" },
   "neogit": { "branch": "master", "commit": "697ad3ee86a73cf6b6758b838d7a7d76cf3b9f86" },
   "neotest": { "branch": "master", "commit": "27bf921498043f7ecd821d6db68d05de244bbd02" },
+  "neotest-golang": { "branch": "main", "commit": "05cd7bf89a146cf1fa2848a9fe277a1e68a3a51d" },
   "neotest-pest": { "branch": "main", "commit": "3388a5f00001303020ce885e18007ccd1835212c" },
   "neotest-phpunit": { "branch": "main", "commit": "40e53c4294726a16f34f1a383a94c570553c6d46" },
   "neovim-gui-shim": { "branch": "master", "commit": "56f283514591a4b8f5ff4503aa61368cab9df715" },
