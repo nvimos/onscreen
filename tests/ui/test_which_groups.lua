@@ -3,7 +3,7 @@
 --   a group with no mapping under its prefix (in any mode)
 --   a <leader> prefix with 2+ mappings under it and no group (n and x modes)
 -- Keys of plugins not loaded yet count: lazy.nvim maps stubs for them.
--- Buffer-local keys (LSP <leader>c…, gitsigns) don't: no file is open, so their groups show as empty.
+-- Buffer-local keys (LSP <leader>c…, gitsigns) don't: no file is open; BUFFER_GROUPS lists those groups.
 
 local child = MiniTest.new_child_neovim()
 -- Lua sent to the child, set below
@@ -126,8 +126,24 @@ local function note(title, list)
 	MiniTest.add_note(title .. ': ' .. table.concat(list, ', '))
 end
 
+-- Groups whose keys are buffer-local, so empty here (keytrans form, as empty_groups() returns).
+local BUFFER_GROUPS = {
+	['<Space>cA'] = 'lua/genja/map-lsp.lua, PHP',
+	['<Space>cW'] = 'lua/genja/map-lsp.lua',
+	['<Space>cc'] = 'lua/genja/map-lsp.lua',
+	['<Space>cd'] = 'lua/genja/map-lsp.lua',
+	['<Space>mf'] = 'after/ftplugin/markdown.vim',
+	['gS'] = 'lua/genja/map-oil.lua',
+}
+
 T['groups: each has a mapping under it'] = function()
-	note('which-key groups with no mapping', child.lua([[return empty_groups()]]))
+	local empty = {}
+	for _, g in ipairs(child.lua([[return empty_groups()]])) do
+		if not BUFFER_GROUPS[g] then
+			table.insert(empty, g)
+		end
+	end
+	note('which-key groups with no mapping', empty)
 end
 
 T['groups: <leader> prefixes with 2+ mappings have one'] = function()

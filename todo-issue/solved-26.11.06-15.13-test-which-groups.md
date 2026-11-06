@@ -1,0 +1,3 @@
+- [x] tests: which-key groups with buffer-local keys not listed as empty (2026-11-06)
+    - [x] BUFFER_GROUPS table filters empty_groups(): tests/ui/test_which_groups.lua
+    - [ ] test: make -C tests D=ui
