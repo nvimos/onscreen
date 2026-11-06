@@ -1,0 +1,3 @@
+- [x] tests: :vert term shell names case typed a char the menu waits for (2026-11-06)
+    - [x] type `vert term n`, not a trailing space: tests/completion/test_cmdline.lua
+    - [ ] test: make -C tests D=completion

@@ -223,7 +223,8 @@ T['shellcmd: :vert term lists shell names'] = function()
 	require('helpers.timing').wait(function()
 		return vim.fn.filereadable(shell_file()) == 1
 	end, 8000)
-	child.type_keys(':', 'vert term ')
+	-- the menu opens on a typed character, not on the space after `term`
+	child.type_keys(':', 'vert term n')
 	check(Helpers.has_match(cmd_items(), '^shellcmd:'))
 end
 
