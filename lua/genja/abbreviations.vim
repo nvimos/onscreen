@@ -55,5 +55,6 @@ inoreabbrev ...) (…)
 " <expr>: expand to today's date at the time of typing, not when sourced.
 " Not ..date: a lhs mixing '.' with letters is invalid (:h abbreviations).
 inoreabbrev <expr> ymd! strftime('%Y-%m-%d')
+inoreabbrev <expr> ymdd! tolower(strftime('%a %Y-%m-%d'))
 inoreabbrev <expr> ymdt! strftime('%Y-%m-%d %H:%M:%S')
 
