@@ -28,7 +28,7 @@ O.oily_hide            = { desc = "Oily: hide via .oily", callback = function() 
 
 -- {{{ start dirs (plug-wip/genja-startdirs.nvim): the dir under the cursor, else oil's dir
 ---@return string?
-local function entry_dir()
+local function cursor_dir_or_oil_dir()
 	local oil = require('oil')
 	local dir = oil.get_current_dir()
 	local entry = oil.get_cursor_entry()
@@ -38,11 +38,11 @@ local function entry_dir()
 	return dir
 end
 O.startdirs_add        = { desc = "Startdirs: add dir under cursor", callback = function()
-	local dir = entry_dir()
+	local dir = cursor_dir_or_oil_dir()
 	if dir then require('genja-startdirs').add(dir, 'oil') end
 end }
 O.startdirs_remove     = { desc = "Startdirs: remove dir from start", callback = function()
-	local dir = entry_dir()
+	local dir = cursor_dir_or_oil_dir()
 	if dir then require('genja-startdirs').remove(dir) end
 end }
 -- }}}
