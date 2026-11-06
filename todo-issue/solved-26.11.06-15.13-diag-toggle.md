@@ -1,0 +1,3 @@
+- [x] diag: toggle all diagnostics next to the 3-per-severity limit (2026-11-06)
+    - [x] <leader>ttt toggles vim.diagnostic, <leader>tt3 desc reworded: plugin/diag-limit.lua
+    - [ ] test: <leader>ttt in a file with diagnostics, twice
