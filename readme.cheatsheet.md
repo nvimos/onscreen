@@ -239,6 +239,7 @@ Textobjects (mini.ai: lua/lazyp/new/mini-ai.lua; treesitter ids from nvim-treesi
     an in    visual / operator: grow / shrink by treesitter node (nvim 0.12 default)   van, then an an … in
     al il    whole buffer / line without blanks (nvim 0.13 default)   yal, cil
     without mini.ai, in Lua only: if af from after/ftplugin/lua.lua (lua/genja/ext/lua-func-obj.lua)
+    visual <C-s> <BS>  grow / shrink the selection by treesitter node; v<C-s> starts (lua/genja/map-plugin/load-treesitter.lua)
 
 F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.vim; visual <F2> in map-telescope.lua)
 

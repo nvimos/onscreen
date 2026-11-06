@@ -2,6 +2,8 @@
 --
 --		require'nvim-treesitter.configs'.setup { compilers = { "gcc" }, }
 
+local Maps = require('genja.map-plugin')
+
 ---@type LazySpec
 return {
 	{
@@ -18,6 +20,7 @@ return {
 		---@param opts TSConfig
 		config = function(_, opts)
 			require('nvim-treesitter').setup(opts)
+			Maps:mappings(opts) -- <C-s> / <BS> node selection: lua/genja/map-plugin/load-treesitter.lua
 
 
 			--   require('nvim-treesitter.install').compilers = { "clang" } -- force compiler from «winget install LLVM.LLVM»
