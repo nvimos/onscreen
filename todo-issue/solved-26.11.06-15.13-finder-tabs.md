@@ -1,0 +1,5 @@
+- [x] genja-finder: <M-t> opens marked or selected entries in tabs, picker stays (2026-11-06)
+    - [x] tabedit_selected_keep_picker in Telemap, at the entry's line: genja-finder.nvim a3272cb
+    - [x] README.md, doc/genja-finder.txt, CLAUDE.md in the plugin
+    - [x] cheatsheet line under Live grep / find: readme.cheatsheet.md
+    - [ ] test: <F1> grep, <Tab> two results, <M-t>; both tabs open at their line, picker still open

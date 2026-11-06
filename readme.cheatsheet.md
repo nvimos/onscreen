@@ -143,6 +143,7 @@ Live grep / find (plug-wip/genja-finder.nvim/lua/genja-finder/scope.lua; <F1> <S
 
     <M-r>  cycle root (pwd, .git, bufdir, home)   <M-Up>  parent dir, one-off   <M-i>  skip set
     <F1>   grep <-> find   <M-c>  command   <C-p>  preview   <M-f>  filter   <BS>  undo filter
+    <M-t>  open selected in tabs, picker stays (genja-finder/telemap.lua; any picker with the shared keys)
 
 Recent files (plug-wip/genja-recent.nvim, picker lua/genja/ext/recent.lua, key in map-telescope.lua)
 
