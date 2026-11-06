@@ -4,4 +4,3 @@
     - [x] clash and version notes, how to check the defaults: comments in lua/lazyp/new/mini-ai.lua
     - [x] fallback without mini.ai, Lua only: after/ftplugin/lua.lua, nvim-treesitter-textobjects or lua/genja/ext/lua-func-obj.lua
     - [x] cheatsheet Textobjects section, al il explained: readme.cheatsheet.md
-    - [ ] test: ciNf above a function, daLc below a class; :verbose xmap an names the nvim default

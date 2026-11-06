@@ -3,4 +3,3 @@
     - [x] Maps:mappings in lua/lazyp/my/load-treesitter.lua
     - [x] source url, version and clash notes (aerial <C-s>, v_<BS>, v_an) in the keys file
     - [x] cheatsheet line under Textobjects
-    - [ ] additional_vim_regex_highlighting left out (cost); add vim.bo.syntax = 'on' after vim.treesitter.start if wanted
