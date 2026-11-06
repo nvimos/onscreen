@@ -60,7 +60,9 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
    - Check `git diff --cached --stat` lists only this group, then `git commit -F <msgfile>` (message file in the tmp dir).
    - Never `git add -A`, `git add .`, `git commit -a`, `--amend`, `--no-verify`.
 4. Re-stage the saved "not ours" patch with `git apply --cached <patch>`. If it fails, say so and give the patch path; don't retry with other flags.
-5. Don't push, in the config or the plugin repos.
+5. Push, without asking, once all commits are done: every repo that got commits (config and `plug-wip/<name>`), once each, as the `git-push` skill does: `git -C <repo> push --no-progress --porcelain 2>&1; echo "exit $?"`.
+   - Not in a Claude worktree (`.claude/worktrees/<name>`); its branch is merged later.
+   - Rejected or no remote: report the line; don't pull, rebase or force.
 
 ## Output
 
@@ -80,5 +82,6 @@ Files: path (all) | path (hunks: <short description>) | todo-issue/….md
 After committing, end with:
 
 - the commits: `<repo> <short hash> <subject>`, one per line;
+- the pushes: `<repo> <branch> <old>..<new>` or "up to date", one per repo;
 - the issue files;
 - the open `test:` items, if any.
