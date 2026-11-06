@@ -1,3 +1,4 @@
+-- vim: fdm=marker
 local km, bkm = vim.keymap.set, vim.api.nvim_buf_set_keymap ---@diagnostic disable-line: unused-local
 local nosi    = function(d) return { silent = true, noremap = true, desc = d } end
 
@@ -67,8 +68,19 @@ km('n', '<Esc>', close_lsp_float, nosi 'LSP: close float, nohlsearch')
 -- }}}
 
 
+-- Diagnostics limit {{{
+-- {{{ diagnostics callbacks
+local function toggle_diag_limit()
+    -- the first 3 per severity and buffer are drawn (lua/genja/ext/diag-limit.lua).
+    require('genja.ext.diag-limit').setup()
+    require('genja.ext.diag-limit').toggle()
+end
+local function toggle_diagnostics() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
+-- }}}
 
-
+vim.keymap.set('', '<leader>ttt', toggle_diagnostics, { desc = 'Toggle: diagnostics, all'})
+vim.keymap.set('', '<leader>tt3', toggle_diag_limit,  { desc = 'Toggle: diagnostics, 3 per severity' })
+-- }}}
 
 
 -- {{{ lsp attach autocommand
@@ -87,8 +99,8 @@ local goto_prev = function() vim.diagnostic.jump({ count = -1, float = true }) e
 local goto_next = function() vim.diagnostic.jump({ count = 1,  float = true }) end
 
 local list_workspaces     = function() print(vim.inspect(vlb.list_workspace_folders())) end
-local toggle_diagnostics  = function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
 local toggle_inline_hints = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end
+
 
 -- code actions of one kind and its subkinds ('refactor.extract' also matches
 -- 'refactor.extract.function'); in visual mode the selection is the range
@@ -170,7 +182,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 		-- {{{ Toggle noise
-		km('', '<leader>ttt', toggle_diagnostics,  o('Toggle: diagnostics'))
 		km('', '<leader>tth', toggle_inline_hints, o('Toggle: inlay hints')) -- arg names, types, [1] [2] indices; off by default
 		-- }}}
 

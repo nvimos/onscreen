@@ -72,6 +72,7 @@ Passed ones: todo-done/tested-2026-10-29.md, todo-done/tested-2026-10-31.md.
     after frameless on (z1, z2); z0 un-maximizes first, frameless off 150 ms later. Not tested.
     Retest: z2, z0: earlier size back; z1, z2, z1, z0: same.
   - result 2026-11-05: z2, z0 passes, window back to its previous size. (z1, z2, z1, z0 not run)
+  - result 2026-11-06: z1, z2, z1, z0 passes, window back to its earlier size. Zen restore done.
     2. `:call GuiWindowMaximized(1)`, then `:call GuiWindowMaximized(0)`: back to the earlier size,
        or still full-screen-sized?
 - Claude window: /exit brings forward some old buffer

@@ -16,45 +16,50 @@ migration from 0.9 to 0.11 (the file that started it all)
 
     ./todo-2026-neovim011.md
 
+## ideas november
+
+- [ ] now that jolemak keymap in win is sending the correct control chars...
+  - `<c-p>` (logical mapping) for preview is not as convenient as `<c-y>` on jolemak
+
 ## ideas october
 
 - [x] extras outside the idea list (2026-10-23)
   - [x] winbar: quickfix windows show w:quickfix_title, no duplicate %q (6f29b37)
-  - [x] map-telescope: helpers in fn.lua; <leader>jj1/jj2 quickfix/loclist, genja grep/find on jjJ/jjj,
-          builtins under <leader>jb (6aa5a7b); which-key groups <leader>j. and <leader>j/ (73c4c3b)
-  - [x] focus.nvim: vim.g.focus_disable, so <C-w>= sticks; <leader>tPf can turn it on (28c80c0)
+  - [x] map-telescope: helpers in fn.lua; `<leader>jj1`/jj2 quickfix/loclist, genja grep/find on jjJ/jjj,
+          builtins under `<leader>jb` (6aa5a7b); which-key groups `<leader>j`. and `<leader>j`/ (73c4c3b)
+  - [x] focus.nvim: vim.g.focus_disable, so `<C-w>`= sticks; `<leader>tPf` can turn it on (28c80c0)
   - [x] every vim.notify names its file through a SRC prefix (2aadf61)
   - [x] mylunsj lists Telescope mydirs first (1151dfb)
-  - [x] cmdline completion: <Tab>/<S-Tab> next/previous, <Up>/<Down> pick while the menu is open (b5173ad)
+  - [x] cmdline completion: `<Tab>`/`<S-Tab>` next/previous, `<Up>`/`<Down>` pick while the menu is open (b5173ad)
 
 - [x] extras outside the idea list (2026-10-24)
-  - [x] cmdline: <C-j>/<C-k> pick items, <Up>/<Down> back to history (0de4d52)
+  - [x] cmdline: `<C-j>`/`<C-k>` pick items, `<Up>`/`<Down>` back to history (0de4d52)
   - [x] map-lsp: descs for nvim 0.11 gr* defaults, references on gR, [d ]d go the way their descs say (5e788aa)
-  - [x] markdown: <F2> glow preview in a new pwsh window, Windows only (21cfe96)
+  - [x] markdown: `<F2>` glow preview in a new pwsh window, Windows only (21cfe96)
   - [x] intro: eob ~ drawn in column 0 like vanilla (81a4659)
-  - [x] gui: nvim-qt toggles on <leader>mQ…, GuiFuncs picker (<F3>, <F2> gui), right-click frameless,
+  - [x] gui: nvim-qt toggles on `<leader>mQ`…, GuiFuncs picker (`<F3>`, `<F2>` gui), right-click frameless,
           one shared state per Gui* function; neovim-gui-shim on again; tested (3580a06, ad94a79)
-  - [x] edit: visual <leader>w, wraps lines as "line",; title case on <leader>wsT, sort paragraph <leader>wsp (8f25155)
-  - [x] f2 git: <M-a> git adds the file, picker stays open (e6c04ac)
+  - [x] edit: visual `<leader>w`, wraps lines as "line",; title case on `<leader>wsT`, sort paragraph `<leader>wsp` (8f25155)
+  - [x] f2 git: `<M-a>` git adds the file, picker stays open (e6c04ac)
   - [x] hilite: darker Search/IncSearch/CurSearch background (a1b0857)
-  - [x] startdirs: <M-1>…<M-4> jump by rank and don't count a use; :Mydirs picker,
+  - [x] startdirs: `<M-1>`…`<M-4>` jump by rank and don't count a use; :Mydirs picker,
           :Mydirs reset deletes the usage file; tested (1132d6b)
 
 - [x] extras outside the idea list (2026-10-25)
-  - [x] telescope keymaps: <M-r> after <M-f>/<M-x> cycles the groups of the refined list; tested (2debb3b)
+  - [x] telescope keymaps: `<M-r>` after `<M-f>`/`<M-x>` cycles the groups of the refined list; tested (2debb3b)
   - [x] tests: map-plugin miss log and health (af13aed), claudefterm per project (63800da),
           comps011 lsp/cmp/lint with groups and timings (9f5f014); tests/Makefile runs every dir
   - [x] aerial: nav float 5% see-through (cbe6c13)
-  - [x] gitsigns: <leader>mGs attaches skipped buffers again (e9e50f7)
+  - [x] gitsigns: `<leader>mGs` attaches skipped buffers again (e9e50f7)
   - [x] f2: groups of at most 6 chars, main list `group  label` in one column (5edddfa)
   - [x] floaterm: :PwshFterm (50e4b8a)
   - [x] mason: make mason-luals reinstalls lua-language-server headless (19d67f5)
   - [x] :ToggleDiagnostics for the current buffer (38e3d2d)
   - [x] f2 diag: hide excess undoes show all (620545d); pickers: matched chars in Visual fg, bold (00b05e5)
-  - [x] genja-finder: <M-Up> rescans in the parent dir (93a8b69); <C-]> opens the entry, a dir entry itself (7bc4759, 31b74cd)
+  - [x] genja-finder: `<M-Up>` rescans in the parent dir (93a8b69); `<C-]>` opens the entry, a dir entry itself (7bc4759, 31b74cd)
   - [x] statusline: [Nameless] for unnamed buffers (eddb6e5); telescope key footer dropped, key help kept (5c6e9a7)
   - [x] md: substitutions wrap vim key notation in backticks (c4d6b26)
-  - [x] commit popup also on <leader>gcm and <leader>C (39dab59); <leader>ei tab-local from stdpath (7b05312)
+  - [x] commit popup also on `<leader>gcm` and `<leader>C` (39dab59); `<leader>ei` tab-local from stdpath (7b05312)
   - [x] nvim-qt: nvim-qt.qss stylesheet, dark title bar note in ginit.vim (41e5bb6)
 
 - [x] extras outside the idea list (2026-10-26)
@@ -62,33 +67,33 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] lua_ls: GENJA_LUA_NO_LIB=1 skips libraries, set by tests/Makefile (53642d0)
   - [x] :checkhealth genja.lsp: servers not installed, broken Python venvs, mason launchers (96b7910)
   - [x] bashls: mason's shellcheck.exe path on Windows (0bdc719); claudefterm kill() crash (0b46cfa)
-  - [x] auto-todo round: shared checkmake.ini (9152813), <M-CR>/<C-s> submit popups (776f78a), telescope default keys
-        and <C-/> descs (2f85171), claudefterm marker toggle and !! markers (a5ae869), f2 git staged picker (5e81cdf)
+  - [x] auto-todo round: shared checkmake.ini (9152813), `<M-CR>`/`<C-s>` submit popups (776f78a), telescope default keys
+        and `<C-/>` descs (2f85171), claudefterm marker toggle and !! markers (a5ae869), f2 git staged picker (5e81cdf)
   - [x] statusline: plain separators in terminals, icons in GUI (487aec2); :Ct for :ClaudeFterm (9073fcb)
   - [x] guifont JetBrainsMono NFM 12 (ac41882); make mason-make reinstalls autotools_ls (170ba57)
 
 - [x] extras outside the idea list (2026-10-27)
   - [x] blink.cmp replaces nvim-cmp, own sources on one source builder, blade-nav source (2d6b4bd, 00268c4);
-        tests/completion: sources, keys, cmdline, <CR> (191c6cf, 55c1296)
+        tests/completion: sources, keys, cmdline, `<CR>` (191c6cf, 55c1296)
   - [x] genja-util: shared centred float and text helpers; plug-wip plugins tidied (b34a1a8, f16695b)
-  - [x] gen.nvim: ollama qwen3.5:0.8b prompt menu on <leader>ai (2bd7b6f)
+  - [x] gen.nvim: ollama qwen3.5:0.8b prompt menu on `<leader>ai` (2bd7b6f)
 
 - [x] extras outside the idea list (2026-10-28)
-  - [x] LSP rename typed in a float over the word: grn, <leader>c2, right-click (527755d)
-  - [x] :EnableLang turns a language on/off for the session, -save writes lsp/local.lua, <F2> offers it (03ce43e)
-  - [x] completion menu colours from StatusLine (e45657e); cmdline <Down>/<Up> walk the menu, history without one (dbd3c64)
-  - [x] terminal windows: scrolloff 0 (db72fa3); :help you page (b7337e9); <leader>ts toggles spelling (fda9e2e)
+  - [x] LSP rename typed in a float over the word: grn, `<leader>c2`, right-click (527755d)
+  - [x] :EnableLang turns a language on/off for the session, -save writes lsp/local.lua, `<F2>` offers it (03ce43e)
+  - [x] completion menu colours from StatusLine (e45657e); cmdline `<Down>`/`<Up>` walk the menu, history without one (dbd3c64)
+  - [x] terminal windows: scrolloff 0 (db72fa3); :help you page (b7337e9); `<leader>ts` toggles spelling (fda9e2e)
   - [x] colorscheme set in init.vim, Gui* settings grouped (6adb2ed); markdownlint MD012 off (ce73378)
 
 - [x] extras outside the idea list (2026-10-29)
-  - [x] ccc.nvim colour picker and highlighter: <leader>ic, <leader>tc (e26d31e)
+  - [x] ccc.nvim colour picker and highlighter: `<leader>ic`, `<leader>tc` (e26d31e)
   - [x] paste search: right-click on a selection (cbeef81); genja-paste-ai.nvim: :PasteSearch, :Wot,
-        :Google / :Perplexity / :Xty, <F2> lookup, web and ai providers (80b9277, 5e70490, f9854f3)
-  - [x] terminal keys, <C-`> floaterm toggle, sessions keep shells (f4675f6)
-  - [x] md-fix: expand tabs, backtick vim keys, <leader>tm (420d58c; Lua port 893ff63); formatlistpat for checkboxes, footnotes (d69e644)
+        :Google / :Perplexity / :Xty, `<F2>` lookup, web and ai providers (80b9277, 5e70490, f9854f3)
+  - [x] terminal keys, `` <C-`> `` floaterm toggle, sessions keep shells (f4675f6)
+  - [x] md-fix: expand tabs, backtick vim keys, `<leader>tm` (420d58c; Lua port 893ff63); formatlistpat for checkboxes, footnotes (d69e644)
   - [x] diag-align: virtual text in one column per paragraph (5b579f9); diagnostic colours per severity (d778534);
         dim underline on markdown links (42d9f18)
-  - [x] legendary: 0king fork, <leader>jl, in mylunsj (14a73da), bigger dropdown (b366920)
+  - [x] legendary: 0king fork, `<leader>jl`, in mylunsj (14a73da), bigger dropdown (b366920)
   - [x] :ClaudeFterm -ax passes --ax-screen-reader (0db2b57)
   - [x] which-key: helix preset, left-centred, fixed height (da8581b, 5eb0576, a143fca); test groups vs mappings (f7a9970)
   - [x] unsaved buffers picker before :qa, jj, s: (58316bd)
@@ -96,16 +101,16 @@ migration from 0.9 to 0.11 (the file that started it all)
 - [x] extras outside the idea list (2026-10-30)
   - [x] unsaved picker: layout, E13 overwrite prompt, :q and :x, tests (4ccf5bc)
   - [x] telescope: per-picker prompt hint via b:telescope_hint (bb164fe); :Messages -yank copies :messages (1270b29)
-  - [x] abbrev: g quits via a <CR> map, :g/pat/ stays :global (a3e07a3)
+  - [x] abbrev: g quits via a `<CR>` map, :g/pat/ stays :global (a3e07a3)
 
 - [x] extras outside the idea list (2026-10-31)
   - [x] netrw.nvim icons (c30c591); ghost text: minuet-ai.nvim and llm.nvim on ollama (d7d084f); both in todo-done/
   - [x] terminal: bare :terminal opens pwsh on Windows, bash on Linux (80c8fa1); idle shells under a 'shell'
-        wrapper saved in sessions (140ed09); <S-Insert> sends <C-v> to pwsh terminals (df0a668)
-  - [x] cmdline: <Up>/<Down> history until a menu walk, no preselect (fc6cd99); <C-BS> deletes a word (8351d8f);
-        <M-j>/<M-k> walk the menu (aa7cdc5); <M-f> previous, <M-w> first, <M-s> 3 down (9693171);
-        no menu on one-char commands, :w<CR> map dropped (c655f23)
-  - [x] minuet: answers only <M-y> unless blink auto-complete is on (6dead7f); qwen2.5-coder, all providers,
+        wrapper saved in sessions (140ed09); `<S-Insert>` sends `<C-v>` to pwsh terminals (df0a668)
+  - [x] cmdline: `<Up>`/`<Down>` history until a menu walk, no preselect (fc6cd99); `<C-BS>` deletes a word (8351d8f);
+        `<M-j>`/`<M-k>` walk the menu (aa7cdc5); `<M-f>` previous, `<M-w>` first, `<M-s>` 3 down (9693171);
+        no menu on one-char commands, :w`<CR>` map dropped (c655f23)
+  - [x] minuet: answers only `<M-y>` unless blink auto-complete is on (6dead7f); qwen2.5-coder, all providers,
         keys from gitignored local/secrets.lua (3e90c60, 6122927); :CheckHealthSimpleMinuet (3e5a645);
         Codestral by default (a300cea); provider guide doc-wip/readme.minuet-providers.md (0c3e3a3)
   - [x] :HiInspect shows highlight groups under the cursor (17dceca); :CheckHealthLspSimple renamed
@@ -113,16 +118,16 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] completion doc window: menu colours, rounded frame, padding (29e8c26, 08a6f5c, 7390836)
   - [x] lint: runs cancelled by nvim-lint no longer reported as exit code 1 (cd4a0ab)
   - [x] tests: gopls go-list warmup (a3f049a), make timings slowest last (cd57bdf), mason linters installed (ef9867a),
-        llm dir with minuet <M-y> (ae71dd3), telescope key help (48936c2), lint md-mixed (3d74e10)
+        llm dir with minuet `<M-y>` (ae71dd3), telescope key help (48936c2), lint md-mixed (3d74e10)
   - [x] ecolog: ecolog2 with ecolog-lsp, else ecolog.nvim v1 (d7842a2, ca842c0)
   - [x] copilot.vim and llm.nvim shelved, keys commented out (18ed193, 1185287)
   - [x] oil: :Lexplore works again (e7b8ece); telescope key help in insert mode without n maps (48936c2)
   - [x] markdown: gq wraps checkbox items under the text (58538ea); md-fix follows editorconfig sections (aeab075)
-  - [x] diag-align toggle on <leader>tta and in <F2> (27648c7); right-click paste search with a picked provider (fa42e84);
+  - [x] diag-align toggle on `<leader>tta` and in `<F2>` (27648c7); right-click paste search with a picked provider (fa42e84);
         diagnostic virtual text and link colours (698b3a6)
 
 - [x] extras outside the idea list (2026-11-02)
-  - [x] lint: <leader>cx turns the markdownlint/vale rule under the cursor off (01f7cda)
+  - [x] lint: `<leader>cx` turns the markdownlint/vale rule under the cursor off (01f7cda)
   - [x] tests: copilot case skips without copilot.vim in lazy (9244bc1)
 
 - [x] extras outside the idea list (2026-11-03)
@@ -131,9 +136,9 @@ migration from 0.9 to 0.11 (the file that started it all)
   - [x] tests: yellow NOTE lines, shorter case path (9bebc59)
   - [x] Makefile.lazy.mk: update-treesitter a prerequisite of update/sync again (3480b0d)
   - [x] mason: cut-off installs repair themselves on open, make kills lua_ls first, lua_ls logs to stdpath('log') (eef2590)
-  - [x] hilite: muted diagnostic underline and virtual text (65812bb); <leader>' opens oldfiles (5c637f8)
+  - [x] hilite: muted diagnostic underline and virtual text (65812bb); `<leader>`' opens oldfiles (5c637f8)
 
-- [x] diagnostics: <leader>ttt disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
+- [x] diagnostics: `<leader>ttt` disables all diagnostics (LSP, nvim-lint: vale, gitleaks, ...) and toggles them back on
   - today: lua/genja/map-lsp.lua toggle_diagnostics, `vim.diagnostic.enable(not vim.diagnostic.is_enabled())`
   - check that every source goes away and comes back, also in buffers opened while off
   - 2026-11-02: already works: enable(false) without a filter covers every namespace and later buffers
@@ -143,18 +148,18 @@ migration from 0.9 to 0.11 (the file that started it all)
   - today vale is skipped until :ValeSync (lua/genja/ext/lint.lua prepare_vale), no hint that it's off
   - 2026-11-02: the first lint without styles starts the sync once per session, then lints all buffers again; untested (1c67fc5)
 
-- [x] abbrev: /FAIL<CR> searches for "/FAIL<C-]><CR>" (literal text, no search)
-  - source: lua/genja/abbreviations.vim:38, the cmdline <CR> map returns the single-quoted string `'<C-]><CR>'` for every cmdtype but `:`; in an <expr> map the <> is typed literally, and the Vim-only `<C-]>` is only needed for `:` abbreviations (a3e07a3, 80c8fa1)
-  - fix: only `:` gets the <C-]> prefix, other cmdtypes return `"\<CR>"` (double quotes, real key), or no map at all for `/` `?`
+- [x] abbrev: /FAIL`<CR>` searches for "/FAIL`<C-]><CR>`" (literal text, no search)
+  - source: lua/genja/abbreviations.vim:38, the cmdline `<CR>` map returns the single-quoted string `'<C-]><CR>'` for every cmdtype but `:`; in an `<expr>` map the <> is typed literally, and the Vim-only `<C-]>` is only needed for `:` abbreviations (a3e07a3, 80c8fa1)
+  - fix: only `:` gets the `<C-]>` prefix, other cmdtypes return `"\<CR>"` (double quotes, real key), or no map at all for `/` `?`
   - test: `/FAIL<CR>`, `?FAIL<CR>`, `:s/a/b/<CR>`, `jj`, `g` still work
   - 2026-11-02: fixed (abbreviations.vim: `"\<CR>"` for non-`:`); `/FAIL<CR>` tested by hand, the rest of the test list open (82cd9a4)
 
 - [x] completion: blink cmdline completion of shell commands (`!cmd`, `:terminal cmd`) is very slow
   - today: blink cmdline source in plug-wip/genja-completion011.nvim/lua/genja/completion/cmdline.lua; shell names come from getcompletion(..., 'shellcmd') = $PATH scan on every keypress (inferred, not profiled)
-  - upstream: blink recipe turns cmdline completion off for `:!` and `:%!` only, because Git Bash or WSL hang (https://cmp.saghen.dev/recipes); feature request to ignore commands in the cmdline source, not resolved in the results (https://github.com/saghen/blink.cmp/issues/1029); Neovim docs: shell command names come from $PATH (:h cmdline-completion)
+  - upstream: blink recipe turns cmdline completion off for `:!` and `:%!` only, because Git Bash or WSL hang (<https://cmp.saghen.dev/recipes>); feature request to ignore commands in the cmdline source, not resolved in the results (<https://github.com/saghen/blink.cmp/issues/1029>); Neovim docs: shell command names come from $PATH (:h cmdline-completion)
   - no PATH cache found upstream in Neovim or blink; a cache would be ours
   - try: profile first (time getcompletion('', 'shellcmd') on this PATH); then cache the list in Lua, rebuild on PATH change or after 3 h, serve it from the cmdline source for `!` and `:terminal`; or drop shellcmd for `!` as the recipe does
-  - test: `!` then letters, `:terminal ` then letters: menu appears within a keypress
+  - test: `!` then letters, `:terminal` then letters: menu appears within a keypress
   - 2026-11-02: written: lua/genja/completion/shellcmd.lua, list in stdpath('state')/genja-completion011/shellcmd.txt, rebuilt after 3 h or on PATH change; `!word`, `:term word` and `:vert term word`; tests/completion/test_cmdline.lua: PATH-change rebuild and `:vert term` pass (make test D=completion); the 3 h age rebuild is untested (abfb666); :ResetPathCache deletes the list
 
 - [ ] zen modes: switch between layouts by task (not thought through yet, 2026-11-05)
@@ -185,16 +190,16 @@ migration from 0.9 to 0.11 (the file that started it all)
         parsers css scss twig jsdoc regex (9a8aa25, need a C compiler: winget install LLVM.LLVM);
         cssls + html lang modules (c18994b, 0ed9ee4); eslint + stylelint with a project config (e7bad3d);
         Drupal: phpactor indexes .module etc., ft mapping, drupal-check (236948c, dbc21f8);
-        <F2> composer/npm scripts (bac05c1); Behat overseer template via ddev in WSL (23d563c)
+        `<F2>` composer/npm scripts (bac05c1); Behat overseer template via ddev in WSL (23d563c)
   - [ ] React side: a JS test runner (vitest / jest through neotest), not decided yet
 
 - [ ] Go project out of the box, same feel as PHP (after PHP, 2026-11-05)
   - have: gopls (plug-wip/genja-completion011.nvim/lua/genja/lang/go.lua: go.work roots, organize imports + format on save,
-    code lenses on <leader>cl), go.nvim with dap (lua/lazyp/langs/go.lua), treesitter go
+    code lenses on `<leader>cl`), go.nvim with dap (lua/lazyp/langs/go.lua), treesitter go
   - gaps (from a grep, not tested): golangci-lint not in lua/genja/ext/lint.lua; treesitter gomod/gosum/gotmpl;
     templ, sql, proto, Dockerfile parsers; tests through neotest-golang or go.nvim (decide one)
   - [x] auto-todo 2026-11-05 (untested): parsers gomod gosum gotmpl (9a8aa25); golangci-lint only with a
-        .golangci.* file, sample examples/go/.golangci.toml (e7bad3d); neotest-golang, go.nvim's :GoTest* kept (1037aa2)
+        .golangci.*file, sample examples/go/.golangci.toml (e7bad3d); neotest-golang, go.nvim's :GoTest* kept (1037aa2)
   - [ ] parsers templ, sql, proto, dockerfile: not decided yet
 
 - [ ] nvim as the interface to the OS for coding work: shell, terminal, pwsh, Git Bash, git (2026-11-05)
