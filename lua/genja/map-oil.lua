@@ -41,6 +41,9 @@ M.keymaps = {
     ['ss'] = O.move_category,
     ['sj'] = O.move_category,
     ['<C-p>'] = O.preview_fit,
+    ['<C-A-y>'] = O.preview_fit,
+    ['<C-M-y>'] = O.preview_fit,
+
     ['gga'] = O.git_add, -- note: gga/ggr make gg wait timeoutlen in oil buffers
     ['<LocalLeader>a'] = O.git_add,
     ['ggr'] = O.git_unstage,

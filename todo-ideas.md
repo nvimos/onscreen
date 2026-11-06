@@ -18,8 +18,9 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas november
 
-- [ ] now that jolemak keymap in win is sending the correct control chars...
+- [x] now that jolemak keymap in win is sending the correct control chars...
   - `<c-p>` (logical mapping) for preview is not as convenient as `<c-y>` on jolemak
+    - added `<c-m-y>` for now. maybe no need to overthink this.
 
 ## ideas october
 
