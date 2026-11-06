@@ -71,6 +71,7 @@ mappings and funcs for them
      ext/recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
      ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/ui/test_diagnostics-limit.lua)
      ext/diag-align.lua - diagnostic virtual text starts in one column per paragraph, after its longest line (vim.g.diag_align = false: end of line; plugin/diag-align.lua)
+     ext/lua-func-obj.lua - if / af textobjects in Lua buffers when mini.ai is not installed: function body, whole function, from treesitter (after/ftplugin/lua.lua)
      ext/lint.lua - nvim-lint linters per filetype (markdown, yaml, ansible via WSL, lua, make, php, workflows, dockerfile, python, vale for markdown (shared lint/.vale.ini, :ValeSync, run by itself once when the styles are missing); editorconfig-checker and gitleaks on all)
      ext/lint-silence.lua - <leader>cx in markdown: the markdownlint/vale rule under the cursor off in its config, with a dated comment
      ext/minuet-diff.lua - minuet in gitcommit buffers: the staged diff goes along with each request (FIM suffix, chat context)

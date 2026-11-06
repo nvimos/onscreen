@@ -228,6 +228,18 @@ Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/m
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats
 
+Textobjects (mini.ai: lua/lazyp/new/mini-ai.lua; treesitter ids from nvim-treesitter-textobjects)
+
+    if af   function body / whole function       vif daf cif
+    ic ac   class                                 dac
+    io ao   if/loop block                         cio
+    iN… aN…  next object: searches forward from the cursor   ciNf change inside the next function
+    iL… aL…  last object: searches backward, the nearest one ending before the cursor   daLc delete the previous class
+             any id works: ciL( inside the previous parens, daLq the previous quote
+    an in    visual / operator: grow / shrink by treesitter node (nvim 0.12 default)   van, then an an … in
+    al il    whole buffer / line without blanks (nvim 0.13 default)   yal, cil
+    without mini.ai, in Lua only: if af from after/ftplugin/lua.lua (lua/genja/ext/lua-func-obj.lua)
+
 F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.vim; visual <F2> in map-telescope.lua)
 
     <F2> > markdown: checklist toggle   add `[ ]` to the cursor line; visual <F2>: to the selected lines
