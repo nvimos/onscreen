@@ -284,6 +284,10 @@ Window sizes (lua/genja/ext/winsize.lua, keys in lua/genja/map-zero.lua)
     <leader>wr    resize mode (which-key loop): h j k l  narrower lower taller wider, = equal, 0 share, s step, <Esc> leaves
     smart-splits.nvim (disabled spec lua/lazyp/new/smart-splits.lua): <M-h/j/k/l>, <leader>wR
 
+Oil (lua/genja/map-oil.lua)
+
+    <C-p>  <C-M-y>  preview the entry, float sized to fit (<C-M-y> for jolemak)
+
 Start dirs (plug-wip/genja-startdirs.nvim, keys in lua/genja/map-plugin/genja-startdirs.lua, oil in lua/genja/map-oil.lua)
 
     <leader>sp  <leader>jD  <S-F3>   picker, most used first; <CR> cd + open; also :Mydirs
