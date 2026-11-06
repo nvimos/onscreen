@@ -16,7 +16,11 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
 ## 2. Plan the commits (commit-plan logic)
 
 1. Read the state: `git status --short`, `git diff`, `git diff --cached`, and `git log --oneline -15` for the repo's message style. Read untracked files that may belong to an issue.
-2. Group the changes by issue, one commit per issue. A file with hunks from two issues is split by hunk; note which hunks go where.
+   - The config repo ignores `plug-wip/*/`; each plugin there is its own git repo. Run the same reads with `git -C plug-wip/<name>` for every plugin folder with changes (`git -C <dir> status --short` not empty).
+2. Group the changes by issue, one commit per issue and repo. A file with hunks from two issues is split by hunk; note which hunks go where.
+   - An issue across a plugin and the config is two commits: the plugin's in its folder first, then the config's with the issue file.
+   - The issue file always goes in the config repo's `todo-issue/`. For an issue only in a plugin, commit the issue file alone in the config repo as `issue: <topic>`. Name the plugin commit (`<plugin> <short hash>`) in the issue file.
+   - Plugin commit messages follow that plugin's `git log` style.
 3. "Not ours" changes are considered also.
 4. Order the groups so each commit stands on its own (a rename before its users, docs after code).
 5. Write a message per group:
@@ -50,13 +54,13 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
 2. Set aside what is already staged:
    - this does not apply if the staged change is relevant to the issue. then it's included.
    - If `git diff --cached` is not empty, save it to a patch in the job tmp dir (`$CLAUDE_JOB_DIR/tmp`, else the system temp dir), then `git restore --staged -- <those paths>`.
-3. For each group, in order:
+3. For each group, in order (for a plugin group, every git command runs with `-C plug-wip/<name>` and paths are relative to it; set aside its staged changes as in step 2):
    - Whole files: `git add -- <paths> todo-issue/….md`.
    - Split files: write a patch with only this group's hunks to the tmp dir and `git apply --cached <patch>`.
    - Check `git diff --cached --stat` lists only this group, then `git commit -F <msgfile>` (message file in the tmp dir).
    - Never `git add -A`, `git add .`, `git commit -a`, `--amend`, `--no-verify`.
 4. Re-stage the saved "not ours" patch with `git apply --cached <patch>`. If it fails, say so and give the patch path; don't retry with other flags.
-5. Don't push.
+5. Don't push, in the config or the plugin repos.
 
 ## Output
 
@@ -65,6 +69,7 @@ The plan, for each group in commit order:
  
 ```
 ### <issue>
+Repo: config | plug-wip/<name>
 Files: path (all) | path (hunks: <short description>) | todo-issue/….md
 
 <subject>
@@ -74,6 +79,6 @@ Files: path (all) | path (hunks: <short description>) | todo-issue/….md
 
 After committing, end with:
 
-- the commits: `<short hash> <subject>`, one per line;
+- the commits: `<repo> <short hash> <subject>`, one per line;
 - the issue files;
 - the open `test:` items, if any.

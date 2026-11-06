@@ -1,0 +1,2 @@
+- [x] skill: commit-close-issues also reads and commits plug-wip repos (2026-11-06)
+    - [x] git -C plug-wip/<name> reads, plugin commit first, issue file in the config: .claude/skills/nvim-commit-close-issues/SKILL.md
