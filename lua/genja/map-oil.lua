@@ -40,10 +40,9 @@ M.keymaps = {
     ['sr'] = O.vote_movielens,
     ['ss'] = O.move_category,
     ['sj'] = O.move_category,
+
     ['<C-p>'] = O.preview_fit,
-    ['<C-A-y>'] = O.preview_fit,
-    ['<C-M-y>'] = O.preview_fit,
-    ['å'] = O.preview_fit, -- jolemak-2026-quirk
+    ['å'] = O.preview_fit, -- jolemak-2026-quirk '<C-A-y>' '<C-M-y>' --> qwerty;altgr+p => jolemak;å
 
     ['gga'] = O.git_add, -- note: gga/ggr make gg wait timeoutlen in oil buffers
     ['<LocalLeader>a'] = O.git_add,

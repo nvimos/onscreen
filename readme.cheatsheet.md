@@ -285,7 +285,7 @@ Window sizes (lua/genja/ext/winsize.lua, keys in lua/genja/map-zero.lua)
 
 Oil (lua/genja/map-oil.lua)
 
-    <C-p>  <C-M-y>  preview the entry, float sized to fit (<C-M-y> for jolemak)
+    <C-p>  preview the entry, float sized to fit
 
 Start dirs (plug-wip/genja-startdirs.nvim, keys in lua/genja/map-plugin/genja-startdirs.lua, oil in lua/genja/map-oil.lua)
 
