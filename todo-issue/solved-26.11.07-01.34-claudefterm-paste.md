@@ -1,3 +1,3 @@
 - [x] claudefterm: visual paste from a buffer without a file (2026-11-07)
     - [x] paste_context() labels the selection `no file` (genja-claudefterm.nvim ea2d156)
-    - [ ] test: select lines in a scratch buffer, <leader>pC
+    - [x] test: select lines in a scratch buffer, <leader>pC
