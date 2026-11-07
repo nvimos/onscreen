@@ -245,6 +245,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - today: no yamlls, no schemas (grep: only old/unused specs); lua/genja/ft/yaml.lua maps yml -> yaml.ansible
   - ideas: yamlls + schemastore + kubernetes schemas (CRD schemas per component, e.g. datreeio/CRDs-catalog);
     helm/kustomize files; docs fetched per component into stdpath('data'), turned into vim help; check existing plugins first
+  - more languages found missing (terraform, helm, alloy, promql, sql, toml, systemd, parsers, linters): todo-ideas/grafana-k8s-terraform-langs.md (2026-11-07)
 
 - [ ] LLM chat in a buffer, like the browser chat (2026-11-05; an idea, to be fleshed out)
   - open a buffer, ask; it thinks, appends the answer; type a follow-up below it, the next answer is appended; one running conversation

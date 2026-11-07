@@ -1,0 +1,5 @@
+- [x] todo: languages and tooling missing for the grafana/terraform/k8s demo repo (2026-11-07)
+    - [x] todo-ideas/grafana-k8s-terraform-langs.md: filetypes, parsers, LSP, linters, tasks, suggested order
+    - [x] todo-ideas.md, Kubernetes YAML item: link to that file
+    - [x] .claude/skills/nvim-auto-todo/runs.md: run row for the demo repo, totals updated
+    - [ ] test: the PR-langs, PR-k8s-yaml, PR-wsl-docker branches in a real session (servers attach, lint output, parsers)
