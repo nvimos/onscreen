@@ -241,10 +241,36 @@ Done and tried items moved to `squash-ideas-oct-17.details.done.md`
   server) reinstalls silently when its filetype opens; `make mason` / `mason-luals` kill lua_ls first;
   lua_ls logs to `stdpath('log')`; `:checkhealth genja.lsp` lists such packages. `update-treesitter` is
   a prerequisite of `update` / `sync` again.
+- PHP and Go out of the box, auto-todo 2026-11-05 (9a8aa25, 0ed9ee4, e7bad3d, dbc21f8, bac05c1, 23d563c,
+  1037aa2, 5fe22f0): treesitter css, scss, twig, jsdoc, regex, gomod, gosum, gotmpl, built only with a C
+  compiler; cssls and html lang modules (off, on per machine); eslint, stylelint, golangci-lint only with a
+  project config; drupal-check on save; `<F2>` composer.json / package.json scripts as overseer tasks, with
+  an automated test on tests/f2/eff-two/; Behat overseer template (this feature / scenario, ddev in WSL);
+  neotest-golang on the PHP test keys.
+- Docs (7b69862, cbb8df5): readme.add-a-language.md, one checklist for a new language; guide for C without
+  a build.
+- PHP debugging (17e6c2b, 8f5b8d2): dap-ui opens on the first stop in its own tab and closes with the
+  session; `!` flips F1-F8 between debug actions and their own maps; `:DdevXdebugHost` sets the Windows LAN
+  IP for DDEV; `:DebugCli`, `:DebugBehat`; `<leader>dK` `dl` `dB` `dp`. nvim-dap-view on `<leader>dv`.
+- Zen and lint (98aa8a4, fdbf5e3): z0 restores the nvim-qt window size; checkmake off, config kept.
+- Layout (2492965, 43c806f, 90814fb, f1951ca): plug-wip plugins are their own repos (tox2ik/<name>);
+  specs load the local checkout, else lazy clones the repo; tests/startup: a clean clone starts cleanly,
+  startup below 1 s.
+- Oil and markdown (f5ce192, 0862b18): `]c`/`[c` jump to changed entries, `ggC` commits the entry; `~`
+  cycles checkboxes x . ~ n.
+- Editing (09eb281, 3bed5be, c6143cd): mini.ai textobjects with treesitter f c o, next/last on aN iN / aL iL;
+  visual `<C-s>`/`<BS>` grow and shrink by node; `ymdd!` weekday and date.
+- Diagnostics (b829ae5): `<leader>ttt` in every buffer; `<leader>tt3` limit of 3.
+- Tests (ed46209, 53d9252, aa538e9): aerial follows `:edit`; cmdline shellcmd menu on a typed char;
+  which-key buffer-local groups not reported empty.
+- Oil preview (70c8803, 7aa1a62): `<C-M-y>` and `å` (what Ctrl+Alt+Y sends on jolemak) next to `<C-p>`.
+- claudefterm (54ffee2; plugin ff46a75, ea2d156): session markers removed (no comment written into files,
+  no `:ClaudeFtermMarkerToggle`); `/rename` still names the terminal; visual `<leader>pC` pastes from a
+  buffer without a file, labelled `no file`.
 
 ## Last scanned commit
 
 Commits up to and including this one are in the files above. The next
 update starts after it (`git log <hash>..HEAD`).
 
-    5c637f81cd9e61926ccf5b1cdbd4621ad7729737  telescope: <leader>' opens oldfiles
+    5fe22f0c320ae8eb55ffb5c9ba41b3faf26bf238  tests: f2 script group with eff-two fixtures

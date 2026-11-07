@@ -104,4 +104,9 @@ Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
 - diag-align `<leader>tta`, `<F2>` (27648c7); paste search with a picked provider (fa42e84); hilite diagnostics and links (698b3a6, 65812bb); zen z1/z2 hide diagnostics (333bf79).
 - keymaps spec on VeryLazy (06bca1b); `:Ct` takes the current window (3911a0b); `<leader>'` oldfiles (5c637f8).
 - Mason: cut-off installs repair on open, `make` kills lua_ls first (eef2590); `update-treesitter` prerequisite again (3480b0d).
+- PHP/Go out of the box (auto-todo 2026-11-05): parsers (9a8aa25), cssls/html (0ed9ee4), eslint/stylelint/golangci-lint (e7bad3d), drupal-check (dbc21f8), `<F2>` scripts (bac05c1, test 5fe22f0), Behat template (23d563c), neotest-golang (1037aa2); add-a-language and C guides (7b69862, cbb8df5).
+- PHP debug: dap-ui tab, F-key flip, `:DdevXdebugHost` (17e6c2b); dap-view `<leader>dv` (8f5b8d2); zen z0 restores size (98aa8a4); checkmake off (fdbf5e3).
+- plug-wip own repos, `Wip.dir` (2492965, 43c806f, 90814fb); tests/startup (f1951ca); oil `]c`/`[c`, `ggC` (f5ce192); `~` cycle x . ~ n (0862b18); aerial follow test (ed46209).
+- mini.ai textobjects (09eb281); node select `<C-s>`/`<BS>` (3bed5be); `<leader>ttt` global (b829ae5); `ymdd!` (c6143cd); tests cmdline shellcmd, which-key groups (53d9252, aa538e9).
+- Oil preview `<C-M-y>`, `å` (70c8803, 7aa1a62); claudefterm markers removed, paste without a file (54ffee2; plugin ff46a75, ea2d156).
 

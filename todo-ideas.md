@@ -21,6 +21,25 @@ migration from 0.9 to 0.11 (the file that started it all)
 - [x] now that jolemak keymap in win is sending the correct control chars...
   - `<c-p>` (logical mapping) for preview is not as convenient as `<c-y>` on jolemak
     - added `<c-m-y>` for now. maybe no need to overthink this.
+  - [x] oil preview on `<C-A-y>`/`<C-M-y>` (70c8803); `å`, what Ctrl+Alt+Y (AltGr) sends on jolemak (7aa1a62)
+
+- [x] extras outside the idea list (2026-11-05)
+  - [x] oil: ]c [c jump to changed entries, ggC commits the entry (f5ce192); ~ checkbox cycle x . ~ n (0862b18)
+  - [x] plug-wip plugins are their own repos (tox2ik/<name>); specs load the local checkout, else clone it (2492965, 43c806f, 90814fb)
+  - [x] tests/startup: a clean clone starts cleanly, startup below 1 s (f1951ca)
+  - [x] lint: checkmake off, its config and parser kept (fdbf5e3)
+  - [x] docs: readme.add-a-language.md checklist (7b69862); guide for C without a build (cbb8df5)
+  - [x] aerial: test that the sidebar follows :edit (ed46209)
+
+- [x] extras outside the idea list (2026-11-06)
+  - [x] textobjects: mini.ai with treesitter f c o, next/last on aN iN / aL iL (09eb281);
+        visual `<C-s>`/`<BS>` grow and shrink by node (3bed5be); tested
+  - [x] abbrev: ymdd! weekday and date (c6143cd); tested
+  - [x] tests: cmdline shellcmd menu opens on a typed char (53d9252); which-key buffer-local groups (aa538e9)
+
+- [x] extras outside the idea list (2026-11-07)
+  - [x] claudefterm: session markers removed, /rename still names the terminal (54ffee2; plugin ff46a75);
+        visual `<leader>pC` pastes from a buffer without a file (plugin ea2d156); tested
 
 ## ideas october
 
@@ -144,6 +163,7 @@ migration from 0.9 to 0.11 (the file that started it all)
   - check that every source goes away and comes back, also in buffers opened while off
   - 2026-11-02: already works: enable(false) without a filter covers every namespace and later buffers
   - [x] zen z1/z2 turn diagnostics off; z0 turns them on again (unless off before zen) with the limit of 3; untested (333bf79)
+  - [x] `<leader>ttt` in every buffer, not only after LspAttach; `<leader>tt3` the limit of 3; tested (b829ae5)
 
 - [x] lint: :ValeSync runs by itself when the shared styles are missing (asked 2026-10-31)
   - today vale is skipped until :ValeSync (lua/genja/ext/lint.lua prepare_vale), no hint that it's off
@@ -177,6 +197,7 @@ migration from 0.9 to 0.11 (the file that started it all)
     2. z3 debug UI: dap-ui or dap-view?
     3. z3 opens the debug UI at once, or on the first stop (as splits)?
     4. z2 today turns diagnostics off; change to diagnostics on with the limit?
+  - [x] z0 restores the window size in nvim-qt: a wait between frameless and maximize (98aa8a4)
 
 - [ ] PHP project out of the box (goal in CLAUDE.md ## Goal, 2026-11-05)
   - examples: Drupal site; Symfony app with a React front end; custom app with Behat
@@ -192,6 +213,7 @@ migration from 0.9 to 0.11 (the file that started it all)
         cssls + html lang modules (c18994b, 0ed9ee4); eslint + stylelint with a project config (e7bad3d);
         Drupal: phpactor indexes .module etc., ft mapping, drupal-check (236948c, dbc21f8);
         `<F2>` composer/npm scripts (bac05c1); Behat overseer template via ddev in WSL (23d563c)
+    - [x] `<F2>` scripts: automated test, fixtures tests/f2/eff-two/, :OverseerToggle (5fe22f0)
   - [ ] React side: a JS test runner (vitest / jest through neotest), not decided yet
 
 - [ ] Go project out of the box, same feel as PHP (after PHP, 2026-11-05)
@@ -241,3 +263,5 @@ migration from 0.9 to 0.11 (the file that started it all)
   - keep nvim-dap + nvim-dap-ui unless the UI test says otherwise; compare nvim-dap-view
   - PHP runs in DDEV inside WSL (weasel-ddev): Xdebug networking and pathMappings untested
   - session, gaps and questions: todo-test/php-debug.md
+  - [x] dap-ui on the first stop in its own tab, `!` flips F1-F8, :DdevXdebugHost, :DebugCli / :DebugBehat,
+        `<leader>dK` `dl` `dB` `dp` (17e6c2b); nvim-dap-view on `<leader>dv` (8f5b8d2); untested
