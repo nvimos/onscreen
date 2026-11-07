@@ -1,0 +1,4 @@
+- [x] docs: add-a-language checklist read against Go (2026-11-07)
+    - [x] every path checked for Go: lang/go.lua, load-treesitter.lua, lint.lua by_ft / mason / ROOT_MARKERS, comps011 lsp-go
+    - [x] step 5 names lua/lazyp/langs/php-neotest.lua (it holds the Go adapter too)
+    - [x] step 6: or none, when the language plugin brings dap (go.nvim in lua/lazyp/langs/go.lua)
