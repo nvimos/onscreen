@@ -3,9 +3,12 @@
 One feature per question in the guided session. Earlier lists: doc-wip/untested.2026-10-2*.md.
 
 - [ ] parsers css scss twig jsdoc regex gomod gosum gotmpl: needs `winget install LLVM.LLVM`, then open a .scss / .twig / go.mod (lua/lazyp/my/load-treesitter.lua) -> doc-wip/readme.2026-11-05.parsers-web-go.md
-- [ ] keymap usage counts: use some keys, then `:KeymapsStats` (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua) -> todo-done/ideas-57-keymap-logger.md
+- [x] keymap usage counts: use some keys, then `:KeymapsStats` (plug-wip/abdul-keymaps.nvim/lua/keymaps/tracker.lua) -> todo-done/ideas-57-keymap-logger.md
 - [ ] genja-commit untested parts: minuet staged diff, copilot/ollama `<M-g>`, bottom split (plug-wip/genja-commit.nvim) -> todo-done/ideas-14-gitcommit.md
-- [ ] adding a language checklist: read readme.add-a-language.md against Go (readme.add-a-language.md) -> doc-wip/readme.2026-11-05.add-a-language.md
+    - [x] bottom split: works (2026-11-07)
+    - [ ] minuet staged diff: ghost text doesn't fit the staged changes (2026-11-07); check lua/genja/ext/minuet-diff.lua with codestral
+    - [ ] `<M-g>` with ollama: open; `<M-r>` now switches the backend (plug-wip/genja-commit.nvim, untested)
+- [x] adding a language checklist: read readme.add-a-language.md against Go (readme.add-a-language.md) -> doc-wip/readme.2026-11-05.add-a-language.md
 - [ ] golangci-lint only with a .golangci.* file: examples/go with the sample config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
 - [ ] eslint from the project's node_modules, only with an eslint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
 - [ ] stylelint only with a stylelint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md

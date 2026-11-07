@@ -1,0 +1,8 @@
+- [x] tests: guided round, read aloud with the audible-wizard skill (2026-11-07)
+    - [x] works: keymap usage counts, genja-commit bottom split, add-a-language checklist (fixed)
+    - [x] broken: minuet ghost text in gitcommit doesn't fit the staged diff (lua/genja/ext/minuet-diff.lua)
+    - [x] skipped, still open: golangci-lint, eslint, stylelint, cssls, html, neotest-golang, C, Drupal, Behat, parsers
+    - [x] doc-wip/untested.2026-11-05.md ticked and annotated
+    - [x] skill ~/.claude/skills/audible-wizard/ (outside the repo): questions up front, edge-tts mp3s in the background, keys 1 2 3
+    - [ ] minuet staged diff: find why codestral ignores it
+    - [ ] test: <M-g> with ollama after <M-r>
