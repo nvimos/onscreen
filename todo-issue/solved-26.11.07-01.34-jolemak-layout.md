@@ -1,0 +1,2 @@
+- [x] claude.md: point to the jolemak layout source for key quirks (2026-11-07)
+    - [x] CLAUDE.md ## Keymaps: jolemak.2026.klc path
