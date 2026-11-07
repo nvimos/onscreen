@@ -16,3 +16,5 @@ lua/lazyp/maybe/*
 
 # plug-wip plugins are their own repos (github.com/tox2ik/<name>); specs load the checkout when present
 /plug-wip/*/
+
+/todo-integrate-plugin
