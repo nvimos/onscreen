@@ -1,0 +1,4 @@
+- [x] diag: limit of 3 per severity is on at startup again (2026-11-07)
+    - [x] plugin/diag-limit.lua: setup() at startup, lost when c0b1e9e moved the keys into map-lsp.lua
+    - [x] lua/genja/map-lsp.lua: `<leader>tt3` only toggles; lua/genja/ext/diag-limit.lua header points at both files
+    - [x] tested: limit on after a restart, `<leader>tt3` shows all

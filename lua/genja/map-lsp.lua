@@ -71,8 +71,8 @@ km('n', '<Esc>', close_lsp_float, nosi 'LSP: close float, nohlsearch')
 -- Diagnostics limit {{{
 -- {{{ diagnostics callbacks
 local function toggle_diag_limit()
-    -- the first 3 per severity and buffer are drawn (lua/genja/ext/diag-limit.lua).
-    require('genja.ext.diag-limit').setup()
+    -- the first 3 per severity and buffer are drawn (lua/genja/ext/diag-limit.lua);
+    -- on from the start: plugin/diag-limit.lua
     require('genja.ext.diag-limit').toggle()
 end
 local function toggle_diagnostics() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
