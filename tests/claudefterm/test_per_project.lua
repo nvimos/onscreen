@@ -346,7 +346,7 @@ T['kill() stops every terminal'] = case(function()
 	eq(wait_for([[#names() == 0]]), true)
 end)
 
--- guide step 6: session markers
+-- guide step 6: /rename names the terminal
 local function transcript(id, lines)
 	child.lua(string.format([[
 		local dir = vim.env.CLAUDE_CONFIG_DIR .. '/projects/some-project'
@@ -355,35 +355,15 @@ local function transcript(id, lines)
 	]], vim.inspect(lines), id))
 end
 
-T['marker in a file: resumes that session in its cwd, named after its title'] = case(function()
-	local id = '11111111-2222-4333-8444-555555555555'
-	child.lua([[_G.a_root, _G.a_file = repo('alpha'); _G.b_root, _G.b_file = repo('beta')]])
-	local b_root = child.lua([[return b_root]])
-	transcript(id, {
-		vim.json.encode({ type = 'user', cwd = b_root }),
-		'{"type":"custom-title","customTitle":"fix the tabline"}',
-	})
-	-- the marker is in a file of repo A, the session ran in repo B
-	child.lua(string.format([[vim.fn.writefile({ '-- claude-session: %s fix the tabline', 'local x = 1' }, a_file)]], id))
-	start('a_file', 'claude-beta')
-	eq(child.lua([[return CF.running()[1].root == b_root]]), true)
-	local launch = child.lua([[return launch_of('claude-beta')]])
-	eq(launch.cwd, b_root:lower())
-	eq(launch.args:find('--resume ' .. id, 1, true) ~= nil, true)
-	eq(child.lua([[return label_of('claude-beta')]]), 'claude-ft «fix the tabline»')
-end)
-
-T['/rename in claude writes the marker into the origin file (not saved)'] = case(function()
+T['/rename in claude names the terminal, the origin file is left alone'] = case(function()
 	child.lua([[_G.a_root, _G.a_file = repo('alpha')]])
 	start('a_file', 'claude-alpha')
 	local id = child.lua([[return vim.b[bufnr_of('claude-alpha')].claude_session_id]])
 	eq(child.lua([[return launch_of('claude-alpha').args]]):find('--session-id ' .. id, 1, true) ~= nil, true)
 	-- what claude appends on /rename
 	transcript(id, { '{"type":"custom-title","customTitle":"my session"}' })
-	local marker = '-- claude-session: ' .. id .. ' my session'
-	eq(wait_for(string.format([[vim.tbl_contains(vim.api.nvim_buf_get_lines(vim.fn.bufnr(a_file), 0, -1, false), %q)]], marker), 8000), true)
-	eq(child.lua([[return vim.bo[vim.fn.bufnr(a_file)].modified]]), true)
-	eq(child.lua([[return label_of('claude-alpha')]]), 'claude-ft «my session»')
+	eq(wait_for([[label_of('claude-alpha') == 'claude-ft «my session»']], 8000), true)
+	eq(child.lua([[return vim.bo[vim.fn.bufnr(a_file)].modified]]), false)
 end)
 
 return T

@@ -1,0 +1,8 @@
+- [x] claudefterm: remove session markers (2026-11-07)
+    - [x] plugin: marker find/write/toggle, resume and :ClaudeFtermMarkerToggle removed (genja-claudefterm.nvim ff46a75)
+    - [x] /rename still names the terminal buffer
+    - [x] README.md, readme.cheatsheet.md: marker mentions dropped
+    - [x] tests/claudefterm/test_per_project.lua: marker cases replaced by a /rename naming case
+    - [x] lua/genja/map-convoluted.lua: stale claude-session marker line removed
+    - [ ] test: make test D=claudefterm in tests/
+    - [ ] test: /rename in claude, terminal name changes, origin file unmodified
