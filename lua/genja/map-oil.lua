@@ -43,6 +43,7 @@ M.keymaps = {
     ['<C-p>'] = O.preview_fit,
     ['<C-A-y>'] = O.preview_fit,
     ['<C-M-y>'] = O.preview_fit,
+    ['å'] = O.preview_fit, -- jolemak-2026-quirk
 
     ['gga'] = O.git_add, -- note: gga/ggr make gg wait timeoutlen in oil buffers
     ['<LocalLeader>a'] = O.git_add,
