@@ -1,0 +1,3 @@
+- [x] docs: survey LazyVim extras and AstroCommunity packs before adding a language (2026-11-07)
+    - [x] plugin CLAUDE.md: section "Look at LazyVim and AstroNvim first" (genja-completion011.nvim 5ac89f6)
+    - [x] CLAUDE.md, LSP and completion: one line pointing to it

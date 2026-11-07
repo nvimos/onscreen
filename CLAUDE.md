@@ -152,6 +152,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## LSP and completion
 
 - Everything lives in `plug-wip/genja-completion011.nvim`, loaded by `lua/lazyp/new/genja-comp011.lua`; see its CLAUDE.md.
+- Adding a language or its tooling: consider LazyVim's language extras and AstroCommunity's packs as a starting point (their choices, not their files); see the plugin's CLAUDE.md, "Look at LazyVim and AstroNvim first".
 - Per-machine language switches go in `lua/genja/lsp/local.lua` (gitignored), not in the spec's `enabled` table.
 - Filetype specs live in the plugin's `lua/genja/ft/`; personal ones stay in the config's `lua/genja/ft/` (`yaml.lua`: `yml` -> `yaml.ansible`).
 - Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`;
