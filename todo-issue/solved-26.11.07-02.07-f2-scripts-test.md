@@ -1,0 +1,7 @@
+- [x] tests: automated test for the <F2> script group (2026-11-07)
+    - [x] fixtures tests/f2/eff-two/: composer.json and package.json, one `hello` script that echoes
+    - [x] tests/f2/test_scripts.lua: both rows offered, composer and npm hello run in overseer, :OverseerToggle closes and reopens the list
+    - [x] overseer output in a plain buffer in the test child: a headless terminal shows only "[Process exited 0]"
+    - [x] run from pwsh (make); from Git Bash the child nvim segfaults in overseer's job
+    - [x] make -C tests test D=f2: 60 of 60 pass
+    - [x] doc-wip/untested.2026-11-05.md: <F2> script group and aerial ticked

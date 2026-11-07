@@ -1,0 +1,7 @@
+{
+    "name": "genja/eff-two",
+    "description": "fixture for tests/f2/test_scripts.lua",
+    "scripts": {
+        "hello": "echo eff-two composer hello"
+    }
+}

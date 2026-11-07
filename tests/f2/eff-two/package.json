@@ -1,0 +1,8 @@
+{
+    "name": "eff-two",
+    "private": true,
+    "description": "fixture for tests/f2/test_scripts.lua",
+    "scripts": {
+        "hello": "echo eff-two npm hello"
+    }
+}

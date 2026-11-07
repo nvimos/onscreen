@@ -9,8 +9,9 @@ One feature per question in the guided session. Earlier lists: doc-wip/untested.
 - [ ] golangci-lint only with a .golangci.* file: examples/go with the sample config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
 - [ ] eslint from the project's node_modules, only with an eslint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
 - [ ] stylelint only with a stylelint config (lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.lint-go-js-css.md
-- [ ] aerial follows :e, splits and tabs: <leader>oo then :e another file (lua/lazyp/ui/aerial.lua) -> doc-wip/readme.2026-11-05.aerial-follow.md
-- [ ] <F2> script group: composer.json / package.json scripts, sub-picker runs them (lua/genja/f2/collect/scripts.lua) -> doc-wip/readme.2026-11-05.f2-scripts.md
+- [x] aerial follows :e, splits and tabs: <leader>oo then :e another file (lua/lazyp/ui/aerial.lua) -> doc-wip/readme.2026-11-05.aerial-follow.md
+- [x] <F2> script group: composer.json / package.json scripts, sub-picker runs them (lua/genja/f2/collect/scripts.lua) -> doc-wip/readme.2026-11-05.f2-scripts.md
+    - [x] automated: tests/f2/test_scripts.lua, fixtures tests/f2/eff-two/ (composer, npm, :OverseerToggle), 2026-11-07
 - [ ] Behat: :OverseerRun in a .feature file, this feature / this scenario, through ddev in WSL (lua/overseer/template/user/behat.lua) -> doc-wip/readme.2026-11-05.behat.md
 - [ ] Go tests in neotest: <leader>Tr in a TestXxx, <leader>Ts summary (lua/lazyp/langs/php-neotest.lua) -> doc-wip/readme.2026-11-05.neotest-golang.md
 - [ ] Drupal: .module is php inside a Drupal tree, phpactor indexes it, drupal-check on save (genja-completion011 lang/php.lua, ft/drupal.lua; lua/genja/ext/lint.lua) -> doc-wip/readme.2026-11-05.drupal.md
