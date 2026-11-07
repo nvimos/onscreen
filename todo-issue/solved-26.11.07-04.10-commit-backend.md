@@ -1,0 +1,5 @@
+- [x] genja-commit: switch the <M-g> backend on the fly (2026-11-07)
+    - [x] <M-r> in gitcommit buffers: next available backend in generate.order, wrapping; holds for the session (genja-commit.nvim ce53326)
+    - [x] choice shown in the popup title and a notification; keys.backend option, README, CLAUDE.md
+    - [x] readme.cheatsheet.md: <M-g> and <M-r> under the commit popup line
+    - [ ] test: commit popup, <M-r> until ollama, then <M-g> writes a message

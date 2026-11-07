@@ -185,6 +185,7 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>mxd close diffview
     <leader>mGc commit popup (genja-commit; in oil also ggc, <LocalLeader>c)
                 in oil: ggC, <LocalLeader>C commit the entry under the cursor as `update: <name>` (lua/genja/map-oil.lua)
+                in gitcommit buffers: <M-g> write the message, <M-r> next backend for <M-g> (plug-wip/genja-commit.nvim)
     <leader>mGs git signs on/off in this buffer (markdown starts off: vim.g.gitsigns_skip_ft)
     hunks, only in buffers gitsigns tracks:
     ]c  [c      next / previous hunk (in diff mode: nvim's change jumps)
