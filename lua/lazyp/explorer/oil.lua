@@ -4,6 +4,38 @@ local aucmd = vim.api.nvim_create_autocmd
 local augrp = vim.api.nvim_create_augroup
 local UserComm = vim.api.nvim_create_user_command
 
+local function config_oil(_, opts)
+    require('oil').setup(opts)
+    vim.g.loaded_netrw = nil -- load netrw, keep :Lexplore, but oil handles dirs
+end
+
+local function init_oil()
+    vim.g.loaded_netrwPlugin = 1 -- prevent netrw FileExplorer autocmds
+
+    -- arg-1 is a dir -> load oil
+    if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+            require("lazy").load({ plugins = { "oil.nvim" } })
+        end
+    end
+
+    -- Open a folder -> load oil
+    vim.api.nvim_create_autocmd("BufReadPre", {
+        desc = "Lazy load oil.nvim when opening a directory buffer",
+        callback = function(ev)
+            if vim.fn.isdirectory(ev.match) == 1 then
+                -- Load the plugin immediately before Neovim processes the directory buffer
+                require("lazy").load({ plugins = { "oil.nvim" } })
+            end
+        end,
+    })
+end
+
+local function genja_oily_is_hidden_file(name, bufnr)
+    return require("genja-oily").is_hidden_file(name, bufnr)
+end
+
 
 local F = require 'genja.oil'
 
@@ -34,102 +66,89 @@ aucmd({ 'BufEnter' }, { group = MyOil, callback = F.dynamic_dir_sort, pattern = 
 aucmd('User', { group = MyOil, pattern = 'OilActionsPre', callback = F.forget_deleted_buffers })
 -- }}}
 
+local oil_spec = {
+    'stevearc/oil.nvim',
+
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = { 'UIEnter', 'TabNew', 'WinNew', 'VimResume' },
+    -- lazy = false, -- bug: open in external editor opens netrw instead of oil
+    cmd = 'Oil',
+
+    config = config_oil,
+    init = init_oil,
+
+    ---@type oil.SetupOpts
+    opts = {
+
+        -- {{{ config, keymaps
+        skip_confirm_for_simple_edits = true,
+        default_file_explorer = true, -- use oil instead of netrw
+        keymaps = require('genja.map-oil').keymaps,
+        -- }}}
+
+        -- {{{ ui layout (modal?)
+        float = {
+            border = 'rounded',
+            padding = 4, -- around the floating window
+            max_width = 0,
+            max_height = 0,
+            win_options = { winblend = 0, },
+            -- This is the config that will be passed to nvim_open_win.
+            -- Change values here to customize the layout
+            override = function(conf) return conf; end,
+        },
+        -- }}}
+
+        -- {{{ ui main window (?)
+        win_options = {
+            concealcursor = 'nvic',
+            cursorcolumn = false,
+            conceallevel = 3,
+            foldcolumn = '2', -- (sic) must be string
+            signcolumn = 'yes',
+            spell = false,
+            list = false,
+            wrap = false,
+        },
+        -- }}}
+
+        -- {{{ ui listing options (keep it lean)
+        -- todo: toggle ls -l mode
+        -- todo: toggle ls -1rt mode
+        -- todo: toggle du -sm * | sort -n mode
+        -- todo: toggle du -sm * mode (no sort, just show sizes)
+        -- todo: figure out how to hack recursive du -sm for dirs, and cache results for 1-2 hours
+        columns = {
+            { "size", }, -- even size is noise for the default view
+            { "icon", add_padding = false },
+        },
+        -- }}}
+
+        -- {{{ listing options
+        view_options = {
+            is_hidden_file = genja_oily_is_hidden_file,
+            natural_order = false,
+            case_insensitive = true,
+            sort = {
+                { 'type', 'asc' },
+                { 'name', 'asc' },
+            },
+        },
+        -- }}}
+
+    },
+}
+
 ---@type LazySpec
 return {
-	{
-		'stevearc/oil.nvim',
-		dependencies = {
-			"nvim-tree/nvim-web-devicons"
-		},
-		event = { 'UIEnter' },
-		cmd = 'Oil',
-		---@type oil.SetupOpts
-		opts = {
 
-			skip_confirm_for_simple_edits = true,
+    oil_spec,
 
-			float = {
-				-- Padding around the floating window
-				padding = 4,
-				max_width = 0,
-				max_height = 0,
-				border = "rounded",
-				win_options = {
-					winblend = 0,
-				},
-				-- This is the config that will be passed to nvim_open_win.
-				-- Change values here to customize the layout
-				override = function(conf)
-					return conf
-				end,
-			},
-
-			keymaps = require('genja.map-oil').keymaps,
-			win_options = {
-				wrap = false,
-				signcolumn = "yes",
-				cursorcolumn = false,
-				foldcolumn = "2",
-				spell = false,
-				list = false,
-				conceallevel = 3,
-				concealcursor = "nvic",
-			},
-			default_file_explorer = true, -- use oil instead of netrw
-			columns = {
-				{ "size", },
-				{ "icon", add_padding = false },
-			},
-
-
-			view_options = {
-				-- dotfiles + the nearest .oily up the tree (plug-wip/genja-oily.nvim)
-				is_hidden_file = function(name, bufnr) return require("genja-oily").is_hidden_file(name, bufnr) end,
-				natural_order = false,
-				case_insensitive = true,
-				sort = {
-					{ 'type', 'asc' },
-					{ 'name', 'asc' },
-				},
-			},
-
-		},
-
-		config = function(_, opts)
-			require('oil').setup(opts)
-			-- oil sets loaded_netrw, which stops netrw's autoload (E117 netrw#Lexplore);
-			-- :e <dir> stays with oil, since oil clears netrw's FileExplorer autocmds
-			vim.g.loaded_netrw = nil
-		end,
-
-		init = function()
-			-- arg-1 is a dir -> load oil
-			if vim.fn.argc() == 1 then
-				local stat = vim.loop.fs_stat(vim.fn.argv(0))
-				if stat and stat.type == "directory" then
-					require("lazy").load({ plugins = { "oil.nvim" } })
-				end
-			end
-
-			-- Open a folder -> load oil
-			vim.api.nvim_create_autocmd("BufReadPre", {
-				desc = "Lazy load oil.nvim when opening a directory buffer",
-				callback = function(ev)
-					if vim.fn.isdirectory(ev.match) == 1 then
-						-- Load the plugin immediately before Neovim processes the directory buffer
-						require("lazy").load({ plugins = { "oil.nvim" } })
-					end
-				end,
-			})
-		end,
-
-
-	},
-
-	-- oil's which-key groups, appended to the main spec's opts.spec (opts_extend)
-	{
-		'folke/which-key.nvim',
-		optional = true,
-		opts = { spec = require('genja.map-oil').which_key },
-	},
+    {
+        -- oil's groups for which-key
+        -- appended to the main spec's opts.spec (opts_extend)
+        'folke/which-key.nvim',
+        optional = true, -- loaded only if added somewhere else
+        opts = { spec = require('genja.map-oil').which_key },
+    },
 }

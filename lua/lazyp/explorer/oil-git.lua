@@ -1,7 +1,9 @@
--- git status in oil: colored names + symbols (+ ~ ? D !), dirs show the top status inside.
+-- git status in oil
+-- colored names and symbols (+ ~ ? D !),
+-- dirs show the top status inside.
+--
 -- Alternative: refractalize/oil-git-status.nvim (two sign columns like `git status -s`;
 -- needs signcolumn = 'yes:2' in oil.lua win_options).
--- Windows support not documented upstream; it shells out to git.
 
 ---@type LazySpec
 return {

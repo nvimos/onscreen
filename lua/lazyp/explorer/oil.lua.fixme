@@ -1,0 +1,45 @@
+
+this form works:
+
+            is_hidden_file = function(name, bufnr) return require("genja-oily").is_hidden_file(name, bufnr) end,
+
+I wonder why this form does not fork:
+
+
+            is_hidden_file = require("genja-oily").view_options__is_hidden_file, --
+
+fails to load early ? -- rtp does not have plugins yet?
+
+trace:
+
+Failed to load `lazyp.explorer.oil`
+
+...sers/jazzo/AppData/Local/nvim/lua/lazyp/explorer/oil.lua:121: module 'genja-oily' not found:
+	no field package.preload['genja-oily']
+	cache_loader: module 'genja-oily' not found
+	cache_loader_lib: module 'genja-oily' not found
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\lua\genja-oily.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\lua\genja-oily\init.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\genja-oily.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\genja-oily\init.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\share\lua\5.1\genja-oily.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\share\lua\5.1\genja-oily\init.lua'
+	no file '.\genja-oily.lua'
+	no file '.\genja-oily\init.lua'
+	no file 'C:\Users\jazzo\AppData\Roaming\luarocks\share\lua\5.1\genja-oily.lua'
+	no file 'C:\Users\jazzo\AppData\Roaming\luarocks\share\lua\5.1\genja-oily\init.lua'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\genja-oily.dll'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\lib\lua\5.1\genja-oily.dll'
+	no file 'C:\Users\jazzo\AppData\Local\Programs\LuaJIT\bin\loadall.dll'
+	no file '.\genja-oily.dll'
+	no file 'C:\Users\jazzo\AppData\Roaming\luarocks\lib\lua\5.1\genja-oily.dll'
+
+# stacktrace:
+  - AppData/Local/nvim/lua/lazyp/explorer/oil.lua:121 _in_ **mod**
+  - AppData/Local/nvim/lua/genja/lazy-plug-spec.lua:59
+  - AppData/Local/nvim/lua/genja/api.lua:16 _in_ **Safeload**
+  - AppData/Local/nvim/lua/genja/init.lua:33
+  - AppData/Local/nvim/lua/genja/api.lua:16 _in_ **Safeload**
+  - lua:4
+  --]]
+            -- 

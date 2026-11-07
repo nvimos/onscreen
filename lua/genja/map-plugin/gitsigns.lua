@@ -35,7 +35,8 @@ return function(Maps)
 	-- runs before setup(opts): hands gitsigns the on_attach that sets the keys
 	Maps:add_mappings(spec_name, function(opts)
 		-- global: also attaches buffers that gitsigns skipped
-		vim.keymap.set('n', '<leader>mGs', toggle_attach, { desc = 'UI: git signs in this buffer (gitsigns)' })
+		vim.keymap.set('n', '<leader>mGs', toggle_attach, { desc = 'UI: git toggle gitsigns' })
+		vim.keymap.set('n', '<leader>tS',  toggle_attach, { desc = 'UI: git toggle gitsigns' })
 
 		opts.on_attach = function(bufnr)
 			-- skipped filetypes stay detached until <leader>mGs; returning false stops the attach
