@@ -34,7 +34,9 @@ km(nv, '<leader>wsT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. cmd 'nohl', 
 
 -- Magical and convoluted macros
 km(nv, '<leader>wsp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
-km(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    nosi 'Edit: remove empty lines in visual block')
+km(v,  '<leader>wsl', ':SortLen<cr>',  nosi 'Edit: sort lines by length, shortest first')
+km(v,  '<leader>wsL', ':SortLen!<cr>', nosi 'Edit: sort lines by length, longest first')
+km(nv, '<leader>wsb',[[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    nosi 'Edit: remove empty lines in visual block')
 km(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                        nosi 'Edit: remove trailing space (or :Ss)')
 km(nv, '<leader>w""', [[:s/"/'/g<cr>j]],                          nosi 'Edit: replace " with \' on current line') -- todo make work with visual too
 km(v,  '<leader>w"q', [[$A",<Esc>gvI"<Esc>]],                     nosi 'Edit: wrap selection with " "')
