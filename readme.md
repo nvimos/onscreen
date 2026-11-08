@@ -59,19 +59,24 @@ Hopefully someone else finds it useful and appreciates the same balance.
 
 ## Features
 
+### Cheatsheet
+
+Every key and command the config adds, grouped by plugin and topic, each
+naming the file that sets it: `readme.cheatsheet.md`. It is kept up to
+date with the config: a new key lands there in the same change.
+
 ### Unsaved q
 
 Quitting with modified buffers doesn't stop at an error. A picker lists
 them; write each, reset it to the file on disk, or drop it, and Neovim
 quits once the list is empty. Buffers without a file get a dated scratch
-name to save under. Details: `readme.cheatsheet.md`.
+name to save under.
 
 ### :Messages
 
 The message history in a buffer you can search and copy, where each
 `file:line` in an error opens that file at that line. The locations can
 also go to the quickfix or location list, or to the context menu.
-Details: `readme.cheatsheet.md`.
 
 ### telescope decorator
 
