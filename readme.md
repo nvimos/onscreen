@@ -21,24 +21,23 @@ Hopefully someone else finds it useful and appreciates the same balance.
 ## Goals
 
 - Fast and feeling like Vim
-  - Startup under a second, plugins load lazily.
-  - Vim vibe. built-in behaviour first, plugins where they add something.
-  - Vim responsiveness. Input shows up at once, no animated messages.
-  - Minimal distractions: floats and sidebars only on demand; files in oil.
+  - Startup under a second, plugins load lazily
+  - Vim vibe. built-in behaviour first, plugins where they add something
+  - Vim responsiveness. Input shows up at once, no animated messages
+  - Minimal distractions: floats and sidebars only on demand; files in oil
 - Real projects work out of the box
-  - Coding workflows that fit together: native LSP, blink.cmp, lint,
+  - Coding workflows that fit together: native LSP, blink.cmp, lint,A
       diagnostics, tests, git and AI helpers, with keys in the same
-      patterns.
+      patterns
   - Projects that work out of the box: a PHP project with its HTML, CSS,
       JS, framework, tests and tooling is linted, parsed and understood
       without days of setup.
-
-      Real projects mix (a Drupal site, a Symfony app with React), and
+      - Real projects mix (a Drupal site, a Symfony app with React), and
       sooner or later you need a debugger; nobody ships that setup
       configured. It should feel the same in C or Go. PHP is the starting
-      point, Go is next.
+      point, Go is next
   - Languages on demand: a small default set, more with `:EnableLang`; a
-      new language plugs in with its own rules.
+      new language plugs in with its own rules
   - Kubernetes manifests: component docs fetched once and shown as
       `:help`, `K` hover or a popup, not in a browser.
 - The editor as the workplace
