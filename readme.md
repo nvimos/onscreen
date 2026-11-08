@@ -47,37 +47,32 @@ directory](tests/)
 
 ## Goals and guidelines
 
-- Fast and feeling like Vim
-  - Startup under a second, plugins load lazily
-  - Vim vibe. built-in behaviour first, plugins where they add something
-  - Vim responsiveness. Input shows up at once, no animated messages
-  - Minimal distractions: floats and sidebars only on demand; files in oil
+- Fast and feels like Vim
+  - Startup takes under a second, because plugins load lazily.
+  - Built-in behaviour comes first, plugins are added where they give something extra.
+  - Input shows up at once, and there are no animated messages.
+  - Floats and sidebars appear only when asked for, and files are handled in oil.
 - Real projects work out of the box
-  - Coding workflows that fit together: native LSP, blink.cmp, lint,A
-      diagnostics, tests, git and AI helpers, with keys in the same
-      patterns
-  - Projects that work out of the box: a PHP project with its HTML, CSS,
-      JS, framework, tests and tooling is linted, parsed and understood
-      without days of setup.
-    - Real projects mix (a Drupal site, a Symfony app with React), and
-      sooner or later you need a debugger; nobody ships that setup
-      configured. It should feel the same in C or Go. PHP is the starting
-      point, Go is next
-  - Languages on demand: a small default set, more with `:EnableLang`; a new
-    language plugs in with its own rules
-  - Kubernetes manifests: component docs fetched once and shown as `:help`,
-    `pK` hover or a popup, not in a browser.
+  - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers work
+    together, with keys that follow the same patterns.
+  - A PHP project with its HTML, CSS, JS, framework, tests and tooling is linted,
+    parsed and understood without days of setup.
+  - Real projects mix stacks, like a Drupal site or a Symfony app with React, and
+    sooner or later they need a debugger, which nobody ships configured. It should
+    feel the same in C or Go. PHP comes first, Go is next.
+  - A small set of languages is on by default, more can be added with `:EnableLang`,
+    and a new language plugs in with its own rules.
+  - For Kubernetes manifests, the component docs are fetched once and shown as
+    `:help`, as `pK` hover or in a popup, so there is no need for a browser.
 - The editor as the workplace
-  - Nvim as the interface to the system: terminals, git, WSL and Docker
-      without leaving the editor.
+  - Terminals, git, WSL and Docker can be used from nvim, without leaving the editor.
 - Plain on the surface, easy to discover
-  - Plain on the surface, yet acting as a tour guide. A neat which-key
-      setup, a cheatsheet (`readme.cheatsheet.md`) and `<F2>`
-      context-aware actions.
-  - Simple Control Helm: `<F1>` `<F2>` `<F3>` do more than open help.
+  - A tidy which-key setup, a cheatsheet (`readme.cheatsheet.md`) and context-aware
+    actions on `<F2>` guide you through the config.
+  - `<F1>`, `<F2>` and `<F3>` do more than open help.
 - Kept working
-  - Checked by tests: mini.test cases in `tests/` (`make help`).
-  - Locked plugin specs between all-suite passing test runs
+  - Tests in `tests/` (mini.test, see `make help`) check that things still work.
+  - Plugin specs are locked between test runs that pass in full.
 
 ## Features
 
