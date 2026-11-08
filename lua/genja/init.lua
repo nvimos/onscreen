@@ -39,6 +39,7 @@ Safeload 'genja.map-convoluted'
 Safeload('genja.ext.user-command.wrapfold', function(m) m.setup_user_command() end) -- :WrapFold
 Safeload('genja.ext.user-command.sort-length', function(m) m.setup_user_command() end) -- :SortLen[!]
 Safeload('genja.ext.user-command.reload-lua', function(m) m.setup_user_command() end) -- :ReloadLua {module}
+Safeload('genja.ext.git-stop-fsmonitor', function(m) m.setup() end) -- :GitFsmonitorStop, and on exit
 -- todo: move this somewhere fitting (treesitter config?)
 Safeload('genja.ext.colorize-mappings', function(m) m.setup() end) -- vimscript colors in keymap rhs strings
 

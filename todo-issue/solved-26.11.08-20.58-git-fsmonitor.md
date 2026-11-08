@@ -1,0 +1,8 @@
+- [x] git: fsmonitor daemons keep handles in repos and block folder renames (2026-11-08)
+    - [x] `lua/genja/ext/git-stop-fsmonitor.lua`: records the repos seen (cwd, `:cd`, files read), stops their daemons on `VimLeavePre`
+    - [x] `:GitFsmonitorStop` runs the same stop, one line per daemon
+    - [x] only repos with `core.fsmonitor` true and a running daemon are touched
+    - [x] wired in `lua/genja/init.lua`, listed in `lua/genja/readme.md`
+    - [ ] test: open a file in a repo with `core.fsmonitor=true`, run git status, `:GitFsmonitorStop` prints `stopped <repo>`
+    - [ ] test: quit nvim, check no `git fsmonitor--daemon` process is left for that repo
+    - [ ] open: repos only visited by Neogit or lazy without a buffer or `:cd` are not recorded
