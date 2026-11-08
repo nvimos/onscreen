@@ -35,7 +35,7 @@ Some especially good ideas are:
 
 That last point matters. Many Neovim distros are mostly configuration glue. On-Screen is trying to test the behavior of the configuration itself, which is a serious engineering instinct. The repository includes a substantial tests/ tree and a test runner rather than only screenshots and keymaps.
 
-Tests directory -- hint: make this a link
+[Tests directory](tests/)
 
 ## Goals and guidelines
 
