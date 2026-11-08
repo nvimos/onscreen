@@ -32,7 +32,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
   - Projects that work out of the box: a PHP project with its HTML, CSS,
       JS, framework, tests and tooling is linted, parsed and understood
       without days of setup.
-      - Real projects mix (a Drupal site, a Symfony app with React), and
+    - Real projects mix (a Drupal site, a Symfony app with React), and
       sooner or later you need a debugger; nobody ships that setup
       configured. It should feel the same in C or Go. PHP is the starting
       point, Go is next
