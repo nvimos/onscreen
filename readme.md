@@ -9,14 +9,13 @@ The distributions I tried were either slow and far from Vim (animated
 popups, lagging input, a file tree eating the screen), or good starting
 points whose LSP, completion and diagnostics didn't work together.
 
-On-screen nvim sits in between: a ready-to-go coding setup that still
+On-Screen Nvim sits in between: a ready-to-go coding setup that still
 feels like Vim. Not a Vi clone, not Eclipse, not Jetbrains, not Vscode,
 not Sublime but something in between. It's meant to be plain on the
 surface and capable underneath, you discover what it can do by digging.
-This is the way I learned Vim, and the way I keep learning nvim.
+This is the way I learned Vim, and the way I keep learning Nvim.
 
-
-Not a contest: just another option for people who want the same balance.
+Hopefully someone else finds it useful and appreciates the same balance.
 
 ## Goals
 
@@ -37,7 +36,7 @@ Not a contest: just another option for people who want the same balance.
   language plugs in with its own rules.
 - Kubernetes manifests: component docs fetched once and shown as `:help`,
   `K` hover or a popup, not in a browser.
-- nvim as the interface to the system: terminals, git, WSL and Docker
+- Nvim as the interface to the system: terminals, git, WSL and Docker
   without leaving the editor.
 - Plain on the surface: which-key, a cheatsheet (`readme.cheatsheet.md`)
   and `<F2>` menus when you look for them.
@@ -55,7 +54,7 @@ Not a contest: just another option for people who want the same balance.
 - `plug-wip/`: plugins written for this config, each its own repo (below).
   A spec loads the local checkout when it's there, else lazy.nvim clones the
   repo, so a fresh clone of the config works without them.
-  This nvim distro is very much a work in progress still.
+  This Nvim distro is very much a work in progress still.
 
 ## Features
 
@@ -84,7 +83,7 @@ default, or a local ollama model. Spec: `lua/lazyp/langs-comps/minuet.lua`.
 
 ## Plugins
 
-Written for on-screen nvim, potentially usable on their own.
+Written for On-Screen Nvim, potentially usable on their own.
 
 | Plugin | What it does |
 | --- | --- |

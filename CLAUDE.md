@@ -1,4 +1,4 @@
-# Neovim config (on-screen nvim; Lua profile `genja`)
+# Neovim config (On-Screen Nvim; Lua profile `genja`)
 
 Neovim 0.11+ config on Windows, at `%LOCALAPPDATA%\nvim`.
 Plugin data in `%LOCALAPPDATA%\nvim-data`.
@@ -13,7 +13,7 @@ Unmarked bullets were stated by user.
 
 ## Goal
 
-- An alternative to the nvim distributions: some are bloated, others too small; on-screen nvim aims to be a ready-to-go setup in between.
+- An alternative to the nvim distributions: some are bloated, others too small; On-Screen Nvim aims to be a ready-to-go setup in between.
 - The distributions tried were either too slow and too far from the Vim feel, or good starting points without well-integrated coding workflows built on LSP.
 - Slow and un-Vim-like meant: animated notifications and sliding messages inside the nvim UI (a desktop paradigm that doesn't fit nvim), and typing input that lagged; much clunkier than Vim. Vim's responsiveness is the bar.
 - File trees (NERDTree, used for years) have their place, but a sidebar eats screen space better used for text; no distracting UI elements. Oil (a buffer you edit) fits instead.
@@ -24,8 +24,8 @@ Unmarked bullets were stated by user.
 - Capable underneath, plain on the surface: features are found by digging, as in Vim itself. Not ideal, but preferred.
 - Startup below 1 s, ideally.
 - Work session: start nvim in the working folder, open a bunch of tabs; splits only when needed. Tabs are preferred: simpler to navigate and close.
-- Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box on-screen nvim should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. Years of PHP work grow habits and tooling; the config should fit that project, not take 3 days of setup.
-- Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; on-screen nvim aims to.
+- Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box On-Screen Nvim should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. Years of PHP work grow habits and tooling; the config should fit that project, not take 3 days of setup.
+- Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; On-Screen Nvim aims to.
 - Then debugging comes in: no IDE or Vim config the user has opened gives those tools out of the box, and every project needs them at some point. Debugging should feel and behave the same in a C or a Go project.
 - PHP as the starting point ("good enough PHP", user has ideas); then the same feel for Go projects.
 - C: navigate and explore C projects (user is not a C/C++ developer).

@@ -7,7 +7,7 @@ opposite of tldr, context, prose.
 I tried several Neovim distributions. They fell into two groups:
 
 - Too slow, and too far from the feel of Vim. Animated notifications and
-  messages sliding across the editor bring a desktop paradigm into nvim,
+  messages sliding across the editor bring a desktop paradigm into Nvim,
   where it looks out of place. Rendering them, and the delay before typed
   input showed up, made those setups much clunkier than Vim.
 - A file tree in a sidebar. Trees have their place (I used NERDTree for
@@ -16,15 +16,15 @@ I tried several Neovim distributions. They fell into two groups:
   LSP, completion, diagnostics and the tools around them were there, but
   didn't work together.
 
-on-screen nvim sits between those: more than a starter config, less than a full
+On-Screen Nvim sits between those: more than a starter config, less than a full
 distribution. It is a ready-to-go setup for coding that still feels like Vim.
 
-I've used Vim since the 2000s. on-screen nvim is my take on a clean, Vi-like
+I've used Vim since the 2000s. On-Screen Nvim is my take on a clean, Vi-like
 experience: not a Vi clone, and not an IDE look either. It is capable,
 but you find what it can do by digging under the surface, the way you
 learn Vim itself. That isn't ideal for everyone, but it's the way I like it.
 
-This is not a contest. Other distributions do many things well; on-screen nvim is
+This is not a contest. Other distributions do many things well; On-Screen Nvim is
 just another option for people who want the same balance I do.
 
 
@@ -46,7 +46,7 @@ just another option for people who want the same balance I do.
 - Projects that work out of the box. Take a PHP project: PHP, HTML, CSS
   and JavaScript in one tree, maybe Symfony, Laravel, Drupal or WordPress,
   tests in PHPUnit, Pest or Behat, tooling from Composer and npm or Bun.
-  on-screen nvim should lint it, understand the project, highlight and parse every
+  On-Screen Nvim should lint it, understand the project, highlight and parse every
   language in it, and pick up its tooling and `.editorconfig`, without days
   of setup.
 
@@ -64,11 +64,11 @@ just another option for people who want the same balance I do.
   next) plugs in with its own rules, without the config shipping every
   language up front.
 - Kubernetes manifests are the next case: the valid values depend on the
-  ingress, router or autoscaler in use. on-screen nvim should fetch those components'
+  ingress, router or autoscaler in use. On-Screen Nvim should fetch those components'
   docs once and show them the Vim way, as `:help` pages, `K` hover or a popup,
   instead of sending you to a browser.
 
-- nvim as the interface to the system for (coding) work: terminals
+- Nvim as the interface to the system for (coding) work: terminals
   (PowerShell, Git Bash), git, WSL distros and Docker containers, without
   leaving the editor for simple tasks. On Windows that fills the gap that a
   tightly configured window manager on Linux used to fill, more or less.
@@ -81,12 +81,12 @@ just another option for people who want the same balance I do.
   lint and the in-repo plugins (`make help` in `tests/`).
 
 - Simple Control Helm feeling. `<f1>` `<f2>` `<f3>` do more than open help.
-  Those keys are not underutilized by on-screen nvim.
+  Those keys are not underutilized by On-Screen Nvim.
 
 
 ## How it's meant to be used
 
-Start nvim in the folder you're working in and open a bunch of tabs: that's
+Start `nvim` in the folder you're working in and open a bunch of tabs: that's
 the work session. Open splits when you need them. Tabs come first because
 they're simpler to navigate and simpler to close.
 
