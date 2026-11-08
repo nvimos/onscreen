@@ -38,8 +38,8 @@ Hopefully someone else finds it useful and appreciates the same balance.
   `K` hover or a popup, not in a browser.
 - Nvim as the interface to the system: terminals, git, WSL and Docker
   without leaving the editor.
-- Plain on the surface: which-key, a cheatsheet (`readme.cheatsheet.md`)
-  and `<F2>` menus when you look for them.
+- Plain on the surface, yet acting as a tour guide. A neat which-key setup,
+  a cheatsheet (`readme.cheatsheet.md`) and `<F2>` context-aware actions.
 - Checked by tests: mini.test cases in `tests/` (`make help`).
 - Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open help.
 
