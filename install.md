@@ -8,10 +8,17 @@ Needed:
 
 | Tool | Version | For |
 |------|---------|-----|
-| Neovim | 0.11+ | the editor; some features want 0.12 |
+| Neovim | 0.11+ | the editor; some features want 0.12; developed on 0.13-dev |
 | git | any recent | lazy.nvim clones the plugins |
 | curl | any | downloads (blink.cmp's prebuilt matcher, lookups) |
 | ripgrep (`rg`) | any recent | live grep and live find (genja-finder) |
+| `fd` (`fd-find`) | any recent | live find, faster than `rg` at listing files |
+
+About finding files: `fd` is fine, and `rg` works in a pinch. Nevertheless, if you have ever used
+computers before, you install Everything (and `es.exe`) on Windows, and let an index answer in milliseconds what a directory
+walk answers in a coffee break. Live find tries `es`, then `fd`, then `rg`. And if you are on Linux
+and not using `locate` (plocate), you are in no position to make snarky remarks about this config being
+built on Windows 11.
 
 Needed for parts of it:
 
