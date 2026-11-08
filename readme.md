@@ -25,7 +25,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
 
 The design philosophy is unusually clear. Keep the editor visually plain,
 preserve Vim’s feel, and simplify or add substantial capability underneath.
-It aspires to more than assembling every popular plugin with default configs.
+It aspires to doing more than assembling every popular plugin with default configs.
 
 Some especially good ideas are:
 
