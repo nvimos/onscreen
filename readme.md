@@ -45,17 +45,6 @@ Hopefully someone else finds it useful and appreciates the same balance.
 - Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open help.
 
 
-## Layout
-
-- `init.vim`: loads lazy.nvim, then the `genja` profile, with a small fallback if that fails.
-- `lua/genja/`: options, keymaps, autocommands; `lua/genja/readme.md` describes each file.
-- `lua/lazyp/<topic>/`: plugin specs.
-- `tests/`: automated tests.
-- `todo-*.md`: plans and backlog.
-- `plug-wip/`: plugins written for this config, each its own repo (below).
-  A spec loads the local checkout when it's there, else lazy.nvim clones the
-  repo, so a fresh clone of the config works without them.
-  This Nvim distro is very much a work in progress still.
 
 ## Features
 
@@ -166,3 +155,16 @@ Written for On-Screen Nvim, potentially usable on their own.
 | [completion.nvim](https://github.com/tox2ik/genja-completion.nvim) | LSP servers, blink.cmp completion, one module per language |
 | [statusline.nvim](https://github.com/tox2ik/genja-statusline.nvim) | statusline, tabline, winbar |
 | [claudefterm.nvim](https://github.com/tox2ik/genja-claudefterm.nvim) | Claude Code in a floaterm, one per project |
+
+
+## Layout
+
+- `init.vim`: loads lazy.nvim, then the `genja` profile, with a small fallback if that fails.
+- `lua/genja/`: options, keymaps, autocommands; `lua/genja/readme.md` describes each file.
+- `lua/lazyp/<topic>/`: plugin specs.
+- `tests/`: automated tests.
+- `todo-*.md`: plans and backlog.
+- `plug-wip/`: plugins written for this config, each its own repo (below).
+  A spec loads the local checkout when it's there, else lazy.nvim clones the
+  repo, so a fresh clone of the config works without them.
+  This Nvim distro is very much a work in progress still.
