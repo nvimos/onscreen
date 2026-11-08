@@ -53,17 +53,11 @@ directory](tests/)
   - Floats and sidebars appear only when asked for, and files are handled in oil
   - Built-in behaviour comes first, plugins are added where they give something extra
 - Real projects work out of the box
-  - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers work
-    together, with keys that follow the same patterns
-  - A PHP project with its HTML, CSS, JS, framework, tests and tooling is linted,
-    parsed and understood without days of setup
-  - Real projects mix stacks, like a Drupal site or a Symfony app with React, and
-    sooner or later they need a debugger, which nobody ships configured. It should
-    feel the same in C or Go. PHP comes first, Go is next
-  - A small set of languages is on by default, more can be added with `:EnableLang`,
-    and a new language plugs in with its own rules
-  - For Kubernetes manifests, the component docs are fetched once and shown as
-    `:help`, as `pK` hover or in a popup, so there is no need for a browser
+  - Real projects mix stacks, like a Drupal site or a Symfony app with React, and sooner or later they need a debugger, which nobody ships configured. It should feel the same in C or Go. PHP comes first, Go is next
+  - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers work together, with keys that follow the same patterns
+  - A PHP project with its HTML, CSS, JS, framework, tests and tooling is linted, parsed and understood without days of setup
+  - A small set of languages is on by default, more can be added with `:EnableLang`, and a new language plugs in with its own rules
+  - For Kubernetes manifests, the component docs are fetched once and shown as `:help`, as `pK` hover or in a popup, so there is no need for a browser
 - The editor as the workplace
   - Terminals, git, WSL and Docker can be used from nvim, without leaving the editor
 - Plain on the surface, easy to discover
