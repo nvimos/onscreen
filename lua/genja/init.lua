@@ -36,8 +36,8 @@ Safeload 'genja.map-telescope'
 Safeload 'genja.ext.ui-select'          -- vim.ui.select in telescope (code actions etc.)
 Safeload 'genja.map-convoluted'
 -- selene: allow(multiple_statements)
-Safeload('genja.ext.wrapfold', function(m) m.setup_command() end) -- :WrapFold
-Safeload('genja.ext.sort-length', function(m) m.setup_command() end) -- :SortLen[!]
+Safeload('genja.ext.user-command.wrapfold', function(m) m.setup_user_command() end) -- :WrapFold
+Safeload('genja.ext.user-command.sort-length', function(m) m.setup_user_command() end) -- :SortLen[!]
 -- todo: move this somewhere fitting (treesitter config?)
 Safeload('genja.ext.colorize-mappings', function(m) m.setup() end) -- vimscript colors in keymap rhs strings
 

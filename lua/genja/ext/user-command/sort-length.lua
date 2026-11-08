@@ -41,7 +41,7 @@ function M.sort(line1, line2, reverse)
 end
 
 --- :[range]SortLen[!]
-function M.setup_command()
+function M.setup_user_command()
     vim.api.nvim_create_user_command('SortLen', function(o)
         M.sort(o.line1, o.line2, o.bang)
     end, { range = '%', bang = true, desc = 'Edit: sort lines by length (! reverses)' })

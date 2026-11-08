@@ -22,7 +22,7 @@ key or command to try, file, guide.
 
 ## Session auto-todo-20261023-1924
 
-- [ ] fold markers with a title: visual `zf`, `<leader>wwf`, `:WrapFold` (lua/genja/ext/wrapfold.lua) -> doc-wip/readme.2026-10-23.wrapfold.md
+- [ ] fold markers with a title: visual `zf`, `<leader>wwf`, `:WrapFold` (lua/genja/ext/user-command/wrapfold.lua) -> doc-wip/readme.2026-10-23.wrapfold.md
 - [ ] right-click Actions (g.), click/double-click in telescope, new actions source/claude (lua/genja/fn.vim, actions.lua) -> doc-wip/readme.2026-10-23.popup-actions.md
 - [ ] ~ swaps true/false, +/-, </> …; <M-~> plain (lua/genja/ext/tilde.lua) -> doc-wip/readme.2026-10-23.tilde-dial.md
 - [ ] dial.nvim <C-a>/<C-x>, g<C-a> per filetype groups (lua/lazyp/new/dial.lua) -> doc-wip/readme.2026-10-23.tilde-dial.md

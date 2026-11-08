@@ -1,6 +1,6 @@
 # Fold markers with a title (idea 29b)
 
-`lua/genja/ext/wrapfold.lua`, keys in `lua/genja/map-zero.lua` (Folds block),
+`lua/genja/ext/user-command/wrapfold.lua`, keys in `lua/genja/map-zero.lua` (Folds block),
 `:WrapFold` set up from `lua/genja/init.lua`. Port of alma's `WrapFold`.
 
 ## Use

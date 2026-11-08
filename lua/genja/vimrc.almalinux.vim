@@ -150,7 +150,7 @@ nn z[ zM
 nn z<space> za
 " }}}
 " {{{ fold paragraph
-" duplicated in lua/genja/ext/wrapfold.lua (<leader>wwf, visual zf, :WrapFold)
+" duplicated in lua/genja/ext/user-command/wrapfold.lua (<leader>wwf, visual zf, :WrapFold)
 nnoremap <leader>wwf vip:<c-u>WrapFold<cr>?NamelessFold<cr>ciw
 vnoremap <leader>wwf    :<c-u>WrapFold<cr>?NamelessFold
 " :<c-u>norm k0WWciw
@@ -588,7 +588,7 @@ endfunction
 " }}}
 
 " {{{ command WrapFold -- insert fold marker around selection
-" duplicated in lua/genja/ext/wrapfold.lua
+" duplicated in lua/genja/ext/user-command/wrapfold.lua
 function! s:wrap_fold_with_marker(fold_title='NamelessFold') range
   let csp = split(&commentstring, '%s')
   if len(csp) == 2

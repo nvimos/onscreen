@@ -200,7 +200,7 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>hc  commit at cursor, visual: log of the lines (mini.git)
     :Git <args>  mini.git, output in a split (fugitive is off)
 
-Fold markers with a title (lua/genja/ext/wrapfold.lua, keys in lua/genja/map-zero.lua)
+Fold markers with a title (lua/genja/ext/user-command/wrapfold.lua, keys in lua/genja/map-zero.lua)
 
     zf (visual)        ask a title, wrap selection in  -- {{{ title  /  -- }}}   empty title: built-in zf
     <leader>wwf        same for the paragraph under the cursor (visual: the selection)

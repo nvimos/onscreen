@@ -1,0 +1,6 @@
+- [x] ext: user command modules grouped in a subfolder (2026-11-08)
+    - [x] `wrapfold.lua` and `sort-length.lua` moved to `lua/genja/ext/user-command/`
+    - [x] `setup_command` renamed `setup_user_command`; `Safeload` lines in `lua/genja/init.lua` use the new module names
+    - [x] references updated: `map-zero.lua`, `lua/genja/readme.md`, `readme.cheatsheet.md`, two doc-wip files, `vimrc.almalinux.vim` comments, `SRC` in `wrapfold.lua`
+    - [ ] test: restart nvim, `:WrapFold`, visual `zf`, `<leader>wwf` and `:SortLen` still work
+    - [ ] open: `doc-wip/squash-ideas-oct-17.details.md` still names the old wrapfold path (history record, left alone)
