@@ -65,6 +65,10 @@ Every key and command the config adds, grouped by plugin and topic, each
 naming the file that sets it: `readme.cheatsheet.md`. It is kept up to
 date with the config: a new key lands there in the same change.
 
+Inside Neovim, `<leader>?` opens a popup with the keys organized by
+category. It is searchable and filters by mode (normal, visual, insert
+and the rest).
+
 ### Unsaved q
 
 Quitting with modified buffers doesn't stop at an error. A picker lists
