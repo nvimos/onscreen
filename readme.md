@@ -49,9 +49,9 @@ directory](tests/)
 
 - Fast and feels like Vim
   - Startup takes under a second, because plugins load lazily
-  - Built-in behaviour comes first, plugins are added where they give something extra
   - Input shows up at once, and there are no animated messages
   - Floats and sidebars appear only when asked for, and files are handled in oil
+  - Built-in behaviour comes first, plugins are added where they give something extra
 - Real projects work out of the box
   - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers work
     together, with keys that follow the same patterns
