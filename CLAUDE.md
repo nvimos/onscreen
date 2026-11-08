@@ -112,6 +112,15 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Spaces (4), single quotes (`.editorconfig` `indent_style = space`, since 39fd23c); older files still have tabs, converted as they are reformatted.
 - Readable Lua over clever Lua: plain assignments and `if` blocks.
     - A short, non-nested two-way `(x and y or z)` is fine, wrapped in parentheses; anything longer or nested is an `if` block.
+    - When in doubt, apply the Golang vibe:
+        - Clear over clever: the boring version anyone reads at once; no metatable tricks, chained `and/or` or one-liners that need a second look.
+        - Early returns, flat code: check the bad case and return first; the main path stays at the left margin.
+        - Errors are values, handled where they happen: `local ok, err = pcall(...)`, own functions return `nil, err`; check at the call; no `error()` for normal control flow, no silent failures.
+        - Explicit over dynamic: plain `require` and assignments; no modules built from strings or globbed discovery.
+        - A little copying beats a little dependency: three similar lines are fine; a helper (in `genja-util`) only when it pays off.
+        - No hidden magic: no `__index` inheritance chains, operator overloading or implicit globals; what a function does is visible in it.
+        - Small, single-purpose functions and modules; short local names in small scopes, descriptive names for what a module exports.
+        - One formatting, not up for debate (like `gofmt`): `.editorconfig`, 4 spaces, single quotes.
 - Shared helpers between plug-wip plugins live in `plug-wip/genja-util.nvim`.
 - Comments: short, explain why. For tricky code, at most one line per callback or function.
 - Annotate with LuaLS types: `---@type LazySpec` on specs, typed `opts`. `.luarc.json` disables `missing-fields`.

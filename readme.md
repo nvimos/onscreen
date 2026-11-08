@@ -58,6 +58,14 @@ Hopefully someone else finds it useful and appreciates the same balance.
 
 ## Features
 
+### Unsaved q
+
+-- todo: fill in this
+
+### :Messages
+
+-- todo: fill in this
+
 ### telescope decorator
 
 Any telescope picker can get the same refine keys:
@@ -73,7 +81,7 @@ selection in tabs. From `plug-wip/genja-finder.nvim`.
 context: make targets, composer and npm scripts, git add in oil,
 diagnostics, languages to switch on, running claude terminals,
 `:messages` error locations and markdown actions. Items run through
-overseer or floaterm; other code adds its own with `add_task`. Code in
+overseer or floaterm. Other code adds actions with `add_task`. Code in
 `lua/genja/f2/`, tests in `tests/f2/`.
 
 ### Ghost text provider
