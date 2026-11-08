@@ -21,17 +21,17 @@ Hopefully someone else finds it useful and appreciates the same balance.
 ## Goals
 
 - Fast, and it feels like Vim
-    - Startup below a second; plugins load lazily.
-    - As responsive as Vim: input shows up at once, no animated messages.
-    - The Vim feel: built-in behaviour first, plugins where they add
+  - Startup below a second; plugins load lazily.
+  - As responsive as Vim: input shows up at once, no animated messages.
+  - The Vim feel: built-in behaviour first, plugins where they add
       something.
-    - Screen space for text: floats and sidebars only on demand; files in
+  - Screen space for text: floats and sidebars only on demand; files in
       oil.
 - Real projects work out of the box
-    - Coding workflows that fit together: native LSP, blink.cmp, lint,
+  - Coding workflows that fit together: native LSP, blink.cmp, lint,
       diagnostics, tests, git and AI helpers, with keys in the same
       patterns.
-    - Projects that work out of the box: a PHP project with its HTML, CSS,
+  - Projects that work out of the box: a PHP project with its HTML, CSS,
       JS, framework, tests and tooling is linted, parsed and understood
       without days of setup.
 
@@ -39,21 +39,21 @@ Hopefully someone else finds it useful and appreciates the same balance.
       sooner or later you need a debugger; nobody ships that setup
       configured. It should feel the same in C or Go. PHP is the starting
       point, Go is next.
-    - Languages on demand: a small default set, more with `:EnableLang`; a
+  - Languages on demand: a small default set, more with `:EnableLang`; a
       new language plugs in with its own rules.
-    - Kubernetes manifests: component docs fetched once and shown as
+  - Kubernetes manifests: component docs fetched once and shown as
       `:help`, `K` hover or a popup, not in a browser.
 - The editor as the workplace
-    - Nvim as the interface to the system: terminals, git, WSL and Docker
+  - Nvim as the interface to the system: terminals, git, WSL and Docker
       without leaving the editor.
 - Plain on the surface, easy to discover
-    - Plain on the surface, yet acting as a tour guide. A neat which-key
+  - Plain on the surface, yet acting as a tour guide. A neat which-key
       setup, a cheatsheet (`readme.cheatsheet.md`) and `<F2>`
       context-aware actions.
-    - Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open
+  - Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open
       help.
 - Kept working
-    - Checked by tests: mini.test cases in `tests/` (`make help`).
+  - Checked by tests: mini.test cases in `tests/` (`make help`).
 
 ## Features
 
