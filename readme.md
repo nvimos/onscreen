@@ -9,8 +9,8 @@ See [install.md](install.md) for how to install it.
 ## Why it exists
 
 The Neovim distributions from 2023 felt slow and far from Vim. Some were good starting points with an under-delivering
-setup of LSP, completion, diagnostics, and tooling. The sum of animated notifications, lagging input, a file tree
-eating visible columns and other bling adds up to less Vim, imho.
+setup of LSP, completion, diagnostics, and tooling. I think the sum of animated notifications, lagging input, a file tree
+eating visible columns and other bling adds up to less Vim.
 
 
 On-Screen Neovim aims to be a modern and capable, ready-to-go coding setup that feels like Vim from 2004.
