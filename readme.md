@@ -36,10 +36,8 @@ Hopefully someone else finds it useful and appreciates the same balance.
       sooner or later you need a debugger; nobody ships that setup
       configured. It should feel the same in C or Go. PHP is the starting
       point, Go is next
-  - Languages on demand: a small default set, more with `:EnableLang`; a
-      new language plugs in with its own rules
-  - Kubernetes manifests: component docs fetched once and shown as
-      `:help`, `K` hover or a popup, not in a browser.
+  - Languages on demand: a small default set, more with `:EnableLang`; a new language plugs in with its own rules
+  - Kubernetes manifests: component docs fetched once and shown as `:help`, `K` hover or a popup, not in a browser.
 - The editor as the workplace
   - Nvim as the interface to the system: terminals, git, WSL and Docker
       without leaving the editor.
