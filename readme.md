@@ -18,7 +18,7 @@ This is the way I learned Vim, and the way I keep learning Nvim.
 
 Hopefully someone else finds it useful and appreciates the same balance.
 
-## Goals
+## Goals and guidelines
 
 - Fast and feeling like Vim
   - Startup under a second, plugins load lazily
