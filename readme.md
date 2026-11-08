@@ -11,8 +11,10 @@ points whose LSP, completion and diagnostics didn't work together.
 
 On-screen nvim sits in between: a ready-to-go coding setup that still
 feels like Vim. Not a Vi clone, not Eclipse, not Jetbrains, not Vscode,
-not Sublime. It's meant to be plain on the surface and capable underneath.
-You find what it can do by digging, the way I learn(ed) (n)Vim itself.
+not Sublime but something in between. It's meant to be plain on the
+surface and capable underneath, you discover what it can do by digging.
+This is the way I learned Vim, and the way I keep learning nvim.
+
 
 Not a contest: just another option for people who want the same balance.
 
