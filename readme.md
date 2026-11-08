@@ -8,8 +8,8 @@ See [install.md](install.md) for how to install it.
 
 ## Why it exists
 
-The Neovim distributions from 2023 felt slow and far from Vim. Some were good starting points with an under-delivering 
-setup of LSP, completion, diagnostics, and tooling. The summation of animated notifications, lagging input, a file tree 
+The Neovim distributions from 2023 felt slow and far from Vim. Some were good starting points with an under-delivering
+setup of LSP, completion, diagnostics, and tooling. The summation of animated notifications, lagging input, a file tree
 eating visible columns and other bling added up to less Vim, imho.
 
 On-Screen Nvim sits in between: a ready-to-go coding setup that still
