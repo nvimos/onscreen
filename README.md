@@ -51,8 +51,8 @@ just another option for people who want the same balance I do.
 
   A "PHP project" is rarely only PHP: a Drupal site, a Symfony app with a
   React front end. The framework, the front end and a test framework creep
-  in, and nobody ships a configured setup for that mix. PHP comes first;
-  Go projects should get the same feel next.
+  in, and nobody ships a configured setup for that mix. PHP is the starting
+  point; Go projects should get the same feel next.
 - Languages on demand: a conservative default set, more with `:EnableLang`,
   per machine in a local file. PHP and Go get full project workflows; C is
   for reading and navigating. A new language (Flutter, or whatever comes

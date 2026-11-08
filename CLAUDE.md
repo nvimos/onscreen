@@ -26,7 +26,7 @@ Unmarked bullets were stated by user.
 - Work session: start nvim in the working folder, open a bunch of tabs; splits only when needed. Tabs are preferred: simpler to navigate and close.
 - Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box genja should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. Years of PHP work grow habits and tooling; the config should fit that project, not take 3 days of setup.
 - Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; genja aims to.
-- PHP first ("good enough PHP", user has ideas); then the same feel for Go projects.
+- PHP as the starting point ("good enough PHP", user has ideas); then the same feel for Go projects.
 - C: navigate and explore C projects (user is not a C/C++ developer).
 - New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects; including everything is pointless.
 - nvim is the interface to the OS for coding work: shell, terminal, PowerShell, Git Bash, git; simple tasks shouldn't need leaving nvim. Windows lacks a good setup otherwise (user came from Linux).
