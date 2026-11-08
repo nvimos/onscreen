@@ -21,8 +21,8 @@ Hopefully someone else finds it useful and appreciates the same balance.
 ## Goals
 
 - Fast, and it feels like Vim
-    - As responsive as Vim: input shows up at once, no animated messages.
     - Startup below a second; plugins load lazily.
+    - As responsive as Vim: input shows up at once, no animated messages.
     - The Vim feel: built-in behaviour first, plugins where they add
       something.
     - Screen space for text: floats and sidebars only on demand; files in
