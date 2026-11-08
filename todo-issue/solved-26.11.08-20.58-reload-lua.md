@@ -1,0 +1,5 @@
+- [x] ext: reload a Lua module without restarting nvim (2026-11-08)
+    - [x] `lua/genja/ext/user-command/reload-lua.lua`: drops the module from `package.loaded`, requires it again, redraws status and tabline; completes the loaded module names
+    - [x] wired in `lua/genja/init.lua`, listed in `lua/genja/readme.md`
+    - [ ] test: `:ReloadLua2 genja-statusline.winbar` completes with Tab and redraws the winbar
+    - [ ] open: the file registers `ReloadLua2` and its header still says "dense twin"; rename to `ReloadLua` after the twin comparison
