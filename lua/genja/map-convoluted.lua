@@ -19,7 +19,6 @@
 ]]
 
 
-
 local km = vim.keymap.set
 local nv = { 'n', 'v' }
 local v = { 'v' }
@@ -28,20 +27,21 @@ local cmd = require'genja.api'.cmd
 
 
 -- Refactorish macros {{{
-vim.keymap.set(nv, '<leader>wsT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. cmd 'nohl', nosi 'Edit: title-case buffer')
+km(nv, '<leader>wsT',  'mjgg=G' .. [[:%s/\<./\U&/g<cr>]] .. '`j' .. cmd 'nohl', nosi 'Edit: title-case buffer')
 
 -- }}}
 
 
 -- Magical and convoluted macros
-vim.keymap.set(nv, '<leader>wsp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
-vim.keymap.set(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]], nosi 'Edit: remove empty lines in visual block')
-vim.keymap.set(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                     nosi 'Edit: remove trailing space (or :Ss)')
-vim.keymap.set(nv, '<leader>w"',  [[:s/"/'/g<cr>j]],                       nosi 'Edit: replace " with \' on current line')
-vim.keymap.set(v,  '<leader>w"',  [[$A",<esc>gvI"<esc>]],                  nosi 'Edit: wrap selection with " "')
+km(nv, '<leader>wsp', [[<Cmd>exe "norm! \eyip" | '[,']sort<CR>]], nosi "Edit: sort current paragraph")
+km(nv, '<leader>wsb', [[:'<,'>g/^$/d<cr> <cmd>let @/=''<cr>]],    nosi 'Edit: remove empty lines in visual block')
+km(nv, '<leader>wss', [[:%s,\s\+$,,<cr>]],                        nosi 'Edit: remove trailing space (or :Ss)')
+km(nv, '<leader>w""', [[:s/"/'/g<cr>j]],                          nosi 'Edit: replace " with \' on current line') -- todo make work with visual too
+km(v,  '<leader>w"q', [[$A",<Esc>gvI"<Esc>]],                     nosi 'Edit: wrap selection with " "')
+km(nv,  'gQ',        [[<Cmd>let s=&l:tw<Bar>setl tw=78<Bar>exe 'norm! gqap'<Bar>let &l:tw=s<cr>]], nosi 'Edit: reflow text')
 
 -- each selected line becomes "line", keeping indent; any visual mode, empty lines skipped
-vim.keymap.set('x', '<leader>w,', [[:s/^\s*\zs.\+/"&",/e<cr><cmd>nohlsearch<cr>]], nosi 'Edit: wrap lines with " ",')
+km('x', '<leader>w,', [[:s/^\s*\zs.\+/"&",/e<cr><cmd>nohlsearch<cr>]], nosi 'Edit: wrap lines with " ",')
 
 -- Instant search & replace word under the cursor
 km('n', '<leader>cS', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<left><left><left>aaa]], nosi 'Edit: search & replace on cursor')

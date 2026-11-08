@@ -8,9 +8,10 @@ See [install.md](install.md) for how to install it.
 
 ## Why it exists
 
-The distributions I tried were either slow and far from Vim (animated
-popups, lagging input, a file tree eating the screen), or good starting
-points whose LSP, completion and diagnostics didn't work together.
+The Neovim distributions from 2023 felt slow and far from Vim.
+Some were good starting points with an under-delivering setup of LSP, completion, diagnostics, and tooling.
+
+(animated popups, lagging input, a file tree eating the screen)
 
 On-Screen Nvim sits in between: a ready-to-go coding setup that still
 feels like Vim. Not a Vi clone, not Eclipse, not Jetbrains, not Vscode,
@@ -23,19 +24,26 @@ Hopefully someone else finds it useful and appreciates the same balance.
 
 ## What is good about it
 
-The design philosophy is unusually clear. Keep the editor visually plain, preserve Vim’s feel, and add substantial capability underneath. That is a better starting point than simply assembling every popular plugin.
+The design philosophy is unusually clear. Keep the editor visually plain,
+preserve Vim’s feel, and add substantial capability underneath. That is a
+better starting point than simply assembling every popular plugin.
 
 Some especially good ideas are:
 
 - Per-language completion/LSP modules.
 - A unified approach to Telescope refinement.
+- Diagnostics deliberately limited on-screen.
 - Custom functionality extracted into separate genja-*.nvim plugins.
-- oil.nvim used as the main filesystem interface instead of a permanently open file tree.
-- Diagnostics deliberately limited on-screen while retaining the complete diagnostic list.
-- Context-sensitive `<F2>` actions for project scripts, diagnostics, Git, languages, and terminals.
-- Automated tests covering startup, completion, LSP behavior, UI behavior, unsaved buffers, messages, and AI terminal behavior.
+- oil.nvim as filesystem interface instead of a permanently open file tree.
+- Context-sensitive `<F2>` actions for scripts, diagnostics, Git, languages, and terminals.
+- Automated tests covering startup, completion, LSP behavior, UI behavior,
+  unsaved buffers, messages, and AI terminal behavior.
 
-That last point matters. Many Neovim distros are mostly configuration glue. On-Screen is trying to test the behavior of the configuration itself, which is a serious engineering instinct. The repository includes a substantial tests/ tree and a test runner rather than only screenshots and keymaps. [Tests directory](tests/)
+That last point matters. Many Neovim distros are mostly configuration glue.
+On-Screen is trying to test the behavior of the configuration itself, which is
+a serious engineering instinct. The repository includes a substantial tests/
+tree and a test runner rather than only screenshots and keymaps. [Tests
+directory](tests/)
 
 ## Goals and guidelines
 
@@ -55,8 +63,10 @@ That last point matters. Many Neovim distros are mostly configuration glue. On-S
       sooner or later you need a debugger; nobody ships that setup
       configured. It should feel the same in C or Go. PHP is the starting
       point, Go is next
-  - Languages on demand: a small default set, more with `:EnableLang`; a new language plugs in with its own rules
-  - Kubernetes manifests: component docs fetched once and shown as `:help`, `K` hover or a popup, not in a browser.
+  - Languages on demand: a small default set, more with `:EnableLang`; a new
+    language plugs in with its own rules
+  - Kubernetes manifests: component docs fetched once and shown as `:help`,
+    `pK` hover or a popup, not in a browser.
 - The editor as the workplace
   - Nvim as the interface to the system: terminals, git, WSL and Docker
       without leaving the editor.
@@ -64,8 +74,7 @@ That last point matters. Many Neovim distros are mostly configuration glue. On-S
   - Plain on the surface, yet acting as a tour guide. A neat which-key
       setup, a cheatsheet (`readme.cheatsheet.md`) and `<F2>`
       context-aware actions.
-  - Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open
-      help.
+  - Simple Control Helm: `<F1>` `<F2>` `<F3>` do more than open help.
 - Kept working
   - Checked by tests: mini.test cases in `tests/` (`make help`).
   - Locked plugin specs between all-suite passing test runs
