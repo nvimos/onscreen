@@ -49,7 +49,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
       help.
 - Kept working
   - Checked by tests: mini.test cases in `tests/` (`make help`).
-  - locked plugin specs between all-suite test runs
+  - locked plugin specs between all-suite passing test runs
 
 ## Features
 
