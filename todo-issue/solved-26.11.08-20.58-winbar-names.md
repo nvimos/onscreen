@@ -1,0 +1,7 @@
+- [x] statusline: same-named files in a diff show the same winbar name (2026-11-08)
+    - [x] plug-wip/genja-statusline.nvim `winbar.lua`: in diff mode the winbar shows the shortest path tail that differs from the other diff windows
+    - [x] plugin commit: genja-statusline 97892de winbar: parent folders tell diffed files apart
+    - [ ] test: `:DiffTool dir1 dir2` on two folders with the same file names, check both winbars show different parents
+    - [ ] test: normal buffer outside a diff still shows the file name only
+    - [ ] test: reload with `:ReloadLua genja-statusline.winbar`, then `:redrawstatus!`
+    - [ ] open: `winbar_extra` is flagged undefined-field by LuaLS in `winbar.lua` (old, not touched)
