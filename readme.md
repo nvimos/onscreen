@@ -24,7 +24,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
 ## What is good about it
 
 The design philosophy is unusually clear. Keep the editor visually plain,
-preserve Vim’s feel, and add substantial capability underneath. That is a
+preserve Vim’s feel, and simplify or add substantial capability underneath. That is a
 better starting point than simply assembling every popular plugin.
 
 Some especially good ideas are:
