@@ -38,14 +38,21 @@ Unmarked bullets were stated by user.
 - Not a contest: no claim to be better than other distributions.
 - `README.md` explains this to readers; keep it in line with this section.
 
+## Main trunk
+
+- The main trunk is the branch `enterprise`; this project uses it instead of `main` or `master`.
+- Docs and notes say "main trunk", not the branch name, so a rename touches only this section.
+- The current `master` branch is derelict: it is not likely to become the main trunk (`enterprise`).
+- `enterprise` lives on origin (GitHub `nvimos/onscreen`, the repo's default branch); the local `v2026` tracks `origin/enterprise` (2026-11-08).
+
 ## Release 2026
 
-- 2026-11-05: `refactor-2026-sept` merged into `master` (fast-forward at ced1985); branches `develop` and `v2026` made from it.
+- 2026-11-05: `refactor-2026-sept` merged into `master`, now derelict (fast-forward at ced1985); branches `develop` and `v2026` made from it.
 - `v2026` is the working branch: the release checklist in todo-2026-neovim011.md (## release v2026, 18 items) is done there.
-- `master` = stable. `develop` = running branch for ideas beyond the v2026 checklist.
+- Main trunk = stable. `develop` = running branch for ideas beyond the v2026 checklist.
 - Spare tokens before a session reset go to implementing open todos and ideas.
-- Branch model: based on OneFlow, develop + master variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
-- Open: when v2026 merges back into `master`, and whether worktree branches and `/prish-merge` target `v2026` or `develop` (today: whatever branch the main checkout is on).
+- Branch model: based on OneFlow, develop + main trunk variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
+- Open: when v2026 merges back into the main trunk, and whether worktree branches and `/prish-merge` target `v2026` or `develop` (today: whatever branch the main checkout is on).
 
 ## Ideas and backlog: 
 
@@ -82,7 +89,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
 - In the main checkout, don't commit unless asked.
-- In a Claude worktree (`.claude/worktrees/<name>`) or a background session, commit finished work without asking; don't merge or push to master.
+- In a Claude worktree (`.claude/worktrees/<name>`) or a background session, commit finished work without asking; don't merge or push to the main trunk.
 - plug-wip plugin repos: commit in the plugin folder like the main checkout (only when asked); pushing to its GitHub repo only when asked.
 - Group commits by feature; no Claude/Co-Authored-By attribution.
 - The tree often has unrelated uncommitted changes; leave them alone.
