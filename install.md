@@ -7,23 +7,22 @@ Draft: written from the config as it is today; not yet tried on a clean machine.
 Needed:
 
 | Tool | Version | For |
-|------|---------|-----|
+| ------ | --------- | ----- |
 | Neovim | 0.11+ | the editor; some features want 0.12; developed on 0.13-dev |
 | git | any recent | lazy.nvim clones the plugins |
 | curl | any | downloads (blink.cmp's prebuilt matcher, lookups) |
 | ripgrep (`rg`) | any recent | live grep and live find (genja-finder) |
 | `fd` (`fd-find`) | any recent | live find, faster than `rg` at listing files |
 
-About finding files: `fd` is fine, and `rg` works in a pinch. Nevertheless, if you have ever used
-computers before, you install Everything (and `es.exe`) on Windows, and let an index answer in milliseconds what a directory
-walk answers in a coffee break. Live find tries `es`, then `fd`, then `rg`. And if you are on Linux
-and not using `locate` (plocate), you are in no position to make snarky remarks about this config being
-built on Windows 11.
+About finding files, fd is fine and rg works. Nevertheless, if you have ever used computers before, you
+install Everything (and `es.exe`) on Windows, and let an index answer in milliseconds what a directory walk answers in a
+coffee break. Live find tries es, then fd, then rg. Corollarily, not using locate on Linux, voids your right to make
+snarky remarks about this config being built and used by the author on Win11.
 
 Needed for parts of it:
 
 | Tool | For |
-|------|-----|
+| ------ | ----- |
 | Node.js + npm | Mason installs most language servers with npm (TypeScript, CSS, HTML, JSON, YAML, Bash) |
 | Python 3 | Mason's pip packages: pyrefly, ruff, gitlint, the Makefile server, sqlfluff |
 | PowerShell 7 (`pwsh`) | the tests (`tests/Makefile`), terminals, Windows helpers |
@@ -36,7 +35,7 @@ Needed for parts of it:
 Optional:
 
 | Tool | For |
-|------|-----|
+| ------ | ----- |
 | claude (Claude Code CLI) | the claude terminal and ask backends, commit messages |
 | ollama | local models for ghost text and commit messages |
 | gemini, aichat, gh copilot | other ask and commit backends |
