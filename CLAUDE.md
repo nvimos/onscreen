@@ -38,6 +38,13 @@ Unmarked bullets were stated by user.
 - So: no animated or sliding UI messages; keep input instant, startup fast and the Vim feel intact; make the LSP coding workflows (completion, diagnostics, lint, tests, git, AI) work together out of the box.
 - Not a contest: no claim to be better than other distributions.
 - `README.md` explains this to readers; keep it in line with this section.
+- When told to change one of `README.md` or this file, change the other to match in the same step; don't ask.
+- The README is not a manual. It says what the config is, why it exists and what it does, in short.
+    - No keys, commands, options or function names (`<leader>am`, `:Minuet change_provider`, `enhance(picker)`).
+    - No implementation details: how a feature works, which module does what, timeouts, workarounds.
+    - A feature gets a sentence or two about what it gives you; a path to its code or guide is fine.
+    - Keys go in `readme.cheatsheet.md`; how-tos and details in `doc-wip/`, `lua/genja/readme.md` or the plugin's README.
+    - This is for new text only. The manual-like parts already in the README (keys, commands, function names) are there on purpose: leave them, don't trim or move them, and don't take them as a pattern to copy.
 
 ## Main trunk
 
