@@ -160,7 +160,7 @@ Written for On-Screen Nvim, potentially usable on their own.
 ## Layout
 
 - `tests/`: automated tests.
-- `init.vim`: loads lazy.nvim, then the `genja` profile, with a small fallback if that fails.
+- `init.vim`: loads lazy.nvim, then the rest of the profile, with a safe subset if that fails.
 - `lua/genja/`: options, keymaps, autocommands; `lua/genja/readme.md` describes each file.
 - `todo-*.md`: plans and backlog.
 - `lua/lazyp/<topic>/`: plugin specs.
