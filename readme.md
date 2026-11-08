@@ -84,26 +84,23 @@ also go to the quickfix or location list, or to the context menu.
 
 ### telescope decorator
 
-Any telescope picker can get the same refine keys:
-`require('genja-finder').enhance(picker)` wraps it, or call
-`attach_shared_keys(map)` in its `attach_mappings`. In the results,
-`<M-f>` filters, `<M-x>` excludes, `<BS>` undoes and `<M-n>` matches
-exactly; `<C-]>` opens the entry's dir in oil and `<M-t>` opens the
-selection in tabs. From `plug-wip/genja-finder.nvim`.
+Every telescope picker can get the same refine tools: narrow the results
+by more words, drop the ones you don't want, step back, match exactly, and
+open entries in oil or in tabs. One way of working across all pickers.
+From `plug-wip/genja-finder.nvim`.
 
 ### Eff-Two (context actions)
 
 `<F2>` opens a menu of what you can do right here, collected from the
 context: make targets, composer and npm scripts, git add in oil,
 diagnostics, languages to switch on, running claude terminals,
-`:messages` error locations and markdown actions. Items run through
-overseer or floaterm. Other code adds actions with `add_task`. Code in
-`lua/genja/f2/`, tests in `tests/f2/`.
+ error locations from :messages and markdown actions.
+Some actions run through overseer or floaterm.
 
 ### Ghost text provider
 
 minuet suggests code as gray text (`<leader>am` per buffer): Codestral by
-default, or a local ollama model. Spec: `lua/lazyp/langs-comps/minuet.lua`.
+default or via ollama.
 
 ## Plugins
 
