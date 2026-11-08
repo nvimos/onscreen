@@ -29,7 +29,7 @@ Needed for parts of it:
 | GNU Make | the tests; `<F2>` make targets |
 | Go | gopls (Mason builds it with `go install`), Go projects |
 | PHP 8.2+ | phpactor; on Windows phpactor runs in a WSL distro set in `lua/genja/lsp/local.lua` |
-| a C compiler (LLVM: `winget install LLVM.LLVM`) | building treesitter parsers |
+| a C compiler | building treesitter parsers (e.g.: `winget install LLVM.LLVM`) |
 | a Nerd Font | icons in the statusline and pickers |
 
 Optional:
