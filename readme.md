@@ -23,10 +23,8 @@ Hopefully someone else finds it useful and appreciates the same balance.
 - Fast, and it feels like Vim
   - Startup below a second; plugins load lazily.
   - Vim responsiveness. Input shows up at once, no animated messages.
-  - Vim vibe: built-in behaviour first, plugins where they add
-      something.
-  - Screen space for text: floats and sidebars only on demand; files in
-      oil.
+  - Vim vibe: built-in behaviour first, plugins where they add something.
+  - Minimal distractions: floats and sidebars only on demand; files in oil.
 - Real projects work out of the box
   - Coding workflows that fit together: native LSP, blink.cmp, lint,
       diagnostics, tests, git and AI helpers, with keys in the same
