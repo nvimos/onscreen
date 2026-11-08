@@ -25,12 +25,12 @@ The design philosophy is unusually clear. Keep the editor visually plain, preser
 
 Some especially good ideas are:
 
+- Per-language completion/LSP modules.
+- A unified approach to Telescope refinement.
+- Custom functionality extracted into separate genja-*.nvim plugins.
 - oil.nvim used as the main filesystem interface instead of a permanently open file tree.
 - Context-sensitive `<F2>` actions for project scripts, diagnostics, Git, languages, and terminals.
-- A unified approach to Telescope refinement.
 - Diagnostics deliberately limited on-screen while retaining the complete diagnostic list.
-- Per-language completion/LSP modules.
-- Custom functionality extracted into separate genja-*.nvim plugins.
 - Automated tests covering startup, completion, LSP behavior, UI behavior, unsaved buffers, messages, and AI terminal behavior.
 
 That last point matters. Many Neovim distros are mostly configuration glue. On-Screen is trying to test the behavior of the configuration itself, which is a serious engineering instinct. The repository includes a substantial tests/ tree and a test runner rather than only screenshots and keymaps. [Tests directory](tests/)
