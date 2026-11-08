@@ -9,10 +9,10 @@ The distributions I tried were either slow and far from Vim (animated
 popups, lagging input, a file tree eating the screen), or good starting
 points whose LSP, completion and diagnostics didn't work together.
 
-on-screen nvim sits in between: a ready-to-go coding setup that still
-feels like Vim. Not a Vi clone, not Eclipse, not Jetbrains. Plain on the
-surface, capable underneath; you find what it can do by digging, the way
-I learn(ed) (n)Vim itself.
+On-screen nvim sits in between: a ready-to-go coding setup that still
+feels like Vim. Not a Vi clone, not Eclipse, not Jetbrains, not Vscode,
+not Sublime. It's meant to be plain on the surface and capable underneath.
+You find what it can do by digging, the way I learn(ed) (n)Vim itself.
 
 Not a contest: just another option for people who want the same balance.
 
