@@ -52,6 +52,8 @@ custom funcs
      ext/winsize.lua - window sizes in big steps, share cycle, resize mode
      ext/unsaved.lua - :Unsaved [cmd]: picker of modified buffers (write / discard), then cmd; :qa, :q, :x, jj, s: go through it
      ext/wrapfold.lua - fold markers with a title, :WrapFold
+     ext/sort-length.lua - :[range]SortLen[!] sorts lines by length, ! reverses (keys in readme.cheatsheet.md)
+     ext/colorize-mappings.lua - treesitter injection: vimscript colors in the rhs string of vim.keymap.set and km()
      completion/minuet.lua - blink.cmp feature 'minuet' for genja-completion011: minuet-ai source, <M-y> asks it
      ext/rename-inline.lua - LSP rename typed in a float over the word (grn, <leader>c2, right-click)
      ui/gui-func-state.lua - nvim-qt shim state: M.Gui<Name>() returns one singleton per Gui* function (:advance, :set, :text); used by the GuiFuncs picker, <leader>mQ keys, right-click frameless
