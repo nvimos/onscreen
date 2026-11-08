@@ -21,7 +21,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
 ## Goals
 
 - Fast, and it feels like Vim
-  - Startup below a second; plugins load lazily.
+  - Startup under a second, plugins load lazily.
   - Vim vibe. built-in behaviour first, plugins where they add something.
   - Vim responsiveness. Input shows up at once, no animated messages.
   - Minimal distractions: floats and sidebars only on demand; files in oil.
