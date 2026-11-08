@@ -50,32 +50,32 @@ directory](tests/)
 - Fast and feels like Vim
   - Startup takes under a second, because plugins load lazily
   - Input shows up at once, and there are no animated messages
-  - Floats and sidebars appear only when asked for, and files are handled in 
+  - Floats and sidebars appear only when asked for, and files are handled in
     oil
-  - Built-in behaviour comes first, plugins are added where they give 
+  - Built-in behaviour comes first, plugins are added where they give
     something extra
 - Real projects work out of the box
-  - Real projects mix stacks, like a Drupal site or a Symfony app with React, 
-    and sooner or later they need a debugger, which nobody ships configured. 
+  - Real projects mix stacks, like a Drupal site or a Symfony app with React,
+    and sooner or later they need a debugger, which nobody ships configured.
     It should feel the same in C or Go. PHP comes first, Go is next
-  - For Kubernetes manifests, the component docs are fetched once and shown as 
+  - For Kubernetes manifests, the component docs are fetched once and shown as
     `:help`, as `pK` hover or in a popup, so there is no need for a browser
-  - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers 
+  - LSP, completion (blink.cmp), lint, diagnostics, tests, git and AI helpers
     work together, with keys that follow the same patterns
-  - A small set of languages is on by default, more can be added with 
+  - A small set of languages is on by default, more can be added with
     `:EnableLang`, and a new language plugs in with its own rules
-  - A PHP project with its HTML, CSS, JS, framework, tests and tooling is 
+  - A PHP project with its HTML, CSS, JS, framework, tests and tooling is
     linted, parsed and understood without days of setup
 - The editor as the workplace
-  - Terminals, git, WSL and Docker can be used from nvim, without leaving the 
+  - Terminals, git, WSL and Docker can be used from nvim, without leaving the
     editor
 - Plain on the surface, easy to discover
-  - A tidy which-key setup, a cheatsheet (`readme.cheatsheet.md`) and 
+  - A tidy which-key setup, a cheatsheet (`readme.cheatsheet.md`) and
     context-aware
     actions on `<F2>` guide you through the config
   - `<F1>`, `<F2>` and `<F3>` do more than open help
 - Kept working
-  - Tests in `tests/` (mini.test, see `make help`) check that things still 
+  - Tests in `tests/` (mini.test, see `make help`) check that things still
     work
   - Plugin specs are locked between test runs that pass in full
 
