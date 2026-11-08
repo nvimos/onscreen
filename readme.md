@@ -14,7 +14,7 @@ eating visible columns and other bling adds up to less Vim.
 
 
 On-Screen Neovim aims to be a modern and capable, ready-to-go coding setup that feels like Vim from 2004.
-_It's not a Vi clone, not Notebad++, certainly not nano, not Eclipse, not Jetbrains, not Vscode, not Sublime but something in between._
+_It's not a Vi clone, not Notebad++, certainly not nano, not Eclipse, not JetBrains, not Vscode, not Sublime but something in between._
 It's meant to be plain on the surface and capable underneath, you discover what it can do through curiosity and by using it.
 This is the way to learn Vim and Neovim.
 
