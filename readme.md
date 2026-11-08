@@ -23,6 +23,7 @@ Hopefully someone else finds it useful and appreciates the same balance.
 
 ## What is good about it
 
+_(accordig to manus.im)_
 The design philosophy is unusually clear. Keep the editor visually plain,
 preserve Vim’s feel, and simplify or add substantial capability underneath.
 It aspires to doing more than assembling every popular plugin with default configs.
