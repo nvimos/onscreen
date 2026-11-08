@@ -29,14 +29,14 @@ It aspires to doing more than assembling every popular plugin with default confi
 
 Some especially good ideas are:
 
-- Per-language completion/LSP modules.
-- A unified approach to Telescope refinement.
-- Diagnostics deliberately limited on-screen.
-- Custom functionality extracted into separate genja-*.nvim plugins.
-- oil.nvim as filesystem interface instead of a permanently open file tree.
-- Context-sensitive `<F2>` actions for scripts, diagnostics, Git, languages, and terminals.
+- Per-language completion/LSP modules
+- A unified approach to Telescope refinement
+- Diagnostics deliberately limited on-screen
+- Custom functionality extracted into separate genja-*.nvim plugins
+- oil.nvim as filesystem interface instead of a permanently open file tree
+- Context-sensitive `<F2>` actions for scripts, diagnostics, Git, languages, and terminals
 - Automated tests covering startup, completion, LSP behavior, UI behavior,
-  unsaved buffers, messages, and AI terminal behavior.
+  unsaved buffers, messages, and AI terminal behavior
 
 That last point matters. Many Neovim distros are mostly configuration glue.
 On-Screen is trying to test the behavior of the configuration itself, which is
