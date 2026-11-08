@@ -14,7 +14,7 @@ eating visible columns and other bling added up to less Vim, imho.
 
 
 On-Screen Nvim aims to be a modern and capable, ready-to-go coding setup that feels like Vim from 2004.
-It's not a Vi clone, not Notebad++, certainly not nano, not Eclipse, not Jetbrains, not Vscode, not Sublime but something in between.
+_It's not a Vi clone, not Notebad++, certainly not nano, not Eclipse, not Jetbrains, not Vscode, not Sublime but something in between._
 It's meant to be plain on the surface and capable underneath, you discover what it can do by digging and by using it.
 This is the way I learned Vim, and the way I keep learning Nvim.
 
