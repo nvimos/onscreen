@@ -102,6 +102,51 @@ Some actions run through overseer or floaterm.
 minuet suggests code as gray text (`<leader>am` per buffer): Codestral by
 default or via ollama.
 
+### Commit popup with message writing
+
+Committing opens a small message window next to the staged files, with
+lint on the subject and body as you type. A language model can write the
+message from the staged diff, and you can switch between models on the
+fly: Claude, Copilot, Gemini, aichat or a local ollama.
+
+### Claude Code beside the code
+
+One Claude Code terminal per project, in a split that comes and goes. The
+selection or the current spot in a file is pasted into it with its path
+and line, and other plugins can send it prompts. The running terminals
+are listed in the context menu.
+
+### Ask popup
+
+A one-question popup to any of several backends (Claude, Gemini, Copilot,
+aichat, ollama), for the quick question that doesn't need a chat. The
+question can go to the Claude terminal instead, to keep the conversation.
+
+### Quiet diagnostics
+
+Only the first few diagnostics per severity are drawn in a buffer, so a
+file with fifty warnings stays readable; all of them are still in the
+lists and floats. Their messages line up in one column per paragraph
+instead of trailing each line.
+
+### Start dirs and recent files
+
+A plain text list of start directories, ranked by how often and how
+recently they are used, with jumps to the top ones. Recent files follow
+their own rules and the same ranking, where edits weigh more than views.
+
+### Oil as the file manager
+
+Directories are buffers you edit (oil.nvim), with previews sized to fit,
+git add and staged diffs from the listing, sorting that cycles, and a
+per-folder `.oily` file that hides clutter on top of the dotfile rule.
+
+### Tests that know their speed
+
+The config tests itself: servers attach, completion answers, linters
+report, plugins behave. Every case is timed; the slow ones are left out
+of the default run and listed, and failed cases rerun on their own.
+
 ## Plugins
 
 Written for On-Screen Nvim, potentially usable on their own.
