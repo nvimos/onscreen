@@ -18,6 +18,24 @@ This is the way I learned Vim, and the way I keep learning Nvim.
 
 Hopefully someone else finds it useful and appreciates the same balance.
 
+
+## What is good about it
+
+The design philosophy is unusually clear: keep the editor visually plain, preserve Vim’s feel, and add substantial capability underneath. That is a better starting point than simply assembling every popular plugin.
+
+Some especially good ideas are:
+
+- oil.nvim used as the main filesystem interface instead of a permanently open file tree.
+- Context-sensitive `<F2>` actions for project scripts, diagnostics, Git, languages, and terminals.
+- A unified approach to Telescope refinement.
+- Diagnostics deliberately limited on-screen while retaining the complete diagnostic list.
+- Per-language completion/LSP modules.
+- Custom functionality extracted into separate genja-*.nvim plugins.
+- Automated tests covering startup, completion, LSP behavior, UI behavior, unsaved buffers, messages, and AI terminal behavior.
+- That last point matters. Many Neovim distros are mostly configuration glue. On-Screen is trying to test the behavior of the configuration itself, which is a serious engineering instinct. The repository includes a substantial tests/ tree and a test runner rather than only screenshots and keymaps. 
+
+Tests directory -- hint: make this a link
+
 ## Goals and guidelines
 
 - Fast and feeling like Vim
