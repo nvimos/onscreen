@@ -208,8 +208,8 @@ Fold markers with a title (lua/genja/ext/wrapfold.lua, keys in lua/genja/map-zer
 
 Wrap and quote lines (lua/genja/map-convoluted.lua)
 
-    <leader>wsl (visual) sort lines by length, shortest first (:SortLen)
-    <leader>wsL (visual) sort lines by length, longest first (:SortLen!)
+    <leader>wsl (visual) sort lines by length, longest first (:SortLen!)
+    <leader>wsL (visual) sort lines by length, shortest first (:SortLen)
     <leader>w, (visual)  each line -> "line",  keeps indent, skips empty lines, any visual mode
     <leader>w" (visual)  same idea via $A / I, block selection
     <leader>w" (normal)  replace " with ' on the current line
