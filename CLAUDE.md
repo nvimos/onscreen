@@ -45,6 +45,7 @@ Unmarked bullets were stated by user.
     - A feature gets a sentence or two about what it gives you; a path to its code or guide is fine.
     - Keys go in `readme.cheatsheet.md`; how-tos and details in `doc-wip/`, `lua/genja/readme.md` or the plugin's README.
     - This is for new text only. The manual-like parts already in the README (keys, commands, function names) are there on purpose: leave them, don't trim or move them, and don't take them as a pattern to copy.
+    - No installation instructions either: they go in `install.md` (requirements, lazy.nvim specs); the README only points to it.
 
 ## Main trunk
 
