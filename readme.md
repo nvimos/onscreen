@@ -151,18 +151,18 @@ question can go to the Claude terminal instead, to keep the conversation.
 
 Written for On-Screen Nvim, potentially usable on their own.
 
-| Plugin | What it does |
-| --- | --- |
-| [genja-ask.nvim](https://github.com/tox2ik/genja-ask.nvim) | ask popup: one question to claude, gemini, copilot, aichat or ollama |
-| [genja-claudefterm.nvim](https://github.com/tox2ik/genja-claudefterm.nvim) | Claude Code in a floaterm, one per project |
-| [genja-commit.nvim](https://github.com/tox2ik/genja-commit.nvim) | commit popup, gitcommit lint, message generation |
-| [genja-completion.nvim](https://github.com/tox2ik/genja-completion.nvim) | LSP servers, blink.cmp completion, one module per language (folder `genja-completion011.nvim`) |
-| [genja-finder.nvim](https://github.com/tox2ik/genja-finder.nvim) | live grep and live find pickers (telescope) |
-| [genja-oily.nvim](https://github.com/tox2ik/genja-oily.nvim) | hide oil.nvim entries listed in `.oily` |
-| [genja-paste-ai.nvim](https://github.com/tox2ik/genja-paste-ai.nvim) | send a query to a web or AI search in the browser |
-| [genja-recent.nvim](https://github.com/tox2ik/genja-recent.nvim) | recent files, frecency ranking |
-| [genja-splitpad.nvim](https://github.com/tox2ik/genja-splitpad.nvim) | padding column next to the split separator |
-| [genja-startdirs.nvim](https://github.com/tox2ik/genja-startdirs.nvim) | start directories: list, jumps, ranking |
-| [genja-statusline.nvim](https://github.com/tox2ik/genja-statusline.nvim) | statusline, tabline, winbar |
-| [genja-util.nvim](https://github.com/tox2ik/genja-util.nvim) | helpers the others share |
-| [keymaps.nvim](https://github.com/tox2ik/keymaps.nvim) (fork) | keymap cheatsheet with usage counts |
+| Plugin                                                               | What it does |
+| -------------------------------------------------------------------- | --- |
+| [ask.nvim](https://github.com/tox2ik/genja-ask.nvim)                 | ask popup: one question to claude, gemini, copilot, aichat or ollama |
+| [oily.nvim](https://github.com/tox2ik/genja-oily.nvim)               | hide oil.nvim entries listed in `.oily` |
+| [util.nvim](https://github.com/tox2ik/genja-util.nvim)               | helpers the others share |
+| [commit.nvim](https://github.com/tox2ik/genja-commit.nvim)           | commit popup, gitcommit lint, message generation |
+| [finder.nvim](https://github.com/tox2ik/genja-finder.nvim)           | live grep and live find pickers (telescope) |
+| [recent.nvim](https://github.com/tox2ik/genja-recent.nvim)           | recent files, frecency ranking |
+| [keymaps.nvim](https://github.com/tox2ik/keymaps.nvim) (fork)        | keymap cheatsheet with usage counts |
+| [paste-ai.nvim](https://github.com/tox2ik/genja-paste-ai.nvim)       | send a query to a web or AI search in the browser |
+| [splitpad.nvim](https://github.com/tox2ik/genja-splitpad.nvim)       | padding column next to the split separator |
+| [startdirs.nvim](https://github.com/tox2ik/genja-startdirs.nvim)     | start directories: list, jumps, ranking |
+| [completion.nvim](https://github.com/tox2ik/genja-completion.nvim)   | LSP servers, blink.cmp completion, one module per language (folder `genja-completion011.nvim`) |
+| [statusline.nvim](https://github.com/tox2ik/genja-statusline.nvim)   | statusline, tabline, winbar |
+| [claudefterm.nvim](https://github.com/tox2ik/genja-claudefterm.nvim) | Claude Code in a floaterm, one per project |
