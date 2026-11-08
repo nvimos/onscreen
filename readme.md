@@ -29,8 +29,8 @@ Some especially good ideas are:
 - A unified approach to Telescope refinement.
 - Custom functionality extracted into separate genja-*.nvim plugins.
 - oil.nvim used as the main filesystem interface instead of a permanently open file tree.
-- Context-sensitive `<F2>` actions for project scripts, diagnostics, Git, languages, and terminals.
 - Diagnostics deliberately limited on-screen while retaining the complete diagnostic list.
+- Context-sensitive `<F2>` actions for project scripts, diagnostics, Git, languages, and terminals.
 - Automated tests covering startup, completion, LSP behavior, UI behavior, unsaved buffers, messages, and AI terminal behavior.
 
 That last point matters. Many Neovim distros are mostly configuration glue. On-Screen is trying to test the behavior of the configuration itself, which is a serious engineering instinct. The repository includes a substantial tests/ tree and a test runner rather than only screenshots and keymaps. [Tests directory](tests/)
