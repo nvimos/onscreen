@@ -18,90 +18,71 @@ Not a contest: just another option for people who want the same balance.
 
 ## Goals
 
-- As responsive as Vim: typed input shows up at once; no animated or
-  sliding messages in the editor.
-- Fast startup: below a second, ideally. Plugins load lazily, on a
-  command, a key or late in startup.
-- Screen space for text: no sidebars that stay open or distracting UI.
-  Floats and the outline sidebar appear on demand and go away again. Files are
-  browsed with oil, a directory listing you edit like a buffer.
-- The Vim feel: built-in Vim and Neovim behaviour first, plugins where they
-  add something.
-- Coding workflows that fit together: LSP through the native
-  `vim.lsp.config` API, completion (blink.cmp), lint, diagnostics, tests,
-  git, and AI helpers working in the same buffers with keys that follow
-  the same patterns.
-- Projects that work out of the box. Take a PHP project: PHP, HTML, CSS
-  and JavaScript in one tree, maybe Symfony, Laravel, Drupal or WordPress,
-  tests in PHPUnit, Pest or Behat, tooling from Composer and npm or Bun.
-  on-screen nvim should lint it, understand the project, highlight and parse every
-  language in it, and pick up its tooling and `.editorconfig`, without days
-  of setup.
+- As responsive as Vim: input shows up at once, no animated messages.
+- Startup below a second; plugins load lazily.
+- Screen space for text: floats and sidebars only on demand; files in oil.
+- The Vim feel: built-in behaviour first, plugins where they add something.
+- Coding workflows that fit together: native LSP, blink.cmp, lint,
+  diagnostics, tests, git and AI helpers, with keys in the same patterns.
+- Projects that work out of the box: a PHP project with its HTML, CSS, JS,
+  framework, tests and tooling is linted, parsed and understood without
+  days of setup.
 
-  A "PHP project" is rarely only PHP: a Drupal site, a Symfony app with a
-  React front end. The framework, the front end and a test framework creep
-  in, and nobody ships a configured setup for that mix. Then debugging comes
-  in: I have never opened an IDE or a Vim config that gives you those tools
-  out of the box, and there is no avoiding it; you need that crap at some
-  point. And you want it to feel and behave the same when you work on a C
-  or a Go problem. PHP is the starting point; Go projects should get the same feel
-  next.
-- Languages on demand: a conservative default set, more with `:EnableLang`,
-  per machine in a local file. PHP and Go get full project workflows; C is
-  for reading and navigating. A new language (Flutter, or whatever comes
-  next) plugs in with its own rules, without the config shipping every
-  language up front.
-- Kubernetes manifests are the next case: the valid values depend on the
-  ingress, router or autoscaler in use. on-screen nvim should fetch those components'
-  docs once and show them the Vim way, as `:help` pages, `K` hover or a popup,
-  instead of sending you to a browser.
+  Real projects mix (a Drupal site, a Symfony app with React), and sooner
+  or later you need a debugger; nobody ships that setup configured. It
+  should feel the same in C or Go. PHP is the starting point, Go is next.
+- Languages on demand: a small default set, more with `:EnableLang`; a new
+  language plugs in with its own rules.
+- Kubernetes manifests: component docs fetched once and shown as `:help`,
+  `K` hover or a popup, not in a browser.
+- nvim as the interface to the system: terminals, git, WSL and Docker
+  without leaving the editor.
+- Plain on the surface: which-key, a cheatsheet (`readme.cheatsheet.md`)
+  and `<F2>` menus when you look for them.
+- Checked by tests: mini.test cases in `tests/` (`make help`).
+- Simple Control Helm feeling: `<F1>` `<F2>` `<F3>` do more than open help.
 
-- nvim as the interface to the system for (coding) work: terminals
-  (PowerShell, Git Bash), git, WSL distros and Docker containers, without
-  leaving the editor for simple tasks. On Windows that fills the gap that a
-  tightly configured window manager on Linux used to fill, more or less.
-
-- Plain on the surface: no IDE look. Features are there when you look for
-  them: which-key groups, a cheatsheet (`readme.cheatsheet.md`), `<F2>`
-  menus, redundant keybinds.
-
-- Checked by tests: `tests/` runs mini.test cases for LSP, completion,
-  lint and the in-repo plugins (`make help` in `tests/`).
-
-- Simple Control Helm feeling. `<f1>` `<f2>` `<f3>` do more than open help.
-  Those keys are not underutilized by on-screen nvim.
-
-
-## Ghost text provider
-
-minuet (`lua/lazyp/langs-comps/minuet.lua`) suggests code as gray text; `<leader>am`
-turns it on in a buffer. It uses Codestral by default. To use the local ollama model
-(`qwen2.5-coder:0.5b`) for this session:
-
-```vim
-:Minuet change_provider openai_fim_compatible
-```
-
-`<Tab>` after `change_provider` lists the other providers. ollama must be running
-(`ollama serve`); the first request after a while loads the model and can run past
-minuet's 6 s timeout ("Request failed"), then the next one is fast.
 
 ## Layout
 
-- `init.vim`: loads lazy.nvim, then the `genja` profile, with a small
-  fallback if that fails.
-- `lua/genja/`: options, keymaps, autocommands; `lua/genja/readme.md`
-  describes each file.
+- `init.vim`: loads lazy.nvim, then the `genja` profile, with a small fallback if that fails.
+- `lua/genja/`: options, keymaps, autocommands; `lua/genja/readme.md` describes each file.
 - `lua/lazyp/<topic>/`: plugin specs.
+- `tests/`: automated tests.
+- `todo-*.md`: plans and backlog.
 - `plug-wip/`: plugins written for this config, each its own repo (below).
   A spec loads the local checkout when it's there, else lazy.nvim clones the
   repo, so a fresh clone of the config works without them.
-- `tests/`: automated tests.
-- `todo-*.md`: plans and backlog.
+  This nvim distro is very much a work in progress still.
+
+## Features
+
+### telescope decorator
+
+Any telescope picker can get the same refine keys:
+`require('genja-finder').enhance(picker)` wraps it, or call
+`attach_shared_keys(map)` in its `attach_mappings`. In the results,
+`<M-f>` filters, `<M-x>` excludes, `<BS>` undoes and `<M-n>` matches
+exactly; `<C-]>` opens the entry's dir in oil and `<M-t>` opens the
+selection in tabs. From `plug-wip/genja-finder.nvim`.
+
+### Eff-Two (context actions)
+
+`<F2>` opens a menu of what you can do right here, collected from the
+context: make targets, composer and npm scripts, git add in oil,
+diagnostics, languages to switch on, running claude terminals,
+`:messages` error locations and markdown actions. Items run through
+overseer or floaterm; other code adds its own with `add_task`. Code in
+`lua/genja/f2/`, tests in `tests/f2/`.
+
+### Ghost text provider
+
+minuet suggests code as gray text (`<leader>am` per buffer): Codestral by
+default, or a local ollama model. Spec: `lua/lazyp/langs-comps/minuet.lua`.
 
 ## Plugins
 
-Written for on-screen nvim, usable on their own (MIT):
+Written for on-screen nvim, potentially usable on their own.
 
 | Plugin | What it does |
 | --- | --- |
