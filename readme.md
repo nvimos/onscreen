@@ -1,4 +1,4 @@
-# on-screen nvim
+# On-Screen Nvim
 
 A Neovim 0.11+ config, assembled on Win11, managed with lazy.nvim.
 Aims to do a lot but still hopefully do it well.
