@@ -1,6 +1,6 @@
 -- :Morning (idea 30/31): a clickable page for lazy mornings and planning sessions.
 --   Sections: Start dirs (genja-startdirs, most used first), Recent (genja-recent, else oldfiles),
---   Todo (top-level items of todo-ideas.md), Untested (open lines of the newest doc-wip/untested.*.md).
+--   Todo (open Backlog.md tasks of the nvimos/meta checkout), Untested (open lines of the newest doc-wip/untested.*.md).
 --   A click or <CR> opens the line's target; q closes. Command in plugin/morning.lua,
 --   also in the right-click menu (lua/genja/popup.lua).
 
@@ -10,6 +10,43 @@ local M = {}
 
 local RECENT_MAX = 12
 local CONFIG = vim.fs.normalize(vim.fn.stdpath('config'))
+
+-- The backlog lives in the planning repo github.com/nvimos/meta (Backlog.md tasks); its checkout:
+-- vim.g.genja_meta_dir, else ~/es/nvimos-meta.
+local META_ORDER = { ['In Progress'] = 1, ['Needs Test'] = 2, ['To Do'] = 3 }
+
+---Open Backlog.md tasks of the meta checkout: in progress, needs test, to do.
+---@return { status: string, title: string, path: string }[] tasks
+---@return string dir the meta checkout
+local function meta_tasks()
+	local dir = vim.fs.normalize(vim.g.genja_meta_dir or '~/es/nvimos-meta')
+	local tasks = {}
+	for _, path in ipairs(vim.fn.glob(dir .. '/backlog/tasks/*.md', false, true)) do
+		-- the header is in the first lines; an unreadable file is left out
+		local ok, head_lines = pcall(vim.fn.readfile, path, '', 12)
+		if ok then
+			local task = { path = path, status = '', title = vim.fs.basename(path) }
+			for _, line in ipairs(head_lines) do
+				local key, value = line:match('^(%w+):%s*(.*)$')
+				if key == 'status' then
+					task.status = value
+				elseif key == 'title' then
+					task.title = value:gsub("^'(.*)'$", '%1')
+				end
+			end
+			if META_ORDER[task.status] then
+				table.insert(tasks, task)
+			end
+		end
+	end
+	table.sort(tasks, function(a, b)
+		if a.status ~= b.status then
+			return META_ORDER[a.status] < META_ORDER[b.status]
+		end
+		return a.title < b.title
+	end)
+	return tasks, dir
+end
 
 ---What a line opens.
 ---@class genja.MorningItem
@@ -101,10 +138,10 @@ local function build()
 		add(short(file), { kind = 'file', path = file })
 	end
 
-	local todo = CONFIG .. '/todo-ideas.md'
-	head('Todo (todo-ideas.md)')
-	for _, hit in ipairs(grep_file(todo, '^%-%s?%[[^%]]*%]')) do
-		add(hit.text, { kind = 'file', path = todo, lnum = hit.lnum })
+	local tasks, dir = meta_tasks()
+	head('Todo (' .. short(dir) .. ')')
+	for _, task in ipairs(tasks) do
+		add(('%-11s %s'):format(task.status, task.title), { kind = 'file', path = task.path })
 	end
 
 	local untested = untested_file()

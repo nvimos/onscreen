@@ -195,7 +195,7 @@ Written for On-Screen Nvim, potentially usable on their own.
 - `tests/`: automated tests.
 - `init.vim`: loads lazy.nvim, then the rest of the profile, with a safe subset if that fails.
 - `lua/genja/`: options, keymaps, autocommands, and the rest
-- `todo-*.md`: plans and backlog.
+- backlog and plans: the planning repo [nvimos/meta](https://github.com/nvimos/meta).
 - `lua/lazyp/<topic>/`: lazy plugin specs.
 - `plug-wip/`: plugins written for this config, each its own repo (below).
   A spec loads the local checkout when it's there, else lazy.nvim clones the

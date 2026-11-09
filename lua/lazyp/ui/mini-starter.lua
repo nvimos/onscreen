@@ -51,7 +51,8 @@ return {
 			items = {
 				start_dirs,
 				recent,
-				{ name = 'todo-ideas.md', action = 'edit ' .. config .. '/todo-ideas.md', section = 'Todo' },
+				-- the backlog moved to the planning repo github.com/nvimos/meta (2026-11-10)
+				{ name = 'backlog (nvimos/meta)', action = 'Oil ' .. (vim.g.genja_meta_dir or '~/es/nvimos-meta') .. '/backlog/tasks', section = 'Todo' },
 				{ name = 'untested list', action = 'Morning', section = 'Todo' },
 				starter.sections.builtin_actions(),
 			},

@@ -42,7 +42,7 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
     - `<yy.mm.dd>-<HH.MM>` is a timestamp.
     - `<topic>`: one to three lowercase words joined by `-`, e.g. `winbar-names`.
     - Never overwrite an existing file.
-- Content: one top-level checklist item, sub-items say briefly what was done, like `todo-ideas.md`:
+- Content: one top-level checklist item, sub-items say briefly what was done, like the files in `todo-done/`:
 
 ```markdown
 - [x] <area>: <issue in one line> (<yyyy-mm-dd>)
@@ -53,7 +53,7 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
 ```
 
 - `[x]` for done work, `[ ]` for open items. Add a `test:` item for each feature that wasn't run or tested in the session.
-- Short lines, no conversational text. Four-space indent as in `todo-ideas.md`. LF newlines.
+- Short lines, no conversational text. Four-space indent as in `todo-issue/`. LF newlines.
 
 ## 4. Commit
 

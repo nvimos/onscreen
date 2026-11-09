@@ -1,6 +1,6 @@
 ---
 name: tidy-docs
-description: Tidy the nvim config's markdown docs (README.md, CLAUDE.md, readme.*.md, doc-wip/, todo files, plug-wip READMEs) - rewrap lines to the file's width, split long sentences, cut filler words, make lists and terms consistent, without changing what they say. Use when the user types /tidy-docs, or asks to tidy, clean up, rewrap or proofread documentation.
+description: Tidy the nvim config's markdown docs (README.md, CLAUDE.md, readme.*.md, doc-wip/, todo-issue/ and todo-done/, plug-wip READMEs; the backlog itself is in nvimos/meta) - rewrap lines to the file's width, split long sentences, cut filler words, make lists and terms consistent, without changing what they say. Use when the user types /tidy-docs, or asks to tidy, clean up, rewrap or proofread documentation.
 ---
 
 # tidy-docs
@@ -20,7 +20,7 @@ clear one; the values below are what the repo uses today.
   indent under the text.
 - `CLAUDE.md` (config and plugins): one bullet per line, not wrapped. A bullet that runs past about 250
   characters is split into sub-bullets (4-space indent), one point each.
-- todo files (`todo-*.md`, `todo-issue/`, `todo-done/`), `doc-wip/`, `readme.*.md`: wrap at 120
+- todo files (`todo-issue/`, `todo-done/`, `todo-test/`), `doc-wip/`, `readme.*.md`: wrap at 120
   (`after/ftplugin/markdown.vim` sets `textwidth=120`); sub-items indented 4 spaces; continuation lines line
   up under the item text.
 - Rewrap a whole paragraph, not single lines, so no short ragged line is left in the middle.
@@ -41,7 +41,7 @@ clear one; the values below are what the repo uses today.
 
 ## 3. Lists and structure
 
-- Bullets use `-`; checklists `- [ ]`, `- [x]`, `- [~]` (tried), `- [n]` (no) as in `todo-ideas.md`.
+- Bullets use `-`; checklists `- [ ]`, `- [x]`, `- [~]` (tried), `- [n]` (no) as in `todo-done/`.
 - A list item that holds several steps (`Topic: step, step; step`) becomes a topic line with one step per
   sub-item (see the `md-reformat` skill).
 - CLAUDE.md keeps its own markers: one `##` heading per feature, one bullet per decision, `Hint:` and

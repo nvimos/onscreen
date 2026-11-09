@@ -63,14 +63,15 @@ Unmarked bullets were stated by user.
 - Branch model: based on OneFlow, develop + main trunk variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
 - Open: when v2026 merges back into the main trunk, and whether worktree branches and `/prish-merge` target `v2026` or `develop` (today: whatever branch the main checkout is on).
 
-## Ideas and backlog: 
+## Ideas and backlog
 
-- todo-ideas.md (add new ideas here),
-- todo-2026-neovim011.md
-- todo-2027.md
-- todo-2028.md
+- The backlog lives in the planning repo github.com/nvimos/meta (public), checkout `~/es/nvimos-meta` (`vim.g.genja_meta_dir` overrides); moved out of this repo 2026-11-10. New ideas go there as tasks, not into this repo.
+- meta keeps the same backlog twice, Backlog.md (`backlog/tasks/`) and OpenSpec (`openspec/changes/`), until the user picks one; keep both in step.
+- Statuses: `To Do`, `In Progress`, `Needs Test` (built, waiting to be tried by hand), `Done`, `Dropped`. Build steps and hands-on checks are separate sections (`## Acceptance Criteria` / `## Verify`, OpenSpec `## 1. Build` / `## 2. Verify`).
+- Scan it: `make review` (needs test), `make doing`, `make open` in meta, or `:Morning` (Todo section).
+- The old todo files (todo-ideas.md, todo-202x.md, squash files, todo-ideas/) are in meta's `legacy/`, read-only.
 - todo-issue/: issues solved in a session, one checklist file each (`solved-<yy.mm.dd>-<HH.MM>-<topic>.md`), written and committed by `/commit-close-issues` (`.claude/skills/nvim-commit-close-issues/`).
-- todo-done/: finished top-level items from the files above, one item per file, named `ideas-<nn>-<topic>.md` or `<year>-<topic>.txt`.
+- todo-done/: finished top-level items from the old todo files, one item per file, named `ideas-<nn>-<topic>.md` or `<year>-<topic>.txt`.
 
 ## Plugins in this repo
 

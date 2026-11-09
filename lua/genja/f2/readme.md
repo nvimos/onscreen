@@ -65,4 +65,4 @@ Found while adding the PowerShell item (2026-11-09); read this to get up to spee
 
 - Not run or tested: the picker tests (`make` in this folder), the `<F2>` item itself.
 - `groups.lua` has a todo: let callers add their own groups through an api function.
-- Extracting F2 into its own plugin: `todo-2027.md`, section `f2 plugin`.
+- Extracting F2 into its own plugin: the `f2 plugin` task in github.com/nvimos/meta.
