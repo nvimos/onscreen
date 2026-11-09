@@ -183,6 +183,7 @@ Git (lua/lazyp/git/, keys in lua/genja/map-plugin/neogit|diffview|gitsigns|mini-
     <leader>mg  Neogit status       <leader>mGl Neogit log
     <leader>md  diffview: changes   <leader>mh  file history   <leader>mH  repo history
     <leader>mxd close diffview
+    <leader>mGd diffview: toggle side by side / inline (also F2 `diffview toggle mode`)
     <leader>mGc commit popup (genja-commit; in oil also ggc, <LocalLeader>c)
                 in oil: ggC, <LocalLeader>C commit the entry under the cursor as `update: <name>` (lua/genja/map-oil.lua)
                 in gitcommit buffers: <M-g> write the message, <M-r> next backend for <M-g> (plug-wip/genja-commit.nvim)

@@ -1,0 +1,48 @@
+-- nvim.difftool: compare two directories (or files) side by side.
+-- Built into Neovim 0.13 as an optional plugin
+-- ($VIMRUNTIME/pack/dist/opt/nvim.difftool), not loaded by default.
+-- :DiffTool {left} {right} fills the quickfix list with the changed files
+-- (A added, D deleted, M modified, R renamed); <CR> opens a pair as a diff.
+--
+-- The block below is commented out: uncomment it to enable.
+--
+-- Options exist only on the Lua API, not on the :DiffTool command:
+--   require('difftool').open(left, right, opt)
+--     method  'auto' | 'builtin' | 'diffr'   default 'auto'
+--               auto: external `diff -qrN` when rename.detect is off and `diff` is on PATH,
+--               else builtin (Lua). On Windows `diff` usually exists only via Git for Windows.
+--     ignore  string[]                       default {}
+--               diffr:   `diff -x` globs   ('*.log', '.git')
+--               builtin: Vim regex matched on the relative path ('\\.git', '\\.log$')
+--     rename.detect      boolean             default false   (builtin only)
+--     rename.similarity  number 0..1         default 0.5     (builtin only)
+--     rename.chunk_size  integer             default 4096    bytes read per file to compare
+--
+-- git difftool --dir-diff (~/.gitconfig):
+--   [difftool "nvim_difftool"]
+--     cmd = nvim -c \"packadd nvim.difftool\" -d \"$LOCAL\" \"$REMOTE\"
+--   [diff]
+--     tool = nvim_difftool
+
+---@type LazySpec
+return {
+	-- {
+	-- 	'nvim.difftool',
+	-- 	dir = vim.fs.joinpath(vim.env.VIMRUNTIME, 'pack', 'dist', 'opt', 'nvim.difftool'),
+	-- 	cmd = 'DiffTool',
+	-- 	keys = {
+	-- 		-- :DiffTool needs two args, so prefill the command line
+	-- 		{ '<leader>gD', ':DiffTool ', desc = 'git: diff two dirs/files (difftool)' },
+	-- 	},
+	-- 	init = function()
+	-- 		-- Same as :DiffTool, but with options (ignore list, rename detection)
+	-- 		vim.api.nvim_create_user_command('DiffToolIgnore', function(a)
+	-- 			require('difftool').open(a.fargs[1], a.fargs[2], {
+	-- 				method = 'auto',
+	-- 				ignore = { '.git', 'node_modules', 'vendor', '*.log' }, -- diffr globs; builtin wants regex
+	-- 				rename = { detect = false, similarity = 0.5, chunk_size = 4096 }, -- builtin only
+	-- 			})
+	-- 		end, { nargs = '+', complete = 'dir', desc = 'DiffTool with ignore list' })
+	-- 	end,
+	-- },
+}

@@ -268,3 +268,14 @@ migration from 0.9 to 0.11 (the file that started it all)
   - session, gaps and questions: todo-test/php-debug.md
   - [x] dap-ui on the first stop in its own tab, `!` flips F1-F8, :DdevXdebugHost, :DebugCli / :DebugBehat,
         `<leader>dK` `dl` `dB` `dp` (17e6c2b); nvim-dap-view on `<leader>dv` (8f5b8d2); untested
+
+- [ ] try the new diff viewers and their modes (2026-11-09; all untested)
+  - diffview, set up plain: panels left/bottom, no icons or hints, `<leader>mGd` and F2 `diffview toggle mode` flip side by side / inline (`diff1_inline`),
+    red left / green right (fold in lua/genja/hilite.lua, hook in lua/lazyp/git/diffview.lua), `diffopt` histogram (opt.lua), fillchars `diff: `
+  - F2 in an oil buffer in a repo (lua/genja/f2/collect/git.lua): `diffview open` (FROM, TO pickers, `FROM...TO`),
+    `codediff changes | branches | history | pr`
+  - installed to compare, nothing mapped: unified.nvim (`:Unified`), deltaview.nvim (`:DeltaView [ref]`, `:Delta`, `:DeltaMenu[!]`),
+    codediff.nvim (`:CodeDiff`; first use downloads its diff library: `:CodeDiff install`)
+  - check: `:Lazy install`; `diff1_inline` and the hook colors exist in the installed diffview (`:h diffview.defaults`);
+    `-C` / `--repo` flags in the codediff items; unified.nvim against a branch ref; which viewer replaces which (keep one or two)
+  - research on sleek diffview configs: the subagent report of this session; alternatives not looked at: nvim.difftool, mini.diff, octo.nvim

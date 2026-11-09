@@ -1,0 +1,13 @@
+- [x] git: plain diffview, red/green sides, other diff viewers to try (2026-11-09)
+    - [x] `lua/lazyp/git/diffview.lua`: no icons or hints, tree panel left, history bottom, panel keys scroll the diff, `cycle_layouts` side by side / inline
+    - [x] `lua/genja/hilite.lua`: `darken`, `lighten`, `blend`, `bg_from` on `cc()`; red left / green right through the `diff_buf_win_enter` hook
+    - [x] `lua/genja/ext/diffview-labels.lua`: pane labels show the branches as typed, not hashes
+    - [x] `lua/genja/ext/diffview-autopreview.lua`: j/k, arrows, wheel and click in the file panel open the diff
+    - [x] `<leader>mGd` toggles the layout (`lua/genja/map-plugin/diffview.lua`, which-key group, cheatsheet)
+    - [x] `diffopt` histogram (`opt.lua`), fillchars `diff: ` (`opt-listchars.lua`)
+    - [x] F2 in oil (`lua/genja/f2/collect/git.lua`): `diffview open` (FROM, TO pickers), codediff, unified, deltaview items; toggles inside diffview
+    - [x] specs to compare: codediff, unified, deltaview, nvim.difftool (commented out); `lazy-lock.json`
+    - [x] CLAUDE.md `## Adding a plugin`, `## Highlight colors`; `todo-ideas.md` item with what to check
+    - [ ] test: `:Lazy install`, then `:DiffviewOpen v2026...develop`: labels, colors, `<leader>mGd`, j/k preview
+    - [ ] test: F2 in an oil buffer of a repo: `diffview open`, codediff, unified, deltaview items
+    - [ ] open: keep one or two viewers, drop the rest

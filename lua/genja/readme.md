@@ -55,6 +55,8 @@ custom funcs
      ext/user-command/sort-length.lua - :[range]SortLen[!] sorts lines by length, ! reverses (keys in readme.cheatsheet.md)
      ext/user-command/reload-lua.lua - :ReloadLua {module} drops a loaded module, requires it again, redraws; :ReloadLuaGenja does it for every loaded module with genja in its name
      ext/git-stop-fsmonitor.lua - stops the git fsmonitor daemons of the repos seen, on exit and with :GitFsmonitorStop
+     ext/diffview-labels.lua - diffview pane labels show the branches or commits as typed instead of hashes
+     ext/diffview-autopreview.lua - diffview file panel: j/k open the diff under the cursor; toggle with the F2 item
      ext/colorize-mappings.lua - treesitter injection: vimscript colors in the rhs string of vim.keymap.set and km()
      completion/minuet.lua - blink.cmp feature 'minuet' for genja-completion011: minuet-ai source, <M-y> asks it
      ext/rename-inline.lua - LSP rename typed in a float over the word (grn, <leader>c2, right-click)

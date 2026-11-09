@@ -70,7 +70,7 @@ return {
 				{ '<leader>jb',       group = 'Jump: telescope builtins' },
 				{ '<leader>jj',       group = 'Jump: quickfix, loclist, grep, find' },
 				{ '<leader>m',        group = 'UI: panels, git, claude, gui' },
-				{ '<leader>mG',       group = 'UI: git log, commit, signs' },
+				{ '<leader>mG',       group = 'UI: git log, commit, signs, diff mode' },
 				{ '<leader>mf',       group = 'Markdown: fix' },
 				{ '<leader>mQ',       group = 'GUI: nvim-qt toggles' },
 				{ '<leader>mx',       group = 'UI: Close' },

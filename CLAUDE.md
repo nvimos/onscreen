@@ -150,6 +150,21 @@ Each has its own CLAUDE.md; read it before changing that plugin.
     - A change across a plugin and the config is two commits, one per repo.
 - Hint: `undodir/`, `state/`, `.claude/` are runtime state; don't edit.
 
+## Adding a plugin
+
+- Config dir is `%LOCALAPPDATA%\nvim` (not `~/.config/nvim`).
+- One file per plugin: `lua/lazyp/new/<name>.lua`, returning a `---@type LazySpec` table; the folder is already imported by `lua/genja/lazy-plug-spec.lua`, so no other registration.
+- Lua files use tabs. Start the file with a short comment: what it does, the upstream or alternative.
+- Always give a trigger (`cmd`, `keys`, `event = 'VeryLazy'`); defaults are `lazy = true`, so a spec without one never loads.
+- Options go in `opts = {}`; add `-- default` comments for the knobs worth knowing.
+- Keymaps: follow `## Keymaps` (`desc` starts with the area, add a which-key group in `lua/lazyp/my/which-key.lua`). Check the key is free before using it.
+- "Comment out the block" means every spec line is prefixed with `--` inside `return { }`, so the file still loads and does nothing.
+- Built-in optional plugins (`$VIMRUNTIME/pack/dist/opt/`, e.g. `nvim.difftool`, `nvim.undotree`) are not installed: use `dir = vim.fs.joinpath(vim.env.VIMRUNTIME, 'pack', 'dist', 'opt', '<name>')` in the spec. Read the plugin's `lua/*.lua` and `plugin/*.lua` there for the real options; the `:help` text may lag.
+- Without a restart: `:packadd <name>` for a built-in; `:Lazy load <name>` or `:Lazy reload <name>` for a spec; `:Lazy install` for a new remote plugin.
+- Own plugins (plug-wip) are different, see `## Layout and loading`.
+- Dry-run the result headless: `nvim --headless -c "lua print(pcall(require,'lazy'))" -c q`, and note in the reply what was not run.
+- Example: `lua/lazyp/new/difftool.lua` (nvim.difftool, commented out).
+
 ## Options (opt.lua)
 
 - `vim.opt` values are strings, not tables; use several `:append()` / `+` lines when needed.
@@ -164,6 +179,17 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - It is all in `lua/genja/popup.lua`: fixed items, per-buffer entries rebuilt on `MenuPopup`.
 - The `PopUp` menu does not nest: activating an item that has children fails with E335. A "submenu" is a plain item `Name actions` that runs `:popup ]Name\ submenu`, a hidden menu; an entry gets there with `submenu = 'Name'`.
 - Menu priority is one number per level, dot separated; `PopUp`'s own is unused, so `.9999` puts an item last (`:h sub-menu-priority`).
+
+## Highlight colors
+
+- Extra highlight groups are set in `lua/genja/hilite.lua` (`M.setup`), through the `cc(fg, bg)` helper (`ColorTable`).
+- When asked for a darker or lighter color, chain `:darken(percent)` or `:lighten(percent)` onto `cc(...)` instead of computing a new hex by hand:
+  `cc('#B5642F'):darken(30):t()`.
+    - Percent is 0 to 100: that many percent towards black (`darken`) or white (`lighten`); default 20.
+    - Both change `fg` and `bg`, whichever are set; the color must be a `'#rrggbb'` string.
+    - `:blend('#rrggbb', percent)` moves them that many percent towards another color (100 becomes it).
+    - `:bg_from('Normal')` starts from a highlight group's background, so colors follow the colorscheme.
+- The diffview red/green fold in the same file uses `bg_from('Normal'):blend(<very dark red or green>, percent)`; tune its `DARK_*` and `BLEND_*` constants.
 
 ## Alma vimrc split
 

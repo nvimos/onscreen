@@ -29,6 +29,7 @@ vim.opt.fillchars = vim.opt.fillchars + 'stl: '      -- statusline
 vim.opt.fillchars = vim.opt.fillchars + 'stlnc:─'    -- statusline (non-current)
 vim.opt.fillchars = vim.opt.fillchars + 'vert::'
 vim.opt.fillchars = vim.opt.fillchars + 'vert:│'
+vim.opt.fillchars = vim.opt.fillchars + 'diff: '     -- no dashes on the filler lines of a diff
 
 
 

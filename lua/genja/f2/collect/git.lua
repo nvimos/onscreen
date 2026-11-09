@@ -5,6 +5,17 @@
 --                  repo-relative paths), diff preview (hidden at start), <Tab> marks,
 --                  <CR> git add, <M-a> git add current (picker stays, row shows the new status),
 --                  <C-p> toggles the preview, <M-t> tabedit (picker stays), <M-e> edit
+--   diffview open  two branch pickers (FROM, then TO), then `DiffviewOpen FROM...TO -C=<root>`
+--   codediff changes | branches | history | pr  only when :CodeDiff exists (lua/lazyp/new/codediff.lua):
+--                  local changes, FROM...TO as in a PR, history FROM..TO (both branch pickers as above), pr by number
+--   unified changes | branch | commit  only when :Unified exists (lua/lazyp/new/unified.lua): in a new tab at the repo root,
+--                  working tree vs HEAD, vs a picked branch, vs a commit from unified's own list
+--   deltaview changes | branches  only when :DeltaMenu exists (lua/lazyp/new/deltaview.lua): file picker over
+--                  what changed vs HEAD, or FROM...TO (branch pickers as above), in a new tab at the repo root
+--   diffview toggle mode  only inside a diffview tab: side by side <-> one window (inline)
+--   diffview toggle auto preview  same: file panel j/k open the diff of the file under the cursor (on by default)
+
+local groups = require('genja.f2.groups')
 
 local M = {}
 
@@ -278,37 +289,253 @@ local function pick_files(root, files, staged)
 	}):find()
 end
 
+-- Local and remote branches, newest commit first, without the `origin/HEAD` alias.
+---@param root string
+---@return string[]? branches, string? err
+local function list_branches(root)
+	local cmd = { 'git', 'branch', '--all', '--sort=-committerdate', '--format=%(refname:short)' }
+	local res = vim.system(cmd, { cwd = root, text = true }):wait()
+	if res.code ~= 0 then
+		return nil, res.stderr or ''
+	end
+	local branches = {}
+	for _, name in ipairs(vim.split(res.stdout or '', '\n', { trimempty = true })) do
+		if not name:match('/HEAD$') and name ~= 'origin' then
+			table.insert(branches, name)
+		end
+	end
+	return branches
+end
+
+-- One telescope list of branches; `on_pick(name)` runs after <CR>.
+---@param title string
+---@param branches string[]
+---@param on_pick fun(name: string)
+local function pick_branch(title, branches, on_pick)
+	local actions = require('telescope.actions')
+	local action_state = require('telescope.actions.state')
+	-- ascending: same reason as in pick_files
+	require('telescope.pickers').new({ sorting_strategy = 'ascending' }, {
+		prompt_title = title,
+		finder = require('telescope.finders').new_table({ results = branches }),
+		sorter = require('telescope.config').values.generic_sorter({}),
+		attach_mappings = function(bufnr, map)
+			require('genja-finder').attach_shared_keys(map)
+			actions.select_default:replace(function()
+				local entry = action_state.get_selected_entry()
+				if not entry then
+					return
+				end
+				actions.close(bufnr)
+				-- next picker after this one is gone, or it closes with the first
+				vim.schedule(function() on_pick(entry.value) end)
+			end)
+			return true
+		end,
+	}):find()
+end
+
+-- FROM branch, then TO branch (two pickers, titled with `name`), then `run(from, to)`.
+---@param root string
+---@param name string picker title prefix, e.g. 'diffview'
+---@param run fun(from: string, to: string)
+local function pick_range(root, name, run)
+	local branches, err = list_branches(root)
+	if not branches then
+		vim.notify(SRC .. 'git branch failed:\n' .. err, vim.log.levels.ERROR)
+		return
+	end
+	pick_branch(name .. ' 1/2: FROM branch (base)  <CR> selects', branches, function(from)
+		local others = vim.tbl_filter(function(branch) return branch ~= from end, branches)
+		pick_branch(name .. ' 2/2: TO branch (compare)  FROM = ' .. from, others, function(to)
+			run(from, to)
+		end)
+	end)
+end
+
+-- `DiffviewOpen FROM...TO`: what TO added since it left FROM (the PR view),
+-- without checking either out.
+---@param root string
+local function diffview_open(root)
+	pick_range(root, 'diffview', function(from, to)
+		local range = vim.fn.fnameescape(from .. '...' .. to)
+		vim.cmd('DiffviewOpen ' .. range .. ' -C=' .. vim.fn.fnameescape(root))
+	end)
+end
+
+-- codediff.nvim (lua/lazyp/new/codediff.lua) is lazy: its :CodeDiff stub exists
+-- once the spec is installed; no stub, no items.
+---@param root string
+---@return genja.f2.Task[]
+local function codediff_tasks(root)
+	if vim.fn.exists(':CodeDiff') ~= 2 then
+		return {}
+	end
+	local repo = vim.fn.fnameescape(root)
+	local function task(label, action)
+		return { group = groups.git, label = label, action = action }
+	end
+	return {
+		task('codediff changes', function()
+			vim.cmd('CodeDiff --repo ' .. repo)
+		end),
+		task('codediff branches', function()
+			pick_range(root, 'codediff', function(from, to)
+				vim.cmd('CodeDiff --repo ' .. repo .. ' ' .. vim.fn.fnameescape(from .. '...' .. to))
+			end)
+		end),
+		task('codediff history', function()
+			pick_range(root, 'codediff history', function(from, to)
+				vim.cmd('CodeDiff -C ' .. repo .. ' history ' .. vim.fn.fnameescape(from .. '..' .. to))
+			end)
+		end),
+		task('codediff pr', function()
+			vim.ui.input({ prompt = 'codediff pr number: ' }, function(input)
+				if not input or input == '' then
+					return
+				end
+				if not input:match('^%d+$') then
+					vim.notify(SRC .. 'not a pr number: ' .. input, vim.log.levels.WARN)
+					return
+				end
+				vim.cmd('CodeDiff --repo ' .. repo .. ' pr ' .. input)
+			end)
+		end),
+	}
+end
+
+-- Only while a diffview tab is current; diffview is not loaded before the first
+-- :Diffview command, so don't require it blindly.
+---@return boolean
+local function diffview_is_open()
+	local lib = package.loaded['diffview.lib']
+	return lib ~= nil and lib.get_current_view() ~= nil
+end
+
+-- `view.cycle_layouts.default` in lua/lazyp/git/diffview.lua holds two layouts
+-- (side by side, inline), so cycling is a toggle.
+---@return genja.f2.Task
+local function diffview_toggle_task()
+	return {
+		group = groups.git,
+		label = 'diffview toggle mode',
+		action = function() require('diffview.actions').cycle_layout() end,
+	}
+end
+
+-- New tab whose directory is the repo root (tab-local), so a viewer that runs git in the
+-- cwd sees the repo, whatever oil's directory or the nvim cwd is.
+---@param root string
+local function repo_tab(root)
+	vim.cmd.tabnew()
+	vim.cmd.tcd(vim.fn.fnameescape(root))
+end
+
+-- unified.nvim (lua/lazyp/new/unified.lua): inline diff against a ref, with a changed-files tree.
+---@param root string
+---@return genja.f2.Task[]
+local function unified_tasks(root)
+	if vim.fn.exists(':Unified') ~= 2 then
+		return {}
+	end
+	local function task(label, action)
+		return { group = groups.git, label = label, action = action }
+	end
+	return {
+		task('unified changes', function()
+			repo_tab(root)
+			vim.cmd('Unified HEAD')
+		end),
+		task('unified branch', function()
+			local branches, err = list_branches(root)
+			if not branches then
+				vim.notify(SRC .. 'git branch failed:\n' .. err, vim.log.levels.ERROR)
+				return
+			end
+			pick_branch('unified: BASE branch to compare the working tree with  <CR> selects', branches, function(base)
+				repo_tab(root)
+				vim.cmd('Unified ' .. vim.fn.fnameescape(base))
+			end)
+		end),
+		task('unified commit', function()
+			repo_tab(root)
+			vim.cmd('Unified') -- no ref: unified.nvim lists commits to pick from
+		end),
+	}
+end
+
+-- deltaview.nvim (lua/lazyp/new/deltaview.lua): file picker over what changed, each file as an inline diff.
+---@param root string
+---@return genja.f2.Task[]
+local function deltaview_tasks(root)
+	if vim.fn.exists(':DeltaMenu') ~= 2 then
+		return {}
+	end
+	local function task(label, action)
+		return { group = groups.git, label = label, action = action }
+	end
+	return {
+		task('deltaview changes', function()
+			repo_tab(root)
+			vim.cmd('DeltaMenu HEAD')
+		end),
+		task('deltaview branches', function()
+			pick_range(root, 'deltaview', function(from, to)
+				repo_tab(root)
+				vim.cmd('DeltaMenu ' .. vim.fn.fnameescape(from .. '...' .. to))
+			end)
+		end),
+	}
+end
+
 ---@param ctx genja.f2.Ctx
 ---@param done fun(tasks: genja.f2.Task[])
 function M.collect(ctx, done)
+	local view_tasks = {}
+	if diffview_is_open() then
+		table.insert(view_tasks, diffview_toggle_task())
+		table.insert(view_tasks, {
+			group = groups.git,
+			label = 'diffview toggle auto preview',
+			action = function() require('genja.ext.diffview-autopreview').toggle() end,
+		})
+	end
 	if ctx.filetype ~= 'oil' or vim.fn.executable('git') == 0 then
-		done({})
+		done(view_tasks)
 		return
 	end
 	local root = vim.fs.root(ctx.dir, '.git')
 	if not root then
-		done({})
+		done(view_tasks)
 		return
 	end
 	local cmd = { 'git', 'status', '--porcelain=v1', '-z', '--untracked-files=all' }
 	vim.system(cmd, { cwd = root, text = true }, vim.schedule_wrap(function(res)
 		if res.code ~= 0 then
-			done({}) -- not a work tree (bare repo, .git inside a .git dir)
+			done(view_tasks) -- not a work tree (bare repo, .git inside a .git dir)
 			return
 		end
 		local files = parse_status(res.stdout or '')
 		local staged = parse_staged(res.stdout or '')
-		local tasks = {}
+		local tasks = view_tasks
+		table.insert(tasks, {
+			group = groups.git,
+			label = 'diffview open',
+			action = function() diffview_open(root) end,
+		})
+		vim.list_extend(tasks, codediff_tasks(root))
+		vim.list_extend(tasks, unified_tasks(root))
+		vim.list_extend(tasks, deltaview_tasks(root))
 		if #files > 0 then
 			table.insert(tasks, {
-				group = 'git',
+				group = groups.git,
 				label = ('add (%d files)'):format(#files),
 				action = function() pick_files(root, files) end,
 			})
 		end
 		if #staged > 0 then
 			table.insert(tasks, {
-				group = 'git',
+				group = groups.git,
 				label = ('staged (%d files)'):format(#staged),
 				action = function() pick_files(root, staged, true) end,
 			})

@@ -114,6 +114,13 @@ vim.o.signcolumn = "yes" -- always show the sign column, otherwise it would shif
 vim.o.wrap       = false -- display lines as one long line
 -- }}}
 
+-- diff, plain look {{{
+
+-- The diffview panels and layout are in lua/lazyp/git/diffview.lua; the filler
+-- line character is in opt-listchars.lua. Don't combine `linematch:100` with `inline:`.
+vim.opt.diffopt:append('algorithm:histogram')
+-- }}}
+
 -- edit and input behavior, navigation {{{
 
 vim.o.updatetime = 200 -- ms to wait for macro to complete e.g. <leader>mGc
