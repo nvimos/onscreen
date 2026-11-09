@@ -27,27 +27,24 @@ Checklist for trying them: `doc-wip/untested.2026-10-23.md`.
 | 30/31 | statusline clicks; PopUp per ft, :Morning   | M      | d015986, 00cbfb9 | untested |
 | 16  | `<M-?>` ask popup, 5 targets, sessions        | M      | 507ab65 | untested |
 
-## Open, ranked (auto-todo-20261105)
+## Open, ranked (auto-todo-20261110)
 
-Ask = questions left (A–P asked 2026-11-05 20:31–21:09, so 0), Tokens = rough cost.
-Built easiest first. A–P done in this round, moved to squash-ideas-oct-17.done.md. Q–T: questions in a later session (answer 15a).
+Ask = questions left (40 asked 2026-11-09 23:58 - 2026-11-10 00:31 by audible-wizard, so 0), Tokens = rough cost.
+Q-T were built 2026-11-05 on PR branches (untested); this round applies the answers there.
 
-| #   | Idea (from todo-ideas.md)                       | Decision 2026-11-05                                                                 | Ask  | Tokens |
-|-----|-------------------------------------------------|-------------------------------------------------------------------------------------|------|--------|
-| Q   | WSL and Docker control                          | later session                                                                        | spec | ~20k   |
-| R   | Kubernetes YAML                                 | later session, first of Q–T                                                          | spec | ~25k   |
-| S   | zen modes by task                               | later session                                                                        | spec | ~10k   |
-| T   | nvim as the interface to the OS                 | later session                                                                        | spec | ?      |
+| #  | Idea (from todo-ideas.md)                          | Where            | Decision 2026-11-10                                                        | Ask | Tokens |
+|----|----------------------------------------------------|------------------|----------------------------------------------------------------------------|-----|--------|
+| 1  | Go: parsers templ, proto                           | v2026            | both; sql on PR-langs, dockerfile on PR-wsl-docker                         | 0   | ~3k    |
+| 2  | F2 markdown: URLs to inline links                  | v2026            | visual range or cursor line; path > 60 chars -> basename, no query         | 0   | ~8k    |
+| 3  | React: JS test runner                              | v2026            | neotest-vitest and neotest-jest, picked by the project's config file       | 0   | ~14k   |
+| 4  | statusline indicator while md-fix runs             | v2026            | md-fix `<leader>tm`                                                         | 0   | ~8k    |
+| 5  | colorcolumn toggle                                 | v2026            | F2 item + `<leader>t` key (new, from zen Q7)                               | 0   | ~4k    |
+| S  | zen modes by task                                  | PR-zen-z3        | z3 maximizes nvim-qt, no colorcolumn; rest as built                        | 0   | ~4k    |
+| T  | nvim as the interface to the OS (long tasks)       | PR-tasks-detach  | statusline_extra hook, `<M-d>` asks first, names dev watch serve start     | 0   | ~10k   |
+| Q  | WSL and Docker control                             | PR-wsl-docker    | docker in the phpactor distro by default; more pickers to todo-ideas       | 0   | ~4k    |
+| R  | Kubernetes YAML                                    | PR-k8s-yaml      | kubectl explain, ingress-nginx + metrics-server, .k8s-version, SchemaStore.nvim, status fields | 0 | ~20k |
 
-Not in this round: LLM chat (survey later, todo-test/llm-chat-survey.md), PHP debugging (own session).
-
-Closed in auto-todo-20261031-0527: vint (to todo-2027), netrw.nvim, ghost text (minuet + llm.nvim).
-Closed in auto-todo-20261029-2307: unsaved picker, `<leader>;` letters, telescope exploration.
-Closed in auto-todo-20261026-2311: #48 (tested), checkmake minphony, popup submit keys,
-telescope default keys + `<C-/>` descs, #39 marker toggle, F2 git staged.
-Closed in auto-todo-20261024-0014: #19 oil resume (`[-]`), #19 paste (`<M-p>`),
-startdirs frecency, #14e second wave, map-plugin healthcheck.
-Earlier round: #18, #19a, #20, #26, #33, #35, #30, #31, #16.
+Skipped this round: PHP debugging (own session), diff viewers (try first), LLM chat (survey later).
 
 ## 14. gitcommit lint
 - Check gitlint's Windows support first; alternative: commitlint or a small custom nvim-lint linter.
