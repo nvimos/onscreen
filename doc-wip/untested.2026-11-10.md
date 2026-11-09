@@ -7,3 +7,4 @@ One feature per line, in the order to try them.
 - [ ] F2 markdown links: `<F2>` > `inline links from urls` on a line with a bare URL (lua/genja/ext/md-links.lua) -> doc-wip/readme.2026-11-10.md-links.md
 - [ ] md-fix busy mark: `:w` in a markdown file, `md-fix…` in the statusline until the reload (lua/genja/ext/md-fix.lua) -> doc-wip/readme.2026-11-10.md-fix-indicator.md
 - [ ] colorcolumn toggle: `<leader>tC` twice, then `<F2>` > `view` (lua/genja/ext/colorcolumn.lua) -> doc-wip/readme.2026-11-10.colorcolumn.md
+- [ ] JS tests vitest/jest: run the nearest test in a `*.test.tsx` of a vite project, then a jest project (lua/lazyp/langs/php-neotest.lua) -> doc-wip/readme.2026-11-10.js-tests.md

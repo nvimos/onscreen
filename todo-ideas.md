@@ -214,7 +214,8 @@ migration from 0.9 to 0.11 (the file that started it all)
         Drupal: phpactor indexes .module etc., ft mapping, drupal-check (236948c, dbc21f8);
         `<F2>` composer/npm scripts (bac05c1); Behat overseer template via ddev in WSL (23d563c)
     - [x] `<F2>` scripts: automated test, fixtures tests/f2/eff-two/, :OverseerToggle (5fe22f0)
-  - [ ] React side: a JS test runner (vitest / jest through neotest), not decided yet
+  - [x] React side: a JS test runner (vitest / jest through neotest), not decided yet
+    - [x] both, picked by the project's config file (vitest wins), lua/lazyp/langs/php-neotest.lua (2026-11-10); untested
 
 - [ ] Go project out of the box, same feel as PHP (after PHP, 2026-11-05)
   - have: gopls (plug-wip/genja-completion011.nvim/lua/genja/lang/go.lua: go.work roots, organize imports + format on save,
