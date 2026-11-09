@@ -13,6 +13,13 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
 - An issue is one problem or request from this session (or unstaged or modified changes) that ended in file changes: a bug fixed, a feature added, a doc changed.
 - If the args name issues, use only those.
 
+## 1b. Fix leftovers
+
+- Before planning, look for loose ends in this session's own work (or work related to it) that the user is likely to want fixed, e.g. a command still named `ReloadLua2` after the twin was dropped, a header comment or doc line that no longer matches.
+- Fix them now, so they land in the same commit as the issue, not a follow-up. Mention each in the issue file as a `[x]` item.
+- After committing, say one line per fix in the reply.
+- Only when the user would plainly want it; anything unsure or unrelated is a suggestion, not a fix.
+
 ## 2. Plan the commits (commit-plan logic)
 
 1. Read the state: `git status --short`, `git diff`, `git diff --cached`, and `git log --oneline -15` for the repo's message style. Read untracked files that may belong to an issue.

@@ -1,0 +1,2 @@
+- [x] skills: close-issues fixes loose ends before committing (2026-11-09)
+    - [x] `.claude/skills/nvim-commit-close-issues/SKILL.md`: step 1b, stale names and doc lines fixed in the issue's own commit, one line per fix in the reply
