@@ -2,6 +2,7 @@
 -- items from the sources below and from f2.add_tasks(); runs the chosen one.
 -- Sources (one file each in collect/, ask the current buffer on every <F2>):
 --   adhoc  one-off fixes, e.g. `go mod init` for a .go file without go.mod
+--   this file (%)  not a source: ftplugins add actions for the current file, e.g. after/ftplugin/ps1.lua
 --   git    oil only: `add (N files)`, a sub-picker of changed files to add
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   script `<runner> scripts in <dir> (N)`: composer.json and package.json scripts, sub-pickers
@@ -21,7 +22,7 @@
 
 ---@class genja.f2.Task
 ---@field label string
----@field group string at most 6 chars, right-aligned before the label (readme.md)
+---@field group string at most 14 chars, right-aligned before the label (readme.md)
 ---@field action? string|fun(ctx: genja.f2.Ctx): boolean? string: normal-mode keys (with mappings)
 ---@field cmd? string|string[] instead of action: a command to run
 ---@field runner? 'overseer'|'floaterm' for cmd; default overseer
@@ -41,8 +42,12 @@ local M = {}
 
 local SRC = 'lua/genja/f2/init.lua: '
 
+---Group names as symbols: f2.groups.this_file (groups.lua).
 ---Group order in the picker; callers may replace it.
-M.group_order = { 'adhoc', 'lsp', 'diag', 'git', 'make', 'script', 'oil', 'claude', 'gui', 'msgs' }
+M.groups = require('genja.f2.groups')
+
+local g = M.groups
+M.group_order = { g.adhoc, g.this_file, g.lsp, g.diag, g.git, g.make, g.script, g.oil, g.claude, g.gui, g.msgs }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.

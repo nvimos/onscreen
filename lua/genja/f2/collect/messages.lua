@@ -12,7 +12,7 @@ function M.collect(_, done)
 	local items = {}
 	for i, loc in ipairs(messages.newest(MAX)) do
 		table.insert(items, {
-			group = 'msgs',
+			group = require('genja.f2.groups').msgs,
 			label = vim.fn.fnamemodify(loc.filename, ':~:.') .. ':' .. loc.lnum,
 			order = i,
 			action = function()

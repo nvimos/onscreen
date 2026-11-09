@@ -4,6 +4,7 @@
 -- (runner from the lockfile: bun, pnpm, yarn, else npm). Same shape as collect/make.lua.
 
 local picker = require('genja.f2.picker')
+local groups = require('genja.f2.groups')
 
 local M = {}
 
@@ -70,12 +71,12 @@ local function item(dir, name)
     for i, script in ipairs(names) do
         local cmd = vim.list_extend({ runner }, vim.list_extend(vim.deepcopy(run), { script }))
         table.insert(entries, {
-            task = { group = 'script', label = runner .. ': ' .. script, cmd = cmd, cwd = root, order = i },
+            task = { group = groups.script, label = runner .. ': ' .. script, cmd = cmd, cwd = root, order = i },
             remove = nothing,
         })
     end
     return {
-        group = 'script',
+        group = groups.script,
         label = ('%s scripts in %s (%d)'):format(runner, vim.fs.basename(root), #entries),
         action = function(pick_ctx)
             picker.entries(entries, pick_ctx, { title = name .. ' scripts: ' .. vim.fn.fnamemodify(root, ':~') })

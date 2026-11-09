@@ -20,7 +20,7 @@ function M.collect(_, done)
 			title = vim.fs.basename(term.root)
 		end
 		table.insert(items, {
-			group = 'claude',
+			group = require('genja.f2.groups').claude,
 			label = title,
 			order = i,
 			action = function()

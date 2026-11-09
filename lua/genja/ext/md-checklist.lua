@@ -78,7 +78,8 @@ end
 
 ---@param buf integer
 function M.register(buf)
-	require('genja.f2').add_task('md', 'checklist toggle')
+	local f2 = require('genja.f2')
+	f2.add_task(f2.groups.markdown, 'checklist toggle')
 		:fn(run)
 		:buffer(buf)
 		:add()

@@ -11,7 +11,7 @@ local M = {}
 ---@field show_group? boolean display `group  label` (main list) or just the label
 
 ---Groups are at most this long; shorter ones are padded on the left (readme.md).
-M.GROUP_WIDTH = 6
+M.GROUP_WIDTH = 14
 
 -- dropped from what the list shows; `:` and parens stay
 local NOISE = '[«»\'"!`%[%]]'

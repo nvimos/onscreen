@@ -8,7 +8,7 @@ function M.collect(_, done)
 	local items = {}
 	if vim.fn.has('gui_running') == 1 then
 		table.insert(items, {
-			group = 'gui',
+			group = require('genja.f2.groups').gui,
 			label = 'funcs frame full scroll',
 			action = function()
 				require('telescope._extensions.mylunsj.gui-funcs').show_picker()

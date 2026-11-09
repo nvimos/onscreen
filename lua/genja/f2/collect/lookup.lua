@@ -8,7 +8,7 @@ local M = {}
 function M.collect(_, done)
 	local ps = require('genja-paste-ai')
 	done({ {
-		group = 'lookup',
+		group = require('genja.f2.groups').lookup,
 		label = 'paste search provider (' .. ps.current() .. ')',
 		action = function()
 			ps.pick()

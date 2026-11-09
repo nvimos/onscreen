@@ -54,7 +54,7 @@ local function go_mod_init(ctx)
 	local dir = ctx.dir
 	local name = vim.fs.basename(dir)
 	return {
-		group = 'adhoc',
+		group = require('genja.f2.groups').adhoc,
 		label = 'go mod init ' .. name,
 		action = function()
 			run.overseer('go mod init ' .. name, { 'go', 'mod', 'init', name }, dir, function(code)

@@ -70,7 +70,8 @@ end
 
 ---@param buf integer
 function M.register(buf)
-	require('genja.f2').add_task('md', 'glow preview')
+	local f2 = require('genja.f2')
+	f2.add_task(f2.groups.markdown, 'glow preview')
 		:fn(function() M.preview() end)
 		:buffer(buf)
 		:add()

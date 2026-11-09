@@ -19,7 +19,7 @@ function M.collect(ctx, done)
 	end
 	done({
 		{
-			group = 'lsp',
+			group = require('genja.f2.groups').lsp,
 			label = 'EnableLang ' .. name,
 			action = function()
 				lsp.enable_lang(name)

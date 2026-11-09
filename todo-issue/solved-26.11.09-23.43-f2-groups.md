@@ -1,0 +1,9 @@
+- [x] f2: group names as symbols, a pwsh item for .ps1 files (2026-11-09)
+    - [x] `lua/genja/f2/groups.lua`: one symbol per group; collectors, md-glow, md-checklist use it; `md` is now `markdown`
+    - [x] group width 6 -> 14 (`picker.GROUP_WIDTH`, warning in `registry.lua`), new group `this file (%)` second in `group_order`
+    - [x] `after/ftplugin/ps1.lua`: `this file (%)  run with PowerShell (pwsh)`, overseer task in the file's folder
+    - [x] `lua/genja/f2/readme.md`: implementation notes; `tests/f2/test_picker.lua` for width 14
+    - [x] `todo-2027.md`: `## f2 plugin`, extracting F2 into its own plugin
+    - [ ] test: `make` in tests/f2
+    - [ ] test: `<F2>` in a .ps1 buffer runs it; `<F2>` in markdown shows `markdown  glow preview`
+    - [ ] open: let callers add their own groups (todo in groups.lua)

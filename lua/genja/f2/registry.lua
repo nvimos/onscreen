@@ -60,8 +60,8 @@ function M.add(tasks, opts)
 			vim.notify(SRC .. 'skipped task ' .. vim.inspect(task.label) .. ': ' .. problem, vim.log.levels.WARN)
 		else
 			-- convention (readme.md): longer groups break the column the labels start in
-			if #task.group > 6 then
-				vim.notify(SRC .. 'group ' .. vim.inspect(task.group) .. ' is longer than 6 chars; the labels lose their column', vim.log.levels.WARN)
+			if #task.group > 14 then
+				vim.notify(SRC .. 'group ' .. vim.inspect(task.group) .. ' is longer than 14 chars; the labels lose their column', vim.log.levels.WARN)
 			end
 			store[key(task)] = task
 		end

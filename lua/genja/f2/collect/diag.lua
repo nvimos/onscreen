@@ -3,6 +3,8 @@
 -- hides the excess again. With diagnostics in the buffer: switch the virtual text column
 -- (lua/genja/ext/diag-align.lua).
 
+local groups = require('genja.f2.groups')
+
 local M = {}
 
 ---@param ctx genja.f2.Ctx
@@ -13,7 +15,7 @@ function M.collect(ctx, done)
 	local hidden = limit.hidden(ctx.bufnr)
 	if hidden > 0 then
 		table.insert(items, {
-			group = 'diag',
+			group = groups.diag,
 			label = ('show all (%d hidden)'):format(hidden),
 			action = function()
 				limit.show_all(ctx.bufnr)
@@ -23,7 +25,7 @@ function M.collect(ctx, done)
 	local excess = limit.excess(ctx.bufnr)
 	if excess > 0 then
 		table.insert(items, {
-			group = 'diag',
+			group = groups.diag,
 			label = ('hide excess (%d over %d per severity)'):format(excess, limit.global_limit()),
 			action = function()
 				limit.hide_excess(ctx.bufnr)
@@ -36,7 +38,7 @@ function M.collect(ctx, done)
 		if align.enabled() then
 			label = 'align: at the end of each line'
 		end
-		table.insert(items, { group = 'diag', label = label, action = align.toggle })
+		table.insert(items, { group = groups.diag, label = label, action = align.toggle })
 	end
 	done(items)
 end

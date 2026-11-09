@@ -3,6 +3,7 @@
 -- each chosen target runs as an overseer task.
 
 local picker = require('genja.f2.picker')
+local groups = require('genja.f2.groups')
 
 local M = {}
 
@@ -97,7 +98,7 @@ local function sorted_tasks(targets, prefixes, dir)
 		if row.prefix ~= '' then
 			label = row.prefix .. ': ' .. row.target
 		end
-		table.insert(tasks, { group = 'make', label = label, cmd = { 'make', row.target }, cwd = dir, order = i })
+		table.insert(tasks, { group = groups.make, label = label, cmd = { 'make', row.target }, cwd = dir, order = i })
 	end
 	return tasks
 end
@@ -135,7 +136,7 @@ function M.collect(ctx, done)
 		end, sorted_tasks(targets, target_prefixes(dir, makefiles), dir))
 		done({
 			{
-				group = 'make',
+				group = groups.make,
 				-- folder name: shows which Makefile was found (e.g. ~/makefile from oil at ~)
 				label = ('targets in %s (%d)'):format(vim.fs.basename(dir), #entries),
 				action = function(pick_ctx)
