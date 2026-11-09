@@ -82,6 +82,8 @@ return {
 					'gomod',
 					'gosum',
 					'gotmpl', -- text/template and html/template files
+					'templ', -- a-h/templ components (.templ)
+					'proto', -- protobuf (.proto), gRPC services
 
 					'make',
 

@@ -232,7 +232,8 @@ migration from 0.9 to 0.11 (the file that started it all)
     templ, sql, proto, Dockerfile parsers; tests through neotest-golang or go.nvim (decide one)
   - [x] auto-todo 2026-11-05 (untested): parsers gomod gosum gotmpl (9a8aa25); golangci-lint only with a
         .golangci.*file, sample examples/go/.golangci.toml (e7bad3d); neotest-golang, go.nvim's :GoTest* kept (1037aa2)
-  - [ ] parsers templ, sql, proto, dockerfile: not decided yet
+  - [x] parsers templ, sql, proto, dockerfile: templ and proto in load-treesitter.lua (2026-11-10);
+        sql on PR-langs, dockerfile on PR-wsl-docker; untested
 
 - [ ] nvim as the interface to the OS for coding work: shell, terminal, pwsh, Git Bash, git (2026-11-05)
   - today: floaterm commands (:PwshFterm, :BashFterm, :LazygitFterm), toggleterm, :terminal pwsh/bash, Neogit, mini.git
