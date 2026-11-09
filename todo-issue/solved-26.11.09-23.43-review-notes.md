@@ -1,0 +1,5 @@
+- [x] docs: notes from review and dictation (2026-11-09)
+    - [x] `readme.inspiration.md`: typo, AstroNvim, LazyVim, Neovim-from-scratch, coc.nvim, awk-language-server
+    - [x] `todo-ideas/cleanup-release-2026.md`: outside review of the repo, removal candidates
+    - [x] `doc-wip/readme.2026-11-09.speech-patterns.md`: misheard words and patterns in the prompts
+    - [x] `todo-ideas.md`: idea for an F2 markdown action that turns URLs into inline links

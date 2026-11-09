@@ -1,6 +1,8 @@
 # Inspiration
 
-Lis of other's work that was used as a starting point in 2023 and as benchmarks or reference points later on in 2026.
+List of other's work that was used as a starting point in 2023 and as
+benchmarks or reference points later on in 2026.
+
 
 ## Docs
 
@@ -28,6 +30,7 @@ Lis of other's work that was used as a starting point in 2023 and as benchmarks 
 | [Ecovim](https://github.com/ecosse3/nvim) | Non-minimal config built for front-end development |
 | [evim](https://github.com/e-cal/evim) | Personal distro by e-cal |
 
+
 ### Competition
 
 What the other nvim distributions taught us (see CLAUDE.md, Goal):
@@ -49,6 +52,10 @@ What the other nvim distributions taught us (see CLAUDE.md, Goal):
 - [ThePrimeagen/init.lua](https://github.com/ThePrimeagen/init.lua)
 - [Traap/nvim](https://github.com/Traap/nvim): old timer with his own system
 
+- <https://github.com/AstroNvim/AstroNvim>
+- <https://github.com/LazyVim/LazyVim>
+- <https://github.com/LunarVim/Neovim-from-scratch>
+
 ### Examples
 
 - [s1n7ax gists](https://gist.github.com/s1n7ax)
@@ -58,3 +65,5 @@ What the other nvim distributions taught us (see CLAUDE.md, Goal):
 ### Plugins
 
 - [vim-devicons on VimAwesome](https://vimawesome.com/plugin/vim-devicons)
+- completion : <https://github.com/neoclide/coc.nvim>
+- lsp : npm install -g "awk-language-server@>=0.5.2"
