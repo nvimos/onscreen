@@ -2,6 +2,7 @@ lua << EOF
 -- <F2> tasks:
 local buf = vim.api.nvim_get_current_buf()
 require('genja.ext.md-checklist').register(buf)
+require('genja.ext.md-links').register(buf)
 require('genja.ext.md-glow').register(buf)
 require('genja.ext.md-fix').register(buf)
 require('genja.ext.md-abbrev').apply(buf)

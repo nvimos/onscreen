@@ -246,10 +246,12 @@ Textobjects (mini.ai: lua/lazyp/new/mini-ai.lua; treesitter ids from nvim-treesi
     without mini.ai, in Lua only: if af from after/ftplugin/lua.lua (lua/genja/ext/lua-func-obj.lua)
     visual <C-s> <BS>  grow / shrink the selection by treesitter node; v<C-s> starts (lua/genja/map-plugin/load-treesitter.lua)
 
-F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.vim; visual <F2> in map-telescope.lua)
+F2 in markdown (lua/genja/ext/md-checklist.lua, lua/genja/ext/md-links.lua, lua/genja/ext/md-glow.lua, from after/ftplugin/markdown.vim; visual <F2> in map-telescope.lua)
 
     <F2> > markdown: checklist toggle   add `[ ]` to the cursor line; visual <F2>: to the selected lines
                                  all lines boxed already: removes the boxes
+    <F2> > markdown: inline links from urls   bare URLs on the cursor line (visual <F2>: selected lines) -> [path](url),
+                                 path > 60 chars: its last part; links, <autolinks>, `code` and fences stay
     <F2> > markdown: glow preview  glow on the file in a new pwsh window, any key closes (Windows only)
     <leader>mfx  fix the file: typos --write-changes, markdownlint-cli2 --fix (also on :w; off: vim.g.md_fix_on_save = false)
     <leader>cx   lint rule under the cursor off: markdownlint (lint/.markdownlint.jsonc) or vale ([*.md] of the vale config), after/ftplugin/markdown.vim

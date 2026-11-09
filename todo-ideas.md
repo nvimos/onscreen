@@ -18,13 +18,6 @@ migration from 0.9 to 0.11 (the file that started it all)
 
 ## ideas november
 
-- [ ] like the markdown F2 context action to convert list items into
-      checkboxes, add one more. ConvertHTTP addresses including HTTPS into
-      markdown links, links that are inline.
-      the name should be the path of the link and if it's longer than
-      45-60 characters then do a basename on it and exclude any query
-      parameters
-
 - [ ] statusline indicator while markdown-reformat is working
 
 - [x] now that jolemak keymap in win is sending the correct control chars...

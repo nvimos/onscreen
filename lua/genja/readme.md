@@ -48,6 +48,7 @@ custom funcs
      ext/secrets.lua - LocalOrEnv(name): API key from the gitignored local/secrets.lua, else the environment
      ext/ui-select.lua - vim.ui.select in a telescope dropdown (code actions etc.)
      ext/md-checklist.lua - <F2> in markdown: lines to a checklist and back
+     ext/md-links.lua - <F2> in markdown: bare URLs to inline links [path](url)
      ext/tilde.lua - ~ toggles true/false, on/off, +/- … under the cursor
      ext/winsize.lua - window sizes in big steps, share cycle, resize mode
      ext/unsaved.lua - :Unsaved [cmd]: picker of modified buffers (write / discard), then cmd; :qa, :q, :x, jj, s: go through it
