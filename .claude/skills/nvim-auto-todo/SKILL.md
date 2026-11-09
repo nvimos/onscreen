@@ -62,6 +62,8 @@ Apply these without asking; mention them once in the overview so the user can ov
 
 ## Rules
 
+- Token budget: the weekly quota resets on Tuesday. A run on Monday evening or in the first hours of Tuesday night (Mon 17:00 - Tue 06:00 local) is there to use up what is left of the week: don't stop or wrap up at a usage mark (95% or any other), keep building until the work or the quota runs out; going up to 5% into next week's quota is fine. Outside that window, stop at 95% usage, commit what is done and list the rest.
+- With the user away (gone to bed, "go ahead with everything"): pick the recommended answer for open questions, say which in the final reply, and keep irreversible or public steps on the safe side (new repos private, nothing deleted, no push to the main trunk).
 - Fast checks are allowed in this skill, overriding CLAUDE.md's "don't run": headless load (`nvim --headless -c 'qa'`), `luac -p`, small unit tests. When unsure whether something is fast, run it with a 6–9 s timeout. Features still go on the untested list; say plainly what was not run.
 - Leave unrelated uncommitted changes alone.
 - Keep the user's wording in `todo-ideas.md`; add sub-items, don't rewrite theirs.
