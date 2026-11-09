@@ -51,6 +51,16 @@ return {
 		tabline = true,
 		winbar = true,
 		winbar_extra = { dropbar_part },
+		statusline_extra = {
+			-- `md-fix…` while the markdown fixers run (lua/genja/ext/md-fix.lua); not loaded: nothing runs
+			function(buf)
+				local fix = package.loaded['genja.ext.md-fix']
+				if not fix then
+					return ''
+				end
+				return fix.status(buf)
+			end,
+		},
 		clicks = clicks,
 		-- json/yaml key path without dropbar: see plug-wip/genja-statusline.nvim/lua/genja-statusline/keypath.lua
 	},

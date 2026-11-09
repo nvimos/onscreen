@@ -1,0 +1,5 @@
+- [x] statusline indicator while markdown-reformat is working
+  - [x] markdown-reformat = md-fix (`<leader>mfx`, on save, `<leader>tm`), decided 2026-11-10
+  - [x] genja-statusline eed8864: `statusline_extra` parts on the right half
+  - [x] lua/genja/ext/md-fix.lua `M.status()`: `md-fix…` while the fixers run; spec lua/lazyp/new/genja-statusline.lua
+  - [ ] test: guide doc-wip/readme.2026-11-10.md-fix-indicator.md

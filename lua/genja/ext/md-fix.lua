@@ -8,6 +8,7 @@
 --                 <leader>tm / :ToggleMarkdownFix switch it (plugin/md-fix.lua)
 -- markdownlint uses the project's config, else the shared lint/.markdownlint.jsonc (as lua/genja/ext/lint.lua).
 -- A fixer that isn't installed is skipped (mason: :MasonToolsInstall).
+-- While the fixers run, the statusline shows `md-fix…` (M.status, statusline_extra in lua/lazyp/new/genja-statusline.lua).
 
 local SRC = 'lua/genja/ext/md-fix.lua: '
 
@@ -454,6 +455,27 @@ local function reload(bufnr)
 	end
 end
 
+---Buffers whose fixers are running.
+---@type table<integer, boolean>
+local busy = {}
+
+---@param bufnr integer
+---@param on boolean
+local function set_busy(bufnr, on)
+	busy[bufnr] = on or nil
+	vim.cmd.redrawstatus()
+end
+
+---Statusline part: `md-fix…` while the fixers run on `buf`, else ''.
+---@param buf integer
+---@return string
+function M.status(buf)
+	if busy[buf] then
+		return '%#DiagnosticWarn#md-fix…%*'
+	end
+	return ''
+end
+
 ---Run the fixers on the file of `bufnr` one after the other, then reload it.
 ---@param bufnr integer
 ---@param save boolean write the buffer first (<leader>mfx); false on BufWritePost
@@ -481,6 +503,7 @@ function M.fix(bufnr, save)
 	end
 	M.expand_tabs(file, size)
 	M.escape_keys(file)
+	set_busy(bufnr, true)
 	local i = 0
 	local function next_cmd()
 		i = i + 1
@@ -488,11 +511,16 @@ function M.fix(bufnr, save)
 			if indent and indent.style == 'tab' then
 				M.indent_to_tabs(file, size)
 			end
+			set_busy(bufnr, false)
 			reload(bufnr)
 			return
 		end
 		-- non-zero exit: what's left unfixed; the linters show it
-		vim.system(cmds[i], { cwd = vim.fs.dirname(file) }, vim.schedule_wrap(next_cmd))
+		local ok, err = pcall(vim.system, cmds[i], { cwd = vim.fs.dirname(file) }, vim.schedule_wrap(next_cmd))
+		if not ok then
+			vim.notify(SRC .. cmds[i][1] .. ' did not start: ' .. tostring(err), vim.log.levels.WARN)
+			vim.schedule(next_cmd) -- the next fixer still runs, and the mark goes away at the end
+		end
 	end
 	next_cmd()
 end
