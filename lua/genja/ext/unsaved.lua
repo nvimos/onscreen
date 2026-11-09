@@ -4,6 +4,7 @@
 -- the `qa`, `q`, `x`, `jj` and `s:` abbreviations call it (lua/genja/abbreviations.vim).
 -- :q and :x only quit nvim from the last window; elsewhere they run at once.
 --   file buffer      <M-w> write          <M-x> reset to the file on disk (:edit!)
+--   mouse            left click on a row opens the buffer, right click discards it (<M-x>)
 --   no-file buffer   <M-w> :w ~/tmp/bufw-<week>-<first-3-words>.txt on the cmdline, to edit
 --                    <M-x> wipe the buffer
 local SRC = 'lua/genja/ext/unsaved.lua: '
@@ -225,7 +226,7 @@ function M.run(cmd)
 			mirror = false,
 		},
 		sorting_strategy = 'ascending',
-		prompt_title = 'Unsaved: <M-w> write <M-x> discard',
+		prompt_title = 'Unsaved: <M-w> write <M-x> discard | click open, right-click discard',
 		finder = require('telescope.finders').new_table({
 			results = bufs,
 			entry_maker = function(buf)
@@ -261,6 +262,31 @@ function M.run(cmd)
 				act(bufnr, write_file)
 			end, { desc = 'Unsaved: write' })
 			map({ 'i', 'n' }, '<M-x>', function() act(bufnr, discard) end, { desc = 'Unsaved: discard (reset or wipe)' })
+			-- mouse: left click on a row opens the buffer (like <CR>), right click discards it (like <M-x>);
+			-- clicks elsewhere in the picker do nothing. The telescope defaults select on click, run on double click.
+			---@return boolean on_row true when the click was on a row of the list, now selected
+			local function select_clicked_row()
+				local picker = action_state.get_current_picker(bufnr)
+				local pos = vim.fn.getmousepos()
+				if pos.winid ~= picker.results_win or pos.line < 1 then
+					return false
+				end
+				picker:set_selection(pos.line - 1)
+				return true
+			end
+			local function open_clicked()
+				if select_clicked_row() then
+					actions.select_default(bufnr)
+				end
+			end
+			local function discard_clicked()
+				if select_clicked_row() then
+					act(bufnr, discard)
+				end
+			end
+			map({ 'i', 'n' }, '<LeftMouse>', open_clicked, { desc = 'Unsaved: open the clicked buffer' })
+			map({ 'i', 'n' }, '<2-LeftMouse>', open_clicked, { desc = 'Unsaved: open the clicked buffer' })
+			map({ 'i', 'n' }, '<RightMouse>', discard_clicked, { desc = 'Unsaved: discard the clicked buffer' })
 			return true
 		end,
 	}):find()

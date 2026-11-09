@@ -355,5 +355,41 @@ km('n', '<leader>ei', [[<cmd>exe 'tabe' stdpath('config').'/lua/genja/'|exe 'tcd
 -- km('n', '<leader>lm', command('resize | vertical resize'), { desc = 'maximize current' })
 km('n', '<c-w>m', cmd('resize | vertical resize'), { desc = 'maximize current' })
 
+-- Left click (normal and visual mode):
+--   right-click menu open (a pum can only be that menu here) and the pointer on it: select the item under the pointer
+--     and run it with <CR>; on a submenu item <CR> opens the submenu. Pointer outside the menu: the click closes it.
+--   quickfix / location list: a click on an entry opens it, a single click even when the list is not focused
+--   closed fold: open it (zo after the click is harmless when the fold column click already opened it)
+-- A failure falls back to the plain click: this map must not break clicking.
+km({ 'n', 'x' }, '<LeftMouse>', function()
+	local ok, key = pcall(function()
+		local mouse = vim.fn.getmousepos()
+		if vim.fn.pumvisible() == 1 then
+			local pum = vim.fn.pum_getpos()
+			local row, col = mouse.screenrow - 1, mouse.screencol - 1 -- pum_getpos is 0-based
+			local inside = row >= pum.row and row < pum.row + pum.height and col >= pum.col and col < pum.col + pum.width
+			if inside then
+				return '<LeftMouse><CR>'
+			end
+		end
+		-- quickfix / location list entry: the click focuses the list and <CR> opens the entry, also from another window
+		if mouse.winid ~= 0 and mouse.line > 0 and vim.bo[vim.api.nvim_win_get_buf(mouse.winid)].buftype == 'quickfix' then
+			return '<LeftMouse><CR>'
+		end
+		if vim.fn.mode() == 'n' and vim.fn.foldclosed(mouse.line) > 0 then
+			return '<LeftMouse>zo'
+		end
+		return '<LeftMouse>'
+	end)
+	if ok then
+		return key
+	end
+	return '<LeftMouse>'
+end, { expr = true, desc = 'Mouse: click runs a right-click menu item, opens a quickfix entry or a closed fold' })
+
+-- mouse side buttons: X1 back, X2 forward in the jump list (<C-o> / <C-i>, which is <Tab>)
+vim.cmd([[nnoremap <X1Mouse> <C-o>]])
+vim.cmd([[nnoremap <X2Mouse> <Tab>]])
+
 
 -- vim: set foldmethod=marker foldlevel=0 foldnestmax=2 foldcolumn=2:

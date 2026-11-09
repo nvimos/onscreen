@@ -9,3 +9,6 @@ local function close_list()
 end
 
 vim.keymap.set('n', 'x', close_list, { buffer = true, silent = true, desc = 'Quickfix: close list' })
+
+-- left click on an entry opens it: the global <LeftMouse> map in lua/genja/map-zero.lua
+-- (a buffer-local map here would miss the first click, which only focuses the list from another window)

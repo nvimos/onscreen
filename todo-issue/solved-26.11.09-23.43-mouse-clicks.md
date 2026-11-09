@@ -1,0 +1,8 @@
+- [x] map: mouse clicks do what the pointer is on (2026-11-09)
+    - [x] `lua/genja/map-zero.lua` `<LeftMouse>`: runs the right-click menu item under the pointer, opens a quickfix entry with one click, opens a closed fold
+    - [x] `<X1Mouse>` / `<X2Mouse>`: back / forward in the jump list
+    - [x] `lua/genja/ext/unsaved.lua`: click on a row opens the buffer, right click discards it
+    - [x] `after/ftplugin/qf.lua`: comment points to the global map
+    - [x] `desc` of the click map names the quickfix case
+    - [ ] test: click a quickfix entry from another window, a closed fold, a menu item; side buttons
+    - [ ] test: `:Unsaved`, click and right-click a row
