@@ -129,7 +129,7 @@ Telescope picker keys (map-telescope.lua, telescope-after.lua; insert and normal
     <M-L>  append marked        <M-Q>  append marked
     <C-l>  all -> loclist       <C-q>  all -> quickfix
 
-Mouse (lua/genja/ext/popup-menu.lua, lua/genja/ext/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
+Mouse (lua/genja/popup.lua, lua/genja/ext/morning.lua, genja-statusline clicks in lua/lazyp/new/genja-statusline.lua)
 
     right-click   markdown: toggle checkbox, open link, F2 menu   oil: git add, open in tab
                   LSP buffers: code action, rename, references     everywhere: Morning   nvim-qt: frameless

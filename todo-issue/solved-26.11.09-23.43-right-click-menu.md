@@ -1,0 +1,8 @@
+- [x] popup: the right-click menu in one file, with submenus (2026-11-09)
+    - [x] `lua/genja/popup.lua` replaces `lua/genja/ext/popup-menu.lua`, `plugin/popup-menu.lua` and the `amenu` lines in `lua/genja/fn.vim`
+    - [x] nvim's defaults defined again, LSP submenu, Reload Genja (`:ReloadLuaGenja`), Quit all (through `:Unsaved qa`)
+    - [x] submenus: hidden menu `]Name submenu`, opened by the PopUp item `Name actions` (no nesting, E335)
+    - [x] loaded in `lua/genja/init.lua`; paths updated in morning.lua, gui-func-state, `lua/genja/readme.md`, `readme.cheatsheet.md`
+    - [x] CLAUDE.md `## Right-click menu`; submenu line fixed (was `Name >`, `:popup ]Name`)
+    - [x] plugin commit: genja-paste-ai 8a05330 CLAUDE.md names `lua/genja/popup.lua`
+    - [ ] test: right-click in markdown, oil, an LSP buffer and a visual selection; open the LSP submenu

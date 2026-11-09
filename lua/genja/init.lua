@@ -36,6 +36,7 @@ Safeload 'genja.map-telescope'
 Safeload 'genja.ext.ui-select'          -- vim.ui.select in telescope (code actions etc.)
 Safeload 'genja.map-convoluted'
 -- selene: allow(multiple_statements)
+Safeload('genja.popup', function(m) m.setup() end) -- right-click menu (PopUp)
 Safeload('genja.ext.user-command.wrapfold', function(m) m.setup_user_command() end) -- :WrapFold
 Safeload('genja.ext.user-command.sort-length', function(m) m.setup_user_command() end) -- :SortLen[!]
 Safeload('genja.ext.user-command.reload-lua', function(m) m.setup_user_command() end) -- :ReloadLua {module}

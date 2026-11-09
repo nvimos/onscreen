@@ -29,12 +29,7 @@ function! ToggleWrap()
 	endif
 endfunction
 
-amenu PopUp.ToggleWrap :call ToggleWrap()<CR>
-" g. action menu (lua/genja/ext/actions.lua); telescope: click selects, double-click runs
-amenu PopUp.Actions\ (g\.) <Cmd>lua require('genja.ext.actions').open()<CR>
-" drop nvim's default "How-to disable mouse" item and the separator above it
-silent! aunmenu PopUp.How-to\ disable\ mouse
-silent! aunmenu PopUp.-1-
+" the right-click menu (PopUp) is in lua/genja/popup.lua; ToggleWrap above is called from it
 
 
 " Modal Help

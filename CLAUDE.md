@@ -157,6 +157,14 @@ Each has its own CLAUDE.md; read it before changing that plugin.
     - Each `fillchars` item is one character.
 - `opt.lua` sets `fillchars` `fold:` twice and the last (`·`) wins. (deliberate, ask before changing)
 
+## Right-click menu
+
+- "Pop-up menu" or "right-click menu" means nvim's `PopUp` menu: the menu that opens on a right mouse click in the editor (`:h popup-menu`), not a telescope picker, the F2 menu or the completion menu.
+- A bare "pop-up" or "popup" does not mean that menu: it can be a modal or a float (the commit popup, the ask popup); ask when it is not clear.
+- It is all in `lua/genja/popup.lua`: fixed items, per-buffer entries rebuilt on `MenuPopup`.
+- The `PopUp` menu does not nest: activating an item that has children fails with E335. A "submenu" is a plain item `Name actions` that runs `:popup ]Name\ submenu`, a hidden menu; an entry gets there with `submenu = 'Name'`.
+- Menu priority is one number per level, dot separated; `PopUp`'s own is unused, so `.9999` puts an item last (`:h sub-menu-priority`).
+
 ## Alma vimrc split
 
 - `lua/genja/vimrc.almalinux.vim` is a one-file config for legacy vim 9+, to use in a pinch.

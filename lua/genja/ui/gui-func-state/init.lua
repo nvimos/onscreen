@@ -1,7 +1,7 @@
 -- nvim-qt shim state: one function per Gui* name, each returns that function's singleton.
 --   require('genja.ui.gui-func-state').GuiWindowFrameless():advance()
 -- Every caller gets the same objects: GuiFuncs picker (mylunsj/gui-funcs), <leader>mQ keys
--- (map-plugin/neovim-gui-shim.lua), right-click menu (popup-menu.lua).
+-- (map-plugin/neovim-gui-shim.lua), right-click menu (popup.lua).
 
 local SRC = 'lua/genja/ui/gui-func-state.lua: '
 

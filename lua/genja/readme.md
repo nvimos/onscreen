@@ -70,8 +70,8 @@ mappings and funcs for them
      map-plugin/        - keymaps for lazy specs: init.lua (registry, looked up by spec file name), <spec name>.lua (keys + keymap functions), health.lua (:checkhealth genja.map-plugin); Makefile: tests in tests/map-plugin/
      map-telescope.lua  - keymaps, telescope actions, shortcuts
      map-telescope/fn.lua - functions bound in map-telescope.lua
+     popup.lua - the right-click menu (PopUp): fixed items, entries per filetype (markdown, oil, LSP), paste search on a selection, Morning, submenus; on MenuPopup
      ext/morning.lua - :Morning page: start dirs, recent files, todo items, untested lines (click opens)
-     ext/popup-menu.lua - right-click entries per filetype (markdown, oil, LSP), paste search on a selection, Morning; on MenuPopup
      ext/recent.lua - <C-F1> picker for genja-recent (frecency), project first, <M-a> all
      ext/diag-limit.lua - draws only the first 3 diagnostics per severity and buffer (vim.g.diag_limit, <leader>tt3 in plugin/diag-limit.lua; tests: tests/ui/test_diagnostics-limit.lua)
      ext/diag-align.lua - diagnostic virtual text starts in one column per paragraph, after its longest line (vim.g.diag_align = false: end of line; plugin/diag-align.lua)
