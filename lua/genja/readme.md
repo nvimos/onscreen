@@ -53,7 +53,7 @@ custom funcs
      ext/unsaved.lua - :Unsaved [cmd]: picker of modified buffers (write / discard), then cmd; :qa, :q, :x, jj, s: go through it
      ext/user-command/wrapfold.lua - fold markers with a title, :WrapFold
      ext/user-command/sort-length.lua - :[range]SortLen[!] sorts lines by length, ! reverses (keys in readme.cheatsheet.md)
-     ext/user-command/reload-lua.lua - :ReloadLua {module} drops a loaded module, requires it again, redraws
+     ext/user-command/reload-lua.lua - :ReloadLua {module} drops a loaded module, requires it again, redraws; :ReloadLuaGenja does it for every loaded module with genja in its name
      ext/git-stop-fsmonitor.lua - stops the git fsmonitor daemons of the repos seen, on exit and with :GitFsmonitorStop
      ext/colorize-mappings.lua - treesitter injection: vimscript colors in the rhs string of vim.keymap.set and km()
      completion/minuet.lua - blink.cmp feature 'minuet' for genja-completion011: minuet-ai source, <M-y> asks it

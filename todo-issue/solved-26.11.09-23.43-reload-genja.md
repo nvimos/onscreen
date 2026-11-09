@@ -1,0 +1,7 @@
+- [x] ext: reload every genja module without restarting nvim (2026-11-09)
+    - [x] `lua/genja/ext/user-command/reload-lua.lua`: `:ReloadLua2` renamed to `:ReloadLua`, header fixed
+    - [x] `:ReloadLuaGenja`: drops every loaded module with genja in its name, requires them again, `genja` last
+    - [x] guards: re-entry refused, cwd restored, failed module keeps its old version, autocmd count before / after, timing
+    - [x] listed in `lua/genja/readme.md`; `todo-issue/solved-26.11.08-20.58-reload-lua.md` updated
+    - [ ] test: `:ReloadLuaGenja` prints `reloaded N modules in M ms`, the cwd stays
+    - [ ] test: a module with a syntax error is reported and the old one stays loaded
