@@ -1,0 +1,4 @@
+- [x] git: quitting nvim waited for the fsmonitor daemons to stop (2026-11-09)
+    - [x] `lua/genja/ext/git-stop-fsmonitor.lua`: `VimLeavePre` calls `stop_detached()`, one detached `git fsmonitor--daemon stop` per repo, nothing read
+    - [x] `:GitFsmonitorStop` still checks config and daemon, waits and reports
+    - [ ] test: quit nvim in a repo with `core.fsmonitor=true`: no delay, no daemon left for that repo

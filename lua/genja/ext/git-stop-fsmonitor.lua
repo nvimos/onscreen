@@ -7,12 +7,13 @@ and nothing ever stops it. It holds a handle on the working tree, so Windows
 refuses to rename or delete a parent folder. Plugins and shells start it; we
 cannot wrap them all, so we keep the repos we met and stop their daemons:
 
-- on exit (VimLeavePre)
-- on :GitFsmonitorStop
+- on exit (VimLeavePre): one detached `git fsmonitor--daemon stop` per repo,
+  nothing is waited for, so quitting stays instant
+- on :GitFsmonitorStop: checks core.fsmonitor and the daemon first, waits,
+  and reports one line per daemon
 
-Repos are recorded from the cwd, :cd and every file read. A repo is touched
-only when core.fsmonitor is true there and its daemon is running. The next git
-call restarts the daemon, so stopping one that is still wanted costs a slower
+Repos are recorded from the cwd, :cd and every file read. The next git call
+restarts a stopped daemon, so stopping one that is still wanted costs a slower
 first `git status`.
 
 ]]
@@ -107,6 +108,18 @@ function M.stop_all()
     return running, wave(running, { 'fsmonitor--daemon', 'stop' })
 end
 
+---Fire `git fsmonitor--daemon stop` at every recorded repo and return at once. The
+---processes are detached, so they finish after nvim has exited; results are not
+---read. No config or status check first: stop on a repo without a daemon only
+---fails inside the detached git, where nobody looks.
+function M.stop_detached()
+    for root in pairs(repos) do
+        local cmd = { 'git', '-C', root, 'fsmonitor--daemon', 'stop' }
+        -- best effort: a spawn that fails (git missing) leaves nothing to do while quitting
+        pcall(vim.system, cmd, { detach = true, stdin = false, stdout = false, stderr = false })
+    end
+end
+
 --- :GitFsmonitorStop, one line per daemon, nothing when none runs
 local function stop_and_report()
     local running, stops = M.stop_all()
@@ -138,10 +151,8 @@ function M.setup()
     })
     vim.api.nvim_create_autocmd('VimLeavePre', {
         group = group,
-        -- best-effort cleanup while quitting: nobody can read a report anymore
-        callback = function()
-            M.stop_all()
-        end,
+        -- best-effort cleanup while quitting: fire and detach, never wait
+        callback = M.stop_detached,
     })
 
     vim.api.nvim_create_user_command('GitFsmonitorStop', stop_and_report, {
