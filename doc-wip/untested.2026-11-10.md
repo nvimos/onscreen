@@ -1,6 +1,18 @@
 # Untested, 2026-11-10 (auto-todo-20261110-0032)
 
-One feature per line, in the order to try them.
+One feature per line, in the order to try them. Mechanical checks were run by Claude (below);
+the lines left open are for trying the features by hand, to learn them.
+
+## Checked by Claude (2026-11-10 00:50, headless)
+
+- [x] passed: `make test D=md` (incl. tests/md/test_md_links.lua), `D=f2`, `D=startup`
+- [x] passed: templ and proto parsers build and load (`vim.treesitter.language.add`)
+- [x] passed: F2 source gives `AI  claude`; F2 `view  colorcolumn on`; `<leader>tC` toggles 4,8 off and back
+- [x] passed: md-fix status is '' when idle; genja-statusline has one statusline_extra part
+- [x] passed: neotest-vitest and neotest-jest load and have is_test_file
+- [ ] not checked: PR branch changes (zen z3, tasks, docker, k8s) beyond syntax; run their test dirs after merging
+
+## To try by hand
 
 - [ ] F2 AI claude: `<F2>` > `ai  claude` from a file, then from oil (lua/genja/f2/collect/claude.lua)
 - [ ] Go parsers templ, proto: open a `.templ` and a `.proto` file, `:InspectTree` (lua/lazyp/my/load-treesitter.lua) -> doc-wip/readme.2026-11-10.go-parsers.md
