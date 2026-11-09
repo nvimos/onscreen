@@ -85,7 +85,7 @@ Legend (legendary.nvim fork 0king/legendary.nvim, lua/lazyp/new/legendary.lua, k
 Colours (ccc.nvim, lua/lazyp/new/ccc.lua, keys in lua/genja/map-plugin/ccc.lua)
 
     <leader>ic   pick a colour: edits the one under the cursor, else inserts   :CccPick
-                 in the picker: j/k bar, h/l or <Left>/<Right> -/+1, s/d -/+5, 0-9 set 0-90%, i RGB/HSL bars, o output format, <CR> apply, q quit
+                 in the picker: j/k bar, h/l or <Left>/<Right> -/+1, s/d -/+5, 0-9 set 0-90%, <Tab> or i RGB/HSL/CMYK bars, o output format, a show/hide alpha (hidden at start), <CR> apply, <Esc> or q quit, ? key list popup (<Esc>, q or ? closes it)
     <leader>tc   paint colours in the buffer on/off (on by default in vim, lua, css, scss)   :CccHighlighterToggle
     :CccConvert  cycle the colour under the cursor: hex -> rgb() -> hsl()
 

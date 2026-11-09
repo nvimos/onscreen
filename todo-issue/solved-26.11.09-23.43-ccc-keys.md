@@ -1,0 +1,4 @@
+- [x] ccc: picker keys closer to habit (2026-11-09)
+    - [x] `lua/lazyp/new/ccc.lua`: `<Esc>` quits, `<Tab>` cycles RGB/HSL/CMYK, `?` key list float, alpha hidden at start
+    - [x] `readme.cheatsheet.md` Colours section
+    - [ ] test: `<leader>ic`, then `?`, `<Tab>`, `a`, `<Esc>`

@@ -11,6 +11,43 @@ local function highlight(bufnr)
 	require('ccc.highlighter'):enable(bufnr)
 end
 
+local SRC = 'lua/lazyp/new/ccc.lua: '
+
+local HELP = {
+	'<Esc> q      close the picker',
+	'<CR>         insert the colour',
+	'<Tab>  i     next colour mode (RGB, HSL, CMYK)',
+	'o            next output format',
+	'a            show or hide alpha',
+	'h l  <Left> <Right>   -1 / +1',
+	's d          -5 / +5',
+	'm ,          -10 / +10',
+	'0-9          set slider to 0-90 %',
+	'H M L        set slider to 0 / 50 / 100 %',
+	'r            reset mode',
+	'g            show previous colours',
+	'b w  B W     previous colour: back, forward, first, last',
+	'?            this help',
+}
+
+-- Small modal listing the picker keys; <Esc> and q close it.
+local function show_help()
+	local ok, float = pcall(require, 'genja-util.float')
+	if not ok then
+		vim.notify(SRC .. 'genja-util.float not found', vim.log.levels.WARN)
+		return
+	end
+	local width = 0
+	for _, line in ipairs(HELP) do
+		width = math.max(width, vim.fn.strdisplaywidth(line))
+	end
+	local buf = float.scratch(HELP)
+	local win = float.open(buf, { width = width + 2, height = #HELP, title = 'ccc keys', zindex = 100 })
+	for _, key in ipairs({ '<Esc>', 'q', '?' }) do
+		vim.keymap.set('n', key, function() float.close(win) end, { buffer = buf, nowait = true })
+	end
+end
+
 ---@type LazySpec
 return {
 	'uga-rosa/ccc.nvim',
@@ -25,8 +62,13 @@ return {
 				auto_enable = false,
 				lsp = false, -- nvim's own LSP document colours would draw a second time
 			},
+			-- Colours in nvim carry no alpha: hidden at start, `a` shows it.
+			alpha_show = 'hide',
 			-- Added to the defaults (h/l, s/d, …), which stay.
 			mappings = {
+				['<Esc>'] = mapping.quit,
+				['<Tab>'] = mapping.cycle_input_mode,
+				['?'] = show_help,
 				['<Left>'] = mapping.decrease1,
 				['<Right>'] = mapping.increase1,
 			},
