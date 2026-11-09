@@ -387,6 +387,8 @@ km({ 'n', 'x' }, '<LeftMouse>', function()
 	return '<LeftMouse>'
 end, { expr = true, desc = 'Mouse: click runs a right-click menu item, opens a quickfix entry or a closed fold' })
 
+km('n', '<leader>tC', function() require('genja.ext.colorcolumn').toggle() end, { desc = 'Toggle: colorcolumn (window)' })
+
 -- mouse side buttons: X1 back, X2 forward in the jump list (<C-o> / <C-i>, which is <Tab>)
 vim.cmd([[nnoremap <X1Mouse> <C-o>]])
 vim.cmd([[nnoremap <X2Mouse> <Tab>]])

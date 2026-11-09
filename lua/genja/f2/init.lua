@@ -14,6 +14,7 @@
 --   msgs   file:line from :messages (tracebacks), newest 10 (lua/genja/ext/messages.lua)
 --   lsp    `EnableLang <lang>` when the buffer's language is off (genja-completion011)
 --   lookup `paste search provider (<current>)`: switch the provider (genja-paste-ai)
+--   view   `colorcolumn on|off` for the current window (lua/genja/ext/colorcolumn.lua)
 -- Order: groups by M.group_order (others after it, A-Z), then `order`, then label.
 
 ---@class genja.f2.Ctx
@@ -73,6 +74,7 @@ local sources = {
 	require('genja.f2.collect.messages'),
 	require('genja.f2.collect.lang'),
 	require('genja.f2.collect.lookup'),
+	require('genja.f2.collect.view'),
 }
 
 -- Normalized (forward slashes, no trailing slash): vim.fs.find takes the path

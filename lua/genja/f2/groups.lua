@@ -20,4 +20,5 @@ return {
     git       = 'git',
     oil       = 'oil',
     gui       = 'gui',
+    view      = 'view',
 }
