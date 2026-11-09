@@ -10,6 +10,7 @@ return {
     markdown  = 'markdown',
     script    = 'script',
     claude    = 'claude',
+    ai        = 'AI',
     lookup    = 'lookup',
     adhoc     = 'adhoc',
     diag      = 'diag',

@@ -4,7 +4,7 @@ Sources, task fields and the add_tasks API: header of `init.lua`. Tests: `readme
 
 ## Conventions
 
-- Group names are at most 14 characters: `adhoc`, `this file (%)`, `diag`, `git`, `make`, `oil`, `claude`, `gui`, `msgs`, `markdown`.
+- Group names are at most 14 characters: `adhoc`, `this file (%)`, `diag`, `git`, `make`, `oil`, `claude`, `AI`, `gui`, `msgs`, `markdown`.
   `registry.lua` warns when an added task's group is longer.
 - The main list right-aligns the group to 14 columns, then two spaces, then the label
   (`picker.display()`), so the labels start in one column:

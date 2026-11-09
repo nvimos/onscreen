@@ -7,6 +7,7 @@
 --   make   `targets (N)`, a sub-picker of the Makefile targets above the dir
 --   script `<runner> scripts in <dir> (N)`: composer.json and package.json scripts, sub-pickers
 --   claude one item per running claude terminal (genja-claudefterm): show it
+--   AI     `claude`: :Ct, claude for the current project in the current window (no split)
 --   gui    in a GUI: open the GuiFuncs picker (nvim-qt toggles)
 --   diag   `show all (N hidden)` when the diagnostics limit hides some (lua/genja/ext/diag-limit.lua);
 --          `align: ...` switches the virtual text column (lua/genja/ext/diag-align.lua)
@@ -47,7 +48,7 @@ local SRC = 'lua/genja/f2/init.lua: '
 M.groups = require('genja.f2.groups')
 
 local g = M.groups
-M.group_order = { g.adhoc, g.this_file, g.lsp, g.diag, g.git, g.make, g.script, g.oil, g.claude, g.gui, g.msgs }
+M.group_order = { g.adhoc, g.this_file, g.lsp, g.diag, g.git, g.make, g.script, g.oil, g.ai, g.claude, g.gui, g.msgs }
 
 ---Add tasks; same group + label updates the earlier one.
 ---opts.buffer: only for that buffer (0 = current), dropped when it is wiped.
