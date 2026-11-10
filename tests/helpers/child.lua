@@ -14,6 +14,7 @@
 -- eval()       child.lua with the `return` written for you
 -- needs()      wrap a case so it is skipped when a program is not on PATH
 -- installed()  are these lazy.nvim plugins on disk (telescope tests skip without them)
+-- settle()     sleep, then let the child run its scheduled callbacks
 -- typer()      a keys(...) function: type each key, then let the child settle (telescope redraws late)
 -- wait_for()   poll a Lua expression in the child until it is truthy
 -- TMP          setup snippet: `tmp`, a fresh temp dir in the child
@@ -35,6 +36,7 @@ vim.notify = function(msg) table.insert(_G.notes, msg) end
 ---@field lines? integer screen size of the child
 ---@field columns? integer
 ---@field only_if? boolean false: no child is started (the cases skip themselves)
+---@field after? fun() runs after the setup, e.g. to let telescope settle
 
 ---@param setup? string Lua run in the child after each restart
 ---@param hooks? table more MiniTest hooks (pre_once, post_case, ...)
@@ -58,6 +60,9 @@ function M.fresh(setup, hooks, opts)
 			end
 			if setup then
 				child.lua(setup)
+			end
+			if opts.after then
+				opts.after()
 			end
 		end,
 		-- the file's own post_once (cleanup) runs after the child stopped
@@ -116,10 +121,17 @@ function M.typer(child, ms)
 	return function(...)
 		for _, k in ipairs({ ... }) do
 			child.type_keys(k)
-			vim.uv.sleep(ms or 150)
-			child.lua([[vim.wait(50)]])
+			M.settle(child, ms)
 		end
 	end
+end
+
+---Sleep `ms` (default 150), then a vim.wait in the child so its scheduled callbacks run.
+---@param child table
+---@param ms? integer
+function M.settle(child, ms)
+	vim.uv.sleep(ms or 150)
+	child.lua([[vim.wait(50)]])
 end
 
 ---Poll `expr` in the child every 100 ms until it is truthy or `ms` (default 5000) pass.

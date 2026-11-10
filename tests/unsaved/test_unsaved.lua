@@ -67,8 +67,7 @@ local child, T = C.fresh([[
 local keys = C.typer(child, 200)
 
 local function settle()
-	vim.uv.sleep(200)
-	child.lua([[vim.wait(50)]])
+	C.settle(child, 200)
 end
 
 -- MiniTest.skip() only ends the function it is called in, so check per case
