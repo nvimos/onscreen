@@ -11,6 +11,11 @@ the lines left open are for trying the features by hand, to learn them.
 - [x] passed: md-fix status is '' when idle; genja-statusline has one statusline_extra part
 - [x] passed: neotest-vitest and neotest-jest load and have is_test_file
 - [x] passed: treesitter svelte, astro, angular build and load; vue_ls, vtsls, angularls, svelte, astro, tsc exist in nvim-lspconfig
+- [x] passed: tests/reload (new: :ReloadLua keeps the old module, :ReloadLuaGenja keeps the cwd)
+- [ ] failing: full `make test` (01:15): 265 of 267 pass. `comps011 mason: linters installed`: eslint, stylelint,
+      golangci-lint, drupal-check not installed on this machine (`:MasonToolsInstall`). `startup below 1 s: a lua file`:
+      1.04-1.47 s (it was just under 1 s at 00:50; tonight's svelte/astro/angular parsers cost at most ~50 ms in a quick
+      comparison, the rest is noise or older); look at `nvim --startuptime` (lazy-plug-spec ~300 ms, opening buffers ~380 ms)
 - [ ] not checked: PR branch changes (zen z3, tasks, docker, k8s) beyond syntax; run their test dirs after merging
 
 ## To try by hand
