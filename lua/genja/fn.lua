@@ -26,7 +26,7 @@ UserComm = require 'genja.api'.UserComm
 ---@param path string
 ---@return boolean
 function FileExists(path)
-	local stat = vim.loop.fs_stat(path)
+	local stat = vim.uv.fs_stat(path)
 	return stat ~= nil
 end
 

@@ -96,9 +96,15 @@ return {
 
         vim.api.nvim_create_user_command('ReloadLua',
             function(o)
+                local old = package.loaded[o.args]
                 package.loaded[o.args] = nil
                 local ok, err = pcall(require, o.args)
-                if not ok then return vim.notify(err, vim.log.levels.ERROR) end
+                if not ok then
+                    -- keep the working version instead of a hole in package.loaded
+                    package.loaded[o.args] = old
+                    vim.notify(SRC .. 'kept the old version of ' .. o.args .. ': ' .. tostring(err), vim.log.levels.ERROR)
+                    return
+                end
                 vim.cmd('redrawstatus! | redrawtabline')
             end,
             {
