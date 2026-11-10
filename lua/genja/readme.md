@@ -36,6 +36,7 @@ custom funcs
      ext/debug-ui.lua - dap-ui opens on a session's first stop, in its own tab or the current one (g:genja_debug_auto_open, g:genja_debug_layout); closes at the end
      ext/debug-fkeys.lua - during a debug session `!` flips F1-F8 between debug actions and their own maps
      ext/debug-ddev.lua - DDEV in WSL: warn when xdebug_ide_location isn't the Windows IP; :DdevXdebugHost sets it; :DebugCli, :DebugBehat run in the container under the debugger
+     ext/debug-js.lua - JS/TS debugging with js-debug-adapter: Node (this file, npm run dev, attach) and Chrome on a dev server
      ext/md-glow.lua - <F2> in markdown: glow preview of the file in a new pwsh window (Windows only)
      ext/messages.lua - :Messages -dump/-quick/-loc (plugin/messages.lua) and <F2> messages: file:line from :messages (tests: tests/messages/)
      ext/messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
