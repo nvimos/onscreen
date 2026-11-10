@@ -79,10 +79,25 @@ end
 local function write_nofile(buf, cmd)
 	vim.fn.mkdir(vim.fn.expand('~/tmp'), 'p')
 	vim.api.nvim_set_current_buf(buf)
-	vim.api.nvim_create_autocmd('BufWritePost', {
-		buffer = buf,
+	-- Global, not `buffer = buf`: `:w <file>` on a buffer without a name skips its buffer-local
+	-- BufWritePost (checked 2026-11-10), so the picker would never come back after the write.
+	local after_write
+	after_write = vim.api.nvim_create_autocmd('BufWritePost', {
+		callback = function(args)
+			if args.buf ~= buf then
+				return
+			end
+			pcall(vim.api.nvim_del_autocmd, after_write)
+			vim.schedule(function() M.run(cmd) end)
+		end,
+	})
+	-- Cmdline left without the write (<Esc>, or another command typed): disarm, or a later :w of this
+	-- buffer would run `cmd` (a :qa) out of the blue. The :w itself fires BufWritePost before this runs.
+	vim.api.nvim_create_autocmd('CmdlineLeave', {
 		once = true,
-		callback = function() vim.schedule(function() M.run(cmd) end) end,
+		callback = function()
+			vim.schedule(function() pcall(vim.api.nvim_del_autocmd, after_write) end)
+		end,
 	})
 	vim.api.nvim_feedkeys(':w ' .. M.save_path(buf), 'n', false)
 end
