@@ -314,7 +314,6 @@ local function search_dir_of_file()
 		vim.api.nvim_feedkeys(slash, 'n', false)
 	end)
 end
-km('n', '<leader>ee', '<cmd>:edit %:p:h<cr>/', nosi 'seek in `dirname`')
 km('n', '<leader>ee', search_dir_of_file, nosi 'seek in `dirname`') -- for Oil
 -- }}}
 
