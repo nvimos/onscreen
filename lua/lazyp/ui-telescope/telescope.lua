@@ -1,19 +1,5 @@
 
-vim.api.nvim_create_autocmd({ 'UIEnter' }, {
-	group = vim.api.nvim_create_augroup('Plugins', { clear = false }),
-	callback = function(_)
-		local ok, ts = pcall(require, 'telescope')
-		if not ok then
-			error 'cannot load nvim-telescope/telescope.nvim'
-		else
-			ts.load_extension 'mycolors'
-			ts.load_extension 'mydirs'
-			ts.load_extension 'mylunsj'
-			ts.load_extension 'undersort'
-		end
-	end,
-	}
-)
+-- the own extensions (mycolors, mydirs, mylunsj, undersort) load on UIEnter in lua/genja/auto.lua
 
 
 ---@type LazySpec

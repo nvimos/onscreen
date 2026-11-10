@@ -52,6 +52,7 @@ augrp('UserLspConfig', { clear = true })
 
 -- {{{ autocmd: close mason and lazy tui
 aucmd('FileType', {
+	group = augrp('GenjaCloseTui', { clear = true }),
 	pattern = { 'mason', 'lazy' },
 	callback = function(ev)
 		bkm(ev.buf, 'n', '<esc>', '<cmd>quit<cr>', nosi "Close: TUI")

@@ -55,10 +55,12 @@ command! YankYmd put =luaeval('os.date([[%Y-%m-%d]])')
 
 " Autocommands
 
-augroup FileType c,cpp,java set mps+==:;
-augroup FileType lua set mps+function(:end
+" was `augroup FileType c,cpp,java set mps+==:;` and a lua one: they set nothing, only made two odd groups
 augroup GenjaGeneralSettings
 	autocmd!
+
+	" % also jumps between = and ; (assignments); lua function/end needs matchit, matchpairs takes single chars
+	autocmd FileType c,cpp,java setlocal matchpairs+==:;
 
 	" close with q, x
 	autocmd FileType qf,help,man,lspinfo,telescope nnoremap <silent> <buffer> q :close<CR>
@@ -102,6 +104,9 @@ augroup end
 
 
 
-autocmd FileType vim,help setlocal keywordprg=:help
+augroup GenjaKeywordprg
+	autocmd!
+	autocmd FileType vim,help setlocal keywordprg=:help
+augroup END
 
 
