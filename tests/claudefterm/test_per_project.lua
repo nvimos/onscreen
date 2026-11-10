@@ -12,21 +12,11 @@ local function installed(name) return vim.uv.fs_stat(lazy .. name) ~= nil end
 local have_floaterm = installed('vim-floaterm')
 local have_telescope = installed('telescope.nvim') and installed('plenary.nvim')
 
----Poll `expr` (Lua, returns a value) in the child until truthy or `ms` pass.
----@param expr string
----@param ms? integer
----@return any last value
+local C = require('helpers.child')
+
+---Poll `expr` in the child until truthy or `ms` pass (helpers.child).
 local function wait_for(expr, ms)
-	local stop = vim.uv.hrtime() + (ms or 5000) * 1e6
-	local got = nil
-	while vim.uv.hrtime() < stop do
-		got = child.lua('return ' .. expr)
-		if got then
-			return got
-		end
-		vim.uv.sleep(100)
-	end
-	return got
+	return C.wait_for(child, expr, ms)
 end
 
 local function settle()

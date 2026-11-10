@@ -1,43 +1,33 @@
 -- lua/genja/ext/messages.lua (:Messages, F2 source) and lua/genja/ext/messages-capture.lua.
 -- Errors are real: a Lua file in a temp dir raises one, so :messages holds a real traceback.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([[
-				vim.cmd('runtime plugin/messages.lua')
-				_G.M = require('genja.ext.messages')
-				_G.tmp = vim.fs.normalize(vim.fn.tempname())
-				vim.fn.mkdir(tmp, 'p')
-				_G.bad = tmp .. '/bad.lua'
-				vim.fn.writefile({ 'local x = 1', 'error("boom")' }, bad)
-				-- an error in :messages, as a failing :luafile leaves it
-				_G.fail = function()
-					local ok, err = pcall(vim.cmd, 'luafile ' .. bad)
-					vim.api.nvim_echo({ { tostring(err) } }, true, { err = true })
-				end
-			]])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh(C.TMP .. [[
+	vim.cmd('runtime plugin/messages.lua')
+	_G.M = require('genja.ext.messages')
+	_G.bad = tmp .. '/bad.lua'
+	vim.fn.writefile({ 'local x = 1', 'error("boom")' }, bad)
+	-- an error in :messages, as a failing :luafile leaves it
+	_G.fail = function()
+		local ok, err = pcall(vim.cmd, 'luafile ' .. bad)
+		vim.api.nvim_echo({ { tostring(err) } }, true, { err = true })
+	end
+]])
 
 T['locations: Lua path:line from a real error'] = function()
 	child.lua([[fail()]])
-	local locs = child.lua([[return M.locations(M.lines())]])
+	local locs = C.eval(child, [[M.locations(M.lines())]])
 	eq(#locs >= 1, true)
-	eq(locs[1].filename, child.lua([[return bad]]))
+	eq(locs[1].filename, C.eval(child, [[bad]]))
 	eq(locs[1].lnum, 2)
 end
 
 T['locations: shortened traceback paths are found in the runtimepath'] = function()
-	local file = child.lua([[return M.resolve('...ocal/nvim/lua/genja/ext/messages.lua')]])
+	local file = C.eval(child, [[M.resolve('...ocal/nvim/lua/genja/ext/messages.lua')]])
 	eq(vim.endswith(file, '/lua/genja/ext/messages.lua'), true)
-	eq(child.lua([[return M.resolve('...nowhere/lua/genja/nope.lua')]]), vim.NIL)
+	eq(C.eval(child, [[M.resolve('...nowhere/lua/genja/nope.lua')]]), vim.NIL)
 end
 
 T['locations: Vim script errors (processing <file>, line <n>)'] = function()
@@ -57,8 +47,8 @@ end
 
 T['locations: each file:line once, missing files skipped'] = function()
 	local locs = child.lua('return M.locations(...)', { {
-		'E5108: ' .. child.lua([[return bad]]) .. ':2: boom',
-		'  ' .. child.lua([[return bad]]) .. ':2: in main chunk',
+		'E5108: ' .. C.eval(child, [[bad]]) .. ':2: boom',
+		'  ' .. C.eval(child, [[bad]]) .. ':2: in main chunk',
 		'C:/no/such/file.lua:9: gone',
 	} })
 	eq(#locs, 1)
@@ -84,7 +74,7 @@ T[':Messages -dump: <CR> on an error line opens file:line'] = function()
 		end
 	]])
 	child.type_keys('<CR>')
-	eq(child.lua([[return vim.fs.normalize(vim.api.nvim_buf_get_name(0)) == bad]]), true)
+	eq(C.eval(child, [[vim.fs.normalize(vim.api.nvim_buf_get_name(0)) == bad]]), true)
 	eq(child.lua([[return vim.api.nvim_win_get_cursor(0)[1] ]]), 2)
 end
 
@@ -94,17 +84,17 @@ T[':Messages -quick appends to the quickfix list'] = function()
 		fail()
 	]])
 	child.cmd('Messages -quick')
-	local qf = child.lua([[return vim.tbl_map(function(i) return i.lnum end, vim.fn.getqflist())]])
+	local qf = C.eval(child, [[vim.tbl_map(function(i) return i.lnum end, vim.fn.getqflist())]])
 	eq(qf[1], 1)
 	eq(vim.tbl_contains(qf, 2), true)
-	eq(child.lua([[return vim.fn.getqflist({ title = 1 }).title]]), ':Messages')
+	eq(C.eval(child, [[vim.fn.getqflist({ title = 1 }).title]]), ':Messages')
 end
 
 T[':Messages -loc fills the location list'] = function()
 	child.lua([[fail()]])
 	child.cmd('Messages -loc')
 	child.cmd('wincmd p')
-	eq(#child.lua([[return vim.fn.getloclist(0)]]) >= 1, true)
+	eq(#C.eval(child, [[vim.fn.getloclist(0)]]) >= 1, true)
 end
 
 T['F2 source: newest first, relative labels'] = function()
