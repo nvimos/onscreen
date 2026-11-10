@@ -1,5 +1,5 @@
 --[[
-PHP debugging with Xdebug.
+PHP debugging with Xdebug; also the nvim-dap setup for JS/TS (lua/genja/ext/debug-js.lua).
 
 Mason installs php-debug-adapter (lang/php.lua lists it). Run it with node
 directly, since libuv can't start Mason's .cmd wrapper on Windows.
@@ -27,7 +27,7 @@ local Maps = require('genja.map-plugin')
 ---@type LazySpec
 return {
 	'mfussenegger/nvim-dap',
-	ft = 'php',
+	ft = { 'php', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
 	keys = Maps:keys(),
 	config = function()
 		-- PHP adapter only when genja has PHP on (config.lua, setup() opts or local.lua).
@@ -68,6 +68,11 @@ return {
 					pathMappings = ddev_mappings,
 				},
 			}
+		end
+
+		-- JS / TS (Node, Chrome): lua/genja/ext/debug-js.lua, when genja has typescript on
+		if ok and genja.enabled('typescript') then
+			require('genja.ext.debug-js').setup(require('dap'))
 		end
 
 		local has_dapui, dapui = pcall(require, 'dapui')

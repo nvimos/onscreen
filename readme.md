@@ -66,6 +66,9 @@ directory](tests/)
     `:EnableLang`, and a new language plugs in with its own rules
   - A PHP project with its HTML, CSS, JS, framework, tests and tooling is
     linted, parsed and understood without days of setup
+  - The same for a project that is only TypeScript: React, Vue, Angular,
+    Svelte or Astro on Node, with its lint, tests and a debugger for the
+    server and the browser
 - The editor as the workplace
   - Terminals, git, WSL and Docker can be used from nvim, without leaving the
     editor

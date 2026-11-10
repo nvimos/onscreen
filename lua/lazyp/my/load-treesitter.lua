@@ -107,6 +107,9 @@ return {
 					'typescript',
 					'javascript',
 					'tsx',
+					'svelte',
+					'astro',
+					'angular', -- Angular templates (component .html with angular syntax)
 					'jsdoc', -- /** */ comments in JS and TS
 					'regex', -- regex literals in JS, TS and others
 				})

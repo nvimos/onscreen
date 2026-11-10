@@ -28,6 +28,7 @@ Unmarked bullets were stated by user.
 - Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; On-Screen Nvim aims to.
 - Then debugging comes in: no IDE or Vim config the user has opened gives those tools out of the box, and every project needs them at some point. Debugging should feel and behave the same in a C or a Go project.
 - PHP as the starting point ("good enough PHP", user has ideas); then the same feel for Go projects.
+- TypeScript-only projects get the same out of the box (2026-11-10): React, Vue, Angular, plus Svelte and Astro; Node tooling (package.json scripts in `<F2>`, vitest/jest, js-debug for Node and Chrome). The user doesn't write TypeScript; picture someone who only does.
 - C: navigate and explore C projects (user is not a C/C++ developer).
 - New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects; including everything is pointless.
 - nvim is the interface to the OS for coding work: shell, terminal, PowerShell, Git Bash, git; simple tasks shouldn't need leaving nvim. Windows lacks a good setup otherwise (user came from Linux).
