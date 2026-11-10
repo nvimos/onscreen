@@ -1,30 +1,20 @@
 -- lua/genja/ext/md-abbrev.lua and lua/genja/ext/md-fix.lua. Fresh child nvim per case.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([[
-				_G.A = require('genja.ext.md-abbrev')
-				_G.F = require('genja.ext.md-fix')
-				_G.tmp = vim.fs.normalize(vim.fn.tempname())
-				vim.fn.mkdir(tmp, 'p')
-			]])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh(C.TMP .. [[
+	_G.A = require('genja.ext.md-abbrev')
+	_G.F = require('genja.ext.md-fix')
+]])
 
 T['abbrev: parse skips comments and blanks, right side may have spaces'] = function()
-	eq(child.lua([[return A.parse({ '# c', '', 'teh the', '  adn   and ', 'ty thank you', 'single' })]]),
+	eq(C.eval(child, [[A.parse({ '# c', '', 'teh the', '  adn   and ', 'ty thank you', 'single' })]]),
 		{ { 'teh', 'the' }, { 'adn', 'and' }, { 'ty', 'thank you' } })
 end
 
 T['abbrev: the shipped list parses'] = function()
-	eq(child.lua([[return #A.parse(vim.fn.readfile(A.FILE)) > 5]]), true)
+	eq(C.eval(child, [[#A.parse(vim.fn.readfile(A.FILE)) > 5]]), true)
 end
 
 T['abbrev: apply sets buffer-local insert abbreviations'] = function()
@@ -32,9 +22,9 @@ T['abbrev: apply sets buffer-local insert abbreviations'] = function()
 		vim.fn.writefile({ 'teh the' }, tmp .. '/ab.txt')
 		A.apply(0, tmp .. '/ab.txt')
 	]])
-	eq(child.lua([[return vim.fn.maparg('teh', 'i', true)]]), 'the')
+	eq(C.eval(child, [[vim.fn.maparg('teh', 'i', true)]]), 'the')
 	child.type_keys('i', 'teh ', '<Esc>')
-	eq(child.lua([[return vim.api.nvim_get_current_line()]]), 'the ')
+	eq(C.eval(child, [[vim.api.nvim_get_current_line()]]), 'the ')
 end
 
 T['fix: commands, shared markdownlint config without a project one'] = function()
@@ -53,7 +43,7 @@ T['fix: a project config wins over the shared one'] = function()
 		vim.fn.writefile({ '{}' }, tmp .. '/.markdownlint.jsonc')
 		return F.commands(tmp .. '/a.md')
 	]])
-	eq(got[2], { 'markdownlint-cli2', '--fix', child.lua([[return tmp .. '/a.md']]) })
+	eq(got[2], { 'markdownlint-cli2', '--fix', C.eval(child, [[tmp .. '/a.md']]) })
 end
 
 T['fix: missing tools are left out'] = function()
@@ -250,7 +240,7 @@ local function fix_file(lines, ec_lines)
 	local got = lines
 	local stop = vim.uv.hrtime() + 5e9
 	while vim.uv.hrtime() < stop do
-		got = child.lua([[return vim.fn.readfile(tmp .. '/f.md')]])
+		got = C.eval(child, [[vim.fn.readfile(tmp .. '/f.md')]])
 		if table.concat(got, '\n') ~= before then
 			break
 		end
@@ -284,21 +274,21 @@ T['save: :w with [*.md] indent_style = tab turns space indents into tabs, the bu
 	local got = nil
 	local stop = vim.uv.hrtime() + 5e9
 	while vim.uv.hrtime() < stop do
-		got = child.lua([[return vim.api.nvim_buf_get_lines(0, 0, -1, false)]])
+		got = C.eval(child, [[vim.api.nvim_buf_get_lines(0, 0, -1, false)]])
 		if vim.deep_equal(got, want) then
 			break
 		end
 		vim.uv.sleep(100)
 	end
 	eq(got, want)
-	eq(child.lua([[return vim.fn.readfile(tmp .. '/s.md')]]), want)
+	eq(C.eval(child, [[vim.fn.readfile(tmp .. '/s.md')]]), want)
 end
 
 T['fix: typos rewrites the file, the buffer reloads'] = function()
 	-- mason's bin is not on PATH in the bare child
 	local bin = vim.fn.stdpath('data') .. '/mason/bin'
 	child.lua('vim.env.PATH = ... .. (vim.fn.has("win32") == 1 and ";" or ":") .. vim.env.PATH', { bin })
-	if child.lua([[return vim.fn.executable('typos')]]) == 0 then
+	if C.eval(child, [[vim.fn.executable('typos')]]) == 0 then
 		MiniTest.skip('typos not installed')
 	end
 	child.lua([[

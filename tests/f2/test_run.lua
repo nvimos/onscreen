@@ -1,32 +1,22 @@
 -- f2 run.lua: keys / function / cmd, autoremove, merge. overseer, floaterm
 -- and nvim_feedkeys are stubbed in the child; nothing is really run.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([[
-				_G.notes = {}
-				vim.notify = function(msg) table.insert(_G.notes, msg) end
-				_G.run = require('genja.f2.run')
-				_G.calls = {}
-				run.overseer = function(name, cmd, cwd, on_exit)
-					table.insert(calls, { runner = 'overseer', name = name, cmd = cmd, cwd = cwd, on_exit = on_exit })
-				end
-				run.floaterm = function(cmd, cwd, on_exit)
-					table.insert(calls, { runner = 'floaterm', cmd = cmd, cwd = cwd, on_exit = on_exit })
-				end
-				_G.removed = 0
-				_G.remove = function() removed = removed + 1 end
-				_G.ctx = { dir = 'C:/work', bufnr = 0, filetype = '' }
-			]])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh(C.NOTES .. [[
+	_G.run = require('genja.f2.run')
+	_G.calls = {}
+	run.overseer = function(name, cmd, cwd, on_exit)
+		table.insert(calls, { runner = 'overseer', name = name, cmd = cmd, cwd = cwd, on_exit = on_exit })
+	end
+	run.floaterm = function(cmd, cwd, on_exit)
+		table.insert(calls, { runner = 'floaterm', cmd = cmd, cwd = cwd, on_exit = on_exit })
+	end
+	_G.removed = 0
+	_G.remove = function() removed = removed + 1 end
+	_G.ctx = { dir = 'C:/work', bufnr = 0, filetype = '' }
+]])
 
 T['keys'] = MiniTest.new_set()
 
@@ -38,8 +28,8 @@ T['keys']['are fed with mappings, after a schedule'] = function()
 		vim.wait(500, function() return _G.fed ~= nil end)
 		return _G.fed
 	]])
-	eq(fed, { child.lua([[return vim.keycode('<Cmd>echo<CR>')]]), 'm' })
-	eq(child.lua('return removed'), 0)
+	eq(fed, { C.eval(child, [[vim.keycode('<Cmd>echo<CR>')]]), 'm' })
+	eq(C.eval(child, 'removed'), 0)
 end
 
 T['keys']['with autoremove are removed after feeding'] = function()
@@ -47,7 +37,7 @@ T['keys']['with autoremove are removed after feeding'] = function()
 		vim.api.nvim_feedkeys = function() end
 		run.task({ group = 'g', label = 'l', action = 'gg', autoremove = true }, ctx, remove)
 	]])
-	eq(child.lua('return removed'), 1)
+	eq(C.eval(child, 'removed'), 1)
 end
 
 T['function'] = MiniTest.new_set()
@@ -63,23 +53,23 @@ end
 
 T['function']['returning true with autoremove is removed'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', autoremove = true, action = function() return true end }, ctx, remove)]])
-	eq(child.lua('return removed'), 1)
+	eq(C.eval(child, 'removed'), 1)
 end
 
 T['function']['returning false with autoremove stays'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', autoremove = true, action = function() return false end }, ctx, remove)]])
-	eq(child.lua('return removed'), 0)
+	eq(C.eval(child, 'removed'), 0)
 end
 
 T['function']['returning true without autoremove stays'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', action = function() return true end }, ctx, remove)]])
-	eq(child.lua('return removed'), 0)
+	eq(C.eval(child, 'removed'), 0)
 end
 
 T['function']['error notifies and stays'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', autoremove = true, action = function() error('boom') end }, ctx, remove)]])
-	eq(child.lua('return removed'), 0)
-	eq(child.lua('return #notes'), 1)
+	eq(C.eval(child, 'removed'), 0)
+	eq(C.eval(child, '#notes'), 1)
 end
 
 T['cmd'] = MiniTest.new_set()
@@ -110,17 +100,17 @@ end
 T['cmd']['autoremove = true removes on exit 0 only'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', cmd = 'x', autoremove = true }, ctx, remove)]])
 	child.lua('calls[1].on_exit(1)')
-	eq(child.lua('return removed'), 0)
+	eq(C.eval(child, 'removed'), 0)
 	child.lua('calls[1].on_exit(0)')
-	eq(child.lua('return removed'), 1)
+	eq(C.eval(child, 'removed'), 1)
 end
 
 T['cmd']['autoremove = 2 removes on exit 2 only'] = function()
 	child.lua([[run.task({ group = 'g', label = 'l', cmd = 'x', autoremove = 2 }, ctx, remove)]])
 	child.lua('calls[1].on_exit(0)')
-	eq(child.lua('return removed'), 0)
+	eq(C.eval(child, 'removed'), 0)
 	child.lua('calls[1].on_exit(2)')
-	eq(child.lua('return removed'), 1)
+	eq(C.eval(child, 'removed'), 1)
 end
 
 T['entries'] = MiniTest.new_set()
@@ -153,7 +143,7 @@ T['entries']['merged autoremove removes every merged task'] = function()
 		run.entries({ { task = t1, remove = remove }, { task = t2, remove = remove } }, ctx)
 		calls[1].on_exit(0)
 	]])
-	eq(child.lua('return removed'), 2)
+	eq(C.eval(child, 'removed'), 2)
 end
 
 T['entries']['different cwd is not merged'] = function()

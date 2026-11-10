@@ -1,58 +1,48 @@
 -- f2.add_tasks / add_task / remove_tasks: scope, merge, cond, validation.
 -- Runs in a fresh child nvim per case, so the registry starts empty.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([[
-				_G.notes = {}
-				vim.notify = function(msg) table.insert(_G.notes, msg) end
-				_G.f2 = require('genja.f2')
-				_G.registry = require('genja.f2.registry')
-				-- sorted 'group: label' of what <F2> would list from added tasks
-				_G.labels = function(bufnr, filetype)
-					local ctx = { dir = '.', bufnr = bufnr or vim.api.nvim_get_current_buf(), filetype = filetype or '' }
-					local out = {}
-					for _, e in ipairs(registry.list(ctx)) do
-						table.insert(out, e.task.group .. ': ' .. e.task.label)
-					end
-					table.sort(out)
-					return out
-				end
-			]])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh(C.NOTES .. [[
+	_G.f2 = require('genja.f2')
+	_G.registry = require('genja.f2.registry')
+	-- sorted 'group: label' of what <F2> would list from added tasks
+	_G.labels = function(bufnr, filetype)
+		local ctx = { dir = '.', bufnr = bufnr or vim.api.nvim_get_current_buf(), filetype = filetype or '' }
+		local out = {}
+		for _, e in ipairs(registry.list(ctx)) do
+			table.insert(out, e.task.group .. ': ' .. e.task.label)
+		end
+		table.sort(out)
+		return out
+	end
+]])
 
 local function labels(bufnr, filetype)
-	return child.lua('return labels(...)', { bufnr, filetype })
+	return C.eval(child, 'labels(...)', { bufnr, filetype })
 end
 
 T['global task shows in every buffer'] = function()
 	child.lua([[f2.add_tasks({ { group = 'demo', label = 'top', action = 'gg' } })]])
 	eq(labels(), { 'demo: top' })
-	local other = child.lua('return vim.api.nvim_create_buf(true, false)')
+	local other = C.eval(child, 'vim.api.nvim_create_buf(true, false)')
 	eq(labels(other), { 'demo: top' })
 end
 
 T['buffer task shows only in its buffer'] = function()
 	child.lua([[f2.add_tasks({ { group = 'demo', label = 'top', action = 'gg' } }, { buffer = 0 })]])
 	eq(labels(), { 'demo: top' })
-	local other = child.lua('return vim.api.nvim_create_buf(true, false)')
+	local other = C.eval(child, 'vim.api.nvim_create_buf(true, false)')
 	eq(labels(other), {})
 end
 
 T['buffer tasks are dropped on BufWipeout'] = function()
-	local buf = child.lua('return vim.api.nvim_create_buf(true, false)')
+	local buf = C.eval(child, 'vim.api.nvim_create_buf(true, false)')
 	child.lua([[f2.add_tasks({ { group = 'demo', label = 'top', action = 'gg' } }, { buffer = ... })]], { buf })
 	eq(labels(buf), { 'demo: top' })
 	child.lua('vim.api.nvim_buf_delete(..., { force = true })', { buf })
-	eq(child.lua('return vim.tbl_count(labels(...))', { buf }), 0)
+	eq(C.eval(child, 'vim.tbl_count(labels(...))', { buf }), 0)
 end
 
 T['same group and label updates, new labels join the group'] = function()
@@ -103,8 +93,8 @@ T['cond error hides the task and notifies'] = function()
 	child.lua([[f2.add_tasks({ { group = 'demo', label = 'broken', action = 'gg',
 		cond = function() error('boom') end } })]])
 	eq(labels(), {})
-	eq(child.lua('return #notes'), 1)
-	MiniTest.expect.no_equality(child.lua('return notes[1]:find("boom")'), nil)
+	eq(C.eval(child, '#notes'), 1)
+	MiniTest.expect.no_equality(C.eval(child, 'notes[1]:find("boom")'), nil)
 end
 
 T['invalid tasks are skipped with a notification'] = function()
@@ -115,7 +105,7 @@ T['invalid tasks are skipped with a notification'] = function()
 		{ group = 'demo', label = 'ok', action = 'gg' },
 	})]])
 	eq(labels(), { 'demo: ok' })
-	eq(child.lua('return #notes'), 3)
+	eq(C.eval(child, '#notes'), 3)
 end
 
 T['builder'] = MiniTest.new_set()
@@ -148,7 +138,7 @@ end
 
 T['builder'][':buffer(0) scopes to the current buffer'] = function()
 	child.lua([[f2.add_task('demo', 'top'):keys('gg'):buffer(0):add()]])
-	local other = child.lua('return vim.api.nvim_create_buf(true, false)')
+	local other = C.eval(child, 'vim.api.nvim_create_buf(true, false)')
 	eq(labels(), { 'demo: top' })
 	eq(labels(other), {})
 end
