@@ -51,7 +51,7 @@ Found while adding the PowerShell item (2026-11-09); read this to get up to spee
 - `this_file` is `this file (%)`: actions on the current buffer's file, whatever the filetype; type `this file` in the prompt to list them.
   `adhoc` is for one-off fixes to the surrounding project (Go's `go mod init` lives there, since it fires from a directory or oil too).
 - Go has no per-file item yet; markdown uses `markdown`; other filetypes add nothing.
-- The width limit is 14. Two places hold the number and are not linked: `picker.GROUP_WIDTH` and the warning in `registry.lua`.
+- The width limit is 14, in `picker.GROUP_WIDTH`; the warning in `registry.lua` reads it from there.
   `tests/f2/test_picker.lua` checks the alignment and that a longer group is not cut.
 - Groups missing from `M.group_order` (`markdown`, `lookup`, ...) sort after it, A-Z.
 
