@@ -120,7 +120,14 @@ function M.open()
 	local results = {}
 	local pending = #sources
 	for i, source in ipairs(sources) do
+		local answered = false
 		local done = vim.schedule_wrap(function(tasks)
+			-- each source counts once: a source that answered and then failed (or answers twice)
+			-- would open the picker before the others are in, then again
+			if answered then
+				return
+			end
+			answered = true
 			results[i] = tasks
 			pending = pending - 1
 			if pending > 0 then
