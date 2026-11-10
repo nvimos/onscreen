@@ -2,51 +2,44 @@
 -- (doc-wip/readme.2026-10-24.map-plugin-health.md, test steps 1-3).
 -- Fresh child nvim per case; the log goes to a temp XDG_STATE_HOME.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
 local state_home = vim.fs.normalize(vim.fn.tempname()) .. '/state'
 local old_state_home = vim.env.XDG_STATE_HOME
 
-local T = MiniTest.new_set({
-	hooks = {
+local child, T = C.fresh([[
+	vim.fn.mkdir(vim.fn.stdpath('log'), 'p')
+	vim.fn.delete(vim.fs.joinpath(vim.fn.stdpath('log'), 'genja-map-plugin.log'))
+	-- notifications while the definition files load
+	_G.notes = {}
+	vim.notify = function(msg, level) table.insert(notes, { msg = msg, level = level }) end
+	_G.Maps = require('genja.map-plugin')
+	_G.config = vim.fs.normalize(vim.fn.stdpath('config'))
+	-- health.check() output, without the :checkhealth buffer
+	_G.health_lines = function()
+		local lines = {}
+		local h = vim.health
+		local orig = { start = h.start, ok = h.ok, warn = h.warn, info = h.info, error = h.error }
+		for kind in pairs(orig) do
+			h[kind] = function(msg) table.insert(lines, kind .. ': ' .. msg) end
+		end
+		require('genja.map-plugin.health').check()
+		for kind, fn in pairs(orig) do
+			h[kind] = fn
+		end
+		return lines
+	end
+]], {
 		pre_once = function()
 			vim.fn.mkdir(state_home, 'p')
 			-- the child inherits this, so stdpath('log') points into the temp dir
 			vim.env.XDG_STATE_HOME = state_home
 		end,
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([[
-				vim.fn.mkdir(vim.fn.stdpath('log'), 'p')
-				vim.fn.delete(vim.fs.joinpath(vim.fn.stdpath('log'), 'genja-map-plugin.log'))
-				-- notifications while the definition files load
-				_G.notes = {}
-				vim.notify = function(msg, level) table.insert(notes, { msg = msg, level = level }) end
-				_G.Maps = require('genja.map-plugin')
-				_G.config = vim.fs.normalize(vim.fn.stdpath('config'))
-				-- health.check() output, without the :checkhealth buffer
-				_G.health_lines = function()
-					local lines = {}
-					local h = vim.health
-					local orig = { start = h.start, ok = h.ok, warn = h.warn, info = h.info, error = h.error }
-					for kind in pairs(orig) do
-						h[kind] = function(msg) table.insert(lines, kind .. ': ' .. msg) end
-					end
-					require('genja.map-plugin.health').check()
-					for kind, fn in pairs(orig) do
-						h[kind] = fn
-					end
-					return lines
-				end
-			]])
-		end,
 		post_once = function()
-			child.stop()
 			vim.env.XDG_STATE_HOME = old_state_home
 			vim.fn.delete(vim.fs.dirname(state_home), 'rf')
 		end,
-	},
 })
 
 T['definition files load without a notification'] = function()

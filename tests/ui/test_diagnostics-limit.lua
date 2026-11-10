@@ -1,55 +1,47 @@
 -- lua/genja/ext/diag-limit.lua: the first N diagnostics per severity and buffer are drawn.
 -- Counts the extmarks nvim's own handlers draw (virtual text, signs). Fresh child per case.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.lua([=[
-				_G.L = require('genja.ext.diag-limit')
-				-- this file checks the limit's <F2> items; the align item is tested in test_diag_align.lua
-				_G.only_limit = function(items)
-					return vim.tbl_filter(function(t) return not t.label:match('^align: ') end, items)
-				end
-				L.setup()
-				vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
-				_G.buf = vim.api.nvim_get_current_buf()
-				vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(string.rep('x\n', 30), '\n'))
-				_G.ns_a = vim.api.nvim_create_namespace('test_a')
-				_G.ns_b = vim.api.nvim_create_namespace('test_b')
-				local E, W = vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN
-				-- ns_a: errors on lines 1-5, warnings on 10-13; ns_b: errors on 20-21
-				_G.put = function()
-					local a = {}
-					for i = 0, 4 do table.insert(a, { lnum = i, col = 0, severity = E, message = 'a err ' .. i }) end
-					for i = 9, 12 do table.insert(a, { lnum = i, col = 0, severity = W, message = 'a warn ' .. i }) end
-					vim.diagnostic.set(ns_a, buf, a)
-					vim.diagnostic.set(ns_b, buf, {
-						{ lnum = 19, col = 0, severity = E, message = 'b err 19' },
-						{ lnum = 20, col = 0, severity = E, message = 'b err 20' },
-					})
-				end
-				-- drawn lines (0-based) with virtual text / with a sign
-				_G.drawn = function(kind)
-					local lines = {}
-					for _, m in ipairs(vim.api.nvim_buf_get_extmarks(buf, -1, 0, -1, { details = true })) do
-						local d = m[4]
-						if (kind == 'virt' and d.virt_text) or (kind == 'sign' and d.sign_text) then
-							lines[m[2]] = true
-						end
-					end
-					local out = vim.tbl_keys(lines)
-					table.sort(out)
-					return out
-				end
-			]=])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh([=[
+	_G.L = require('genja.ext.diag-limit')
+	-- this file checks the limit's <F2> items; the align item is tested in test_diag_align.lua
+	_G.only_limit = function(items)
+		return vim.tbl_filter(function(t) return not t.label:match('^align: ') end, items)
+	end
+	L.setup()
+	vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
+	_G.buf = vim.api.nvim_get_current_buf()
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(string.rep('x\n', 30), '\n'))
+	_G.ns_a = vim.api.nvim_create_namespace('test_a')
+	_G.ns_b = vim.api.nvim_create_namespace('test_b')
+	local E, W = vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN
+	-- ns_a: errors on lines 1-5, warnings on 10-13; ns_b: errors on 20-21
+	_G.put = function()
+		local a = {}
+		for i = 0, 4 do table.insert(a, { lnum = i, col = 0, severity = E, message = 'a err ' .. i }) end
+		for i = 9, 12 do table.insert(a, { lnum = i, col = 0, severity = W, message = 'a warn ' .. i }) end
+		vim.diagnostic.set(ns_a, buf, a)
+		vim.diagnostic.set(ns_b, buf, {
+			{ lnum = 19, col = 0, severity = E, message = 'b err 19' },
+			{ lnum = 20, col = 0, severity = E, message = 'b err 20' },
+		})
+	end
+	-- drawn lines (0-based) with virtual text / with a sign
+	_G.drawn = function(kind)
+		local lines = {}
+		for _, m in ipairs(vim.api.nvim_buf_get_extmarks(buf, -1, 0, -1, { details = true })) do
+			local d = m[4]
+			if (kind == 'virt' and d.virt_text) or (kind == 'sign' and d.sign_text) then
+				lines[m[2]] = true
+			end
+		end
+		local out = vim.tbl_keys(lines)
+		table.sort(out)
+		return out
+	end
+]=])
 
 T['default 3 per severity over all namespaces: virtual text'] = function()
 	child.lua([[put()]])

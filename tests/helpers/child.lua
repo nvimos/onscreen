@@ -13,6 +13,8 @@
 --              then runs `setup` (Lua) in it; the child stops after the last case
 -- eval()       child.lua with the `return` written for you
 -- needs()      wrap a case so it is skipped when a program is not on PATH
+-- installed()  are these lazy.nvim plugins on disk (telescope tests skip without them)
+-- typer()      a keys(...) function: type each key, then let the child settle (telescope redraws late)
 -- wait_for()   poll a Lua expression in the child until it is truthy
 -- TMP          setup snippet: `tmp`, a fresh temp dir in the child
 -- NOTES        setup snippet: vim.notify messages collected in `notes`
@@ -29,19 +31,42 @@ _G.notes = {}
 vim.notify = function(msg) table.insert(_G.notes, msg) end
 ]]
 
+---@class genja.test.FreshOpts
+---@field lines? integer screen size of the child
+---@field columns? integer
+---@field only_if? boolean false: no child is started (the cases skip themselves)
+
 ---@param setup? string Lua run in the child after each restart
 ---@param hooks? table more MiniTest hooks (pre_once, post_case, ...)
+---@param opts? genja.test.FreshOpts
 ---@return table child, table T
-function M.fresh(setup, hooks)
+function M.fresh(setup, hooks, opts)
+	opts = opts or {}
 	local child = MiniTest.new_child_neovim()
-	local all = vim.tbl_extend('force', hooks or {}, {
+	hooks = hooks or {}
+	local all = vim.tbl_extend('force', hooks, {
 		pre_case = function()
+			if opts.only_if == false then
+				return
+			end
 			child.restart({ '-u', 'tests/minimal_init.lua' })
+			if opts.lines then
+				child.o.lines = opts.lines
+			end
+			if opts.columns then
+				child.o.columns = opts.columns
+			end
 			if setup then
 				child.lua(setup)
 			end
 		end,
-		post_once = child.stop,
+		-- the file's own post_once (cleanup) runs after the child stopped
+		post_once = function()
+			child.stop()
+			if hooks.post_once then
+				hooks.post_once()
+			end
+		end,
 	})
 	return child, MiniTest.new_set({ hooks = all })
 end
@@ -66,6 +91,34 @@ function M.needs(exe, case)
 			MiniTest.skip(exe .. ' not on PATH')
 		end
 		case()
+	end
+end
+
+---Are these lazy.nvim plugins installed (in stdpath('data')/lazy)?
+---@param ... string plugin folder names
+---@return boolean
+function M.installed(...)
+	local lazy = vim.fn.stdpath('data') .. '/lazy/'
+	for _, name in ipairs({ ... }) do
+		if not vim.uv.fs_stat(lazy .. name) then
+			return false
+		end
+	end
+	return true
+end
+
+---A keys(...) function for `child`: each key is typed, then the child gets `ms` (default 150)
+---plus a vim.wait to run its scheduled callbacks.
+---@param child table
+---@param ms? integer
+---@return fun(...: string)
+function M.typer(child, ms)
+	return function(...)
+		for _, k in ipairs({ ... }) do
+			child.type_keys(k)
+			vim.uv.sleep(ms or 150)
+			child.lua([[vim.wait(50)]])
+		end
 	end
 end
 

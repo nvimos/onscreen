@@ -2,48 +2,39 @@
 -- g:diag_align switch, M.toggle(), and its <F2> item (lua/genja/f2/collect/diag.lua).
 -- One aspect per case; fresh child per case.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.o.columns = 120
-			child.lua([=[
-				_G.A = require('genja.ext.diag-align')
-				A.setup()
-				vim.diagnostic.config({ virtual_text = true })
-				vim.notify = function() end
-				_G.buf = vim.api.nvim_get_current_buf()
-				-- paragraph 1: rows 0-2, widest 'a long line here' (16); paragraph 2: rows 4-5, widest 9
-				vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
-					'short', 'a long line here', 'mid line', '', 'para two', 'x 2345678',
-				})
-				_G.ns = vim.api.nvim_create_namespace('test_align')
-				_G.put = function(rows)
-					local list = {}
-					for _, row in ipairs(rows) do
-						table.insert(list, { lnum = row, col = 0, severity = vim.diagnostic.severity.WARN, message = 'w' .. row })
-					end
-					vim.diagnostic.set(ns, buf, list)
-				end
-				-- row -> { col = virt_text_win_col or false, pos = virt_text_pos } of the virtual text marks
-				_G.marks = function()
-					local out = {}
-					for _, m in ipairs(vim.api.nvim_buf_get_extmarks(buf, -1, 0, -1, { details = true })) do
-						local d = m[4]
-						if d.virt_text then
-							out[tostring(m[2])] = { col = d.virt_text_win_col or false, pos = d.virt_text_pos }
-						end
-					end
-					return out
-				end
-			]=])
-		end,
-		post_once = child.stop,
-	},
-})
+local child, T = C.fresh([=[
+	_G.A = require('genja.ext.diag-align')
+	A.setup()
+	vim.diagnostic.config({ virtual_text = true })
+	vim.notify = function() end
+	_G.buf = vim.api.nvim_get_current_buf()
+	-- paragraph 1: rows 0-2, widest 'a long line here' (16); paragraph 2: rows 4-5, widest 9
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+		'short', 'a long line here', 'mid line', '', 'para two', 'x 2345678',
+	})
+	_G.ns = vim.api.nvim_create_namespace('test_align')
+	_G.put = function(rows)
+		local list = {}
+		for _, row in ipairs(rows) do
+			table.insert(list, { lnum = row, col = 0, severity = vim.diagnostic.severity.WARN, message = 'w' .. row })
+		end
+		vim.diagnostic.set(ns, buf, list)
+	end
+	-- row -> { col = virt_text_win_col or false, pos = virt_text_pos } of the virtual text marks
+	_G.marks = function()
+		local out = {}
+		for _, m in ipairs(vim.api.nvim_buf_get_extmarks(buf, -1, 0, -1, { details = true })) do
+			local d = m[4]
+			if d.virt_text then
+				out[tostring(m[2])] = { col = d.virt_text_win_col or false, pos = d.virt_text_pos }
+			end
+		end
+		return out
+	end
+]=], nil, { columns = 120 })
 
 ---Columns of the marks on `rows`.
 ---@param rows integer[]

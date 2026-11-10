@@ -2,100 +2,80 @@
 -- The quit commands are recorded instead of run (vim.cmd wrapper), so the child stays up.
 -- Needs telescope and plenary in lazy's data dir; cases skip without them. Fresh child per case.
 
-local child = MiniTest.new_child_neovim()
+local C = require('helpers.child')
 local eq = MiniTest.expect.equality
 
-local lazy = vim.fn.stdpath('data') .. '/lazy/'
-local have_telescope = vim.uv.fs_stat(lazy .. 'telescope.nvim') ~= nil and vim.uv.fs_stat(lazy .. 'plenary.nvim') ~= nil
+local have_telescope = C.installed('telescope.nvim', 'plenary.nvim')
 
--- telescope opens and closes on scheduled callbacks; give the child time
+local child, T = C.fresh([[
+	local lazy = vim.fn.stdpath('data') .. '/lazy/'
+	local config = vim.fn.stdpath('config')
+	vim.opt.rtp:prepend(lazy .. 'plenary.nvim')
+	vim.opt.rtp:prepend(lazy .. 'telescope.nvim')
+	require('telescope').setup({})
+	vim.cmd('runtime plugin/unsaved.lua')
+	vim.cmd('source ' .. config .. '/lua/genja/abbreviations.vim')
+	_G.U = require('genja.ext.unsaved')
+
+	-- record the quit commands instead of running them
+	_G.ran = {}
+	local QUITS = { q = true, ['q!'] = true, qa = true, ['qa!'] = true, x = true, ['x!'] = true }
+	local orig = vim.cmd
+	vim.cmd = setmetatable({}, {
+		__call = function(_, c)
+			if type(c) == 'string' and QUITS[c] then
+				table.insert(ran, c)
+				return
+			end
+			return orig(c)
+		end,
+		__index = function(_, k) return orig[k] end,
+	})
+
+	_G.tmp = vim.fs.normalize(vim.fn.tempname())
+	vim.fn.mkdir(tmp, 'p')
+	_G.file = tmp .. '/unsaved-file.txt'
+	vim.fn.writefile({ 'disk' }, file)
+	-- a modified file buffer, current
+	_G.modify_file = function()
+		vim.cmd.edit(file)
+		vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'changed' })
+		return vim.api.nvim_get_current_buf()
+	end
+	-- a modified no-name buffer, current
+	_G.modify_noname = function()
+		vim.cmd.enew()
+		vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'hello there world' })
+		return vim.api.nvim_get_current_buf()
+	end
+	_G.picker_open = function()
+		return vim.bo[vim.api.nvim_get_current_buf()].filetype == 'TelescopePrompt'
+	end
+	-- buffer numbers listed in the open picker, sorted
+	_G.listed = function()
+		local p = require('telescope.actions.state').get_current_picker(vim.api.nvim_get_current_buf())
+		local list = {}
+		for entry in p.manager:iter() do
+			table.insert(list, entry.value)
+		end
+		table.sort(list)
+		return list
+	end
+]], nil, { only_if = have_telescope, lines = 40, columns = 160 })
+
+-- telescope opens and closes on scheduled callbacks: each key gets 200 ms
+local keys = C.typer(child, 200)
+
 local function settle()
 	vim.uv.sleep(200)
 	child.lua([[vim.wait(50)]])
 end
 
----@param ... string
-local function keys(...)
-	for _, k in ipairs({ ... }) do
-		child.type_keys(k)
-		settle()
-	end
-end
-
-local T = MiniTest.new_set({
-	hooks = {
-		pre_case = function()
-			if not have_telescope then
-				return
-			end
-			child.restart({ '-u', 'tests/minimal_init.lua' })
-			child.o.lines = 40
-			child.o.columns = 160
-			child.lua([[
-				local lazy = vim.fn.stdpath('data') .. '/lazy/'
-				local config = vim.fn.stdpath('config')
-				vim.opt.rtp:prepend(lazy .. 'plenary.nvim')
-				vim.opt.rtp:prepend(lazy .. 'telescope.nvim')
-				require('telescope').setup({})
-				vim.cmd('runtime plugin/unsaved.lua')
-				vim.cmd('source ' .. config .. '/lua/genja/abbreviations.vim')
-				_G.U = require('genja.ext.unsaved')
-
-				-- record the quit commands instead of running them
-				_G.ran = {}
-				local QUITS = { q = true, ['q!'] = true, qa = true, ['qa!'] = true, x = true, ['x!'] = true }
-				local orig = vim.cmd
-				vim.cmd = setmetatable({}, {
-					__call = function(_, c)
-						if type(c) == 'string' and QUITS[c] then
-							table.insert(ran, c)
-							return
-						end
-						return orig(c)
-					end,
-					__index = function(_, k) return orig[k] end,
-				})
-
-				_G.tmp = vim.fs.normalize(vim.fn.tempname())
-				vim.fn.mkdir(tmp, 'p')
-				_G.file = tmp .. '/unsaved-file.txt'
-				vim.fn.writefile({ 'disk' }, file)
-				-- a modified file buffer, current
-				_G.modify_file = function()
-					vim.cmd.edit(file)
-					vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'changed' })
-					return vim.api.nvim_get_current_buf()
-				end
-				-- a modified no-name buffer, current
-				_G.modify_noname = function()
-					vim.cmd.enew()
-					vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'hello there world' })
-					return vim.api.nvim_get_current_buf()
-				end
-				_G.picker_open = function()
-					return vim.bo[vim.api.nvim_get_current_buf()].filetype == 'TelescopePrompt'
-				end
-				-- buffer numbers listed in the open picker, sorted
-				_G.listed = function()
-					local p = require('telescope.actions.state').get_current_picker(vim.api.nvim_get_current_buf())
-					local list = {}
-					for entry in p.manager:iter() do
-						table.insert(list, entry.value)
-					end
-					table.sort(list)
-					return list
-				end
-			]])
-		end,
-		post_once = child.stop,
-	},
-})
-
 -- MiniTest.skip() only ends the function it is called in, so check per case
 local function case(fn)
 	return function()
 		if not have_telescope then
-			MiniTest.skip('telescope or plenary not in ' .. lazy)
+			MiniTest.skip('telescope or plenary not installed (lazy data dir)')
 		end
 		fn()
 	end
