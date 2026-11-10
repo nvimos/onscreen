@@ -63,11 +63,13 @@ local function walk(key)
 		local idx = C.selected()
 		return idx ~= before and idx or nil
 	end, 1500)
-	-- the index moves first; then the item is inserted and the menu redrawn: wait until the line holds
+	-- the index moves first; then the item is inserted: wait until the line holds for one read
+	-- (the menu may close on the walk, e.g. <Tab> inserting the last item; waiting for it to show
+	-- again cost 1.5 s per key)
 	local line = child.fn.getcmdline()
 	require('helpers.timing').wait(function()
 		vim.uv.sleep(100)
-		local same = child.fn.getcmdline() == line and child.lua('return require("blink.cmp").is_menu_visible()')
+		local same = child.fn.getcmdline() == line
 		line = child.fn.getcmdline()
 		return same
 	end, 1500)

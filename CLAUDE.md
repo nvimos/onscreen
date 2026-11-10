@@ -259,6 +259,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Tests
 
 - `tests/Makefile` runs mini.test through pwsh; `make help` lists targets and variables.
+- New test files start from `tests/helpers/child.lua`: `C.fresh(setup)` gives a child per case on minimal_init, `C.eval`, `C.needs(exe, case)`, `C.installed(...)`, `C.typer` / `C.settle` for telescope, `C.wait_for`, snippets `C.TMP` and `C.NOTES`. A case shows its intent: setup in `fresh`, helpers in the file's top, the case itself a few lines.
 - Timings: every case is timed, its weighted average (newest run 30%) kept in `stdpath('state')/genja-tests/timings.json` (throw-away; `make timings` shows it). Code and details: header of `tests/helpers/timing.lua`.
     - comps011 and llm cases use `S:case()`: groups, a timeout, a slow cutoff, `requires` (what it skips without). Other dirs' cases are timed by `adopt()` with the default timeout (12 s) and cutoff (3 s), no groups.
         - Any dir can: `local S = require('helpers.timing').suite('<dir>')`, then `T[name] = S:case({ name, groups, timeout, slow }, function(ctx) ... end)`; `ctx.timeout` is the case's timeout for its wait loops (`H.wait(check, ms)`). Call `H.save()` in `post_once`, as comps011 does.
