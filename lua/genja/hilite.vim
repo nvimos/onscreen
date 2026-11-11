@@ -40,7 +40,7 @@ hi CurSearch  guifg=cyan   guibg=#330B08
 
 hi MatchParen guifg=orange guibg=NONE
 hi MatchParen guisp=orange gui=bold,standout,underline
-hi Visual     guifg=orange guibg=#332277 gui=bold
+hi Visual     guifg=#111111 guibg=#eb831e gui=bold
 hi Folded     guifg=#ffd787 guibg=#161616
 hi FoldColumn guifg=#ffffff
 
