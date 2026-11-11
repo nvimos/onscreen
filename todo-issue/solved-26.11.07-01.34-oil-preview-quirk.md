@@ -1,3 +1,0 @@
-- [x] oil: å opens the preview, jolemak quirk (2026-11-07)
-    - [x] lua/genja/map-oil.lua: ['å'] = O.preview_fit
-    - [x] test: in oil, press the key that sends å

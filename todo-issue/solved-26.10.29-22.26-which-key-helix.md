@@ -1,4 +1,0 @@
-- [x] which-key: helix layout, modern and narrow classic to try (2026-10-29)
-    - [x] lua/lazyp/my/which-key.lua: preset helix, two commented-out options
-    - [x] committed in da8581b
-    - [x] test: <leader>, wait: one column, now left-centred (5eb0576) (works, 2026-10-30)

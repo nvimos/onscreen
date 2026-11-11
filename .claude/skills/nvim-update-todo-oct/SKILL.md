@@ -5,12 +5,12 @@ description: Update the nvim config's backlog (Backlog.md tasks in the planning 
 
 # update-todo-oct-nvim
 
-Brings the backlog of the nvim config (`%LOCALAPPDATA%/nvim`) up to date with what the commits added, changed or improved. The backlog lives in github.com/nvimos/meta (checkout `~/es/nvimos-meta`, or `vim.g.genja_meta_dir`) since 2026-11-10. Edits only meta's files; commits nothing.
+Brings the backlog of the nvim config (`%LOCALAPPDATA%/nvim`) up to date with what the commits added, changed or improved. The backlog lives in github.com/nvimos/meta (the checkout is the planning repo named by `tracking` in the `.nvimos` file at the config root) since 2026-11-10. Edits only meta's files; commits nothing.
 
 ## Files (in meta)
 
 - `backlog/tasks/task-<n> - <Title>.md`: one task per idea (Backlog.md); `backlog/archive/tasks/` for `Done` and `Dropped`.
-- `openspec/changes/<id>/` and `index.tsv`: the same backlog in OpenSpec; keep both in step.
+- `openspec/changes/<id>/` and `index.tsv`: OpenSpec, only for work that needs a design. Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both.
 - `last-scanned-commit.md`: the config commit the last update stopped at.
 
 ## Steps

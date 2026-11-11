@@ -1,4 +1,0 @@
-- [x] zen: <leader>z0 closes zen and stays closed (2026-10-24)
-    - [x] lua/genja/map-plugin/zenmode.lua: zen_off closes, unsets frameless; unused width var dropped
-    - [x] readme.cheatsheet.md, todo-ideas.md updated
-    - [x] test: nvim-qt, <leader>z1 then <leader>z0, window framed again

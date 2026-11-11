@@ -1,5 +1,0 @@
-- [x] oil: preview keys for jolemak (2026-11-07)
-    - [x] lua/genja/map-oil.lua: `<C-p>` and `å` (what Ctrl+Alt+Y sends on jolemak, AltGr); `<C-A-y>`/`<C-M-y>` dropped, they never arrive
-    - [x] readme.cheatsheet.md: only `<C-p>` listed, `å` stays undocumented
-    - [x] tested: `å` opens the preview after `:e`
-    - [ ] stale oil ids after a reload (`Entry N missing parent url`): self-heal idea in todo-2027.md

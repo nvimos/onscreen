@@ -1,3 +1,0 @@
-- [x] markdown: wrapped list lines line up after the marker (2026-10-29)
-    - [x] after/ftplugin/markdown.vim: formatlistpat for bullets, numbers, checkboxes, footnotes
-    - [ ] test: gq on a long `- [ ] item` line indents after the checkbox

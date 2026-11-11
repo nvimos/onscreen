@@ -1,4 +1,0 @@
-- [x] intro: `~` in column 0 of the intro lines, vanilla look (2026-10-24)
-    - [x] lua/genja/intro.lua: eob char from the window's 'fillchars' (default `~`), EndOfBuffer hl
-    - [x] centring pad shortened by the eob char's width
-    - [x] test: start nvim with no args, check `~` on every intro row

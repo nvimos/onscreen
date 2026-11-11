@@ -1,3 +1,0 @@
-- [x] opt-term: set_shape() with no name warns instead of erroring (2026-10-26)
-    - [x] `lua/genja/opt-term.lua`: `M` declared before `set_shape()`, nil name check
-    - [ ] test: `:TermCursorShape` without an argument: one warning

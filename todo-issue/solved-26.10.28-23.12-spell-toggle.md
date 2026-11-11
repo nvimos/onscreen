@@ -1,3 +1,0 @@
-- [x] keys: <leader>ts toggles spelling (2026-10-28)
-    - [x] lua/genja/map-zero.lua; readme.cheatsheet.md
-    - [ ] test: <leader>ts twice

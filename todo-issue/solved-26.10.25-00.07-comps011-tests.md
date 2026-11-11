@@ -1,8 +1,0 @@
-- [x] comps011: integration tests for LSP, cmp and linters (2026-10-24)
-    - [x] `tests/comps011/` (11 lsp, 2 cmp, 12 lint cases, samples/), real config in the child
-    - [x] `tests/helpers/timing.lua`: groups (make G=lsp|cmp|lint|fast|slow|gather|all), timeouts, slow cutoffs, timings in stdpath('state')
-    - [x] `g:genja_lsp_no_install` in genja-completion011 so test children install nothing
-    - [x] first runs: lint 10/10, lsp 2 pass, cmp 1 pass; committed in 9f5f014
-    - [ ] reinstall lua-language-server (half-installed, mason/staging left) and autotools-language-server (gone Python)
-    - [ ] bashls and gopls: attach without diagnostics; check `go` on PATH
-    - [ ] test: `make test D=comps011 G=gather`, then `make timings`

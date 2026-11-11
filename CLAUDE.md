@@ -33,7 +33,7 @@ Unmarked bullets were stated by user.
 - New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects; including everything is pointless.
 - nvim is the interface to the OS for coding work: shell, terminal, PowerShell, Git Bash, git; simple tasks shouldn't need leaving nvim. Windows lacks a good setup otherwise (user came from Linux).
 - Control WSL instances and Docker containers from nvim.
-- Kubernetes YAML, before 2027: completion and lookup while writing manifests, no browsing the spec. Values depend on the components in use (router, ingress, autoscaler); their docs get pulled into stdpath('data') and shown through familiar interfaces: generated `:help` files, `K` hover, popups. Integrated, not a separate tool. Next to implement (start before 2027), after cleanup, alongside the LLM chat survey (`todo-test/llm-chat-survey.md`). The user is learning Kubernetes; test project `~/es/k8s-minikube-ci` in its own WSL distro `minikube` (AlmaLinux 10, bash Makefile), Windows pwsh wrapper `C:/Users/jazzo/es/k8s-minikube-ci` (CI in Minikube, Tekton).
+- Kubernetes YAML, before 2027: completion and lookup while writing manifests, no browsing the spec. Values depend on the components in use (router, ingress, autoscaler); their docs get pulled into stdpath('data') and shown through familiar interfaces: generated `:help` files, `K` hover, popups. Integrated, not a separate tool. Next to implement (start before 2027), after cleanup, alongside the LLM chat survey (meta `backlog/docs/doc-7 - llm-chat-survey.md`). The user is learning Kubernetes; test project `~/es/k8s-minikube-ci` in its own WSL distro `minikube` (AlmaLinux 10, bash Makefile), Windows pwsh wrapper `C:/Users/jazzo/es/k8s-minikube-ci` (CI in Minikube, Tekton).
 - LLM chat in a buffer, browser-chat style: ask, the answer is appended, follow-ups below it, all in one buffer (input buffer optional); questions fold automatically, responses by hand. Any provider. Likely extends the genja-ask popup. minuet already covers ghost text. Still an idea, to be fleshed out.
 - Before building a feature, survey what others have built. Use theirs only if its interface fits the user's mental model; don't adapt to someone else's vision. Otherwise build our own and take the ideas that work from theirs.
 - So: no animated or sliding UI messages; keep input instant, startup fast and the Vim feel intact; make the LSP coding workflows (completion, diagnostics, lint, tests, git, AI) work together out of the box.
@@ -67,12 +67,11 @@ Unmarked bullets were stated by user.
 ## Ideas and backlog
 
 - The backlog lives in the planning repo github.com/nvimos/meta (public), checkout `~/es/nvimos-meta` (`vim.g.genja_meta_dir` overrides); moved out of this repo 2026-11-10. New ideas go there as tasks, not into this repo.
-- meta keeps the same backlog twice, Backlog.md (`backlog/tasks/`) and OpenSpec (`openspec/changes/`), until the user picks one; keep both in step.
+- meta: Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both.
 - Statuses: `To Do`, `In Progress`, `Needs Test` (built, waiting to be tried by hand), `Done`, `Dropped`. Build steps and hands-on checks are separate sections (`## Acceptance Criteria` / `## Verify`, OpenSpec `## 1. Build` / `## 2. Verify`).
 - Scan it: `make review` (needs test), `make doing`, `make open` in meta, or `:Morning` (Todo section).
-- The old todo files (todo-ideas.md, todo-202x.md, squash files, todo-ideas/) are in meta's `legacy/`, read-only.
-- todo-issue/: issues solved in a session, one checklist file each (`solved-<yy.mm.dd>-<HH.MM>-<topic>.md`), written and committed by `/commit-close-issues` (`.claude/skills/nvim-commit-close-issues/`).
-- todo-done/: finished top-level items from the old todo files, one item per file, named `ideas-<nn>-<topic>.md` or `<year>-<topic>.txt`.
+- The old todo files are in meta's `legacy/`, read-only: todo-ideas.md, todo-202x.md, squash files, todo-ideas/ (2026-11-10); todo-2026.md, todo-done/, todo-issue/, todo-test/ in `legacy/nvim-config/` (2026-11-11). Test session notes are meta `backlog/docs/`.
+- Solved issues: `/commit-close-issues` (`.claude/skills/nvim-commit-close-issues/`) writes each as a Backlog.md task in meta and commits it there; no todo files in this repo.
 
 ## Plugins in this repo
 

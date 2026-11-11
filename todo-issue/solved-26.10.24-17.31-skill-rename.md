@@ -1,3 +1,0 @@
-- [x] skills: /close-issues renamed to commit-close-issues (2026-10-24)
-    - [x] .claude/skills/commit-close-issues/SKILL.md, name field changed
-    - [ ] CLAUDE.md still names `.claude/skills/close-issues/`

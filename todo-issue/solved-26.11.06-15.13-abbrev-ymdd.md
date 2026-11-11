@@ -1,3 +1,0 @@
-- [x] abbrev: weekday with the date (2026-11-06)
-    - [x] ymdd! expands to `fri 2026-11-06`: lua/genja/abbreviations.vim
-    - [ ] test: type ymdd! in insert mode

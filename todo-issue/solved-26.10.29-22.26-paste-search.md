@@ -1,7 +1,0 @@
-- [x] lookup: paste search plugin with providers (2026-10-29)
-    - [x] plug-wip/genja-paste-ai.nvim: perplexity, chatgpt, grok (URL); gemini, manus (clipboard)
-    - [x] :PasteSearch (:Xty, :Pplx), <leader>pl/pw/py/ps, right-click, <F2> lookup provider switch
-    - [x] -save / <M-s>: lua/genja/local/paste-ai.lua (gitignored)
-    - [x] headless check: commands, keys, URLs, clipboard, <F2> label
-    - [x] committed in 80b9277
-    - [x] test: <F2> picker, <M-s> saves, restart keeps the provider (works, 2026-10-30)

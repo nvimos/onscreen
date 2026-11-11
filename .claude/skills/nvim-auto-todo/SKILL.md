@@ -6,7 +6,7 @@ description: Work down the nvim config's backlog (Backlog.md tasks in the planni
 # auto-todo
 
 Session for the nvim config (`%LOCALAPPDATA%/nvim`): shrink the backlog by doing the cheapest items first. The goal is fewer open tasks.
-The backlog lives in the planning repo github.com/nvimos/meta (checkout `~/es/nvimos-meta`, or `vim.g.genja_meta_dir`), moved out of the config on 2026-11-10.
+The backlog lives in the planning repo github.com/nvimos/meta (the checkout is the planning repo named by `tracking` in the `.nvimos` file at the config root), moved out of the config on 2026-11-10.
 
 When started from a phrase instead of `/auto-todo`, ask "Run /auto-todo?" first and wait for a yes.
 
@@ -14,10 +14,10 @@ When started from a phrase instead of `/auto-todo`, ask "Run /auto-todo?" first 
 
 - meta `backlog/tasks/task-<n> - <Title>.md`: the backlog (Backlog.md). Status in the YAML header: `To Do`, `In Progress`, `Needs Test` (built, waiting to be tried by hand), `Done`, `Dropped`. Build steps are `## Acceptance Criteria`, hands-on checks `## Verify`.
 - meta `backlog/archive/tasks/`: `Done` and `Dropped` tasks (move the file there).
-- meta `openspec/changes/<id>/` (`proposal.md`, `tasks.md` with `## 1. Build` and `## 2. Verify`): the same backlog in OpenSpec; keep both in step until the user picks one (README of meta). `index.tsv` maps TASK-<n> to the change id.
+- meta `openspec/changes/<id>/` (`proposal.md`, `tasks.md` with `## 1. Build` and `## 2. Verify`): only for work that needs a design; Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both. `index.tsv` lists every task with its change.
 - meta `tools/scan.py` / `make review`, `make doing`, `make open`: list tasks by status with their open steps.
 - meta `legacy/`: the old todo files and squash files, read-only reference.
-- config `todo-issue/`, `todo-done/`, `todo-test/`: stay in the config repo.
+- meta `backlog/docs/`: test sessions and longer notes; meta `legacy/nvim-config/`: the config's old todo-issue/, todo-done/, todo-test/.
 - config `doc-wip/readme.<yyyy-mm-dd>.<topic>.md`: one guide per implemented item.
 - config `doc-wip/untested.<yyyy-mm-dd>.md`: everything not tried by hand, for a later tutorial/discovery session.
 

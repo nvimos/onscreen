@@ -1,8 +1,0 @@
-- [x] minuet: no completions from ollama; providers and keys (2026-10-31)
-    - [x] cause: qwen3.5 has no fill-in-the-middle (400 does not support insert); model qwen2.5-coder:0.5b
-    - [x] blocks for gemini, claude (claude-haiku-5-5, effort low), codestral, openai, openai_compatible; DeepSeek commented out
-    - [x] every key via secret(name) -> LocalOrEnv; Codestral: MISTRAL_API_KEY (paid, api.mistral.ai) wins over CODESTRAL_API_KEY (free)
-    - [x] gemini: thinkingLevel low (minimal is 400 on gemini-3.8-flash)
-    - [x] request_timeout 6 s for every provider; blink timeout_ms 6000 (lua/genja/completion/minuet.lua); the gemini curl --retry was removed
-    - [x] test: <M-y> in insert mode shows a minuet item (ollama serve)
-    - [x] test: :Minuet change_model codestral:codestral-latest, then <M-y>

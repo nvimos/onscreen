@@ -1,6 +1,0 @@
-- [x] gui: test Makefile pointed at the old mylunsj path (2026-10-24)
-    - [x] lua/genja/ui/gui-func-state/Makefile: DIR = lua/genja/ui/gui-func-state
-    - [x] Makefile paths relative to its folder, no cd
-    - [x] style list: wait up to 5 s, no hit-enter prompt (init.lua discover_styles)
-    - [x] run_gui.lua: report to gui-report.txt, quits nvim-qt; make fails on a Fail line
-    - [x] test: make -C lua/genja/ui/gui-func-state test-gui passes

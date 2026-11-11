@@ -1,3 +1,0 @@
-- [x] floaterm: `:PwshFterm` (2026-10-25)
-    - [x] float 0.8 x 0.8, `--autoclose=smart`, like `:BashFterm` (`lua/genja/auto-alias.vim`)
-    - [ ] test: `:PwshFterm`, `exit` closes it

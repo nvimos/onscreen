@@ -1,4 +1,0 @@
-- [x] autoresource: reload ext/ modules, skip the alma vimrc (2026-10-28)
-    - [x] after/plugin/genja-autoresource.lua: */lua/genja/ext/*.lua in the reload patterns
-    - [x] vimrc.almalinux.vim left out: sourcing it would apply its portable top part
-    - [ ] test: :w on lua/genja/ext/tilde.lua reloads it; :w on the alma vimrc does not

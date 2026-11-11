@@ -1,5 +1,5 @@
 -- nvim-dap-view: one debug window with sections in its winbar, a lighter alternative to nvim-dap-ui.
--- Under evaluation next to dap-ui (todo-test/php-debug.md, step 7). Keys: lua/genja/map-plugin/dap-view.lua.
+-- Under evaluation next to dap-ui (nvimos-meta backlog/docs/doc-8 - php-debug.md, step 7). Keys: lua/genja/map-plugin/dap-view.lua.
 local Maps = require('genja.map-plugin')
 
 ---@type LazySpec

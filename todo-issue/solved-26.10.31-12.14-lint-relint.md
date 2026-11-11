@@ -1,9 +1,0 @@
-- [x] lint: "linter gitleaks exited with code: 1" at startup (2026-10-31)
-    - [x] cause: a second lint of a buffer cancels the run still going; nvim-lint kills it, the killed cmd.exe exits 1
-    - [x] startup lints the first buffer twice (BufReadPost and setup()); gitleaks is the slowest linter
-    - [x] gitleaks itself exits 0 (8.30.1, also with leaks); nvim-lint never appends the file name for stdin linters
-    - [x] lua/genja/ext/lint.lua: the exit-code wrapper skips runs whose LintProc is cancelled
-    - [x] headless: 5 double lints, 10 warnings before, 0 after
-    - [x] test: `lint: relint cancels without a warning` in tests/comps011 (groups lint, gitleaks, relint)
-    - [x] test: `make test D=comps011 G=relint` in tests/ passes
-    - [x] test: open ws/foo.sh: no exit-code warning

@@ -16,7 +16,7 @@ networking host.docker.internal doesn't resolve in the container (2026-11-05), s
 xdebug_ide_location must be the Windows LAN IP (needs hostAddressLoopback=true in .wslconfig;
 the Windows firewall asks to allow node). <leader>dc warns when it isn't; :DdevXdebugHost sets
 it (lua/genja/ext/debug-ddev.lua). /var/www/html maps to the folder holding .ddev. Test session:
-todo-test/php-debug.md.
+~/es/nvimos-meta/backlog/docs/doc-8 - php-debug.md.
 
 Session UI and keys: lua/genja/ext/debug-ui.lua (auto-open, tab or split),
 lua/genja/ext/debug-fkeys.lua (! flips F1-F8).

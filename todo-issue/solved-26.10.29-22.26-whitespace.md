@@ -1,4 +1,0 @@
-- [x] style: whitespace in hilite.lua and zexp.lua (2026-10-29)
-    - [x] lua/genja/hilite.lua: reformatted, indent 4 spaces, trailing blank lines dropped
-    - [x] lua/genja/zexp.lua: blank lines moved
-    - [x] hilite.lua: spaces are the rule now (.editorconfig, CLAUDE.md), not a formatter bug (2026-10-30)

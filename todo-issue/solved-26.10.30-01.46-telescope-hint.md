@@ -1,3 +1,0 @@
-- [x] telescope: a picker can replace the prompt hint (2026-10-30)
-    - [x] after/plugin/telescope-after.lua: vim.b[prompt_bufnr].telescope_hint overrides HINT
-    - [x] used by the unsaved picker ('…')

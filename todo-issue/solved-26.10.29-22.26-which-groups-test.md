@@ -1,5 +1,0 @@
-- [x] tests: which-key groups vs mappings, warnings both ways (2026-10-29)
-    - [x] tests/ui/test_which_groups.lua: empty groups, <leader> prefixes without a group, as notes
-    - [x] ran: 2 cases pass, notes list 7 empty groups and 8 prefixes
-    - [x] committed in f7a9970
-    - [x] add groups for <Space>jb, <Space>g, <Space>T, ... in lua/lazyp/my/which-key.lua (5eb0576)

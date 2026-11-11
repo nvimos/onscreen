@@ -1,9 +1,0 @@
-- [x] markdown: <F2> preview with glow in a new terminal (2026-10-24)
-    - [x] lua/genja/md-glow.lua: new pwsh window runs glow on the file, any key closes
-    - [x] -EncodedCommand passes the script, so paths need no shell quoting
-    - [x] win32 branch only; other systems get a warning (untested stub)
-    - [x] registered per buffer in after/ftplugin/markdown.lua
-    - [x] readme.cheatsheet.md, lua/genja/readme.md
-    - [x] test: open a .md file, <F2> > markdown: preview, any key closes the window
-    - [ ] test: path with spaces or a `'` in it
-    - [ ] linux: pick a terminal ($TERMINAL, x-terminal-emulator)

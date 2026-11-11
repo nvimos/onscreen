@@ -1,3 +1,0 @@
-- [x] telescope: `<leader>'` opens oldfiles (2026-11-03)
-    - [x] `lua/genja/map-telescope.lua`
-    - [ ] add `<leader>'` to `readme.cheatsheet.md`

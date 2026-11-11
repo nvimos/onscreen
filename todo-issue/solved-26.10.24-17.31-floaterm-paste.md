@@ -1,2 +1,0 @@
-- [x] doc: how to paste into a floaterm (2026-10-24)
-    - [x] doc-wip/learn-vim.paste-to-floaterm.md

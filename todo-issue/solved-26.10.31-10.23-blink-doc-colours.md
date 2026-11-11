@@ -1,5 +1,0 @@
-- [x] hilite: blink.cmp documentation popup colours (2026-10-31)
-    - [x] BlinkCmpDoc and BlinkCmpDocBorder in lua/genja/hilite.vim, Vimscript form of the pasted Lua
-    - [x] set again on ColorScheme (augroup genja_hilite_blink_doc)
-    - [x] test: survives :colorscheme default
-    - [x] moved to genja-completion011 completion/appearance.lua: menu colours (StatusLine bg), rounded frame in PmenuExtra fg, 1-space padding left and right; hilite.vim block removed

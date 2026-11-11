@@ -1,9 +1,0 @@
-- [x] claudefterm: `:ClaudeFterm -1` / `-one` opens claude without a split (2026-10-24)
-    - [x] claude replaces the current window's buffer; `:ClaudeFterm` puts it back (`show_here()`, `restore_here()` in `genja-claudefterm/init.lua`)
-    - [x] floaterm opens its split, claude moves into the origin window, floaterm `winid` set to -1 so its BufHidden hook leaves the window alone
-    - [x] claude's exit restores the replaced buffer instead of closing the window
-    - [x] only for that start, not kept like flags; `-one` in `<Tab>` completion
-    - [x] first try (full-size float) gave a 1x1 float: floaterm reads `1` as one cell
-    - [x] tested by user
-    - [x] committed in 1d15d43
-    - [x] `<C-q>` and the other back keys go to the previous window: kept as is; `/exit` restores the buffer (tested)

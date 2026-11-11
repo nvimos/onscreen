@@ -1,6 +1,0 @@
-- [x] textobjects: function body / whole function objects, next and last (2026-11-06)
-    - [x] mini.ai with treesitter f c o ids from nvim-treesitter-textobjects: lua/lazyp/new/mini-ai.lua
-    - [x] next / last on aN iN / aL iL, so nvim 0.12 an in and 0.13 al il defaults stay
-    - [x] clash and version notes, how to check the defaults: comments in lua/lazyp/new/mini-ai.lua
-    - [x] fallback without mini.ai, Lua only: after/ftplugin/lua.lua, nvim-treesitter-textobjects or lua/genja/ext/lua-func-obj.lua
-    - [x] cheatsheet Textobjects section, al il explained: readme.cheatsheet.md

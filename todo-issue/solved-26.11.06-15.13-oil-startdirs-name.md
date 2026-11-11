@@ -1,2 +1,0 @@
-- [x] oil: start dirs helper named for what it returns (2026-11-06)
-    - [x] entry_dir -> cursor_dir_or_oil_dir: lua/genja/oil-actions.lua

@@ -1,6 +1,0 @@
-- [x] completion: cmdline menu walks on <M-j>/<M-k>, not <C-j>/<C-k> (2026-10-31)
-    - [x] keys and WALK_KEYS in completion/cmdline.lua
-    - [x] tests/completion/test_cmdline.lua uses <M-j>/<M-k>; helpers/completion.lua C.selected() maps vim.NIL to nil
-    - [x] readme.cheatsheet.md and genja-completion011 CLAUDE.md: <Up>/<Down> history first, walk after a walk key
-    - [x] test: `make test D=completion` in tests/: 3 runs, 42 cases each pass (14 cmdline)
-    - [x] test: :ec then <M-j>/<M-k> walks the menu

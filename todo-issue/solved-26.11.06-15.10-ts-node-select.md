@@ -1,5 +1,0 @@
-- [x] treesitter: incremental selection from vermaden's config (2026-11-06)
-    - [x] visual <C-s> grow / <BS> shrink via vim.treesitter.select: lua/genja/map-plugin/load-treesitter.lua
-    - [x] Maps:mappings in lua/lazyp/my/load-treesitter.lua
-    - [x] source url, version and clash notes (aerial <C-s>, v_<BS>, v_an) in the keys file
-    - [x] cheatsheet line under Textobjects

@@ -1,6 +1,0 @@
-- [x] md: substitutions that wrap vim key notation in backticks (2026-10-25)
-    - [x] `lua/genja/md-fix.vim-keys-escape.vim`: very magic version, joins adjacent keys into one span
-    - [x] ported to Lua in `lua/genja/ext/md-fix.lua` (`M.escape_keys`, runs on save and `<leader>mfx`); 420d58c; the .vim script is deleted (2026-10-30)
-    - [x] listed in `lua/genja/readme.md` (md-fix entry: vim keys in backticks)
-    - [x] manual: saving `todo-2027.md` wraps the `<M-v>` lines (2026-10-30)
-    - [x] `tests/md/test_md_fix.lua` `keys:` cases pass (make test D=md, 2026-10-30)

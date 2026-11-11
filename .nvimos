@@ -1,0 +1,5 @@
+# nvimos: where the planning for this repo lives (Backlog.md tasks, OpenSpec changes).
+# tracking: the planning repo; ~ and paths relative to this file work.
+# project: this repo's name there, for filtering when several repos share it.
+tracking = ~/es/nvimos-meta
+project = nvim-config
