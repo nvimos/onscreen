@@ -1,6 +1,6 @@
 ---
 name: tidy-docs
-description: Tidy the nvim config's markdown docs (README.md, CLAUDE.md, readme.*.md, doc-wip/, plug-wip READMEs; the backlog itself is in nvimos/meta) - rewrap lines to the file's width, split long sentences, cut filler words, make lists and terms consistent, without changing what they say. Use when the user types /tidy-docs, or asks to tidy, clean up, rewrap or proofread documentation.
+description: Tidy the nvim config's markdown docs (README.md, CLAUDE.md, readme.*.md, doc-wip/ (notes, ideas, learning; guides are in nvimos-meta), plug-wip READMEs; the backlog itself is in nvimos/meta) - rewrap lines to the file's width, split long sentences, cut filler words, make lists and terms consistent, without changing what they say. Use when the user types /tidy-docs, or asks to tidy, clean up, rewrap or proofread documentation.
 ---
 
 # tidy-docs

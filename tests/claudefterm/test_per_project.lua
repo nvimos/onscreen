@@ -1,4 +1,4 @@
--- genja-claudefterm: one claude floaterm per project (doc-wip/readme.2026-10-23.claude-per-project.md).
+-- genja-claudefterm: one claude floaterm per project (nvimos-meta backlog/docs/doc-11 - guide-claude-per-project.md).
 -- Real vim-floaterm; claude is tests/claudefterm/fake_claude.cmd / .sh, which logs its cwd and args
 -- to $FAKE_LOG (headless nvim on Windows sends terminal output to the outer console, not the buffer).
 -- Pastes are recorded by stubbing nvim_chan_send. Needs vim-floaterm (and telescope + plenary for

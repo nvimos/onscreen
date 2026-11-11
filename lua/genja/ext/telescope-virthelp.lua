@@ -16,7 +16,7 @@ The footer on the results border was abandoned (2026-10-25) and removed.
 
 Hook: FileType TelescopePrompt (plugin/telescope-virthelp.lua), so every picker gets it,
 also the ones the config doesn't wrap. Spec and open questions:
-doc-wip/readme.2026-10-24.telescope-explore.md
+nvimos-meta backlog/docs/doc-36 - guide-telescope-explore.md
 
 
 --]]

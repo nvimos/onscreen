@@ -1,5 +1,5 @@
 -- map-plugin: miss records, the miss log and :checkhealth genja.map-plugin
--- (doc-wip/readme.2026-10-24.map-plugin-health.md, test steps 1-3).
+-- (nvimos-meta backlog/docs/doc-32 - guide-map-plugin-health.md, test steps 1-3).
 -- Fresh child nvim per case; the log goes to a temp XDG_STATE_HOME.
 
 local C = require('helpers.child')

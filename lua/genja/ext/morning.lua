@@ -1,6 +1,6 @@
 -- :Morning (idea 30/31): a clickable page for lazy mornings and planning sessions.
 --   Sections: Start dirs (genja-startdirs, most used first), Recent (genja-recent, else oldfiles),
---   Todo (open Backlog.md tasks of the nvimos/meta checkout), Untested (open lines of the newest doc-wip/untested.*.md).
+--   Todo (open Backlog.md tasks of the nvimos/meta checkout), Untested (open lines of the newest untested list in meta's backlog/docs/).
 --   A click or <CR> opens the line's target; q closes. Command in plugin/morning.lua,
 --   also in the right-click menu (lua/genja/popup.lua).
 
@@ -12,14 +12,32 @@ local RECENT_MAX = 12
 local CONFIG = vim.fs.normalize(vim.fn.stdpath('config'))
 
 -- The backlog lives in the planning repo github.com/nvimos/meta (Backlog.md tasks); its checkout:
--- vim.g.genja_meta_dir, else ~/es/nvimos-meta.
+-- vim.g.genja_meta_dir, else `tracking` in the config's .nvimos, else ~/es/nvimos-meta.
+---@return string
+local function meta_dir()
+	if vim.g.genja_meta_dir then
+		return vim.fs.normalize(vim.g.genja_meta_dir)
+	end
+	local ok, lines = pcall(vim.fn.readfile, CONFIG .. '/.nvimos')
+	for _, line in ipairs(ok and lines or {}) do
+		local dir = line:match('^%s*tracking%s*=%s*(.-)%s*$')
+		if dir then
+			dir = vim.fs.normalize(dir)
+			if not dir:match('^%a:/') and not dir:match('^/') then
+				dir = vim.fs.normalize(vim.fs.joinpath(CONFIG, dir))
+			end
+			return dir
+		end
+	end
+	return vim.fs.normalize('~/es/nvimos-meta')
+end
 local META_ORDER = { ['In Progress'] = 1, ['Needs Test'] = 2, ['To Do'] = 3 }
 
 ---Open Backlog.md tasks of the meta checkout: in progress, needs test, to do.
 ---@return { status: string, title: string, path: string }[] tasks
 ---@return string dir the meta checkout
 local function meta_tasks()
-	local dir = vim.fs.normalize(vim.g.genja_meta_dir or '~/es/nvimos-meta')
+	local dir = meta_dir()
 	local tasks = {}
 	for _, path in ipairs(vim.fn.glob(dir .. '/backlog/tasks/*.md', false, true)) do
 		-- the header is in the first lines; an unreadable file is left out
@@ -102,11 +120,13 @@ local function grep_file(file, pattern)
 	return found
 end
 
----Newest doc-wip/untested.*.md (names sort by date).
+---Newest untested list of the auto-todo runs: meta's backlog/docs/doc-<n> - untested-<date>.md.
 ---@return string|nil
 local function untested_file()
-	local files = vim.fn.glob(CONFIG .. '/doc-wip/untested.*.md', true, true)
-	table.sort(files)
+	local files = vim.fn.glob(meta_dir() .. '/backlog/docs/doc-* - untested-*.md', true, true)
+	table.sort(files, function(a, b)
+		return a:match('untested%-([%d-]+)') < b:match('untested%-([%d-]+)')
+	end)
 	return files[#files]
 end
 

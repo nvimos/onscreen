@@ -1,6 +1,6 @@
 ---
 name: auto-todo
-description: Work down the nvim config's backlog (Backlog.md tasks in the planning repo nvimos/meta) in one session - rank tasks and sub-tasks by the user's answer time and estimated tokens, update the task statuses, tag the session in git, show an overview of the questions and then ask them one at a time, then implement the easiest items first with a doc-wip guide per item, a progress line per commit and a list of untested features. Use when the user types /auto-todo, or says "auto todo", "squash todos", "hammer out the todo list" or "work down the todo list" (for these phrases, ask before starting).
+description: Work down the nvim config's backlog (Backlog.md tasks in the planning repo nvimos/meta) in one session - rank tasks and sub-tasks by the user's answer time and estimated tokens, update the task statuses, tag the session in git, show an overview of the questions and then ask them one at a time, then implement the easiest items first with a guide per item (in meta's backlog/docs/), a progress line per commit and a list of untested features. Use when the user types /auto-todo, or says "auto todo", "squash todos", "hammer out the todo list" or "work down the todo list" (for these phrases, ask before starting).
 ---
 
 # auto-todo
@@ -18,8 +18,8 @@ When started from a phrase instead of `/auto-todo`, ask "Run /auto-todo?" first 
 - meta `tools/scan.py` / `make review`, `make doing`, `make open`: list tasks by status with their open steps.
 - meta `legacy/`: the old todo files and squash files, read-only reference.
 - meta `backlog/docs/`: test sessions and longer notes; meta `legacy/nvim-config/`: the config's old todo-issue/, todo-done/, todo-test/.
-- config `doc-wip/readme.<yyyy-mm-dd>.<topic>.md`: one guide per implemented item.
-- config `doc-wip/untested.<yyyy-mm-dd>.md`: everything not tried by hand, for a later tutorial/discovery session.
+- meta `backlog/docs/doc-<n> - guide-<topic>.md` (front matter `id`, `title`, `type: guide`, `created_date`): one guide per implemented item, linked from its task's Description.
+- meta `backlog/docs/doc-<n> - untested-<yyyy-mm-dd>.md`: everything not tried by hand, for a later tutorial/discovery session (`:Morning` shows the newest).
 
 ## Defaults
 
@@ -53,11 +53,11 @@ Apply these without asking; mention them once in the overview so the user can ov
    - tick its steps in the meta task and the OpenSpec `tasks.md`, set the status (`Needs Test` until tried by hand), note the config commit hash;
    - run the mechanical checks yourself (unit tests, headless loads, `make test D=<dir>`) and record passed/failing in the untested file; checks that teach the feature stay open for the user;
    - a key, command name or picker key chosen from a default answer: add it to one `review the keys added in auto-todo <date>` task, so the user can rethink them later;
-   - write `doc-wip/readme.<yyyy-mm-dd>.<topic>.md`: what it does, keys and commands, how to use it, how to test it step by step;
-   - add a line to `doc-wip/untested.<yyyy-mm-dd>.md`;
+   - write meta's `backlog/docs/doc-<n> - guide-<topic>.md`: what it does, keys and commands, how to use it, how to test it step by step;
+   - add a line to meta's `backlog/docs/doc-<n> - untested-<yyyy-mm-dd>.md`;
    - commit (no Claude attribution, one commit per feature);
    - print a progress line: `done <n>/<total>, ~<k>k tokens left, next: #<id> <idea>`. No minute estimates.
-7. **Untested list.** `doc-wip/untested.<yyyy-mm-dd>.md`: one checklist line per feature: `- [ ] <feature>: <key or command to try> (<file>) -> doc-wip/readme.<...>.md`. Include earlier features with status `Needs Test` in meta. Order it so one feature can be tried per question in the later guided session.
+7. **Untested list.** meta's `backlog/docs/doc-<n> - untested-<yyyy-mm-dd>.md`: one checklist line per feature: `- [ ] <feature>: <key or command to try> (<file>) -> doc-wip/readme.<...>.md`. Include earlier features with status `Needs Test` in meta. Order it so one feature can be tried per question in the later guided session.
 8. **Run log.** Add one row to `runs.md` next to this SKILL.md (`.claude/skills/nvim-auto-todo/runs.md`): date, project, project type, languages / frameworks, items built, items closed, questions asked, estimated tokens, question time, build time (from the session start, the tag and the commit times). Insert it above the two summary rows, which stay last; then recompute them over all runs:
    - **total**: sums of built, closed, questions, tokens, question time, build time.
    - **avg per built item**: the totals of questions, tokens, question time and build time divided by the total built; closed left empty.

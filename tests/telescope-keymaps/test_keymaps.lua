@@ -1,5 +1,5 @@
 -- lua/genja/ext/telescope-keymaps.lua with genja-finder's refine keys, driven by real keys
--- (doc-wip/readme.2026-10-23.telescope-keymaps.md). Needs telescope and plenary in lazy's
+-- (nvimos-meta backlog/docs/doc-20 - guide-telescope-keymaps.md). Needs telescope and plenary in lazy's
 -- data dir; cases skip without them. Fresh child nvim per case.
 
 local C = require('helpers.child')
