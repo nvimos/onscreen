@@ -16,61 +16,60 @@ Unmarked bullets were stated by user.
 - An alternative to the nvim distributions: some are bloated, others too small; On-Screen Nvim aims to be a ready-to-go setup in between.
 - The distributions tried were either too slow and too far from the Vim feel, or good starting points without well-integrated coding workflows built on LSP.
 - Slow and un-Vim-like meant: animated notifications and sliding messages inside the nvim UI (a desktop paradigm that doesn't fit nvim), and typing input that lagged; much clunkier than Vim. Vim's responsiveness is the bar.
-- File trees (NERDTree, used for years) have their place, but a sidebar eats screen space better used for text; no distracting UI elements. Oil (a buffer you edit) fits instead.
-- Oil fits the file navigation needs well.
+- File trees (NERDTree, used for years) have their place, but a sidebar eats screen space better used for text; no distracting UI elements. Oil (a buffer you edit) fits the file navigation needs instead.
 - Not an IDE-looking nvim. The current setup is the user's own take on a clean Vi-like experience and is enough as it is; not a Vi clone, don't strip features toward Vi.
 - Floats on demand are fine. which-key as configured (left side, vertical list, category prefixes in `desc`) is not disruptive; keep it.
 - Sidebars (aerial) only on demand, never always or for every file.
 - Capable underneath, plain on the surface: features are found by digging, as in Vim itself. Not ideal, but preferred.
 - Startup below 1 s, ideally.
-- Work session: start nvim in the working folder, open a bunch of tabs; splits only when needed. Tabs are preferred: simpler to navigate and close.
-- Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box On-Screen Nvim should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. Years of PHP work grow habits and tooling; the config should fit that project, not take 3 days of setup.
-- Real projects mix: a Drupal site, a Symfony app with a React front end; the framework, the front end and some test framework creep in. Nobody ships a configured experience for that mix; On-Screen Nvim aims to.
-- Then debugging comes in: no IDE or Vim config the user has opened gives those tools out of the box, and every project needs them at some point. Debugging should feel and behave the same in a C or a Go project.
-- PHP as the starting point ("good enough PHP", user has ideas); then the same feel for Go projects.
+- Work session: start nvim in the working folder, open a bunch of tabs; splits only when needed. Tabs are simpler to navigate and close.
+- Integrated workflow, PHP as the example: a project mixes PHP, HTML, CSS and JavaScript, often a framework (Symfony, Laravel; also Drupal, WordPress, custom apps with Behat or other tests). Out of the box On-Screen Nvim should lint it, know the project, parse and highlight the JS and CSS, read its tooling (Composer, npm/Node, Bun), `.editorconfig` and the like. The config should fit that project, not take 3 days of setup.
+- Real projects mix: a Drupal site, a Symfony app with a React front end, some test framework. Nobody ships a configured experience for that mix; On-Screen Nvim aims to.
+- Debugging comes in too: no IDE or Vim config the user has opened gives it out of the box, and every project needs it at some point. It should feel and behave the same in a C or a Go project.
+- PHP is the starting point ("good enough PHP", user has ideas); then the same feel for Go projects.
 - TypeScript-only projects get the same out of the box (2026-11-10): React, Vue, Angular, plus Svelte and Astro; Node tooling (package.json scripts in `<F2>`, vitest/jest, js-debug for Node and Chrome). The user doesn't write TypeScript; picture someone who only does.
 - C: navigate and explore C projects (user is not a C/C++ developer).
-- New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects; including everything is pointless.
+- New languages plug in (e.g. Flutter later): the infrastructure supports adding a language with its own rules, without shipping every language. Nobody knows all future projects.
 - nvim is the interface to the OS for coding work: shell, terminal, PowerShell, Git Bash, git; simple tasks shouldn't need leaving nvim. Windows lacks a good setup otherwise (user came from Linux).
 - Control WSL instances and Docker containers from nvim.
-- Kubernetes YAML, before 2027: completion and lookup while writing manifests, no browsing the spec. Values depend on the components in use (router, ingress, autoscaler); their docs get pulled into stdpath('data') and shown through familiar interfaces: generated `:help` files, `K` hover, popups. Integrated, not a separate tool. Next to implement (start before 2027), after cleanup, alongside the LLM chat survey (meta `backlog/docs/doc-7 - llm-chat-survey.md`). The user is learning Kubernetes; test project `~/es/k8s-minikube-ci` in its own WSL distro `minikube` (AlmaLinux 10, bash Makefile), Windows pwsh wrapper `C:/Users/jazzo/es/k8s-minikube-ci` (CI in Minikube, Tekton).
+- Kubernetes YAML, before 2027: completion and lookup while writing manifests, no browsing the spec. Values depend on the components in use (router, ingress, autoscaler); their docs get pulled into stdpath('data') and shown through familiar interfaces: generated `:help` files, `K` hover, popups. Integrated, not a separate tool.
+    - Next to implement (start before 2027), after cleanup, alongside the LLM chat survey (meta `backlog/docs/doc-7 - llm-chat-survey.md`).
+    - The user is learning Kubernetes; test project `~/es/k8s-minikube-ci` in its own WSL distro `minikube` (AlmaLinux 10, bash Makefile), Windows pwsh wrapper `C:/Users/jazzo/es/k8s-minikube-ci` (CI in Minikube, Tekton).
 - LLM chat in a buffer, browser-chat style: ask, the answer is appended, follow-ups below it, all in one buffer (input buffer optional); questions fold automatically, responses by hand. Any provider. Likely extends the genja-ask popup. minuet already covers ghost text. Still an idea, to be fleshed out.
 - Before building a feature, survey what others have built. Use theirs only if its interface fits the user's mental model; don't adapt to someone else's vision. Otherwise build our own and take the ideas that work from theirs.
 - So: no animated or sliding UI messages; keep input instant, startup fast and the Vim feel intact; make the LSP coding workflows (completion, diagnostics, lint, tests, git, AI) work together out of the box.
 - Not a contest: no claim to be better than other distributions.
-- `README.md` explains this to readers; keep it in line with this section.
-- When told to change one of `README.md` or this file, change the other to match in the same step; don't ask.
+- `README.md` explains this to readers; keep it in line with this section. When told to change one of `README.md` or this file, change the other to match in the same step; don't ask.
 - The README is not a manual. It says what the config is, why it exists and what it does, in short.
     - No keys, commands, options or function names (`<leader>am`, `:Minuet change_provider`, `enhance(picker)`).
     - No implementation details: how a feature works, which module does what, timeouts, workarounds.
     - A feature gets a sentence or two about what it gives you; a path to its code or guide is fine.
     - Keys go in `readme.cheatsheet.md`; how-tos and details in `doc-wip/`, `lua/genja/readme.md` or the plugin's README.
-    - This is for new text only. The manual-like parts already in the README (keys, commands, function names) are there on purpose: leave them, don't trim or move them, and don't take them as a pattern to copy.
-    - No installation instructions either: they go in `install.md` (requirements, lazy.nvim specs); the README only points to it.
+    - No installation instructions: they go in `install.md` (requirements, lazy.nvim specs); the README only points to it.
+    - This is for new text only. The manual-like parts already in the README are there on purpose: leave them, don't trim or move them, and don't copy them as a pattern.
 
 ## Main trunk
 
-- The main trunk is the branch `enterprise`; this project uses it instead of `main` or `master`.
+- The main trunk is the branch `enterprise`; this project uses it instead of `main` or `master`. It is the repo's default branch on origin (GitHub `nvimos/onscreen`); the local `v2026` tracks `origin/enterprise` (2026-11-08).
 - Docs and notes say "main trunk", not the branch name, so a rename touches only this section.
-- The current `master` branch is derelict: it is not likely to become the main trunk (`enterprise`).
-- `enterprise` lives on origin (GitHub `nvimos/onscreen`, the repo's default branch); the local `v2026` tracks `origin/enterprise` (2026-11-08).
+- The `master` branch is derelict, not likely to become the main trunk.
 
 ## Release 2026
 
-- 2026-11-05: `refactor-2026-sept` merged into `master`, now derelict (fast-forward at ced1985); branches `develop` and `v2026` made from it.
+- 2026-11-05: `refactor-2026-sept` merged into `master` (fast-forward at ced1985); branches `develop` and `v2026` made from it.
 - `v2026` is the working branch: the release checklist in todo-2026-neovim011.md (## release v2026, 18 items) is done there.
 - Main trunk = stable. `develop` = running branch for ideas beyond the v2026 checklist.
 - Spare tokens before a session reset go to implementing open todos and ideas.
-- Branch model: based on OneFlow, develop + main trunk variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
+- Branch model: OneFlow, develop + main trunk variant (Adam Ruka, endoflineblog.com 2017); git flow is too much overhead for a single developer; use an established model, not a home-made one. A `v2026` branch instead of a `v2026` tag was the user's choice.
 - Open: when v2026 merges back into the main trunk, and whether worktree branches and `/prish-merge` target `v2026` or `develop` (today: whatever branch the main checkout is on).
 
 ## Ideas and backlog
 
 - The backlog lives in the planning repo github.com/nvimos/meta (public), checkout `~/es/nvimos-meta` (`vim.g.genja_meta_dir` overrides); moved out of this repo 2026-11-10. New ideas go there as tasks, not into this repo.
-- meta: Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both.
+- meta: every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both.
 - Statuses: `To Do`, `In Progress`, `Needs Test` (built, waiting to be tried by hand), `Done`, `Dropped`. Build steps and hands-on checks are separate sections (`## Acceptance Criteria` / `## Verify`, OpenSpec `## 1. Build` / `## 2. Verify`).
 - Scan it: `make review` (needs test), `make doing`, `make open` in meta, or `:Morning` (Todo section).
-- The old todo files are in meta's `legacy/`, read-only: todo-ideas.md, todo-202x.md, squash files, todo-ideas/ (2026-11-10); todo-2026.md, todo-done/, todo-issue/, todo-test/ in `legacy/nvim-config/` (2026-11-11). Test session notes are meta `backlog/docs/`.
+- Old todo files are in meta's `legacy/`, read-only: todo-ideas.md, todo-202x.md, squash files, todo-ideas/ (2026-11-10); todo-2026.md, todo-done/, todo-issue/, todo-test/ in `legacy/nvim-config/` (2026-11-11). Test session notes are meta `backlog/docs/`.
 - Solved issues: `/commit-close-issues` (`.claude/skills/nvim-commit-close-issues/`) writes each as a Backlog.md task in meta and commits it there; no todo files in this repo.
 
 ## Plugins in this repo
@@ -93,26 +92,25 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Working style
 
 - Terse replies. No anthropomorphising.
-- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. Testing is done manually to also learn the new features 
-  from the user's perspective.
+- Don't run, test, compile or start sandbox runs unless asked; suggest the command instead. Testing is done manually to also learn the new features from the user's perspective.
+- Say plainly when something was not run or tested that you wanted to run or test. (Hint)
 - Follow-up questions stay on point; no offers to explore unrelated topics.
 - When asked for a plan, analysis or "don't change anything yet", edit no files.
 - Do only what was asked; list further fixes as suggestions. (inferred)
 - In the main checkout, don't commit unless asked.
 - In a Claude worktree (`.claude/worktrees/<name>`) or a background session, commit finished work without asking; don't merge or push to the main trunk.
-- plug-wip plugin repos: commit in the plugin folder like the main checkout (only when asked); pushing to its GitHub repo only when asked.
+- plug-wip plugin repos: commit in the plugin folder like the main checkout (only when asked); push to its GitHub repo only when asked.
 - Group commits by feature; no Claude/Co-Authored-By attribution.
 - The tree often has unrelated uncommitted changes; leave them alone.
-- Before patching around a tool's bugs, check upstream issues and check platform support before recommending a tool.
+- Before patching around a tool's bugs, check upstream issues; check platform support before recommending a tool.
 - Prefer built-in vim/nvim functions over new dependencies.
-- Hint: say plainly when something was not run or tested that you wanted to run or test.
 - Prompts are often dictated by voice; some words arrive misheard ("deer" = dir, "OAuth" = "followed by", "whip doc"/"VIP doc" = doc-wip). When a phrase makes no sense, read it as speech-to-text and pick the likely word; ask only if still unclear.
 
 ## Files and formatting
 
 - Unix newlines (LF) everywhere; only `desktop.ini` is CRLF (`.gitattributes`, `.editorconfig`). Don't mention line endings in replies.
 - Spaces (4), single quotes (`.editorconfig` `indent_style = space`, since 39fd23c); older files still have tabs, converted as they are reformatted.
-- Markdown lists: items don't end with a period (this applies to the items of a list, not to prose paragraphs).
+- Markdown list items don't end with a period (prose paragraphs do).
 - Readable Lua over clever Lua: plain assignments and `if` blocks.
     - A short, non-nested two-way `(x and y or z)` is fine, wrapped in parentheses; anything longer or nested is an `if` block.
     - When in doubt, apply the Golang vibe:
@@ -121,21 +119,18 @@ Each has its own CLAUDE.md; read it before changing that plugin.
         - Errors are values, handled where they happen: `local ok, err = pcall(...)`, own functions return `nil, err`; check at the call; no `error()` for normal control flow, no silent failures.
             - Except: a failure that is well understood, or doesn't matter to the overall outcome, can stay silent (an optional plugin missing, a best-effort cleanup). Say why in a short comment.
         - Explicit over dynamic: plain `require` and assignments; no modules built from strings or globbed discovery.
-        - A little copying beats a little dependency: three similar lines are fine; a helper (in `genja-util`) only when it pays off.
+        - A little copying beats a little dependency: three similar lines are fine; a helper (in `plug-wip/genja-util.nvim`, shared by the plug-wip plugins) only when it pays off.
         - No hidden magic: no `__index` inheritance chains, operator overloading or implicit globals; what a function does is visible in it.
         - Small, single-purpose functions and modules; short local names in small scopes, descriptive names for what a module exports.
         - One formatting, not up for debate (like `gofmt`): `.editorconfig`, 4 spaces, single quotes.
-- Shared helpers between plug-wip plugins live in `plug-wip/genja-util.nvim`.
 - Comments: short, explain why. For tricky code, at most one line per callback or function.
 - Annotate with LuaLS types: `---@type LazySpec` on specs, typed `opts`. `.luarc.json` disables `missing-fields`.
 
 ## Logging and reporting logical or runtime issues to user
 
-- Notifications name their source: script path relative to the nvim stdpath config folder.
-    - e.g. after/ftplugin/make.lua: ...
-    - e.g. lua/genja/map-plugin/init.lua: ...
+- Notifications name their source: script path relative to the nvim stdpath config folder, e.g. `after/ftplugin/make.lua: ...`, `lua/genja/map-plugin/init.lua: ...`.
 - Each file declares the prefix once, near the top: `local SRC = 'lua/genja/auto.lua: '` (path, colon, space), and calls `vim.notify(SRC .. 'message')`. Always `SRC`, never `src` or an inline path.
-    - plug-wip files only use the dirname/basename.ext like: SRC = 'genja-commit/popup.lua: '
+    - plug-wip files use only dirname/basename.ext: `SRC = 'genja-commit/popup.lua: '`
 
 ## Layout and loading
 
@@ -153,16 +148,14 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 ## Adding a plugin
 
-- Config dir is `%LOCALAPPDATA%\nvim` (not `~/.config/nvim`).
-- One file per plugin: `lua/lazyp/new/<name>.lua`, returning a `---@type LazySpec` table; the folder is already imported by `lua/genja/lazy-plug-spec.lua`, so no other registration.
-- Lua files use tabs. Start the file with a short comment: what it does, the upstream or alternative; not its keys (those go in `readme.cheatsheet.md`).
+- One file per plugin: `lua/lazyp/new/<name>.lua`, returning a `---@type LazySpec` table; the folder is already imported by `lua/genja/lazy-plug-spec.lua`, so no other registration. Own plugins (plug-wip) differ, see `## Layout and loading`.
+- Start the file with a short comment: what it does, the upstream or alternative; not its keys (those go in `readme.cheatsheet.md`).
 - Always give a trigger (`cmd`, `keys`, `event = 'VeryLazy'`); defaults are `lazy = true`, so a spec without one never loads.
 - Options go in `opts = {}`; add `-- default` comments for the knobs worth knowing.
 - Keymaps: follow `## Keymaps` (`desc` starts with the area, add a which-key group in `lua/lazyp/my/which-key.lua`). Check the key is free before using it.
 - "Comment out the block" means every spec line is prefixed with `--` inside `return { }`, so the file still loads and does nothing.
 - Built-in optional plugins (`$VIMRUNTIME/pack/dist/opt/`, e.g. `nvim.difftool`, `nvim.undotree`) are not installed: use `dir = vim.fs.joinpath(vim.env.VIMRUNTIME, 'pack', 'dist', 'opt', '<name>')` in the spec. Read the plugin's `lua/*.lua` and `plugin/*.lua` there for the real options; the `:help` text may lag.
 - Without a restart: `:packadd <name>` for a built-in; `:Lazy load <name>` or `:Lazy reload <name>` for a spec; `:Lazy install` for a new remote plugin.
-- Own plugins (plug-wip) are different, see `## Layout and loading`.
 - Dry-run the result headless: `nvim --headless -c "lua print(pcall(require,'lazy'))" -c q`, and note in the reply what was not run.
 - Example: `lua/lazyp/new/difftool.lua` (nvim.difftool, commented out).
 
@@ -184,8 +177,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Highlight colors
 
 - Extra highlight groups are set in `lua/genja/hilite.lua` (`M.setup`), through the `cc(fg, bg)` helper (`ColorTable`).
-- When asked for a darker or lighter color, chain `:darken(percent)` or `:lighten(percent)` onto `cc(...)` instead of computing a new hex by hand:
-  `cc('#B5642F'):darken(30):t()`.
+- For a darker or lighter color, chain `:darken(percent)` or `:lighten(percent)` onto `cc(...)` instead of computing a hex by hand: `cc('#B5642F'):darken(30):t()`.
     - Percent is 0 to 100: that many percent towards black (`darken`) or white (`lighten`); default 20.
     - Both change `fg` and `bg`, whichever are set; the color must be a `'#rrggbb'` string.
     - `:blend('#rrggbb', percent)` moves them that many percent towards another color (100 becomes it).
@@ -195,8 +187,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Alma vimrc split
 
 - `lua/genja/vimrc.almalinux.vim` is a one-file config for legacy vim 9+, to use in a pinch.
-- Portable core on top, then `if has('nvim') | finish | endif`, then vim-only parts: vim-plug, curl downloads, fzf, plugin config, statusline, colors, options that conflict with genja, clashing keymaps.
-- Plugins installed via vim-plug are never installed when the file is sourced from nvim.
+- Portable core on top, then `if has('nvim') | finish | endif`, then vim-only parts: vim-plug, curl downloads, fzf, plugin config, statusline, colors, options that conflict with genja, clashing keymaps. So vim-plug plugins are never installed when nvim sources the file.
 - Don't duplicate alma settings into Lua.
 - Today `init.vim` sources it only in the fallback branch.
 - A later accidental alma import into `opt.lua`/`auto.lua` was reverted (9555e32); the fold block in `opt.lua` was added back on request.
@@ -204,10 +195,8 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 ## Plugins, extensions
 
 - Live grep and live find live in `plug-wip/genja-finder.nvim`; see its CLAUDE.md.
-- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) stay in the config,
-  unless otherwise instructed.
-- `Telemap` and the refine decorator live in genja-finder: `require('genja-finder.telemap').Telemap(map)`,
-  `require('genja-finder').attach_shared_keys(map)` / `.enhance(picker)`; see its CLAUDE.md.
+- Telescope extensions (`lua/telescope/_extensions/`: finn, mycolors, mydirs, mylunsj, undersort) stay in the config, unless otherwise instructed.
+- `Telemap` and the refine decorator live in genja-finder: `require('genja-finder.telemap').Telemap(map)`, `require('genja-finder').attach_shared_keys(map)` / `.enhance(picker)`; see its CLAUDE.md.
 - Start dirs come from `plug-wip/genja-startdirs.nvim` (`require('genja-startdirs').dirs()` / `.ranked()`); the list is `lua/genja/local/startdirs.txt` (gitignored). The `START_DIRS` global is gone.
 - Telescope `file_ignore_patterns` (in `after/plugin/telescope-after.lua`) are anchored, e.g. `"%.a$"`.
 
@@ -217,7 +206,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - Adding a language or its tooling: consider LazyVim's language extras and AstroCommunity's packs as a starting point (their choices, not their files); see the plugin's CLAUDE.md, "Look at LazyVim and AstroNvim first".
 - Per-machine language switches go in `lua/genja/lsp/local.lua` (gitignored), not in the spec's `enabled` table.
 - Filetype specs live in the plugin's `lua/genja/ft/`; personal ones stay in the config's `lua/genja/ft/` (`yaml.lua`: `yml` -> `yaml.ansible`).
-- Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`;
+- Treesitter parsers are listed in `lua/lazyp/my/load-treesitter.lua`
 
 ## Keymaps
 
