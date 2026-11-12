@@ -99,7 +99,144 @@ function M.setup()
         callback = M.diffview_colors,
     })
     -- }}}
+
+    -- {{{ markdown headings: pale indigo, markdown files only
+    -- Remove this fold and `M.markdown_headings` below to go back to the colorscheme's heading colors.
+    M.markdown_headings()
+    M.markdown_comment()
+    M.markdown_code()
+    M.folded()
+    M.diag_float()
+    M.fold_column()
+    vim.api.nvim_create_autocmd('ColorScheme', {
+        group = vim.api.nvim_create_augroup('genja_md_heading_colors', { clear = true }),
+        callback = function()
+            M.markdown_headings()
+            M.markdown_comment()
+            M.markdown_code()
+            M.folded()
+            M.diag_float()
+            M.fold_column()
+        end,
+    })
+    -- }}}
 end
+
+-- {{{ markdown headings (see the fold in M.setup)
+-- Only markdown's own groups (the `.markdown` treesitter captures and the markdown syntax groups), so
+-- other filetypes keep the colorscheme's heading color.
+-- lua/genja/hilite.vim has the same color as a fallback (group MdHeading); change both.
+-- local HEADING_COLOR = '#a5b4fc' -- pale indigo, to go back to; darken or lighten it with cc(HEADING_COLOR):darken(10)
+local HEADING_COLOR = '#af4805' -- the StatusLine orange (`hi StatusLine guifg` in lua/genja/hilite.vim)
+
+-- Hierarchy: levels 1 and 2 are bold in the full indigo, from level 3 each level steps a little darker and
+-- plain, so the outline reads at a glance. The `#` markers are the same hue, darker: they recede and the
+-- title text stands out. (hilite.vim's fallback keeps one color for all of them.)
+local HEADING_BOLD_UNTIL = 2 -- levels up to this are bold
+local HEADING_STEP = 6 -- percent darker per level below HEADING_BOLD_UNTIL
+local HEADING_MARKER_DARKEN = 35 -- percent darker than the title text
+local HEADING_MARKER_MAX = 45 -- the deepest levels' markers stop here, so they stay readable
+
+-- cc() hands out one shared object, so each color is taken with :t() before the next cc() call.
+---@param percent integer
+---@return table
+local function heading_shade(percent)
+    if percent <= 0 then
+        return cc(HEADING_COLOR):t()
+    end
+    return cc(HEADING_COLOR):darken(percent):t()
+end
+
+function M.markdown_headings()
+    vim.api.nvim_set_hl(0, 'markdownHeadingDelimiter', heading_shade(HEADING_MARKER_DARKEN))
+
+    for level = 1, 6 do
+        local step = math.max(0, level - HEADING_BOLD_UNTIL) * HEADING_STEP
+        local text = heading_shade(step)
+        text.bold = level <= HEADING_BOLD_UNTIL
+        local marker = heading_shade(math.min(step + HEADING_MARKER_DARKEN, HEADING_MARKER_MAX))
+        vim.api.nvim_set_hl(0, 'markdownH' .. level, text)
+        vim.api.nvim_set_hl(0, ('@markup.heading.%d.markdown'):format(level), text)
+        vim.api.nvim_set_hl(0, ('@markup.heading.%d.marker.markdown'):format(level), marker)
+    end
+end
+
+-- MdComment: gray text, no background, for <!-- --> comments. Highlight groups are global, so
+-- the markdown windows swap the html comment groups for it (winhighlight, after/ftplugin/markdown.lua).
+-- lua/genja/hilite.vim has the same color as a fallback; change both.
+local COMMENT_FG = '#7d8590'
+
+function M.markdown_comment()
+    vim.api.nvim_set_hl(0, 'MdComment', cc(COMMENT_FG):darken(15):t())
+end
+
+-- Diagnostic float: the Normal background, a little lighter, so it stands out but stays dark. Used by the
+-- diagnostic float only (lua/genja/ext/diag-float.lua sets the window's winhighlight to these groups).
+local DIAG_FLOAT_LIGHTEN = 7 -- percent towards white
+
+function M.diag_float()
+    local bg = cc():bg_from('Normal'):lighten(DIAG_FLOAT_LIGHTEN):t().bg
+    local border = vim.api.nvim_get_hl(0, { name = 'FloatBorder', link = false })
+    vim.api.nvim_set_hl(0, 'GenjaDiagFloat', { bg = bg })
+    vim.api.nvim_set_hl(0, 'GenjaDiagFloatBorder', { fg = border.fg, bg = bg })
+end
+
+-- Fold column markers (every filetype; CursorLineFold links to it): hilite.vim's dark brown moved towards
+-- the StatusLine orange, so the chrome shares the accent but stays far quieter than text. Starts from the
+-- constant, like M.folded, so running it again doesn't blend twice.
+local FOLDCOLUMN_FG = '#493423' -- same as `hi FoldColumn guifg` in lua/genja/hilite.vim; change both
+local FOLDCOLUMN_BLEND = 60 -- percent towards the StatusLine orange: 0 is the brown, 100 is the orange
+local FOLDCOLUMN_FADE = 30 -- percent towards the Normal background afterwards: more is quieter
+
+function M.fold_column()
+    local statusline = vim.api.nvim_get_hl(0, { name = 'StatusLine', link = false })
+    if not statusline.fg then
+        return -- no StatusLine color yet: hilite.vim's FoldColumn stays
+    end
+    local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+    local color = cc(FOLDCOLUMN_FG):blend(('#%06x'):format(statusline.fg), FOLDCOLUMN_BLEND)
+    color:blend(('#%06x'):format(normal.bg or 0), FOLDCOLUMN_FADE)
+    color = color:t()
+    vim.api.nvim_set_hl(0, 'FoldColumn', color)
+end
+
+-- Folded (the text of a closed fold, every filetype): lua/genja/hilite.vim's color blended towards the
+-- Normal text color. It starts from the constant, not from the current group, so running it again
+-- doesn't blend twice; the background stays as hilite.vim sets it.
+local FOLDED_FG = '#a38652' -- same as `hi Folded guifg` in lua/genja/hilite.vim; change both
+local FOLDED_BLEND = 60 -- percent towards the Normal text color
+
+function M.folded()
+    local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+    if not normal.fg then
+        return -- no Normal color yet: hilite.vim's Folded stays
+    end
+    local folded = vim.api.nvim_get_hl(0, { name = 'Folded', link = false })
+    local color = cc(FOLDED_FG):blend(('#%06x'):format(normal.fg), FOLDED_BLEND):t()
+    color.bg = folded.bg
+    vim.api.nvim_set_hl(0, 'Folded', color)
+end
+
+-- Inline `code`: the StatusLine's foreground (the orange) blended towards the Normal text color, no
+-- background. Both groups are markdown's own, so other filetypes are not touched.
+-- lua/genja/hilite.vim has the plain orange as a fallback.
+local CODE_BLEND = 65 -- percent towards the Normal text color: 0 is the StatusLine orange, 100 is the text
+
+function M.markdown_code()
+    local statusline = vim.api.nvim_get_hl(0, { name = 'StatusLine', link = false })
+    if not statusline.fg then
+        return -- no StatusLine color yet: the fallback in hilite.vim stays
+    end
+    local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+    local orange = cc(('#%06x'):format(statusline.fg))
+    if normal.fg then
+        orange:blend(('#%06x'):format(normal.fg), CODE_BLEND)
+    end
+    local color = orange:t()
+    vim.api.nvim_set_hl(0, '@markup.raw.markdown_inline', color)
+    vim.api.nvim_set_hl(0, 'markdownCode', color)
+end
+-- }}}
 
 -- {{{ diffview: left side red, right side green (see the fold in M.setup)
 -- Each group starts from the Normal background and is blended with a very dark red / green, so it follows the colorscheme.

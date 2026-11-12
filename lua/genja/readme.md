@@ -42,6 +42,7 @@ custom funcs
      ext/messages-capture.lua - NOT ACTIVE: records vim.notify WARN+ with tracebacks; ideas and how others do it in its header
      ext/md-fix.lua - markdown fixers: <leader>mfx and on save (tabs to spaces, or to tabs when an editorconfig section for markdown says indent_style = tab; vim keys in backticks, typos, markdownlint-cli2 --fix), vim.g.md_fix_on_save, toggled by <leader>tmm / :ToggleMarkdownFix (plugin/md-fix.lua)
      ext/md-conceal.lua - markdown conceal: 'conceallevel' toggle 0/2 and <F2> cycle 0 1 2 3
+     ext/diag-float.lua - diagnostic float (open_float, jump float) gets its own background, a little lighter than Normal (colors: M.diag_float in hilite.lua)
      ext/md-foldtext.lua - markdown 'foldtext': the fold's first line with treesitter highlights, no line count (after/ftplugin/markdown.lua)
      ext/opt-cycle.lua - :Toggle / :Cycle any option, names and values completed (plugin/opt-cycle.lua)
      ext/md-abbrev.lua, ext/md-abbrev.txt - markdown insert-mode abbreviations, one `wrong right` pair per line (tests: tests/md/)

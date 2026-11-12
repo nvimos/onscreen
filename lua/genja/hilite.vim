@@ -41,8 +41,42 @@ hi CurSearch  guifg=cyan   guibg=#330B08
 hi MatchParen guifg=orange guibg=NONE
 hi MatchParen guisp=orange gui=bold,standout,underline
 hi Visual     guifg=#111111 guibg=#eb831e gui=bold
-hi Folded     guifg=#ffd787 guibg=#161616
-hi FoldColumn guifg=#ffffff
+
+
+hi Folded     guifg=#a38652 guibg=#141409
+hi FoldColumn guifg=#493423
+hi! link CursorLineFold FoldColumn
+
+" Markdown headings, pale indigo. Fallback: lua/genja/hilite.lua (markdown_headings) sets the same
+" and re-applies it on ColorScheme. Only markdown's own groups: the syntax ones and the .markdown captures.
+"hi MdHeading guifg=#a5b4fc gui=bold " pale indigo, to go back to
+hi MdHeading guifg=#AF4805 gui=bold
+" Markdown <!-- --> comments: gray, no background; the markdown windows use it through winhighlight
+" (after/ftplugin/markdown.lua), same color as M.markdown_comment in lua/genja/hilite.lua.
+hi MdComment guifg=#6a717a
+" Markdown inline `code`: the StatusLine orange (M.markdown_code in lua/genja/hilite.lua follows StatusLine).
+hi @markup.raw.markdown_inline guifg=#AF4805
+hi markdownCode guifg=#AF4805
+hi! link markdownHeadingDelimiter MdHeading
+
+hi! link markdownH1 MdHeading
+hi! link markdownH2 MdHeading
+hi! link markdownH3 MdHeading
+hi! link markdownH4 MdHeading
+hi! link markdownH5 MdHeading
+hi! link markdownH6 MdHeading
+hi! link @markup.heading.1.markdown MdHeading
+hi! link @markup.heading.2.markdown MdHeading
+hi! link @markup.heading.3.markdown MdHeading
+hi! link @markup.heading.4.markdown MdHeading
+hi! link @markup.heading.5.markdown MdHeading
+hi! link @markup.heading.6.markdown MdHeading
+hi! link @markup.heading.1.marker.markdown MdHeading
+hi! link @markup.heading.2.marker.markdown MdHeading
+hi! link @markup.heading.3.marker.markdown MdHeading
+hi! link @markup.heading.4.marker.markdown MdHeading
+hi! link @markup.heading.5.marker.markdown MdHeading
+hi! link @markup.heading.6.marker.markdown MdHeading
 
 " Dash-eboard
 hi DashboardHeader       ctermfg=Yellow guifg=#4793AF
@@ -105,7 +139,7 @@ hi DiagnosticOk    guifg=#90ee90 ctermfg=10 gui=NONE
 hi DiagnosticUnderlineError guisp=#7d3138 gui=underline cterm=underline
 hi DiagnosticUnderlineWarn  guisp=#836c4a gui=underline cterm=underline
 hi DiagnosticUnderlineInfo  guisp=#553333 gui=underline cterm=underline
-hi DiagnosticUnderlineHint  guisp=#d3d3d3 gui=underline cterm=underline
+hi DiagnosticUnderlineHint  guisp=#707070 gui=underline cterm=underline
 hi DiagnosticUnderlineOk    guisp=#90ee90 gui=underline cterm=underline
 
 
@@ -123,6 +157,13 @@ hi DiagnosticVirtualTextError guifg=#825483 guibg=NONE ctermbg=Black
 hi DiagnosticVirtualTextWarn  guifg=#94775c guibg=NONE ctermbg=Black
 hi DiagnosticVirtualTextInfo  guifg=#61AFEF guibg=NONE ctermbg=Black
 hi DiagnosticVirtualTextHint  guifg=#98C379 guibg=NONE ctermbg=Black
+
+" The diagnostic float (vim.diagnostic.open_float, the jump float) colors each line like the document's virtual text.
+hi! link DiagnosticFloatingError DiagnosticVirtualTextError
+hi! link DiagnosticFloatingWarn  DiagnosticVirtualTextWarn
+hi! link DiagnosticFloatingInfo  DiagnosticVirtualTextInfo
+hi! link DiagnosticFloatingHint  DiagnosticVirtualTextHint
+hi! link DiagnosticFloatingOk    DiagnosticVirtualTextOk
 
 "" NOWORK. todo fixme: hi @nvim.diagnostic.float guifg=orange
 
