@@ -18,8 +18,9 @@ vim.opt.foldcolumn = '3'                     -- fdc=2 ; overrides the '2' above
 vim.opt.fillchars = 'fold:│'
 vim.opt.fillchars = 'fold:·'
 
-vim.opt.fillchars = vim.opt.fillchars + 'foldopen:▼'  -- folds
-vim.opt.fillchars = vim.opt.fillchars + 'foldclose:▶' -- folds
+-- Open and closed folds both show the line, no triangles (▼ open, ▶ closed before)
+vim.opt.fillchars = vim.opt.fillchars + 'foldopen:│'  -- folds
+vim.opt.fillchars = vim.opt.fillchars + 'foldclose:│' -- folds
 vim.opt.fillchars = vim.opt.fillchars + 'foldsep:│'   -- folds
 
 -- }}}
