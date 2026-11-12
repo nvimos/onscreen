@@ -143,6 +143,10 @@ Mouse (lua/genja/popup.lua, lua/genja/ext/morning.lua, genja-statusline clicks i
     :Morning      start dirs, recent files, todo items, untested lines; click or <CR> opens,
                   q closes, R rebuilds
 
+Ops desktop app (plugin/ops.lua)
+
+    :Ops  :Frontend   start the latest release build (make build) on this nvim; starts listening first if needed (6666, else a free port)
+
 Live grep / find (plug-wip/genja-finder.nvim/lua/genja-finder/scope.lua; <F1> <S-F1> <leader>jj)
 
     <M-r>  cycle root (pwd, .git, bufdir, home)   <M-Up>  parent dir, one-off   <M-i>  skip set
