@@ -108,6 +108,7 @@ function M.setup()
     M.folded()
     M.diag_float()
     M.fold_column()
+    M.color_column()
     vim.api.nvim_create_autocmd('ColorScheme', {
         group = vim.api.nvim_create_augroup('genja_md_heading_colors', { clear = true }),
         callback = function()
@@ -117,6 +118,7 @@ function M.setup()
             M.folded()
             M.diag_float()
             M.fold_column()
+            M.color_column()
         end,
     })
     -- }}}
@@ -179,6 +181,16 @@ function M.diag_float()
     local border = vim.api.nvim_get_hl(0, { name = 'FloatBorder', link = false })
     vim.api.nvim_set_hl(0, 'GenjaDiagFloat', { bg = bg })
     vim.api.nvim_set_hl(0, 'GenjaDiagFloatBorder', { fg = border.fg, bg = bg })
+end
+
+-- The textwidth/colorcolumn stripe: the Normal background with only a little of the colorscheme's gray
+-- in it, so it is barely there. The background is the dominant part of the blend.
+local COLORCOLUMN_GRAY = '#303030' -- the colorscheme's ColorColumn background
+local COLORCOLUMN_BLEND = 25 -- percent towards the gray: 0 is the background, 100 the gray
+
+function M.color_column()
+    local color = cc():bg_from('Normal'):blend(COLORCOLUMN_GRAY, COLORCOLUMN_BLEND):t()
+    vim.api.nvim_set_hl(0, 'ColorColumn', color)
 end
 
 -- Fold column markers (every filetype; CursorLineFold links to it): hilite.vim's dark brown moved towards
