@@ -60,7 +60,7 @@ custom funcs
      ext/unsaved.lua - :Unsaved [cmd]: picker of modified buffers (write / discard), then cmd; :qa, :q, :x, jj, s: go through it
      ext/user-command/wrapfold.lua - fold markers with a title, :WrapFold
      ext/user-command/sort-length.lua - :[range]SortLen[!] sorts lines by length, ! reverses (keys in readme.cheatsheet.md)
-     ext/user-command/reload-lua.lua - :ReloadLua {module} drops a loaded module, requires it again, redraws; :ReloadLuaGenja does it for every loaded module with genja in its name
+     ext/user-command/reload-lua.lua - :ReloadLua {module} drops a loaded module, requires it again, redraws; :ReloadLuaGenja does it for every loaded module with genja in its name, then sources the config's ftplugin and after/ftplugin files again for every loaded buffer's filetype
      ext/git-stop-fsmonitor.lua - stops the git fsmonitor daemons of the repos seen, on exit and with :GitFsmonitorStop
      ext/diffview-labels.lua - diffview pane labels show the branches or commits as typed instead of hashes
      ext/diffview-autopreview.lua - diffview file panel: j/k open the diff under the cursor; toggle with the F2 item
