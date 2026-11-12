@@ -229,7 +229,8 @@ Toggle and increment (lua/genja/ext/tilde.lua in map-zero.lua; dial: lua/genja/m
     <M-~>      plain ~ (case)
     <leader>ts spelling on/off (map-zero.lua)
     <leader>tC colorcolumn on/off for the window, off remembers the columns (map-zero.lua, lua/genja/ext/colorcolumn.lua; also <F2> view)
-    <leader>tm markdown fix on save on/off, :ToggleMarkdownFix (plugin/md-fix.lua)
+    <leader>tmm markdown fix on save on/off, :ToggleMarkdownFix (plugin/md-fix.lua)
+    <leader>tmc markdown conceal 0/2, markup shown or hidden; <F2> conceal cycle: 0 1 2 3 (lua/genja/ext/md-conceal.lua)
     <C-a> <C-x>      dial: numbers, hex, dates, times, semver, weekdays, months, &&/||, bool
                      lua ==/~=, ts let/const, php visibility, css hex colors, md headers and [ ]/[x]
     g<C-a> g<C-x>    same; in visual: progressive (1, 2, 3 …); dot repeats

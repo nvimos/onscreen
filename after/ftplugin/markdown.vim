@@ -5,6 +5,7 @@ require('genja.ext.md-checklist').register(buf)
 require('genja.ext.md-links').register(buf)
 require('genja.ext.md-glow').register(buf)
 require('genja.ext.md-fix').register(buf)
+require('genja.ext.md-conceal').register(buf)
 require('genja.ext.md-abbrev').apply(buf)
 EOF
 
