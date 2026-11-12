@@ -66,10 +66,17 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
 		if vim.bo[ev.buf].buftype ~= 'terminal' then
 			return
 		end
-		local chan = vim.bo[ev.buf].channel
-		if chan > 0 and vim.fn.jobwait({ chan }, 0)[1] == -1 then
-			vim.cmd.startinsert()
-		end
+		-- After the command: :tabedit from a terminal enters a window showing
+		-- the terminal for a moment, and startinsert would carry over to oil.
+		vim.schedule(function()
+			if vim.api.nvim_get_current_buf() ~= ev.buf then
+				return
+			end
+			local chan = vim.bo[ev.buf].channel
+			if chan > 0 and vim.fn.jobwait({ chan }, 0)[1] == -1 then
+				vim.cmd.startinsert()
+			end
+		end)
 	end,
 	desc = 'Terminal windows: terminal mode on enter',
 })
