@@ -69,7 +69,7 @@ let &l:formatlistpat = join([
 " tabstop 4 is the CommonMark tab width, for files that do contain tabs.
 setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=4
 
-setlocal conceallevel=1
+setlocal conceallevel=2
 setlocal showbreak=NONE
 setlocal nospell
 " no listchars in markdown
