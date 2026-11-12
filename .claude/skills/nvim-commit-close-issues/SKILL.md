@@ -60,8 +60,8 @@ Commit-planning logic is copied from `commit-plan`; unlike it, this skill commit
 ```
 
 - An open follow-up that is not a hand test is its own `To Do` task, or a step of an existing task.
-- Short lines, no conversational text. LF newlines. Add a row to meta's `index.tsv`.
-- Commit the tasks in meta after the config commits: `git -C <meta> add -- <task files> index.tsv`, message
+- Short lines, no conversational text. LF newlines. `index.tsv` in meta is generated and untracked: don't edit or stage it.
+- Commit the tasks in meta after the config commits: `git -C <meta> add -- <task files>`, message
   `issue: <topic>` (one commit for all of the session's tasks). Don't push meta.
 
 ## 4. Commit

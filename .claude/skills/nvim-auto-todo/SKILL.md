@@ -14,7 +14,7 @@ When started from a phrase instead of `/auto-todo`, ask "Run /auto-todo?" first 
 
 - meta `backlog/tasks/task-<n> - <Title>.md`: the backlog (Backlog.md). Status in the YAML header: `To Do`, `In Progress`, `Needs Test` (built, waiting to be tried by hand), `Done`, `Dropped`. Build steps are `## Acceptance Criteria`, hands-on checks `## Verify`.
 - meta `backlog/archive/tasks/`: `Done` and `Dropped` tasks (move the file there).
-- meta `openspec/changes/<id>/` (`proposal.md`, `tasks.md` with `## 1. Build` and `## 2. Verify`): only for work that needs a design; Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both. `index.tsv` lists every task with its change.
+- meta `openspec/changes/<id>/` (`proposal.md`, `tasks.md` with `## 1. Build` and `## 2. Verify`): only for work that needs a design; Every item is a Backlog.md task; only work that needs a design also gets an OpenSpec change (`openspec/changes/<id>/`, `proposal.md` names its task, the task a `Change:` line). Never copy an item into both. `index.tsv` is generated and untracked: don't edit it.
 - meta `tools/scan.py` / `make review`, `make doing`, `make open`: list tasks by status with their open steps.
 - meta `legacy/`: the old todo files and squash files, read-only reference.
 - meta `backlog/docs/`: test sessions and longer notes; meta `legacy/nvim-config/`: the config's old todo-issue/, todo-done/, todo-test/.
