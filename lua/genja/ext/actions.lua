@@ -1,5 +1,4 @@
--- Action menu (idea #17): g. and <LocalLeader>/ open a telescope list of what can be
--- done here. `cur:` items act on the item under the cursor (LSP symbol, diagnostic,
+-- Action menu (idea #17): a telescope list of what can be done here. `cur:` items act on the item under the cursor (LSP symbol, diagnostic,
 -- word, oil entry); unprefixed ones act on the buffer or wider. The list is built
 -- when the menu opens, from what is available then.
 

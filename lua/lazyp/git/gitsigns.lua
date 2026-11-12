@@ -1,5 +1,5 @@
 -- Hunk signs in the sign column, stage/reset/preview hunks, line blame.
--- Keys: lua/genja/map-plugin/gitsigns.lua (<leader>h…, ]c [c, ih), buffer-local via on_attach.
+-- Keys: lua/genja/map-plugin/gitsigns.lua, buffer-local via on_attach.
 
 local Maps = require('genja.map-plugin')
 

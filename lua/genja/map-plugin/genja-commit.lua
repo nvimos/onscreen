@@ -1,4 +1,4 @@
--- Keys for lua/lazyp/new/genja-commit.lua. In oil: ggc / <LocalLeader>c (lua/genja/map-oil.lua).
+-- Keys for lua/lazyp/new/genja-commit.lua. Oil's keys for it: lua/genja/map-oil.lua.
 
 ---Repo to commit in: oil's dir, else the buffer's file dir, else the cwd.
 ---@return string

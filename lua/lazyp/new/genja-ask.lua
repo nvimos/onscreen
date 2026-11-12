@@ -1,4 +1,4 @@
--- Ask popup (idea 16): plug-wip/genja-ask.nvim. Keys: <M-?> (plugin/ask.lua), <leader>pc (plugin/claude-fterm.lua).
+-- Ask popup (idea 16): plug-wip/genja-ask.nvim. Keys: plugin/ask.lua, plugin/claude-fterm.lua.
 
 local Wip = require('genja.plug-wip')
 

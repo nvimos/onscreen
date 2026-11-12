@@ -155,7 +155,7 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 
 - Config dir is `%LOCALAPPDATA%\nvim` (not `~/.config/nvim`).
 - One file per plugin: `lua/lazyp/new/<name>.lua`, returning a `---@type LazySpec` table; the folder is already imported by `lua/genja/lazy-plug-spec.lua`, so no other registration.
-- Lua files use tabs. Start the file with a short comment: what it does, the upstream or alternative.
+- Lua files use tabs. Start the file with a short comment: what it does, the upstream or alternative; not its keys (those go in `readme.cheatsheet.md`).
 - Always give a trigger (`cmd`, `keys`, `event = 'VeryLazy'`); defaults are `lazy = true`, so a spec without one never loads.
 - Options go in `opts = {}`; add `-- default` comments for the knobs worth knowing.
 - Keymaps: follow `## Keymaps` (`desc` starts with the area, add a which-key group in `lua/lazyp/my/which-key.lua`). Check the key is free before using it.
@@ -229,9 +229,10 @@ Each has its own CLAUDE.md; read it before changing that plugin.
 - `:ClaudeFterm [flags]` passes flags (e.g. `--chrome`) to claude at start; completion list `FLAGS` / `FLAG_VALUES` in `plug-wip/genja-claudefterm.nvim`.
 - `<leader>pc` opens the ask popup, `<leader>pC` pastes context into claude, `<leader>mC` lists running claude terminals (`plugin/claude-fterm.lua`); `<F2>` lists them too (`lua/genja/f2/collect/claude.lua`).
 - `<leader>cAp` runs `:PhpDocParams` (`map-lsp.lua`, PHP buffers).
-- When adding keys:
+- When adding keys, in the config or with a new plugin:
     - add them to `readme.cheatsheet.md`, one section per plugin or topic, naming the file that sets them.
     - don't list a file's keymaps again in its comments; the code (`desc`) is the list.
+    - file headers (ext modules, plugin/ glue, specs, map-plugin files) say what the file does and point to the file that sets its keys (`Keys: lua/genja/map-zero.lua`); no key names. Keys may appear where they explain a choice, e.g. a collision with an nvim default (`lua/lazyp/new/mini-ai.lua`).
     - main config: keys go only in `readme.cheatsheet.md`, not in `lua/genja/readme.md` or other readmes.
     - plug-wip plugin or module with its own README: keys go there only if it already has a keymaps section.
     - write `desc` so it sorts well: which-key sorts by `desc` (`lua/lazyp/my/which-key.lua`), so start with the area and then the object, e.g. `Git: hunk stage`, `Git: hunk reset`, `UI: git status (Neogit)`.

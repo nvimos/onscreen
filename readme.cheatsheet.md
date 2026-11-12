@@ -34,6 +34,10 @@ Breadcrumbs and outline (dropbar, aerial)
     <leader>oo  outline sidebar                  <leader>oO  outline nav float (same as mo / mO)
     <leader>ja  telescope symbols (aerial)       [o  ]o   previous / next symbol
 
+Undo tree (undotree, lua/lazyp/util-qol/undotree.lua, key in lua/genja/map-zero.lua)
+
+    <leader>mu  undo tree and diff panel on/off
+
 Debug, PHP with Xdebug (nvim-dap, nvim-dap-ui; lua/genja/map-plugin/dap-php.lua)
 
     <leader>db  toggle breakpoint     <leader>dc  start "Listen for Xdebug" / continue
@@ -332,6 +336,7 @@ Unsaved buffers (lua/genja/ext/unsaved.lua, command in plugin/unsaved.lua, abbre
     <M-w>            file: write; no file: `:w ~/tmp/bufw-<week>-<3 words>.txt` on the cmdline
     <M-x>            file: reset to disk (:edit!); no file: wipe
     <CR>             go to the buffer, cmd not run
+    mouse            left click on a row: open the buffer; right click: discard it (as <M-x>)
 
 Messages (lua/genja/ext/messages.lua, command in plugin/messages.lua)
 

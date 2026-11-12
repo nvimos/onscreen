@@ -5,9 +5,8 @@
 --   :Minuet change_model openai_fim_compatible:qwen2.5-coder:0.5b
 -- :CheckHealthSimpleMinuet shows which provider is on and whether it can answer.
 -- Ghost text is on in gitcommit buffers (took over from copilot.vim, 2026-10-31), with the staged
--- diff sent along (lua/genja/ext/minuet-diff.lua, 2026-11-02); off elsewhere:
---   ghost text: <leader>am in the buffer (:Minuet virtualtext toggle)
---   blink: the source only answers <M-y>; <leader>aM turns on auto-complete
+-- diff sent along (lua/genja/ext/minuet-diff.lua, 2026-11-02); off elsewhere until toggled
+-- (:Minuet virtualtext toggle); the blink source only answers its own key unless auto-complete is on.
 -- The blink source is added by lua/genja/completion/minuet.lua (feature 'minuet'
 -- in lua/lazyp/new/genja-completion011.lua); blink's require loads this plugin.
 --

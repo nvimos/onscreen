@@ -3,7 +3,7 @@
 --   vale          Check.Name = NO       in the [*.md] section of the vale config the buffer uses
 --                                       (the project's .vale.ini, else the shared lint/.vale.ini)
 -- Each entry gets a comment with the date and the message, so it can be found and undone by hand.
--- Then the buffer is linted again. Key: <leader>cx in markdown (after/ftplugin/markdown.vim).
+-- Then the buffer is linted again. Mapped in markdown buffers (after/ftplugin/markdown.vim).
 
 local SRC = 'lua/genja/ext/lint-silence.lua: '
 

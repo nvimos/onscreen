@@ -1,6 +1,6 @@
 -- Keys and mappings for lua/lazyp/langs-comps/minuet.lua.
 -- Insert-mode ghost text keys are minuet's own (opts.virtualtext.keymap in the spec);
--- <M-y> is a blink key (lua/genja/completion/minuet.lua).
+-- the blink key is in lua/genja/completion/minuet.lua.
 
 ---@param Maps genja.MapPlugin
 return function(Maps)

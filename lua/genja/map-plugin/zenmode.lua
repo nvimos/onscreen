@@ -1,9 +1,5 @@
 -- Keys for lua/lazyp/ui/zenmode.lua.
---   <leader>z1  width 120, no numbers, frameless; diagnostics off
---   <leader>z2  width 80, relnum, colorcolumn 4,8,80, frameless + maximized; diagnostics off
---   <leader>z0  close; frameless and maximized off, window size as before z1/z2;
---               diagnostics back on (unless off before zen) with the default limit of 3
--- z1 <-> z2 while zen is open: zen closes first, an open zen window would keep its old width.
+-- Switching presets while zen is open closes zen first: an open zen window would keep its old width.
 
 local function gui()
 	return require('genja.ui.gui-func-state')

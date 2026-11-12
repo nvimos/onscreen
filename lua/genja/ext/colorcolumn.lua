@@ -1,5 +1,5 @@
 -- colorcolumn on/off for the current window: off remembers the columns, on brings them back
--- (80 when there were none). <leader>tC (map-zero.lua) and <F2> `view  colorcolumn on|off`.
+-- (80 when there were none). Key in map-zero.lua, F2 item in the view group.
 
 local SRC = 'lua/genja/ext/colorcolumn.lua: '
 

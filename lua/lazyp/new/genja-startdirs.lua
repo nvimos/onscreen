@@ -1,7 +1,7 @@
 -- Start dirs (idea 36): plug-wip/genja-startdirs.nvim. Keys: lua/genja/map-plugin/genja-startdirs.lua.
 -- The list: lua/genja/local/startdirs.txt (gitignored; example next to it), then opts.dirs.
 -- :Mydirs opens the mydirs picker, :Mydirs reset deletes the usage counts.
--- Used by the mydirs picker, <leader>jd find, CycleDirs (lua/genja/fu.lua), oil ,s / ,S.
+-- Used by the mydirs picker, the start dirs find, CycleDirs (lua/genja/fu.lua) and oil (lua/genja/map-oil.lua).
 local SRC = 'lua/lazyp/new/genja-startdirs.lua: '
 local Maps = require('genja.map-plugin')
 

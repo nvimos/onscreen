@@ -1,6 +1,6 @@
 -- Keys for lua/lazyp/git/gitsigns.lua. Buffer-local: set in on_attach, so they
 -- exist only in buffers gitsigns tracks; elsewhere ]c [c stay nvim's.
--- Filetypes in vim.g.gitsigns_skip_ft (default markdown) aren't attached; <leader>mGs toggles per buffer.
+-- Filetypes in vim.g.gitsigns_skip_ft (default markdown) aren't attached; a key toggles it per buffer.
 
 ---Filetypes gitsigns doesn't attach to: vim.g.gitsigns_skip_ft, default { 'markdown' }.
 ---@return string[]

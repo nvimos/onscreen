@@ -1,9 +1,9 @@
 -- :messages as a jump list: file:line locations in Lua tracebacks and Vim script errors.
---   :Messages [-dump]   :messages in a scratch buffer (current window); <CR> jumps, q closes
+--   :Messages [-dump]   :messages in a scratch buffer (current window)
 --   :Messages -quick    append the locations to the quickfix list, open it
 --   :Messages -loc      append them to this window's location list, open it
 --   :Messages -yank     all of :messages to the clipboard (+)
---   <F2>                one item per location, newest first, at most 10 (lua/genja/f2/collect/messages.lua)
+--   F2 menu             one item per location, newest first, at most 10 (lua/genja/f2/collect/messages.lua)
 -- Reads :messages when asked; nothing runs in the background. The recording variant
 -- (wraps vim.notify, off by default) is lua/genja/ext/messages-capture.lua.
 -- Command: plugin/messages.lua. Tests: tests/messages/.

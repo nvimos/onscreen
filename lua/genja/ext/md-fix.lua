@@ -3,9 +3,8 @@
 -- An editorconfig section for markdown ([*.md] ...) sets the tab stop, and with indent_style = tab
 -- the leading spaces become tabs after the fixers ran (M.indent_to_tabs); [*] alone doesn't count.
 -- Then vim key notation in prose gets backticks: <C-x><C-o> -> `<C-x><C-o>`; see M.escape_keys.
---   <leader>mfx   fix this buffer now (after/ftplugin/markdown.vim)
---   on save       the same after every :w, unless vim.g.md_fix_on_save = false
---                 <leader>tm / :ToggleMarkdownFix switch it (plugin/md-fix.lua)
+--   on demand     fix this buffer now (key in after/ftplugin/markdown.vim)
+--   on save       the same after every :w, unless vim.g.md_fix_on_save = false (switch: plugin/md-fix.lua)
 -- markdownlint uses the project's config, else the shared lint/.markdownlint.jsonc (as lua/genja/ext/lint.lua).
 -- A fixer that isn't installed is skipped (mason: :MasonToolsInstall).
 -- While the fixers run, the statusline shows `md-fix…` (M.status, statusline_extra in lua/lazyp/new/genja-statusline.lua).

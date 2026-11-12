@@ -1,6 +1,5 @@
--- <C-F1>: recent files from genja-recent (frecency), the current project first.
---   <M-a> switches between this project (git root, else :pwd) and all files.
---   genja-finder's shared keys: <M-f> filter, <M-x> exclude, <M-n> exact, <BS> undo, <F2>/<F3>.
+-- Recent files picker from genja-recent (frecency), the current project first; switches
+-- between this project (git root, else :pwd) and all files. Uses genja-finder's shared keys.
 
 local SRC = 'lua/genja/ext/recent.lua: '
 

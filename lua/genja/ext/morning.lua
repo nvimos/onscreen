@@ -1,7 +1,7 @@
 -- :Morning (idea 30/31): a clickable page for lazy mornings and planning sessions.
 --   Sections: Start dirs (genja-startdirs, most used first), Recent (genja-recent, else oldfiles),
 --   Todo (open Backlog.md tasks of the nvimos/meta checkout), Untested (open lines of the newest untested list in meta's backlog/docs/).
---   A click or <CR> opens the line's target; q closes. Command in plugin/morning.lua,
+--   Each line opens its target. Command in plugin/morning.lua,
 --   also in the right-click menu (lua/genja/popup.lua).
 
 local SRC = 'lua/genja/ext/morning.lua: '

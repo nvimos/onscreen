@@ -1,4 +1,4 @@
--- dial.nvim: <C-a>/<C-x> on more than numbers (idea 29a). Keys: lua/genja/map-plugin/dial.lua.
+-- dial.nvim: increment / decrement on more than numbers (idea 29a). Keys: lua/genja/map-plugin/dial.lua.
 -- Groups follow LazyVim's dial extra: one group per filetype, `default` otherwise.
 -- `~` (lua/genja/ext/tilde.lua) still swaps a single word; dial adds counts, dates and cycles.
 local Maps = require('genja.map-plugin')

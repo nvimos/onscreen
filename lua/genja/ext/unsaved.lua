@@ -1,12 +1,8 @@
 -- :Unsaved {cmd}: handle the modified buffers that block :qa (E37/E162), then run {cmd}.
 -- A telescope picker lists them; each action closes it and it reopens with what's left,
--- so {cmd} runs once the list is empty. <Esc> cancels {cmd}. Command: plugin/unsaved.lua;
+-- so {cmd} runs once the list is empty; closing the picker cancels it. Command: plugin/unsaved.lua;
 -- the `qa`, `q`, `x`, `jj` and `s:` abbreviations call it (lua/genja/abbreviations.vim).
 -- :q and :x only quit nvim from the last window; elsewhere they run at once.
---   file buffer      <M-w> write          <M-x> reset to the file on disk (:edit!)
---   mouse            left click on a row opens the buffer, right click discards it (<M-x>)
---   no-file buffer   <M-w> :w ~/tmp/bufw-<week>-<first-3-words>.txt on the cmdline, to edit
---                    <M-x> wipe the buffer
 local SRC = 'lua/genja/ext/unsaved.lua: '
 
 local M = {}

@@ -1,6 +1,6 @@
 -- Debug UI: open dap-ui when a session first stops, in its own tab or in the current one; close it at the end.
 -- Switches, also at runtime with :let (read at each open):
---   g:genja_debug_auto_open  v:true (default): open on the first stop; v:false: only <leader>du
+--   g:genja_debug_auto_open  v:true (default): open on the first stop; v:false: only when toggled by hand
 --   g:genja_debug_layout     'tab' (default): dap-ui in a new tab; 'split': splits in the current tab
 -- Called from lua/lazyp/debug/dap-php.lua.
 local M = {}

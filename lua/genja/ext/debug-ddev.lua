@@ -5,7 +5,7 @@
 -- under the debugger (CLI scripts, Behat), only when asked.
 -- Works from a buffer in the WSL copy (//wsl.localhost/<distro>/...) or a Windows copy holding
 -- .ddev (synced into WSL; distro from genja.lsp phpactor_wsl.distro).
--- Called from lua/lazyp/debug/dap-php.lua (<leader>dc, :DdevXdebugHost, :DebugCli, :DebugBehat).
+-- Called from lua/lazyp/debug/dap-php.lua (:DdevXdebugHost, :DebugCli, :DebugBehat).
 local SRC = 'lua/genja/ext/debug-ddev.lua: '
 
 local M = {}

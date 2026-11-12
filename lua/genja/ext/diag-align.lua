@@ -2,7 +2,7 @@
 -- right after the paragraph's longest line, instead of after each line's own end.
 -- Wraps the built-in virtual_text handler, then moves its extmarks to virt_text_win_col.
 --   vim.g.diag_align   false: plain end-of-line placement
---   M.toggle()         switch it and move the marks of every buffer (<leader>tta, <F2> diag)
+--   M.toggle()         switch it and move the marks of every buffer
 -- Setup: plugin/diag-align.lua. Works under the diag limit wrapper (lua/genja/ext/diag-limit.lua).
 --
 -- A paragraph whose longest line is wider than the window keeps end-of-line placement:

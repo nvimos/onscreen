@@ -1,5 +1,5 @@
 -- LSP rename typed in place: a one-line float over the word under the cursor, in insert mode.
--- Completion stays on; <C-j> takes its item, <CR> always renames.
+-- Completion stays on in the float; confirming always renames.
 local SRC = 'lua/genja/ext/rename-inline.lua: '
 
 local M = {}

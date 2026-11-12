@@ -1,7 +1,6 @@
 -- Keys for lua/lazyp/new/urlview.lua.
 
 -- Telescope picker, not vim.ui.select: that returns one item only.
--- <Tab> marks entries; <CR> opens the marked ones, or the current one if none are marked.
 local SRC = 'lua/genja/map-plugin/urlview.lua: '
 
 ---@param urls string[]

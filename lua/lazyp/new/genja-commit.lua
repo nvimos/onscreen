@@ -1,4 +1,4 @@
--- Commit message popup (oil), gitcommit linting, <M-g> message generation.
+-- Commit message popup (oil), gitcommit linting, message generation.
 -- Details: plug-wip/genja-commit.nvim/CLAUDE.md.
 
 local Maps = require('genja.map-plugin')

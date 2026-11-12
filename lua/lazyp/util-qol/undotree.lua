@@ -1,4 +1,4 @@
--- revert to previous versions of edits; <leader>u
+-- revert to previous versions of edits; key in lua/genja/map-zero.lua
 ---@type LazySpec
 return {
 	'mbbill/undotree',

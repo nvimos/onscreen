@@ -1,7 +1,5 @@
--- Window sizes in big steps (idea 28). Keys in lua/genja/map-zero.lua (Windows):
---   <M-=> / <M-->  grow / shrink the current window along its split
---   <M-0>          cycle the left/top share of the split: 50 → 30 → 70 → 60 (percent)
---   <leader>wr     resize mode (which-key loop over <leader>W…): h j k l = 0, <Esc> leaves
+-- Window sizes in big steps (idea 28): grow, shrink, cycle the split share, a resize mode.
+-- Keys in lua/genja/map-zero.lua.
 -- smart-splits.nvim is an alternative, spec disabled: lua/lazyp/new/smart-splits.lua.
 local SRC = 'lua/genja/ext/winsize.lua: '
 

@@ -1,4 +1,4 @@
--- Keys for lua/lazyp/ui-gui/neovim-gui-shim.lua: <leader>mQ toggles nvim-qt GUI options.
+-- Keys for lua/lazyp/ui-gui/neovim-gui-shim.lua: toggle nvim-qt GUI options.
 -- Same singletons as the GuiFuncs picker and the right-click menu (lua/genja/ui/gui-func-state.lua).
 
 local SRC = 'lua/genja/map-plugin/neovim-gui-shim.lua: '
