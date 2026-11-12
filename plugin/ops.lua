@@ -35,10 +35,22 @@ local function launch()
         vim.notify(SRC .. 'listening on ' .. addr)
     end
 
-    local job = vim.fn.jobstart({ exe, addr }, { cwd = vim.fs.dirname(exe), detach = true })
-    if job <= 0 then
-        vim.notify(SRC .. 'could not start ' .. exe, vim.log.levels.ERROR)
+    -- Not jobstart(): on Windows nvim spawns jobs with a hidden window, so the app ran unseen.
+    local proc, spawn_err
+    proc, spawn_err = vim.uv.spawn(exe, {
+        args = { addr },
+        cwd = vim.fs.dirname(exe),
+        detached = true,
+        hide = false,
+    }, function()
+        proc:close()
+    end)
+    if not proc then
+        vim.notify(SRC .. 'could not start ' .. exe .. ': ' .. tostring(spawn_err), vim.log.levels.ERROR)
+        return
     end
+    -- Don't keep nvim's loop alive (or block :q) for the app.
+    proc:unref()
 end
 
 vim.api.nvim_create_user_command('Ops', launch, { desc = 'Ops: start the front end app on this nvim' })
