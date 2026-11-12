@@ -384,6 +384,14 @@ Notifications name their source: script path relative to the nvim stdpath config
 Each file declares the prefix once, near the top: `local SRC = 'lua/genja/auto.lua: '` (path, colon,
 space), and calls `vim.notify(SRC .. 'message')`. Always `SRC`, never `src` or an inline path.
 
+### No useless messages
+
+Don't tell the user about things that went fine or that they can't act on. When a problem can be
+detected and repaired without harm (e.g. the Hidden attribute that makes a write fail,
+`plugin/hidden-write.lua`), repair it at the point of use instead of only warning about it. Keep the
+normal path fast (a stat or two) and the repair non-destructive. A repair that works is silent;
+notify only when it fails, with the reason and the manual fix.
+
 ### plug-wip files
 
 Use only dirname/basename.ext: `SRC = 'genja-commit/popup.lua: '`
