@@ -21,7 +21,7 @@ local HELP = {
 	'a            show or hide alpha',
 	'h l  <Left> <Right>   -1 / +1',
 	's d          -5 / +5',
-	'm ,          -10 / +10',
+	'm ,  <S-Left> <S-Right>   -10 / +10',
 	'0-9          set slider to 0-90 %',
 	'H M L        set slider to 0 / 50 / 100 %',
 	'r            reset mode',
@@ -71,6 +71,8 @@ return {
 				['?'] = show_help,
 				['<Left>'] = mapping.decrease1,
 				['<Right>'] = mapping.increase1,
+				['<S-Left>'] = mapping.decrease10,
+				['<S-Right>'] = mapping.increase10,
 			},
 		}
 	end,
