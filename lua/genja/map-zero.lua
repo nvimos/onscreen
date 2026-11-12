@@ -124,6 +124,8 @@ km(nxo, 'zk',    'zk', nosi 'Fold: jump to previous end')
 
 km(n, 'zr',      'zr', nosi 'Fold: level less (foldlevel +1)')
 km(n, 'zm',      'zm', nosi 'Fold: level more (foldlevel -1)')
+km(n, 'z1',      'zm', nosi 'Fold: level down (foldlevel -1)')
+km(n, 'z2',      'zr', nosi 'Fold: level up (foldlevel +1)')
 
 km(nx, 'zo',     'zo', nosi 'Fold: open')
 km(n, 'zR',      'zR', nosi 'Fold: open all')

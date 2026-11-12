@@ -112,6 +112,8 @@ vim.o.cursorline = false -- highlight the current line
 vim.o.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 
 vim.o.wrap       = false -- display lines as one long line
+
+vim.o.foldnestmax = 5 -- deepest nested fold; only for foldmethod indent and syntax, not expr (markdown)
 -- }}}
 
 -- diff, plain look {{{
